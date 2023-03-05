@@ -9,32 +9,43 @@ import { Rule } from 'antd/lib/form';
 import { motion } from 'framer-motion';
 interface MyProps {
     isOpenModal: boolean;
-    toggleLoginModal: () => void;
     toggleRegisterModal: () => void;
+    toggleLoginModal: () => void;
 }
 const regexPhoneNumber = /^0(1\d{9}|3\d{8}|5\d{8}|7\d{8}|8\d{8}|9\d{8})$/;
 const regexEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 const regexPass = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*()_+]).{6,}$/;
-const Login = (props: MyProps) => {
-    const [userEmailLogin, setUserEmailLogin] = useState<string>('')
-    const [userPassLogin, setUserPassLogin] = useState<string>('')
-    const [checkLoginBtn, setCheckLoginBtn] = useState<boolean>(false);
+
+const Register = (props: MyProps) => {
+
+    const [userNameReq, setUserNameReq] = useState<string>('')
+    const [userNumberPhoneReq, setUserNumberPhoneReq] = useState<string>('')
+    const [userEmailReq, setUserEmailReq] = useState<string>('')
+    const [userPassReq, setUserPassReq] = useState<string>('')
+    const [userConfirmPassReq, setUserConfirmPassReq] = useState<string>('')
+
+    const [checkReqBtn, setCheckReqBtn] = useState<boolean>(false);
 
     useEffect(() => {
-        (userEmailLogin && regexPass.test(userPassLogin)) ? setCheckLoginBtn(true) : setCheckLoginBtn(false);
+        (userNameReq && regexPhoneNumber.test(userNumberPhoneReq) && regexEmail.test(userEmailReq) && regexPass.test(userPassReq) && userConfirmPassReq === userPassReq) ? setCheckReqBtn(true) : setCheckReqBtn(false);
+    }, [userNameReq, userNumberPhoneReq, userEmailReq, userPassReq, userConfirmPassReq])
 
-    }, [userEmailLogin, userPassLogin])
 
-
-    const handleInputEmailLoginChange = (event: { target: { value: any; }; }) => {
-        setUserEmailLogin(event.target.value);
+    const handleInputNameReqChange = (event: { target: { value: any; }; }) => {
+        setUserNameReq(event.target.value);
     };
-
-
-    const handleInputPassLoginChange = (event: { target: { value: any; }; }) => {
-        setUserPassLogin(event.target.value);
+    const handleInputPhoneNumberReqChange = (event: { target: { value: any; }; }) => {
+        setUserNumberPhoneReq(event.target.value);
     };
-
+    const handleInputEmailReqChange = (event: { target: { value: any; }; }) => {
+        setUserEmailReq(event.target.value);
+    };
+    const handleInputPassReqChange = (event: { target: { value: any; }; }) => {
+        setUserPassReq(event.target.value);
+    };
+    const handleInputConfirmPassReqChange = (event: { target: { value: any; }; }) => {
+        setUserConfirmPassReq(event.target.value);
+    };
 
     const phoneValidator = (rule: Rule, value: string, callback: (message?: string) => void) => {
         if (!value) {
@@ -71,10 +82,11 @@ const Login = (props: MyProps) => {
 
     return (
         <>
-            <Modal title="Đăng nhập"
+            <Modal
+                title="Đăng ký"
                 open={props.isOpenModal}
-                onOk={props.toggleLoginModal}
-                onCancel={props.toggleLoginModal}
+                onOk={props.toggleRegisterModal}
+                onCancel={props.toggleRegisterModal}
                 footer={false}
             >
                 <Form
@@ -84,15 +96,38 @@ const Login = (props: MyProps) => {
                     onFinish={(item) => onFinish(item)}
                     layout="vertical"
                 >
+                    <div className='row-item'>
+                        <Form.Item
+                            label="Họ và tên"
+                            name="nameReg"
+                            rules={[
+                                { required: true, message: 'Vui lòng nhập họ tên' },
+                            ]}
+                        >
+                            <Input className='form-input' placeholder="Nhập họ tên" onChange={handleInputNameReqChange}
+                            />
+                        </Form.Item>
+                        <Form.Item
+                            label="Số điện thoại"
+                            name="phoneNumberReg"
+                            rules={[
+                                { validator: phoneValidator, message: 'Số điện thoại không hợp lệ' },
+                            ]}
+                        >
+                            <Input className='form-input' placeholder="Nhập số điện thoại" onChange={handleInputPhoneNumberReqChange}
+                            />
+                        </Form.Item>
+                    </div>
                     <div>
                         <Form.Item
                             label="Email/sdt"
-                            name="emailLogin"
+                            name="emailReg"
                             rules={[
-                                { required: true, message: 'Email/sdt không hợp lệ' },
+                                { validator: emailValidator, message: 'Email không hợp lệ' },
+
                             ]}
                         >
-                            <Input className='form-input' placeholder="Nhập email/sđt" onChange={handleInputEmailLoginChange}
+                            <Input className='form-input' placeholder="Nhập email/sđt" onChange={handleInputEmailReqChange}
                             />
                         </Form.Item>
                         <div className='check-label'>Mỗi email chỉ được đăng ký 1 tài khoản.</div>
@@ -100,7 +135,7 @@ const Login = (props: MyProps) => {
                     <div>
                         <Form.Item
                             label="Mật khẩu"
-                            name="passwordLogin"
+                            name="passwordReq"
                             rules={[
                                 { validator: passwordValidator, message: 'Mật khẩu vừa nhập của bạn không chính xác. Hãy thử lại hoặc chọn “Quên mật khẩu” để đặt lại mật khẩu mới!' }]}
                         >
@@ -109,25 +144,38 @@ const Login = (props: MyProps) => {
                                 iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                                 type="password"
                                 placeholder="Nhập mật khẩu"
-                                onChange={handleInputPassLoginChange}
+                                onChange={handleInputPassReqChange}
                             />
                         </Form.Item>
                         <div className='check-label'>Mật khẩu phải lớn hơn 6 ký tự, có chữ hoa, chữ thường, số và ký tự đặc biệt.</div>
-
                     </div>
+                    <div>
+                        <Form.Item
+                            // className='form-input'
+                            label="Xác nhận mật khẩu"
+                            name="confirmPasswordReq"
+                            dependencies={['passwordReq']}
+                            rules={[
+                                { required: true, message: 'Vui lòng nhập mật khẩu' },
+                                ({ getFieldValue }) => ({
+                                    validator(_, value) {
+                                        if (!value || getFieldValue('passwordReq') === value) {
+                                            return Promise.resolve();
+                                        }
+                                        return Promise.reject(new Error('Mật khẩu xác nhận không đúng!'));
+                                    },
+                                }),
+                            ]}
+                        >
+                            <Input.Password className='form-input' id='basic_ConfirmPasswordRegiter' placeholder='Nhập lại mật khẩu' onChange={handleInputConfirmPassReqChange} />
+                        </Form.Item>
+                    </div>
+
                     <Form.Item className='remember-forgot-password' name="remember" valuePropName="checked" >
                         <label className='label-login'>
                             <Checkbox className='checkbox-login' />
-                            <motion.div
-                                style={{ cursor: 'pointer' }}
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.95 }}
-                                whileFocus={{ scale: 1.1 }}>Nhớ mật khẩu</motion.div>
+                            <div>Tôi đồng ý với <strong>Điều khoản</strong>và<strong>Chính sách bảo mật.</strong></div>
                         </label>
-                        <motion.div className='forgot-password'
-                            whileHover={{ scale: 1.3 }}
-                            whileTap={{ scale: 0.95 }}
-                            whileFocus={{ scale: 1.3 }}>Quên mật khẩu</motion.div>
                     </Form.Item>
 
                     <Form.Item className='form-submit'>
@@ -136,35 +184,34 @@ const Login = (props: MyProps) => {
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             whileFocus={{ scale: 1.05 }}>
-                            {checkLoginBtn ?
+                            {checkReqBtn ?
                                 <Button type="primary" htmlType="submit" className="login-form-button active">
-                                    Đăng nhập
+                                    Đăng ký
                                 </Button> :
                                 <Button type="primary" htmlType="submit" className="login-form-button">
-                                    Đăng nhập
+                                    Đăng ký
                                 </Button>
                             }
                         </motion.div>
                         <div className='change-to-register'>
-                            Bạn chưa có tài khoản ?
+                            Bạn đã có tài khoản ?
                             <motion.strong
                                 className='register'
                                 whileHover={{ scale: 1.3 }}
                                 whileTap={{ scale: 0.95 }}
                                 whileFocus={{ scale: 1.3 }}
-                                onClick={props.toggleRegisterModal}
+                                onClick={props.toggleLoginModal}
                             >
-                                Đăng ký
+                                Đăng nhập
                             </motion.strong>
                         </div>
                     </Form.Item>
                 </Form>
             </Modal>
-
         </>
 
 
     );
 };
 
-export default Login;
+export default Register;

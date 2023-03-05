@@ -7,8 +7,8 @@
     width: 100%;
     background: white;
     z-index: 100;
-    font-family: 'Montserrat' !important;
-    font-style: normal !important;
+    font-family: 'Lexend Deca', sans-serif;
+    font-style: normal;
     display: flex;
     align-items: center;
     padding: 10px 100px;
@@ -97,35 +97,37 @@
         }
     }
 
-    
+
     .header-avatar {
         position: absolute;
         right: 50px;
     }
-    
+
     .menubtn {
         background: linear-gradient(308.85deg, #FF6600 0%, #FF9955 100%);
         border: none;
-        
+
     }
-    
+
     .menubtn:hover,
     .menubtn:focus {
         animation: pulse 1s;
         box-shadow: 0 0 0 2em transparent;
         background: linear-gradient(308.85deg, #FF6600 0%, #f87925 100%);
     }
-    
-    
-    .user-infor{
+
+
+    .user-infor {
         display: flex;
         justify-content: space-around;
-        .icon-group{
-            .between-space{
+
+        .icon-group {
+            .between-space {
                 margin-left: 8px;
                 margin-right: 8px
             }
         }
+
         .header-button button {
             background: #E60200;
             margin-right: 8px;
@@ -136,24 +138,24 @@
             font-size: 14px;
             line-height: 20px;
         }
-        
-    
+
+
         .header-button button:hover {
             font-weight: 700;
         }
 
-        .avatar{
+        .avatar {
             margin-top: 0px;
             margin-left: 11px;
         }
 
-        .name-and-balance{
+        .name-and-balance {
             font-size: 12px;
             margin-left: 8px;
             margin-top: -3px;
         }
 
-        .drop-down{
+        .drop-down {
             margin-top: 7px;
             margin-left: 9px;
         }

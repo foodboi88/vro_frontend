@@ -15,6 +15,9 @@ import UserIcon from '../../images/user_icon.png'
 import SearchIcon from '../../images/Search_Icon.png'
 import { useSelectorRoot } from '../../redux/store'
 import Logo from '../../images/header/logo.png'
+import Login from '../../pages/login/Login'
+import Register from '../../pages/login/Register'
+
 
 
 interface MyProps {
@@ -29,7 +32,8 @@ export const CHeader = (props: MyProps) => {
     const [userName, setUserName] = useState<string>(user?.name ? user.name : '')
     const [userEmail, setUserEmail] = useState<string>(user?.email ? user.email : '')
     const navigate = useNavigate();
-
+    const [isOpenLoginModal, setIsOpenLoginModal] = useState<boolean>(false) // Biến kiểm tra đang mở modal login hay chưa
+    const [isOpenRegisterModal, setIsOpenRegisterModal] = useState<boolean>(false) // Biến kiểm tra đang mở modal registration hay chưa
     useEffect(() => {
         if (tokenLogin) {
             const usermail = localStorage.getItem('userMail') ? localStorage.getItem('userMail') : '';
@@ -98,16 +102,30 @@ export const CHeader = (props: MyProps) => {
     ];
 
     const handleClickLogin = () => {
-        navigate('/login');
+        // navigate('/login');
     }
+
+    // Hàm chuyển đổi trạng thái đóng mở modal login
+    const toggleLoginModal = () => {
+        setIsOpenLoginModal(!isOpenLoginModal);
+        setIsOpenRegisterModal(false);
+
+    };
+    // Hàm chuyển đổi trạng thái đóng mở modal registration
+    const toggleRegisterModal = () => {
+        setIsOpenLoginModal(false);
+        setIsOpenRegisterModal(!isOpenRegisterModal);
+    };
+
+
     return (
         <div className='main-header'>
             <div className='header-logo'>
                 <Link to={'/'} className='logo-text'>
-                    <img src={Logo}/>
+                    <img src={Logo} />
                 </Link>
             </div>
-            
+
             <div className={`header-content-input ${tokenLogin ? 'login' : ''}`}>
                 <Input
                     className='search-input'
@@ -129,20 +147,40 @@ export const CHeader = (props: MyProps) => {
                     <Button onClick={handleClickLogin}>Đăng bản vẽ</Button>
                 </motion.div>
                 <div className='icon-group'>
-                    <BellOutlined className='between-space'/>
-                    <MessageOutlined className='between-space'/>
-                    <ShoppingCartOutlined className='between-space'/>
+                    <BellOutlined className='between-space' />
+                    <MessageOutlined className='between-space' />
+                    <ShoppingCartOutlined className='between-space' />
                 </div>
-                <Avatar className='avatar'  src={UserIcon} />
+                <motion.div className='header-button'
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}>
+                    <Button onClick={() => setIsOpenLoginModal(true)}>Đăng nhập</Button>
+                </motion.div>
+                <motion.div className='header-button'
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}>
+                    <Button onClick={() => setIsOpenRegisterModal(true)}>Đăng ký</Button>
+                </motion.div>
+                <Login
+                    isOpenModal={isOpenLoginModal}
+                    toggleLoginModal={toggleLoginModal}
+                    toggleRegisterModal={toggleRegisterModal}
+                />
+                <Register
+                    isOpenModal={isOpenRegisterModal}
+                    toggleLoginModal={toggleLoginModal}
+                    toggleRegisterModal={toggleRegisterModal}
+                />
+                {/* <Avatar className='avatar' src={UserIcon} />
                 <div className='name-and-balance'>
                     <div>Đỗ Trung Hiếu</div>
                     <div>Số dư: {'1.500.000Đ'}</div>
                 </div>
                 <Dropdown className='drop-down' menu={{ items }} placement="bottomLeft" arrow>
                     <DownOutlined />
-                </Dropdown>
-            
-            </div>    
+                </Dropdown> */}
+
+            </div>
 
             {/* } */}
 

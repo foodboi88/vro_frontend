@@ -1,7 +1,7 @@
 @import '~antd/dist/antd.css';
 
 .main-home {
-    font-family: 'Montserrat';
+    font-family: 'Lexend Deca', sans-serif;
     font-style: normal;
     user-select: none;
     background: white;
@@ -24,7 +24,8 @@
             display: flex;
             justify-content: space-between;
             width: 100%;
-            .sub-title{
+
+            .sub-title {
                 margin-top: 11px;
                 font-weight: 400;
                 font-size: 14px;
@@ -57,24 +58,24 @@
                 flex-direction: column;
                 align-items: center;
 
-                .ant-card-body{
-                    width: 240; 
+                .ant-card-body {
+                    width: 240;
                     display: flex;
                     justify-content: space-between;
-                    .title-and-price{
-                        
-                    }
-                    .seen-times{
+
+                    .title-and-price {}
+
+                    .seen-times {
                         margin-left: 28px;
                         margin-top: -3px;
                         display: flex;
-                        .anticon{
+
+                        .anticon {
                             margin-top: 5px;
                             margin-right: 5px;
                         }
-                        .text{
 
-                        }
+                        .text {}
                     }
 
                 }
