@@ -1,0 +1,12 @@
+:root {
+    --main-color: #C30200;
+    --second-main-color: #E60200;
+    --hover-active-btn: #F63735;
+    --hover-btn: #DFDFDF;
+    --border-color: #C0C0C0;
+    --title-color: #1E1E1E;
+    --text-color: #4E4E4E;
+    --background-input-color: #F5F5F5;
+    --white: #FFFFFF;
+    --error: #FF0000;
+}
