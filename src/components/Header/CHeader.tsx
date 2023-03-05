@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-import { SearchOutlined } from '@ant-design/icons'
+import { BellOutlined, DownOutlined, MessageOutlined, SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons'
 import { Avatar, Button, Drawer, Dropdown, Input, Menu, MenuProps } from 'antd'
 import { useEffect, useState } from 'react'
 import "./styles.header.scss"
@@ -14,6 +14,7 @@ import Utils from '../../common/utils'
 import UserIcon from '../../images/user_icon.png'
 import SearchIcon from '../../images/Search_Icon.png'
 import { useSelectorRoot } from '../../redux/store'
+import Logo from '../../images/header/logo.png'
 
 
 interface MyProps {
@@ -102,36 +103,11 @@ export const CHeader = (props: MyProps) => {
     return (
         <div className='main-header'>
             <div className='header-logo'>
-                <Link to={'/'} className='logo-text'> V.innovate</Link>
+                <Link to={'/'} className='logo-text'>
+                    <img src={Logo}/>
+                </Link>
             </div>
-            <Menu
-                className={`header-menu + ${tokenLogin ? 'login' : ''}`}
-                onClick={handleClick}
-                defaultSelectedKeys={[current]}
-                selectedKeys={[current]}
-                mode="horizontal"
-                overflowedIndicator={<MenuOutlined />}
-            >
-                <Menu.Item key="1" >
-                    <Link to={'/'}> Trang chủ </Link>
-                </Menu.Item>
-                <Menu.Item key="2">
-                    <Link to={'/test'}>Đánh giá </Link>
-                </Menu.Item>
-                {/* <Menu.Item key="3" >
-                    <Link to={'/news'}>Tin tức</Link>
-                </Menu.Item> */}
-                <Menu.Item key="4">
-                    <Link to={'/about_us'}>Về chúng tôi</Link>
-                </Menu.Item>
-            </Menu>
-            {/* <div className='header-content-input '>
-                <Input
-                    className='search-input'
-                    placeholder='Tìm kiếm'
-                />
-                <SearchOutlined className='icon-search' />
-            </div> */}
+            
             <div className={`header-content-input ${tokenLogin ? 'login' : ''}`}>
                 <Input
                     className='search-input'
@@ -140,21 +116,38 @@ export const CHeader = (props: MyProps) => {
                 <img src={SearchIcon} className='icon-search'></img>
                 {/* <SearchOutlined className='icon-search' /> */}
             </div>
-            {!tokenLogin &&
-                <>
-                    <motion.div className='header-button'
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}>
-                        <Button onClick={handleClickLogin}>Đăng Ký / Đăng Nhập</Button>
-                    </motion.div>
-                </>
-            }
-            {tokenLogin &&
-                <Dropdown menu={{ items }} placement="bottomLeft" arrow>
-                    <Avatar className='header-avatar' src={UserIcon} />
+            {/* {!tokenLogin && */}
+
+            {/* } */}
+
+
+            {/* {tokenLogin && */}
+            <div className='user-infor'>
+                <motion.div className='header-button'
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}>
+                    <Button onClick={handleClickLogin}>Đăng bản vẽ</Button>
+                </motion.div>
+                <div className='icon-group'>
+                    <BellOutlined className='between-space'/>
+                    <MessageOutlined className='between-space'/>
+                    <ShoppingCartOutlined className='between-space'/>
+                </div>
+                <Avatar className='avatar'  src={UserIcon} />
+                <div className='name-and-balance'>
+                    <div>Đỗ Trung Hiếu</div>
+                    <div>Số dư: {'1.500.000Đ'}</div>
+                </div>
+                <Dropdown className='drop-down' menu={{ items }} placement="bottomLeft" arrow>
+                    <DownOutlined />
                 </Dropdown>
-            }
-            <>
+            
+            </div>    
+
+            {/* } */}
+
+
+            {/* <>
                 <Button className={`menubtn + ${tokenLogin ? 'login' : ''}`} type="primary" shape="circle" icon={<MenuOutlined />} onClick={showDrawer} ></Button>
                 <Drawer
                     title={
@@ -172,7 +165,7 @@ export const CHeader = (props: MyProps) => {
                         {!tokenLogin && <Button type="text" href="/login" >Đăng nhập / Đăng ký</Button>}
                     </div>
                 </Drawer>
-            </>
+            </> */}
         </div>
     )
 }
