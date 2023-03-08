@@ -1,0 +1,34 @@
+.main-arrange{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    .container{
+        padding: 18px;
+        display: flex;
+        justify-content: flex-start;
+        background: #E5E5E5;
+        border-radius: 20px;
+        .title{
+            margin-right: 10px;
+        }
+        .button1{
+            margin-right: 10px;
+
+        }
+        .button2{
+            margin-right: 10px;
+
+        }
+        .select-box{
+            
+        }
+    }
+}
+
+.ant-btn{
+    border-radius: 20px;
+}
+
+.ant-select-selector{
+    border-radius: 20px;
+
+}

@@ -77,7 +77,7 @@ const CFilter = () => {
                     <div className='icon'>
                         <FormatPainterOutlined />
                     </div>
-                    <div className='text'>Công cụ</div>
+                    <div className='text'>Phong cách</div>
                 </div>
                 <Checkbox.Group>
                     {/* <Row>

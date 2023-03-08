@@ -21,6 +21,7 @@ import { useSelectorRoot } from '../../redux/store';
 import BietThu from '../../images/homepage/bietthu1.png';
 import Notification from '../../images/homepage/notification.png'
 import './styles.home.scss';
+import CProductCard from '../../components/ProductCard/CProductCard';
 
 // Phần trang chủ của trang web
 const Home = () => {
@@ -101,92 +102,28 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="lst-tool">
-                    <motion.div
-                        className="tool"
-                        whileHover="hover"
-                        whileTap="tap"
-                        variants={hoverVariants}
-                    >
-                        <Card
-                            className='card'
-                            hoverable
-                            cover={<img alt="example" src={BietThu} />}
-                        >
-                            <div className='title-and-price'>
-                                <Meta title="Bản vẽ biệt thự 2 tầng" description="File Sketchup" />
-                                <span>500.000Đ</span>
-                            </div>
-                            <div className='seen-times'>
-                                <EyeOutlined />
-                                <span>100</span>
-                            </div>
-
-                        </Card>
-                    </motion.div>
-                    <motion.div
-                        className="tool"
-                        whileHover="hover"
-                        whileTap="tap"
-                        variants={hoverVariants}
-                    >
-                        <Card
-                            className='card'
-                            hoverable
-                            cover={<img alt="example" src={BietThu} />}
-                        >
-                            <div className='title-and-price'>
-                                <Meta title="Bản vẽ biệt thự 2 tầng" description="File Sketchup" />
-                                <span>500.000Đ</span>
-                            </div>
-                            <div className='seen-times'>
-                                <EyeOutlined />
-                                <span>100</span>
-                            </div>
-
-                        </Card>
-                    </motion.div>
-                    <motion.div
-                        className="tool"
-                        whileHover="hover"
-                        whileTap="tap"
-                        variants={hoverVariants}
-                    >
-                        <Card
-                            className='card'
-                            hoverable
-                            cover={<img alt="example" src={BietThu} />}                        >
-                            <div className='title-and-price'>
-                                <Meta title="Bản vẽ biệt thự 2 tầng" description="File Sketchup" />
-                                <span>500.000Đ</span>
-                            </div>
-                            <div className='seen-times'>
-                                <EyeOutlined />
-                                <span>100</span>
-                            </div>
-
-                        </Card>
-                    </motion.div>
-                    <motion.div
-                        className="tool"
-                        whileHover="hover"
-                        whileTap="tap"
-                        variants={hoverVariants}
-                    >
-                        <Card
-                            className='card'
-                            hoverable
-                            cover={<img alt="example" src={BietThu} />}                        >
-                            <div className='title-and-price'>
-                                <Meta title="Bản vẽ biệt thự 2 tầng" description="File Sketchup" />
-                                <span>500.000Đ</span>
-                            </div>
-                            <div className='seen-times'>
-                                <EyeOutlined />
-                                <span>100</span>
-                            </div>
-
-                        </Card>
-                    </motion.div>
+                    <CProductCard/>
+                    <CProductCard/>
+                    <CProductCard/>
+                    <CProductCard/>
+                    
+                    
+                </div>
+            </div>
+            <div className='tool-of-web'>
+                <div className="title">
+                    <div>
+                        Danh sách bản vẽ nổi bật
+                    </div>
+                    <div className='sub-title'>
+                        {'Xem thêm ->'}
+                    </div>
+                </div>
+                <div className="lst-tool">
+                    <CProductCard/>
+                    <CProductCard/>
+                    <CProductCard/>
+                    <CProductCard/>
                     
                 </div>
             </div>
@@ -297,187 +234,10 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="lst-tool">
-                    <motion.div
-                        className="tool"
-                        whileHover="hover"
-                        whileTap="tap"
-                        variants={hoverVariants}
-                    >
-                        <Card
-                            className='card'
-                            hoverable
-                            cover={<img alt="example" src={BietThu} />}                        >
-                            <div className='title-and-price'>
-                                <Meta title="Bản vẽ biệt thự 2 tầng" description="File Sketchup" />
-                                <span>500.000Đ</span>
-                            </div>
-                            <div className='seen-times'>
-                                <EyeOutlined />
-                                <span>100</span>
-                            </div>
-
-                        </Card>
-                    </motion.div>
-                    <motion.div
-                        className="tool"
-                        whileHover="hover"
-                        whileTap="tap"
-                        variants={hoverVariants}
-                    >
-                        <Card
-                            className='card'
-                            hoverable
-                            cover={<img alt="example" src={BietThu} />}                        >
-                            <div className='title-and-price'>
-                                <Meta title="Bản vẽ biệt thự 2 tầng" description="File Sketchup" />
-                                <span>500.000Đ</span>
-                            </div>
-                            <div className='seen-times'>
-                                <EyeOutlined />
-                                <span>100</span>
-                            </div>
-
-                        </Card>
-                    </motion.div>
-                    <motion.div
-                        className="tool"
-                        whileHover="hover"
-                        whileTap="tap"
-                        variants={hoverVariants}
-                    >
-                        <Card
-                            className='card'
-                            hoverable
-                            cover={<img alt="example" src={BietThu} />}                        >
-                            <div className='title-and-price'>
-                                <Meta title="Bản vẽ biệt thự 2 tầng" description="File Sketchup" />
-                                <span>500.000Đ</span>
-                            </div>
-                            <div className='seen-times'>
-                                <EyeOutlined />
-                                <span>100</span>
-                            </div>
-
-                        </Card>
-                    </motion.div>
-                    <motion.div
-                        className="tool"
-                        whileHover="hover"
-                        whileTap="tap"
-                        variants={hoverVariants}
-                    >
-                        <Card
-                            className='card'
-                            hoverable
-                            cover={<img alt="example" src={BietThu} />}                        >
-                            <div className='title-and-price'>
-                                <Meta title="Bản vẽ biệt thự 2 tầng" description="File Sketchup" />
-                                <span>500.000Đ</span>
-                            </div>
-                            <div className='seen-times'>
-                                <EyeOutlined />
-                                <span>100</span>
-                            </div>
-
-                        </Card>
-                    </motion.div>
-                    
-                </div>
-            </div>
-            <div className='tool-of-web'>
-                <div className="title">
-                    <div>
-                        Danh sách bản vẽ nổi bật
-                    </div>
-                    <div className='sub-title'>
-                        {'Xem thêm ->'}
-                    </div>
-                </div>
-                <div className="lst-tool">
-                    <motion.div
-                        className="tool"
-                        whileHover="hover"
-                        whileTap="tap"
-                        variants={hoverVariants}
-                    >
-                        <Card
-                            className='card'
-                            hoverable
-                            cover={<img alt="example" src={BietThu} />}                        >
-                            <div className='title-and-price'>
-                                <Meta title="Bản vẽ biệt thự 2 tầng" description="File Sketchup" />
-                                <span>500.000Đ</span>
-                            </div>
-                            <div className='seen-times'>
-                                <EyeOutlined />
-                                <span>100</span>
-                            </div>
-
-                        </Card>
-                    </motion.div>
-                    <motion.div
-                        className="tool"
-                        whileHover="hover"
-                        whileTap="tap"
-                        variants={hoverVariants}
-                    >
-                        <Card
-                            className='card'
-                            hoverable
-                            cover={<img alt="example" src={BietThu} />}                        >
-                            <div className='title-and-price'>
-                                <Meta title="Bản vẽ biệt thự 2 tầng" description="File Sketchup" />
-                                <span>500.000Đ</span>
-                            </div>
-                            <div className='seen-times'>
-                                <EyeOutlined />
-                                <span>100</span>
-                            </div>
-
-                        </Card>
-                    </motion.div>
-                    <motion.div
-                        className="tool"
-                        whileHover="hover"
-                        whileTap="tap"
-                        variants={hoverVariants}
-                    >
-                        <Card
-                            className='card'
-                            hoverable
-                            cover={<img alt="example" src={BietThu} />}                        >
-                            <div className='title-and-price'>
-                                <Meta title="Bản vẽ biệt thự 2 tầng" description="File Sketchup" />
-                                <span>500.000Đ</span>
-                            </div>
-                            <div className='seen-times'>
-                                <EyeOutlined />
-                                <span>100</span>
-                            </div>
-
-                        </Card>
-                    </motion.div>
-                    <motion.div
-                        className="tool"
-                        whileHover="hover"
-                        whileTap="tap"
-                        variants={hoverVariants}
-                    >
-                        <Card
-                            className='card'
-                            hoverable
-                            cover={<img alt="example" src={BietThu} />}                        >
-                            <div className='title-and-price'>
-                                <Meta title="Bản vẽ biệt thự 2 tầng" description="File Sketchup" />
-                                <span>500.000Đ</span>
-                            </div>
-                            <div className='seen-times'>
-                                <EyeOutlined />
-                                <span>100</span>
-                            </div>
-
-                        </Card>
-                    </motion.div>
+                    <CProductCard/>
+                    <CProductCard/>
+                    <CProductCard/>
+                    <CProductCard/>
                     
                 </div>
             </div>
