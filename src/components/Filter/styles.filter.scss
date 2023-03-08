@@ -1,0 +1,32 @@
+@import '~antd/dist/antd.css';
+
+.main-filter{
+    background: #FFFFFF;
+    height: 120%;
+    margin-top: -34px;
+    .ant-form{
+        padding: 40px;
+        .ant-form-item{
+            .title{
+                display: flex;
+                font-size: 17px;
+                font-weight: 550;
+                .icon{
+                    margin-right: 10px;
+                }
+                .text{
+                    margin-top: 4px;
+                }
+            }
+            .ant-checkbox-group{
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    }
+}
+
+.ant-checkbox-inner{
+    border-radius: 20px;
+
+}

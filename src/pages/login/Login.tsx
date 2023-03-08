@@ -14,7 +14,6 @@ import { IPosition } from '../../common/u-innovate/define-position';
 import { getAllAddressesRequest, getAllFacilitiesByDescriptionRequest, getAllPositionsRequest } from '../../redux/controller';
 import { checkEmailRequest, loginRequest, registerRequest } from '../../redux/controller/login.slice';
 import { useDispatchRoot, useSelectorRoot } from '../../redux/store';
-import ActiveAccountModel from '../ActiveAccount/ActiveAccountModel';
 import './login.scss';
 import '../../App.scss';
 import { IAddresses } from '../../common/u-innovate/define-addresses';
@@ -1410,7 +1409,7 @@ const Login = (props: MyProps) => {
                     }
                 </div>
             </div>
-            {registerSuccess && <ActiveAccountModel email={userEmail} />}
+            {/* {registerSuccess && <ActiveAccountModel email={userEmail} />} */}
         </motion.div>
     )
 }

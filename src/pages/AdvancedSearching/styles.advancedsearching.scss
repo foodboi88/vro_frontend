@@ -1,0 +1,15 @@
+.main{
+    margin-top: 90px;
+    display: flex;
+    .sidebar{
+        width: 18%;
+
+    }
+    .filtered-items{
+        padding: 56px;
+        margin-top: -35px;
+        .author-introduction{
+            display: flex
+        }
+    }
+}

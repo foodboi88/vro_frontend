@@ -100,6 +100,12 @@ export const CHeader = (props: MyProps) => {
     const handleClickLogin = () => {
         navigate('/login');
     }
+
+    const handleSearching = (event: any) => {
+        console.log(event.target.value)
+        navigate('/searching')
+    }
+
     return (
         <div className='main-header'>
             <div className='header-logo'>
@@ -112,6 +118,7 @@ export const CHeader = (props: MyProps) => {
                 <Input
                     className='search-input'
                     placeholder='Tìm kiếm'
+                    onPressEnter={handleSearching}
                 />
                 <img src={SearchIcon} className='icon-search'></img>
                 {/* <SearchOutlined className='icon-search' /> */}

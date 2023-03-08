@@ -18,7 +18,8 @@ import RightOfUseImage3 from '../../images/right_of_use_image_3.png';
 import RightOfUseImage4 from '../../images/right_of_use_image_4.png';
 import RightOfUseImage5 from '../../images/right_of_use_image_5.png';
 import { useSelectorRoot } from '../../redux/store';
-import BietThu from '../../images/homepage/bietthu1.png'
+import BietThu from '../../images/homepage/bietthu1.png';
+import Notification from '../../images/homepage/notification.png'
 import './styles.home.scss';
 
 // Phần trang chủ của trang web
@@ -85,6 +86,10 @@ const Home = () => {
             animate={{ width: "100%" }}
             exit={{ x: window.innerWidth, transition: { duration: 0.5 } }}
         >
+        
+            <div className='main-notification'>
+                <img className='image' src={Notification} alt="main notification"/>
+            </div>
             
             <div className='tool-of-web'>
                 <div className="title">
