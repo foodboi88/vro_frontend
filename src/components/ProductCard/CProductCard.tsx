@@ -4,10 +4,13 @@ import { Card } from 'antd';
 import Meta from 'antd/lib/card/Meta';
 import { EyeOutlined } from '@ant-design/icons';
 import BietThu from '../../images/homepage/bietthu1.png';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const CProductCard = () => {
+    const navigate = useNavigate();
+
     const hoverVariants = {
         hover: {
             scale: 1.1,
@@ -18,12 +21,17 @@ const CProductCard = () => {
             scale: 0.8
         },
     };
+    const handleNavigate = () => {
+        navigate('/detail-sketch')
+
+    }
   return (
     <motion.div
         className="tool"
         whileHover="hover"
         whileTap="tap"
         variants={hoverVariants}
+        onClick={handleNavigate}
     >
         <Card
             className='card'
