@@ -1,10 +1,13 @@
-import { Breadcrumb, Button, Carousel, Col, Rate, Row } from 'antd'
+import { Breadcrumb, Button, Col, Rate, Row } from 'antd'
+import { Carousel } from 'react-responsive-carousel';
 import React from 'react'
 import CAuthorIntroduction from '../../components/AuthorIntroduction/CAuthorIntroduction'
 import CComment from '../../components/Comment/CComment'
 import CProductCard from '../../components/ProductCard/CProductCard'
 import Image1 from '../../images/homepage/bietthu1.png'
 import "./styles.detailsketch.scss"
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+
 
 
 
@@ -20,7 +23,7 @@ const DetailSketch = () => {
         </div>
         <div className='detail-sketch'>
             <div className='image-carousel'>
-                <Carousel autoplay>
+                <Carousel >
                     <div>
                         <img src={Image1}/>
                     </div>
