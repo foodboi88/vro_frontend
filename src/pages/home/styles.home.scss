@@ -6,6 +6,15 @@
     user-select: none;
     background: white;
 
+    .main-notification{
+        margin-top: 115px;
+        margin-left: 71px;
+
+        .image{
+            width: 95%;
+        }
+    }
+
     .tool-of-web {
         margin: 48px;
         display: flex;

@@ -1,0 +1,34 @@
+.main{
+    margin-top: 90px;
+    display: flex;
+    .sidebar{
+        width: 18%;
+
+    }
+    .filtered-items{
+        padding: 56px;
+        margin-top: -35px;
+        width: 82%;
+        .author-introduction{
+
+            .searched-author-title{
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 15px;
+
+            }
+        }
+
+        .sketch-list{
+            .searched-sketch-title{
+                margin-top: 50px;
+
+            }
+            .main-arrange{
+                margin-top: 11px;
+                margin-bottom: 20px;
+            }
+            
+        }
+    }
+}

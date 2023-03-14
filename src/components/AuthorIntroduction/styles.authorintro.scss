@@ -1,0 +1,39 @@
+.main-intro{
+    background: #FFFFFF;
+    border-radius: 20px;
+    .container{
+        display: flex;
+        padding: 25px;
+        justify-content: space-between;
+        .left-side{
+            display: flex;
+            .avatar{
+
+            }
+            .name-status-contact{
+                margin-left: 27px;
+                .name{
+                    font-weight:450;
+                }
+                .status{
+                    margin-top: 5px;
+                    margin-bottom: 8px;
+                }
+                .contact{
+                    .button1{
+                        margin-right: 30px;
+                    }
+                    .ant-btn{
+                        border-radius: 20px;
+
+                    }
+                }
+            }
+        }
+        .right-side{
+            .container{
+            }
+        }
+
+    }
+}
