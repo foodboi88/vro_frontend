@@ -6,17 +6,17 @@
     user-select: none;
     background: white;
 
-    .main-notification{
-        margin-top: 115px;
-        margin-left: 71px;
+    .main-notification {
+        margin-top: 5em;
+        text-align: center;
 
-        .image{
-            width: 95%;
+        .image {
+            width: 90vw;
         }
     }
 
     .tool-of-web {
-        margin: 48px;
+        margin: 3em;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -33,9 +33,9 @@
             display: flex;
             justify-content: space-between;
             width: 100%;
+            margin-bottom: 1em;
 
             .sub-title {
-                margin-top: 11px;
                 font-weight: 400;
                 font-size: 14px;
             }
@@ -56,6 +56,7 @@
             justify-content: space-around;
             align-items: center;
             width: 100%;
+            gap: 16px;
 
             .tool {
                 width: 261.33px;
@@ -66,6 +67,10 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+
+                // .card{
+
+                // }
 
                 .ant-card-body {
                     width: 240;
@@ -567,7 +572,6 @@
 
         .tool-of-web {
             .lst-tool {
-                flex-direction: column;
 
                 .tool {
                     width: 90%;
@@ -690,6 +694,39 @@
 
 @media (max-width: 400px) {
     .main-home {
+        .tool-of-web {
+            .title {
+                font-size: 14px;
+
+                .sub-title {
+                    font-size: 12px;
+                    margin-top: 3px;
+                }
+            }
+
+            .subtitle {
+                font-size: 12px;
+            }
+
+            .lst-tool {
+                .tool {
+                    .tool-title {
+                        font-size: 12px;
+                    }
+
+                    .tool-subtitle {
+                        font-size: 10px;
+                        margin-bottom: 5px;
+                    }
+
+                    .btn-tool {
+                        font-size: 8px;
+                    }
+                }
+
+            }
+        }
+
         .intro-part {
             .text-of-intro {
                 margin: 100px 25px 50px 25px;

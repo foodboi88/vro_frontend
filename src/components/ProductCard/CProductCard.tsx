@@ -6,8 +6,6 @@ import { EyeOutlined } from '@ant-design/icons';
 import BietThu from '../../images/homepage/bietthu1.png';
 import { useNavigate } from 'react-router-dom';
 
-
-
 const CProductCard = () => {
     const navigate = useNavigate();
 
@@ -25,31 +23,31 @@ const CProductCard = () => {
         navigate('/detail-sketch')
 
     }
-  return (
-    <motion.div
-        className="tool"
-        whileHover="hover"
-        whileTap="tap"
-        variants={hoverVariants}
-        onClick={handleNavigate}
-    >
-        <Card
-            className='card'
-            hoverable
-            cover={<img alt="example" src={BietThu} />}
+    return (
+        <motion.div
+            className="tool"
+            whileHover="hover"
+            whileTap="tap"
+            variants={hoverVariants}
+            onClick={handleNavigate}
         >
-            <div className='title-and-price'>
-                <Meta title="Bản vẽ biệt thự 2 tầng" description="File Sketchup" />
-                <span>500.000Đ</span>
-            </div>
-            <div className='seen-times'>
-                <EyeOutlined />
-                <span>100</span>
-            </div>
+            <Card
+                className='card'
+                hoverable
+                cover={<img alt="example" src={BietThu} />}
+            >
+                <div className='title-and-price'>
+                    <Meta title="Bản vẽ biệt thự 2 tầng" description="File Sketchup" />
+                    <span>500.000Đ</span>
+                </div>
+                <div className='seen-times'>
+                    <EyeOutlined />
+                    <span>100</span>
+                </div>
 
-        </Card>
-    </motion.div>
-  )
+            </Card>
+        </motion.div>
+    )
 }
 
 export default CProductCard
