@@ -1,9 +1,9 @@
 @import '~antd/dist/antd.css';
-
+@import "../../theme/color.css";
 
 .main-header {
     position: fixed !important;
-    justify-content: space-around;
+    justify-content: space-between;
     width: 100%;
     background: white;
     z-index: 100;
@@ -11,155 +11,142 @@
     font-style: normal;
     display: flex;
     align-items: center;
-    padding: 10px 100px;
+    padding: .8em 3em;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
-
-    .header-logo {
-        .logo-text {
-            color: #FF9955;
-            font-size: 20px;
-            font-weight: bold;
-        }
-    }
-
-    .header-menu {
-        width: 100%;
-        border: none;
-        margin-left: 100px;
-
-        .ant-menu-item a:hover {
-            color: #FF9955 !important;
-            border: none;
-        }
-    }
-
-    .ant-menu-horizontal>.ant-menu-item a::before {
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 20px;
-        color: #858585
-    }
-
-    .ant-menu-horizontal>.ant-menu-item-selected a {
-        font-weight: 700;
-        font-size: 16px;
-        line-height: 20px;
-        color: #FF9955 !important;
-        transition: 0.3s all ease-in-out;
-    }
-
-    .ant-menu-horizontal>.ant-menu-item::after,
-    .ant-menu-horizontal>.ant-menu-submenu::after {
-        display: none !important;
-    }
-
-    .header-content-input {
-        position: relative;
+    .header-left {
         display: flex;
-        padding: 8.5px 10px;
         align-items: center;
-        margin-right: 5px;
+        gap: 3em;
 
-        .search-input {
-            min-width: none;
-            width: 300px;
-            letter-spacing: 0;
-            line-height: 20px;
-            white-space: nowrap;
-            border-radius: 20px;
-            font-size: 14px;
-            line-height: 20px;
-            font-weight: 500;
+        .header-content-input {
+            position: relative;
             display: flex;
             align-items: center;
-            color: #696969;
-        }
+            align-items: center;
+            margin-right: 5px;
+            align-items: center;
+            margin-right: 5px;
 
-        .search-input:hover {
-            border: 1px solid #FF9955 !important;
-        }
+            .search-input {
+                width: 30em;
+                letter-spacing: 0;
+                white-space: nowrap;
+                border-radius: 20px;
+                font-size: .8em;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                color: var(--text-color);
+                background: #F5F5F5;
+            }
 
-        .search-input:focus {
-            border: 1px solid #FF9955 !important;
-            // border-color: #FF9955;
-            box-shadow: 0 0 0 1px #FF9955;
-            caret-color: #FF9955;
-        }
+            .search-input:hover {
+                border: 1px solid var(--main-color) !important;
+            }
 
-        .icon-search {
-            position: absolute;
-            right: 15px;
-            padding: 7px;
-            pointer-events: none;
-            height: 30px;
-            width: 30px;
-        }
-    }
+            .search-input:focus {
+                border: 1px solid var(--main-color) !important;
+                // border-color: var(--main-color);
+                box-shadow: 0 0 0 1px var(--main-color);
+                caret-color: var(--main-color);
+            }
 
-
-    .header-avatar {
-        position: absolute;
-        right: 50px;
-    }
-
-    .menubtn {
-        background: linear-gradient(308.85deg, #FF6600 0%, #FF9955 100%);
-        border: none;
-
-    }
-
-    .menubtn:hover,
-    .menubtn:focus {
-        animation: pulse 1s;
-        box-shadow: 0 0 0 2em transparent;
-        background: linear-gradient(308.85deg, #FF6600 0%, #f87925 100%);
-    }
-
-
-    .user-infor {
-        display: flex;
-        justify-content: space-around;
-
-        .icon-group {
-            .between-space {
-                margin-left: 8px;
-                margin-right: 8px
+            .icon-search {
+                position: absolute;
+                right: 1em;
+                padding: .5em;
+                pointer-events: none;
+                width: 2em;
+                height: 2em;
             }
         }
+    }
 
-        .header-button button {
-            background: #E60200;
-            margin-right: 8px;
-            border-radius: 30px;
-            color: #FFFFFF;
+    .header-right {
+        display: flex;
+        align-items: center;
+        gap: .5em;
+
+        .menubtn {
+            background: linear-gradient(308.85deg, var(--main-color) 0%, var(--main-color) 100%);
             border: none;
-            font-weight: 400;
-            font-size: 14px;
-            line-height: 20px;
+            color: white;
+        }
+
+        .menubtn:hover,
+        .menubtn:focus {
+            animation: pulse 1s;
+            box-shadow: 0 0 0 2em transparent;
+            background: linear-gradient(308.85deg, var(--main-color) 0%, var(--main-color) 100%);
         }
 
 
-        .header-button button:hover {
-            font-weight: 700;
-        }
+        .user-infor {
+            display: flex;
+            // justify-content: space-around;
+            gap: 2em;
 
-        .avatar {
-            margin-top: 0px;
-            margin-left: 11px;
-        }
+            .icon-group {
+                display: flex;
+                align-items: center;
+                gap: 2em;
 
-        .name-and-balance {
-            font-size: 12px;
-            margin-left: 8px;
-            margin-top: -3px;
-        }
+                .ant-badge {
+                    .ant-scroll-number {
+                        position: absolute;
+                        top: 0px;
+                        right: -4px;
+                        transform: translate(50%, -50%);
+                        transform-origin: 100% 0%;
+                    }
+                }
 
-        .drop-down {
-            margin-top: 7px;
-            margin-left: 9px;
+            }
+
+            .user-info-content {
+                display: flex;
+
+                .name-and-balance {
+                    font-size: .6em;
+                }
+            }
+
+            .header-button button {
+                background: #E60200;
+                border-radius: 30px;
+                color: #FFFFFF;
+                border: none;
+                font-weight: 400;
+                font-size: 14px;
+                display: flex;
+                gap: 10px;
+                align-items: center;
+            }
+
+
+            .header-button button:hover {
+                font-weight: 700;
+            }
+
+            .avatar {
+                margin-top: 0px;
+                margin-left: 11px;
+            }
+
+            .name-and-balance {
+                font-size: 12px;
+                margin-left: 8px;
+                margin-top: -3px;
+            }
+
+            .drop-down {
+                margin-top: 7px;
+                margin-left: 9px;
+            }
         }
     }
+
 
 }
 
@@ -167,7 +154,7 @@
     .ant-drawer-header {
         .header-logo {
             .logo-text {
-                color: #FF9955;
+                color: var(--main-color);
                 font-size: 20px;
                 font-weight: bold;
             }
@@ -194,106 +181,84 @@
     }
 }
 
-@media (min-width: 1280px) {
+@media (max-width: 3000px) {
     .menubtn {
         display: none;
     }
-
-    .header-menu {
-        right: 10px;
-    }
 }
 
-@media (max-width: 1280px) {
+@media (max-width: 1200px) {
     .main-header {
-        justify-content: flex-start;
-
-        .header-button {
-            position: absolute;
-            right: 70px;
+        .header-left {
+            .header-content-input {
+                display: none;
+            }
         }
-
-        .header-content-input {
-            position: absolute;
-            right: 260px;
-        }
-
-        .header-content-input.login {
-            position: absolute;
-            right: 120px;
-        }
-
-        .header-avatar {
-            position: absolute;
-            right: 70px;
-        }
-    }
-
-    .header-menu {
-        display: none;
-    }
-
-    .header-menu.login {
-        display: block;
-    }
-
-    .ant-drawer-content-wrapper {
-        width: 50% !important;
-    }
-
-    .menubtn {
-        position: absolute;
-        right: 20px;
-    }
-
-    .menubtn.login {
-        display: none;
-    }
-}
-
-@media (max-width: 1100px) {
-    .header-menu.login {
-        display: none;
-    }
-
-    .menubtn.login {
-        display: block;
-        position: absolute;
-        right: 20px;
     }
 }
 
 @media (max-width: 900px) {
-    .main-header {
-        padding: 10px 25px;
-    }
-}
 
-@media (max-width: 800px) {
     .main-header {
-        padding-left: 25px;
+        .user-infor {
+            .header-button.login {
+                display: none;
+            }
+        }
+
+        .menubtn {
+            display: block;
+        }
+
     }
 
-    .header-menu {
+    .post-btn {
         display: none;
     }
 
-    .ant-drawer-content-wrapper {
-        width: 75% !important;
-    }
-
-    .header-content-input {
-        display: none !important;
-    }
-
-    .menubtn {
-        position: absolute;
-        right: 20px;
+    .post-btn.login {
+        display: block;
     }
 }
 
-@media (max-width: 400px) {
-    .header-button {
-        display: none !important;
+@media (max-width: 650px) {
+    .main-header {
+        padding: 0.8em 1em;
+
+        .header-left {
+            .header-logo {
+                .logo-text {
+                    img {
+                        width: 20vw;
+                    }
+                }
+            }
+        }
+
+        .user-infor {
+            .header-button.post {
+                display: none;
+            }
+        }
+
+    }
+
+    .post-btn {
+        display: block;
+    }
+}
+
+@media (max-width: 550px) {
+    .main-header {
+        .user-infor {
+            .icon-group {
+                display: none !important;
+            }
+        }
+
+    }
+
+    .post-btn {
+        display: block;
     }
 }

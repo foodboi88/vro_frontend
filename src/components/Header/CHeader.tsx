@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 import { BellOutlined, DownOutlined, MessageOutlined, SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons'
-import { Avatar, Button, Drawer, Dropdown, Input, Menu, MenuProps } from 'antd'
+import { Avatar, Button, Drawer, Dropdown, Input, Menu, MenuProps, Badge } from 'antd'
 import { useEffect, useState } from 'react'
 import "./styles.header.scss"
 // import "./styles.css";
@@ -17,6 +17,7 @@ import { useSelectorRoot } from '../../redux/store'
 import Logo from '../../images/header/logo.png'
 import Login from '../../pages/login/Login'
 import Register from '../../pages/login/Register'
+import HeaderIcon from '../../images/header/header-icon.png';
 
 
 
@@ -28,20 +29,21 @@ interface MyProps {
 export const CHeader = (props: MyProps) => {
     const [visible, setVisible] = useState(false); // Biến thể hiện nút thu gọn menu có đang mở hay không
     const [current, setCurrent] = useState<string>('1') // Biến thể hiện giá trị cho nút hiện tại
-    const { tokenLogin, user } = useSelectorRoot((state) => state.login);
-    const [userName, setUserName] = useState<string>(user?.name ? user.name : '')
-    const [userEmail, setUserEmail] = useState<string>(user?.email ? user.email : '')
+    // const { tokenLogin, user } = useSelectorRoot((state) => state.login);
+    // const [userName, setUserName] = useState<string>(user?.name ? user.name : '')
+    // const [userEmail, setUserEmail] = useState<string>(user?.email ? user.email : '')
     const navigate = useNavigate();
     const [isOpenLoginModal, setIsOpenLoginModal] = useState<boolean>(false) // Biến kiểm tra đang mở modal login hay chưa
     const [isOpenRegisterModal, setIsOpenRegisterModal] = useState<boolean>(false) // Biến kiểm tra đang mở modal registration hay chưa
-    useEffect(() => {
-        if (tokenLogin) {
-            const usermail = localStorage.getItem('userMail') ? localStorage.getItem('userMail') : '';
-            const username = localStorage.getItem('userName') ? localStorage.getItem('userName') : '';
-            setUserEmail(usermail ? usermail : '');
-            setUserName(username ? username : '');
-        }
-    });
+    const [isLogin, setIsLogin] = useState<boolean>(false);
+    // useEffect(() => {
+    //     if (tokenLogin) {
+    //         const usermail = localStorage.getItem('userMail') ? localStorage.getItem('userMail') : '';
+    //         const username = localStorage.getItem('userName') ? localStorage.getItem('userName') : '';
+    //         setUserEmail(usermail ? usermail : '');
+    //         setUserName(username ? username : '');
+    //     }
+    // });
     // Kiểm tra xem đường dẫn đang là gì để set thuộc tính đã click cho header
     useEffect(() => {
         if (window.location.pathname === '/test')
@@ -75,22 +77,22 @@ export const CHeader = (props: MyProps) => {
         window.location.reload();
     }
     const items: MenuProps['items'] = [
-        {
-            key: '1',
-            label: (
-                <div >
-                    Tên: {userName}
-                </div>
-            ),
-        },
-        {
-            key: '2',
-            label: (
-                <div >
-                    Email: {userEmail}
-                </div>
-            ),
-        },
+        // {
+        //     key: '1',
+        //     label: (
+        //         <div >
+        //             Tên: {userName}
+        //         </div>
+        //     ),
+        // },
+        // {
+        //     key: '2',
+        //     label: (
+        //         <div >
+        //             Email: {userEmail}
+        //         </div>
+        //     ),
+        // },
         {
             key: '4',
             label: (
@@ -121,23 +123,27 @@ export const CHeader = (props: MyProps) => {
         console.log(event.target.value)
         navigate('/searching')
     }
-
+    const checkIsLogin = (val: boolean) => {
+        setIsLogin(val);
+    }
     return (
         <div className='main-header'>
-            <div className='header-logo'>
-                <Link to={'/'} className='logo-text'>
-                    <img src={Logo} />
-                </Link>
-            </div>
+            <div className="header-left">
+                <div className='header-logo'>
+                    <Link to={'/'} className='logo-text'>
+                        <img src={Logo} />
+                    </Link>
+                </div>
 
-            <div className={`header-content-input ${tokenLogin ? 'login' : ''}`}>
-                <Input
-                    className='search-input'
-                    placeholder='Tìm kiếm'
-                    onPressEnter={handleSearching}
-                />
-                <img src={SearchIcon} className='icon-search'></img>
-                {/* <SearchOutlined className='icon-search' /> */}
+                <div className={`header-content-input`}>
+                    <Input
+                        className='search-input'
+                        placeholder='Tìm kiếm bản vẽ'
+                        onPressEnter={handleSearching}
+                    />
+                    <img src={SearchIcon} className='icon-search'></img>
+                    {/* <SearchOutlined className='icon-search' /> */}
+                </div>
             </div>
             {/* {!tokenLogin && */}
 
@@ -145,70 +151,91 @@ export const CHeader = (props: MyProps) => {
 
 
             {/* {tokenLogin && */}
-            <div className='user-infor'>
-                <motion.div className='header-button'
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}>
-                    <Button onClick={handleClickLogin}>Đăng bản vẽ</Button>
-                </motion.div>
-                <div className='icon-group'>
-                    <BellOutlined className='between-space' />
-                    <MessageOutlined className='between-space' />
-                    <ShoppingCartOutlined className='between-space' />
-                </div>
-                <motion.div className='header-button'
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}>
-                    <Button onClick={() => setIsOpenLoginModal(true)}>Đăng nhập</Button>
-                </motion.div>
-                <motion.div className='header-button'
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}>
-                    <Button onClick={() => setIsOpenRegisterModal(true)}>Đăng ký</Button>
-                </motion.div>
-                <Login
-                    isOpenModal={isOpenLoginModal}
-                    toggleLoginModal={toggleLoginModal}
-                    toggleRegisterModal={toggleRegisterModal}
-                />
-                <Register
-                    isOpenModal={isOpenRegisterModal}
-                    toggleLoginModal={toggleLoginModal}
-                    toggleRegisterModal={toggleRegisterModal}
-                />
-                {/* <Avatar className='avatar' src={UserIcon} />
-                <div className='name-and-balance'>
-                    <div>Đỗ Trung Hiếu</div>
-                    <div>Số dư: {'1.500.000Đ'}</div>
-                </div>
-                <Dropdown className='drop-down' menu={{ items }} placement="bottomLeft" arrow>
-                    <DownOutlined />
-                </Dropdown> */}
+            <div className="header-right">
+                <div className='user-infor'>
+                    <motion.div className={`header-button post ${isLogin && 'login'}`}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}>
 
+                        <Button icon={<img src={HeaderIcon} />} >
+                            Đăng bản vẽ
+                        </Button>
+                    </motion.div>
+                    <div className='icon-group'>
+                        <Badge count={10} size="small">
+                            <BellOutlined />
+                        </Badge>
+                        <Badge count={10} size="small">
+                            <MessageOutlined />
+                        </Badge>
+                        <Badge count={10} size="small">
+                            <ShoppingCartOutlined />
+                        </Badge>
+                    </div>
+                    {!isLogin ?
+                        <>
+                            <motion.div className='header-button login'
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.95 }}>
+                                <Button onClick={() => setIsOpenLoginModal(true)}>Đăng nhập</Button>
+                            </motion.div>
+                            <motion.div className='header-button login'
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.95 }}>
+                                <Button onClick={() => setIsOpenRegisterModal(true)}>Đăng ký</Button>
+                            </motion.div>
+                        </>
+                        :
+                        <div className='user-info-content'>
+                            <Avatar className='avatar' src={UserIcon} />
+                            <div className='name-and-balance'>
+                                <div className='name'>Nguyễn Trần Kiên</div>
+                                <div className='balance'>Số dư: {'1.500.000Đ'}</div>
+                            </div>
+                            <Dropdown className='drop-down' menu={{ items }} placement="bottomLeft" arrow>
+                                <DownOutlined />
+                            </Dropdown>
+                        </div>
+                    }
+                    <Login
+                        checkIsLogin={checkIsLogin}
+                        isOpenModal={isOpenLoginModal}
+                        toggleLoginModal={toggleLoginModal}
+                        toggleRegisterModal={toggleRegisterModal}
+                    />
+                    <Register
+                        isOpenModal={isOpenRegisterModal}
+                        toggleLoginModal={toggleLoginModal}
+                        toggleRegisterModal={toggleRegisterModal}
+                    />
+
+
+                </div>
+                <>
+                    <Button className={`menubtn + ${isLogin ? 'login' : ''}`} shape="circle" icon={<MenuOutlined />} onClick={showDrawer} ></Button>
+                    <Drawer
+                        title={
+                            <div className='header-logo'>
+                                <Link to={'/'} className='logo-text'>Vro Group</Link>
+                            </div>
+                        }
+                        placement="right"
+                        onClose={onClose}
+                        visible={visible}>
+                        <div style={{ display: 'flex', flexDirection: "column" }}>
+                            {!isLogin && <Button type="text" href="/login" >Đăng nhập / Đăng ký</Button>}
+                            <Button className={`post-btn ${isLogin && 'login'}`} type="text" icon={<img src={HeaderIcon} />} >
+                                Đăng bản vẽ
+                            </Button>
+                        </div>
+                    </Drawer>
+                </>
             </div>
 
             {/* } */}
 
 
-            {/* <>
-                <Button className={`menubtn + ${tokenLogin ? 'login' : ''}`} type="primary" shape="circle" icon={<MenuOutlined />} onClick={showDrawer} ></Button>
-                <Drawer
-                    title={
-                        <div className='header-logo'>
-                            <Link to={'/'} className='logo-text'>V.innovate</Link>
-                        </div>
-                    }
-                    placement="right"
-                    onClose={onClose}
-                    visible={visible}>
-                    <div style={{ display: 'flex', flexDirection: "column" }}>
-                        <Button type="text" href="/" >Trang chủ</Button>
-                        <Button type="text" href="/test" >Đánh giá</Button>
-                        <Button type="text" href="/about_us" >Về chúng tôi</Button>
-                        {!tokenLogin && <Button type="text" href="/login" >Đăng nhập / Đăng ký</Button>}
-                    </div>
-                </Drawer>
-            </> */}
+
         </div>
     )
 }

@@ -11,6 +11,7 @@ interface MyProps {
     isOpenModal: boolean;
     toggleLoginModal: () => void;
     toggleRegisterModal: () => void;
+    checkIsLogin: (val: boolean) => void;
 }
 const regexPhoneNumber = /^0(1\d{9}|3\d{8}|5\d{8}|7\d{8}|8\d{8}|9\d{8})$/;
 const regexEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -69,6 +70,10 @@ const Login = (props: MyProps) => {
     const onFinish = async (account: LoginRequest): Promise<any> => {
     }
 
+    const handleClickSubmit = () => {
+        props.toggleLoginModal()
+        props.checkIsLogin(true)
+    }
     return (
         <>
             <Modal title="Đăng nhập"
@@ -137,7 +142,7 @@ const Login = (props: MyProps) => {
                             whileTap={{ scale: 0.95 }}
                             whileFocus={{ scale: 1.05 }}>
                             {checkLoginBtn ?
-                                <Button type="primary" htmlType="submit" className="login-form-button active">
+                                <Button type="primary" htmlType="submit" className="login-form-button active" onClick={() => handleClickSubmit()}>
                                     Đăng nhập
                                 </Button> :
                                 <Button type="primary" htmlType="submit" className="login-form-button">

@@ -1,74 +1,177 @@
 /* eslint-disable jsx-a11y/iframe-has-title */
-import { EyeOutlined } from '@ant-design/icons';
-import { Button, Card, Col, Row, notification } from 'antd';
-import Meta from 'antd/lib/card/Meta'
-import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
-import { Variants, motion, useTransform, useViewportScroll } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { ArrowLeftOutlined, ArrowRightOutlined, EyeOutlined } from '@ant-design/icons';
+import { Button, Card, Col, Row } from 'antd';
+import Meta from 'antd/lib/card/Meta';
+import { Variants, motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ImageOfIntro from '../../images/home_image_1.png';
-import HowToUse from '../../images/home_image_2.png';
-import HowToUse1 from '../../images/how_to_use1.png';
-import HowToUse2 from '../../images/how_to_use2.png';
-import HowToUse3 from '../../images/how_to_use3.png';
-import HowToUse4 from '../../images/how_to_use4.png';
-import HowToUse5 from '../../images/how_to_use5.png';
-import RightOfUseImage1 from '../../images/right_of_use_image_1.png';
-import RightOfUseImage2 from '../../images/right_of_use_image_2.png';
-import RightOfUseImage3 from '../../images/right_of_use_image_3.png';
-import RightOfUseImage4 from '../../images/right_of_use_image_4.png';
-import RightOfUseImage5 from '../../images/right_of_use_image_5.png';
-import { useSelectorRoot } from '../../redux/store';
 import BietThu from '../../images/homepage/bietthu1.png';
-import Notification from '../../images/homepage/notification.png'
+import Notification from '../../images/homepage/notification.png';
+import { useSelectorRoot } from '../../redux/store';
 import './styles.home.scss';
-import CProductCard from '../../components/ProductCard/CProductCard';
+
+import DrawHomeImage1 from '../../images/homepage/home_img_1.png';
+import DrawHomeImage2 from '../../images/homepage/home_img_2.png';
+import DrawHomeImage3 from '../../images/homepage/home_img_3.png';
+import DrawHomeImage4 from '../../images/homepage/home_img_4.png';
+import DrawHomeImage5 from '../../images/homepage/home_img_5.png';
+import DrawHomeImage6 from '../../images/homepage/home_img_6.png';
+import DrawHomeImage7 from '../../images/homepage/home_img_7.png';
+import DrawHomeImage8 from '../../images/homepage/home_img_8.png';
+import DrawHomeImage9 from '../../images/homepage/home_img_9.png';
+import DrawHomeImage10 from '../../images/homepage/home_img_10.png';
+import DrawHomeImage11 from '../../images/homepage/home_img_11.png';
+import DrawHomeImage12 from '../../images/homepage/home_img_12.png';
+import DrawHomeImage13 from '../../images/homepage/home_img_13.png';
+import DrawHomeImage14 from '../../images/homepage/home_img_14.png';
+import DrawHomeImage15 from '../../images/homepage/home_img_15.png';
+import DrawHomeImage16 from '../../images/homepage/home_img_16.png';
+
 interface CardData {
     id: number;
     title: string;
-    description: string;
+    type: string;
+    price: string;
+    view: number;
     imageUrl: string;
 }
 
-const cardData: CardData[] = [
+const featuredLst: CardData[] = [
     {
         id: 1,
-        title: 'Card 1',
-        description: 'This is the first card',
-        imageUrl: 'https://picsum.photos/id/1/200/300',
+        title: 'Bản vẽ biệt thự 2 tầng',
+        type: 'File Sketchup',
+        price: '500.000VNĐ',
+        view: 96,
+        imageUrl: DrawHomeImage1,
     },
     {
         id: 2,
-        title: 'Card 2',
-        description: 'This is the second card',
-        imageUrl: 'https://picsum.photos/id/2/200/300',
+        title: 'Bản vẽ biệt thự 4 tầng',
+        type: 'File 3D Max',
+        price: '1.500.000VNĐ',
+        view: 105,
+        imageUrl: DrawHomeImage2,
     },
     {
         id: 3,
-        title: 'Card 3',
-        description: 'This is the third card',
-        imageUrl: 'https://picsum.photos/id/3/200/300',
+        title: 'Bản vẽ biệt thự 3 tầng',
+        type: 'File Sketchup',
+        price: 'Free',
+        view: 365,
+        imageUrl: DrawHomeImage3,
     },
     {
         id: 4,
-        title: 'Card 4',
-        description: 'This is the fourth card',
-        imageUrl: 'https://picsum.photos/id/4/200/300',
-    },
-    {
-        id: 5,
-        title: 'Card 5',
-        description: 'This is the fifth card',
-        imageUrl: 'https://picsum.photos/id/5/200/300',
-    },
-    {
-        id: 6,
-        title: 'Card 6',
-        description: 'This is the sixth card',
-        imageUrl: 'https://picsum.photos/id/6/200/300',
+        title: 'Thiết kế nhà gác lửng hiện đại',
+        type: 'File Auto Cad',
+        price: '2.500.000VNĐ',
+        view: 25,
+        imageUrl: DrawHomeImage4,
     },
 ];
-
+const newLst: CardData[] = [
+    {
+        id: 1,
+        title: 'Dựng ngoại cảnh căn biệt thự',
+        type: 'File Auto cad',
+        price: '865.000VNĐ',
+        view: 245,
+        imageUrl: DrawHomeImage5,
+    },
+    {
+        id: 2,
+        title: 'Thiết kế biệt thự 2 tầng',
+        type: 'File Sketchup',
+        price: 'Free',
+        view: 32,
+        imageUrl: DrawHomeImage6,
+    },
+    {
+        id: 3,
+        title: 'Bản vẽ biệt thự 2 tầng',
+        type: 'File Sketchup',
+        price: '300.000VNĐ',
+        view: 26,
+        imageUrl: DrawHomeImage7,
+    },
+    {
+        id: 4,
+        title: 'Bản vẽ biệt thự 2 tầng',
+        type: 'File Sketchup',
+        price: 'Free',
+        view: 85,
+        imageUrl: DrawHomeImage8,
+    },
+];
+const suggestLst: CardData[] = [
+    {
+        id: 1,
+        title: 'Bản vẽ biệt thự 3 tầng cổ điển',
+        type: 'File 3D Max',
+        price: 'Free',
+        view: 265,
+        imageUrl: DrawHomeImage9,
+    },
+    {
+        id: 2,
+        title: 'Bản vẽ nhà xưởng',
+        type: 'File Revit',
+        price: 'Free',
+        view: 500,
+        imageUrl: DrawHomeImage10,
+    },
+    {
+        id: 3,
+        title: 'Bản vẽ biệt thự phong cách Nhật',
+        type: 'File Revit',
+        price: '3.500.000VNĐ',
+        view: 65,
+        imageUrl: DrawHomeImage11,
+    },
+    {
+        id: 4,
+        title: 'Biệt thự phong cách Roman',
+        type: 'File 3D Max',
+        price: '10.000.000VNĐ',
+        view: 152,
+        imageUrl: DrawHomeImage12,
+    },
+];
+const webSuggestLst: CardData[] = [
+    {
+        id: 1,
+        title: 'Biệt thự mái thái',
+        type: 'File Revit',
+        price: '700.000VNĐ',
+        view: 65,
+        imageUrl: DrawHomeImage13,
+    },
+    {
+        id: 2,
+        title: 'Biệt thự Tân cổ điển',
+        type: 'File Auto cad',
+        price: '670.000VNĐ',
+        view: 98,
+        imageUrl: DrawHomeImage14,
+    },
+    {
+        id: 3,
+        title: 'Bản vẽ biệt thự mái thái',
+        type: 'File Sketchup',
+        price: 'Free',
+        view: 32,
+        imageUrl: DrawHomeImage15,
+    },
+    {
+        id: 4,
+        title: 'Bản vẽ quán ăn',
+        type: 'File Auto cad',
+        price: 'Free',
+        view: 75,
+        imageUrl: DrawHomeImage16,
+    },
+];
 const imageVariants: Variants = {
     offscreen: {
         y: 100,
@@ -152,11 +255,11 @@ const Home = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const handleNextCard = () => {
-        setCurrentIndex((currentIndex + 1) % cardData.length);
+        setCurrentIndex((currentIndex + 1));
     };
 
     const handlePrevCard = () => {
-        setCurrentIndex(currentIndex === 0 ? cardData.length - 1 : currentIndex - 1);
+        setCurrentIndex(currentIndex - 1);
     };
     return (
         <motion.div
@@ -176,7 +279,7 @@ const Home = () => {
                         Danh sách bản vẽ nổi bật
                     </div>
                     <div className='sub-title'>
-                        {'Xem thêm ->'}
+                        {'Xem thêm'}
                     </div>
                 </div>
                 <div className="lst-tool">
@@ -184,38 +287,48 @@ const Home = () => {
                         <Button icon={<ArrowLeftOutlined />} onClick={handlePrevCard} disabled={currentIndex === 0 && true} />
                     </Col>
                     <Row gutter={[16, 16]}>
-                        {cardData.slice(currentIndex, currentIndex + numberOfCardShow).map((card) => (
+                        {featuredLst.slice(currentIndex, currentIndex + numberOfCardShow).map((card) => (
                             <Col span={spanCol} key={card.id}>
                                 <Card
                                     className='card'
                                     hoverable
-                                    cover={<img alt="example" src={BietThu} />}
+                                    cover={<img alt="example" src={card.imageUrl} />}
                                 >
                                     <div className='title-and-price'>
-                                        <Meta title={card.title} description={card.description} />
-                                        <span>500.000Đ</span>
+                                        <Meta
+                                            title={
+                                                <div className='home-card-title'>
+                                                    <div className='h-c-t-title'>{card.title}</div>
+                                                    <div className='h-c-t-view-point'>
+                                                        <EyeOutlined />
+                                                        <div className='number-of-view'>{card.view}</div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            description={card.type} />
+                                        {card.price === 'Free'
+                                            ?
+                                            <div className='home-card-price free'>Miễn Phí</div>
+                                            :
+                                            <div className='home-card-price'>{card.price}</div>
+                                        }
                                     </div>
-                                    <div className='seen-times'>
-                                        <EyeOutlined />
-                                        <span>100</span>
-                                    </div>
-
                                 </Card>
                             </Col>
                         ))}
                     </Row>
                     <Col>
-                        <Button icon={<ArrowRightOutlined />} onClick={handleNextCard} disabled={currentIndex >= numberOfCardNext - 2 && true} />
+                        <Button icon={<ArrowRightOutlined />} onClick={handleNextCard} disabled={currentIndex >= numberOfCardNext - 4 && true} />
                     </Col>
                 </div>
             </div>
             <div className='tool-of-web'>
                 <div className="title">
                     <div>
-                        Danh sách bản vẽ nổi bật
+                        Bài vẽ mới hôm nay
                     </div>
                     <div className='sub-title'>
-                        {'Xem thêm ->'}
+                        {'Xem thêm'}
                     </div>
                 </div>
                 <div className="lst-tool">
@@ -223,38 +336,48 @@ const Home = () => {
                         <Button icon={<ArrowLeftOutlined />} onClick={handlePrevCard} disabled={currentIndex === 0 && true} />
                     </Col>
                     <Row gutter={[16, 16]}>
-                        {cardData.slice(currentIndex, currentIndex + numberOfCardShow).map((card) => (
+                        {newLst.slice(currentIndex, currentIndex + numberOfCardShow).map((card) => (
                             <Col span={spanCol} key={card.id}>
                                 <Card
                                     className='card'
                                     hoverable
-                                    cover={<img alt="example" src={BietThu} />}
+                                    cover={<img alt="example" src={card.imageUrl} />}
                                 >
                                     <div className='title-and-price'>
-                                        <Meta title={card.title} description={card.description} />
-                                        <span>500.000Đ</span>
+                                        <Meta
+                                            title={
+                                                <div className='home-card-title'>
+                                                    <div className='h-c-t-title'>{card.title}</div>
+                                                    <div className='h-c-t-view-point'>
+                                                        <EyeOutlined />
+                                                        <div className='number-of-view'>{card.view}</div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            description={card.type} />
+                                        {card.price === 'Free'
+                                            ?
+                                            <div className='home-card-price free'>Miễn Phí</div>
+                                            :
+                                            <div className='home-card-price'>{card.price}</div>
+                                        }
                                     </div>
-                                    <div className='seen-times'>
-                                        <EyeOutlined />
-                                        <span>100</span>
-                                    </div>
-
                                 </Card>
                             </Col>
                         ))}
                     </Row>
                     <Col>
-                        <Button icon={<ArrowRightOutlined />} onClick={handleNextCard} disabled={currentIndex >= numberOfCardNext - 2 && true} />
+                        <Button icon={<ArrowRightOutlined />} onClick={handleNextCard} disabled={currentIndex >= numberOfCardNext - 4 && true} />
                     </Col>
                 </div>
             </div>
             <div className='tool-of-web'>
                 <div className="title">
                     <div>
-                        Danh sách bản vẽ nổi bật
+                        Gợi ý cho bạn
                     </div>
                     <div className='sub-title'>
-                        {'Xem thêm ->'}
+                        {'Xem thêm'}
                     </div>
                 </div>
                 <div className="lst-tool">
@@ -262,38 +385,48 @@ const Home = () => {
                         <Button icon={<ArrowLeftOutlined />} onClick={handlePrevCard} disabled={currentIndex === 0 && true} />
                     </Col>
                     <Row gutter={[16, 16]}>
-                        {cardData.slice(currentIndex, currentIndex + numberOfCardShow).map((card) => (
+                        {suggestLst.slice(currentIndex, currentIndex + numberOfCardShow).map((card) => (
                             <Col span={spanCol} key={card.id}>
                                 <Card
                                     className='card'
                                     hoverable
-                                    cover={<img alt="example" src={BietThu} />}
+                                    cover={<img alt="example" src={card.imageUrl} />}
                                 >
                                     <div className='title-and-price'>
-                                        <Meta title={card.title} description={card.description} />
-                                        <span>500.000Đ</span>
+                                        <Meta
+                                            title={
+                                                <div className='home-card-title'>
+                                                    <div className='h-c-t-title'>{card.title}</div>
+                                                    <div className='h-c-t-view-point'>
+                                                        <EyeOutlined />
+                                                        <div className='number-of-view'>{card.view}</div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            description={card.type} />
+                                        {card.price === 'Free'
+                                            ?
+                                            <div className='home-card-price free'>Miễn Phí</div>
+                                            :
+                                            <div className='home-card-price'>{card.price}</div>
+                                        }
                                     </div>
-                                    <div className='seen-times'>
-                                        <EyeOutlined />
-                                        <span>100</span>
-                                    </div>
-
                                 </Card>
                             </Col>
                         ))}
                     </Row>
                     <Col>
-                        <Button icon={<ArrowRightOutlined />} onClick={handleNextCard} disabled={currentIndex >= numberOfCardNext - 2 && true} />
+                        <Button icon={<ArrowRightOutlined />} onClick={handleNextCard} disabled={currentIndex >= numberOfCardNext - 4 && true} />
                     </Col>
                 </div>
             </div>
             <div className='tool-of-web'>
                 <div className="title">
                     <div>
-                        Danh sách bản vẽ nổi bật
+                        Vro Group đề xuất
                     </div>
                     <div className='sub-title'>
-                        {'Xem thêm ->'}
+                        {'Xem thêm'}
                     </div>
                 </div>
                 <div className="lst-tool">
@@ -301,33 +434,41 @@ const Home = () => {
                         <Button icon={<ArrowLeftOutlined />} onClick={handlePrevCard} disabled={currentIndex === 0 && true} />
                     </Col>
                     <Row gutter={[16, 16]}>
-                        {cardData.slice(currentIndex, currentIndex + numberOfCardShow).map((card) => (
+                        {webSuggestLst.slice(currentIndex, currentIndex + numberOfCardShow).map((card) => (
                             <Col span={spanCol} key={card.id}>
                                 <Card
                                     className='card'
                                     hoverable
-                                    cover={<img alt="example" src={BietThu} />}
+                                    cover={<img alt="example" src={card.imageUrl} />}
                                 >
                                     <div className='title-and-price'>
-                                        <Meta title={card.title} description={card.description} />
-                                        <span>500.000Đ</span>
+                                        <Meta
+                                            title={
+                                                <div className='home-card-title'>
+                                                    <div className='h-c-t-title'>{card.title}</div>
+                                                    <div className='h-c-t-view-point'>
+                                                        <EyeOutlined />
+                                                        <div className='number-of-view'>{card.view}</div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            description={card.type} />
+                                        {card.price === 'Free'
+                                            ?
+                                            <div className='home-card-price free'>{card.price}</div>
+                                            :
+                                            <div className='home-card-price'>{card.price}</div>
+                                        }
                                     </div>
-                                    <div className='seen-times'>
-                                        <EyeOutlined />
-                                        <span>100</span>
-                                    </div>
-
                                 </Card>
                             </Col>
                         ))}
                     </Row>
                     <Col>
-                        <Button icon={<ArrowRightOutlined />} onClick={handleNextCard} disabled={currentIndex >= numberOfCardNext - 2 && true} />
+                        <Button icon={<ArrowRightOutlined />} onClick={handleNextCard} disabled={currentIndex >= numberOfCardNext - 4 && true} />
                     </Col>
                 </div>
             </div>
-
-
         </motion.div>
     )
 }

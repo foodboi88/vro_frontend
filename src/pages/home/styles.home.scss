@@ -34,6 +34,7 @@
             justify-content: space-between;
             width: 100%;
             margin-bottom: 1em;
+            align-items: center;
 
             .sub-title {
                 font-weight: 400;
@@ -58,54 +59,62 @@
             width: 100%;
             gap: 16px;
 
-            .tool {
-                width: 261.33px;
-                height: 280px;
-                background-repeat: no-repeat;
-                background-size: cover;
-                cursor: pointer;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
+            .ant-card-body {
+                padding: 1.5em;
 
-                // .card{
+                .title-and-price {
+                    position: relative;
 
-                // }
-
-                .ant-card-body {
-                    width: 240;
-                    display: flex;
-                    justify-content: space-between;
-
-                    .title-and-price {}
-
-                    .seen-times {
-                        margin-left: 28px;
-                        margin-top: -3px;
-                        display: flex;
-
-                        .anticon {
-                            margin-top: 5px;
-                            margin-right: 5px;
-                        }
-
-                        .text {}
+                    .ant-card-meta-title {
+                        position: absolute;
+                        width: 100%;
                     }
 
+                    .home-card-title {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: baseline;
+
+                        .h-c-t-title {
+                            font-weight: 700;
+                            font-size: clamp(0.5em, 1.35vw, 1.1em);
+                            color: #4E4E4E;
+                            white-space: break-spaces;
+                        }
+
+                        .h-c-t-view-point {
+                            display: flex;
+                            align-items: center;
+                            gap: 0.5em;
+                            font-weight: 400;
+                            font-size: clamp(0.5em, 1.5vw, 1.1em);
+                            // font-size: 14px;
+                            color: #858585;
+                        }
+                    }
+
+                    .ant-card-meta-description {
+                        font-weight: 400;
+                        // font-size: 16px;
+                        font-size: clamp(0.5em, 1.5vw, 1.1em);
+                        line-height: 24px;
+                        color: #858585;
+                        margin-top: 4em;
+                    }
+
+                    .home-card-price {
+                        font-weight: 400;
+                        // font-size: 16px;
+                        font-size: clamp(0.5em, 1.5vw, 1.1em);
+                        line-height: 24px;
+                        color: #FF0000;
+                    }
+
+                    .home-card-price.free {
+                        color: #27CA40;
+                    }
                 }
             }
-
-            // .tool:nth-child(1) {
-            //     background-image: url("../../images/image-tool-1.png");
-            // }
-
-            // .tool:nth-child(2) {
-            //     background-image: url("../../images/image-tool-2.png");
-            // }
-
-            // .tool:nth-child(3) {
-            //     background-image: url("../../images/image-tool-3.png");
-            // }
         }
     }
 
@@ -436,6 +445,37 @@
 
         .tool-of-web {
             margin: 20px;
+
+            .title {}
+
+            .lst-tool {
+                .ant-card-body {
+                    .title-and-price {
+
+                        .ant-card-meta-title {}
+
+                        .home-card-title {
+                            .h-c-t-title {
+                                font-size: clamp(0.6em, 1.5vw, 1.5em);
+                            }
+
+                            .h-c-t-view-point {
+                                font-size: clamp(0.6em, 1.5vw, 1.5em);
+                            }
+                        }
+
+                        .ant-card-meta-description {
+                            font-size: clamp(0.6em, 1.5vw, 1.5em);
+                        }
+
+                        .home-card-price {
+                            font-size: clamp(0.6em, 1.5vw, 1.5em);
+                        }
+
+                        .home-card-price.free {}
+                    }
+                }
+            }
         }
 
         .how-to-use {
@@ -571,36 +611,37 @@
         }
 
         .tool-of-web {
+            margin: 20px;
+
+            .title {}
+
             .lst-tool {
+                .ant-card-body {
+                    .title-and-price {
 
-                .tool {
-                    width: 90%;
-                    height: 100px;
-                    margin-bottom: 20px;
-                    padding: 0px 20px;
+                        .ant-card-meta-title {}
 
-                    .tool-title {
-                        padding-top: 10px;
+                        .home-card-title {
+                            .h-c-t-title {
+                                // font-size: 2em;
+                                font-size: clamp(0.48em, 2vw, 2em);
+                            }
+
+                            .h-c-t-view-point {
+                                font-size: clamp(0.48em, 2vw, 2em);
+                            }
+                        }
+
+                        .ant-card-meta-description {
+                            font-size: clamp(0.48em, 2vw, 2em);
+                        }
+
+                        .home-card-price {
+                            font-size: clamp(0.48em, 2vw, 2em);
+                        }
+
+                        .home-card-price.free {}
                     }
-
-                    .tool-subtitle {}
-
-                    .btn-tool {}
-                }
-
-                .tool:nth-child(1) {
-                    background: linear-gradient(138.87deg, #FF5A80 0%, #FFC19E 99.02%);
-                    border-radius: 40px;
-                }
-
-                .tool:nth-child(2) {
-                    background: linear-gradient(125.34deg, #46D6A1 0%, #9FDE69 100%);
-                    border-radius: 40px;
-                }
-
-                .tool:nth-child(3) {
-                    background: linear-gradient(135deg, #6C7DEF 0%, #C981F7 100%);
-                    border-radius: 40px;
                 }
             }
         }
@@ -695,35 +736,44 @@
 @media (max-width: 400px) {
     .main-home {
         .tool-of-web {
+            margin: 20px;
+
             .title {
-                font-size: 14px;
+                text-align: start;
+                font-size: 1em;
 
                 .sub-title {
-                    font-size: 12px;
-                    margin-top: 3px;
+                    font-size: .7em;
                 }
-            }
-
-            .subtitle {
-                font-size: 12px;
             }
 
             .lst-tool {
-                .tool {
-                    .tool-title {
-                        font-size: 12px;
-                    }
+                .ant-card-body {
+                    .title-and-price {
 
-                    .tool-subtitle {
-                        font-size: 10px;
-                        margin-bottom: 5px;
-                    }
+                        .ant-card-meta-title {}
 
-                    .btn-tool {
-                        font-size: 8px;
+                        .home-card-title {
+                            .h-c-t-title {
+                                font-size: clamp(0.7em, 4vw, 1.7em);
+                            }
+
+                            .h-c-t-view-point {
+                                font-size: clamp(0.7em, 4vw, 1.7em);
+                            }
+                        }
+
+                        .ant-card-meta-description {
+                            font-size: clamp(0.7em, 4vw, 1.7em);
+                        }
+
+                        .home-card-price {
+                            font-size: clamp(0.7em, 4vw, 1.7em);
+                        }
+
+                        .home-card-price.free {}
                     }
                 }
-
             }
         }
 
