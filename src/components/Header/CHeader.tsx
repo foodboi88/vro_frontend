@@ -74,6 +74,7 @@ export const CHeader = (props: MyProps) => {
         Utils.removeItemLocalStorage('token');
         Utils.removeItemLocalStorage('userMail');
         Utils.removeItemLocalStorage('userName');
+        setIsLogin(!isLogin);
         window.location.reload();
     }
     const items: MenuProps['items'] = [
@@ -153,25 +154,7 @@ export const CHeader = (props: MyProps) => {
             {/* {tokenLogin && */}
             <div className="header-right">
                 <div className='user-infor'>
-                    <motion.div className={`header-button post ${isLogin && 'login'}`}
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}>
 
-                        <Button icon={<img src={HeaderIcon} />} >
-                            Đăng bản vẽ
-                        </Button>
-                    </motion.div>
-                    <div className='icon-group'>
-                        <Badge count={10} size="small">
-                            <BellOutlined />
-                        </Badge>
-                        <Badge count={10} size="small">
-                            <MessageOutlined />
-                        </Badge>
-                        <Badge count={10} size="small">
-                            <ShoppingCartOutlined />
-                        </Badge>
-                    </div>
                     {!isLogin ?
                         <>
                             <motion.div className='header-button login'
@@ -186,16 +169,37 @@ export const CHeader = (props: MyProps) => {
                             </motion.div>
                         </>
                         :
-                        <div className='user-info-content'>
-                            <Avatar className='avatar' src={UserIcon} />
-                            <div className='name-and-balance'>
-                                <div className='name'>Nguyễn Trần Kiên</div>
-                                <div className='balance'>Số dư: {'1.500.000Đ'}</div>
+                        <>
+                            <motion.div className={`header-button post ${isLogin && 'login'}`}
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.95 }}>
+
+                                <Button icon={<img src={HeaderIcon} />} >
+                                    Đăng bản vẽ
+                                </Button>
+                            </motion.div>
+                            <div className='icon-group'>
+                                <Badge count={10} size="small">
+                                    <BellOutlined />
+                                </Badge>
+                                <Badge count={10} size="small">
+                                    <MessageOutlined />
+                                </Badge>
+                                <Badge count={10} size="small">
+                                    <ShoppingCartOutlined />
+                                </Badge>
                             </div>
-                            <Dropdown className='drop-down' menu={{ items }} placement="bottomLeft" arrow>
-                                <DownOutlined />
-                            </Dropdown>
-                        </div>
+                            <div className='user-info-content'>
+                                <Avatar className='avatar' src={UserIcon} />
+                                <div className='name-and-balance'>
+                                    <div className='name'>Nguyễn Trần Kiên</div>
+                                    <div className='balance'>Số dư: {'1.500.000Đ'}</div>
+                                </div>
+                                <Dropdown className='drop-down' menu={{ items }} placement="bottomLeft" arrow>
+                                    <DownOutlined />
+                                </Dropdown>
+                            </div>
+                        </>
                     }
                     <Login
                         checkIsLogin={checkIsLogin}

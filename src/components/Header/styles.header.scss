@@ -106,9 +106,25 @@
 
             .user-info-content {
                 display: flex;
+                gap: .5em;
+
+                .avatar {
+                    margin-top: 0px;
+                    margin-left: 11px;
+                }
+
 
                 .name-and-balance {
-                    font-size: .6em;
+                    font-size: clamp(0.3em, 2.4vw, .7em);
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .drop-down {
+                    margin-top: 7px;
+                    margin-left: 9px;
                 }
             }
 
@@ -129,21 +145,7 @@
                 font-weight: 700;
             }
 
-            .avatar {
-                margin-top: 0px;
-                margin-left: 11px;
-            }
 
-            .name-and-balance {
-                font-size: 12px;
-                margin-left: 8px;
-                margin-top: -3px;
-            }
-
-            .drop-down {
-                margin-top: 7px;
-                margin-left: 9px;
-            }
         }
     }
 
@@ -243,9 +245,6 @@
 
     }
 
-    .post-btn {
-        display: block;
-    }
 }
 
 @media (max-width: 550px) {
@@ -258,7 +257,7 @@
 
     }
 
-    .post-btn {
-        display: block;
+    .ant-drawer-content-wrapper {
+        width: 250px !important;
     }
 }
