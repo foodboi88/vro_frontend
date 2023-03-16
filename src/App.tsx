@@ -16,7 +16,7 @@ function App() {
     <Layout>
       <CHeader />
       <AnimationRouter />
-      <CFooter />
+      {/* <CFooter /> */}
     </Layout>
   );
 }

@@ -181,6 +181,49 @@
             opacity: 1;
         }
     }
+
+    .header-content-input {
+        position: relative;
+        display: flex;
+        align-items: center;
+        align-items: center;
+        margin-right: 5px;
+        align-items: center;
+        margin-right: 5px;
+
+        .search-input {
+            width: 30em;
+            letter-spacing: 0;
+            white-space: nowrap;
+            border-radius: 20px;
+            font-size: .8em;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+            background: #F5F5F5;
+        }
+
+        .search-input:hover {
+            border: 1px solid var(--main-color) !important;
+        }
+
+        .search-input:focus {
+            border: 1px solid var(--main-color) !important;
+            // border-color: var(--main-color);
+            box-shadow: 0 0 0 1px var(--main-color);
+            caret-color: var(--main-color);
+        }
+
+        .icon-search {
+            position: absolute;
+            right: 1em;
+            padding: .5em;
+            pointer-events: none;
+            width: 2em;
+            height: 2em;
+        }
+    }
 }
 
 @media (max-width: 3000px) {
@@ -192,18 +235,7 @@
 @media (max-width: 1200px) {
     .main-header {
         .header-left {
-            .header-content-input {
-                display: none;
-            }
-        }
-    }
-}
-
-@media (max-width: 900px) {
-
-    .main-header {
-        .user-infor {
-            .header-button.login {
+            .header-content-input.login {
                 display: none;
             }
         }
@@ -218,8 +250,54 @@
         display: none;
     }
 
+    .header-content-input.draw.login {
+        display: flex;
+    }
+}
+
+@media (max-width: 900px) {
+
+    .main-header {
+        .user-infor {
+            .header-button.login {
+                display: none;
+            }
+        }
+
+    }
+
+    .post-btn {
+        display: none;
+    }
+
     .post-btn.login {
         display: block;
+    }
+
+    .header-content-input.draw {
+        display: none;
+    }
+}
+
+@media (max-width: 700px) {
+    .main-header {
+        .header-left {
+            .header-content-input {
+                display: none;
+            }
+        }
+    }
+
+    .header-content-input.draw {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+
+        .search-input {
+            width: 300px;
+            justify-content: center;
+        }
     }
 }
 

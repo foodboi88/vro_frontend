@@ -136,7 +136,7 @@ export const CHeader = (props: MyProps) => {
                     </Link>
                 </div>
 
-                <div className={`header-content-input`}>
+                <div className={`header-content-input ${isLogin && 'login'}`}>
                     <Input
                         className='search-input'
                         placeholder='Tìm kiếm bản vẽ'
@@ -231,6 +231,14 @@ export const CHeader = (props: MyProps) => {
                             <Button className={`post-btn ${isLogin && 'login'}`} type="text" icon={<img src={HeaderIcon} />} >
                                 Đăng bản vẽ
                             </Button>
+                            <div className={`header-content-input draw ${isLogin && 'login'}`}>
+                                <Input
+                                    className='search-input'
+                                    placeholder='Tìm kiếm bản vẽ'
+                                    onPressEnter={handleSearching}
+                                />
+                                {/* <SearchOutlined className='icon-search' /> */}
+                            </div>
                         </div>
                     </Drawer>
                 </>
