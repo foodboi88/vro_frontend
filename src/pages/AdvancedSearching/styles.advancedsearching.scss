@@ -1,34 +1,178 @@
-.main{
-    margin-top: 90px;
+.main {
     display: flex;
-    .sidebar{
-        width: 18%;
+    margin-top: 5em;
+    font-family: 'Lexend Deca';
+    font-style: normal;
 
-    }
-    .filtered-items{
-        padding: 56px;
-        margin-top: -35px;
-        width: 82%;
-        .author-introduction{
+    .filtered-items {
+        display: flex;
+        flex-direction: column;
+        padding: 2em;
+        padding-top: 1em;
+        gap: 2em;
 
-            .searched-author-title{
+        .author-introduction {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+
+            .show-filter {
+                background: linear-gradient(180deg, var(--main-color) 0%, var(--second-main-color) 100%);
+                border-radius: 10px;
+                font-size: .8em;
+                color: #FFFFFF;
+                display: flex;
+                align-items: center;
+                text-align: center;
+                border: none;
+
+            }
+
+            .searched-author-title {
                 display: flex;
                 justify-content: space-between;
-                margin-bottom: 15px;
+                margin-bottom: 1em;
+                align-items: center;
 
+                .text-title {
+                    text-align: center;
+                    display: flex;
+                    align-items: center;
+                    gap: 1em;
+                    font-weight: 500;
+                    font-size: 16px;
+                    line-height: 24px;
+                    color: #858585;
+
+                    strong {
+                        color: var(--main-color);
+                    }
+                }
+
+                .text-title.results {
+                    color: var(--main-color);
+                    cursor: pointer;
+                }
             }
         }
 
-        .sketch-list{
-            .searched-sketch-title{
-                margin-top: 50px;
+        .sketch-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5em;
 
+            .searched-sketch-title {
+                display: flex;
+                align-items: center;
+                gap: 1em;
+                text-align: center;
+                display: flex;
+                align-items: center;
+                gap: 1em;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 24px;
+                color: #858585;
+
+                strong {
+                    color: var(--main-color);
+                }
             }
-            .main-arrange{
-                margin-top: 11px;
-                margin-bottom: 20px;
+
+            .detail-list {
+                .ant-card-body {
+                    padding: 1em;
+                    height: 10em;
+                    position: relative;
+
+                    .title-and-price {
+                        position: relative;
+
+                        .ant-card-meta-title {
+                            position: absolute;
+                            width: 100%;
+                        }
+
+                        .home-card-title {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: baseline;
+
+                            .h-c-t-title {
+                                font-weight: 700;
+                                font-size: clamp(0.5em, 1.35vw, 1.1em);
+                                color: #4E4E4E;
+                                white-space: break-spaces;
+                            }
+
+                            .h-c-t-view-point {
+                                display: flex;
+                                align-items: center;
+                                gap: 0.5em;
+                                font-weight: 400;
+                                font-size: clamp(0.5em, 1.5vw, 1.1em);
+                                color: #858585;
+                            }
+                        }
+                    }
+
+                    .home-card-description {
+                        font-weight: 400;
+                        font-size: clamp(0.5em, 1.5vw, 1.1em);
+                        line-height: 24px;
+                        color: #858585;
+                        position: absolute;
+                        bottom: 2.5em;
+                    }
+
+                    .home-card-price {
+                        position: absolute;
+                        bottom: 1em;
+                        font-weight: 400;
+                        // font-size: 16px;
+                        font-size: clamp(0.5em, 1.5vw, 1.1em);
+                        line-height: 24px;
+                        color: #FF0000;
+                    }
+
+                    .home-card-price.free {
+                        color: #27CA40;
+                    }
+                }
             }
-            
+
+        }
+    }
+}
+
+@media (max-width: 900px) {
+    .main {
+        .filtered-items {
+            .sketch-list {
+                .detail-list {
+                    .ant-card-body {
+                        .title-and-price {
+                            .home-card-title {
+                                .h-c-t-title {
+                                    font-size: clamp(0.5em, 1.8vw, 1.1em);
+                                }
+
+                                .h-c-t-view-point {
+                                    font-size: clamp(0.5em, 1.8vw, 1.1em);
+                                }
+                            }
+                        }
+
+                        .home-card-description {
+                            font-size: clamp(0.5em, 1.8vw, 1.1em);
+                        }
+
+                        .home-card-price {
+                            font-size: clamp(0.5em, 1.8vw, 1.1em);
+                        }
+                    }
+                }
+            }
         }
     }
 }
