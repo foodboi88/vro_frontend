@@ -172,14 +172,11 @@ const data: CardData[] = [
 const AdvancedSeaching = () => {
     const navigate = useNavigate();
     const [spanCol, setSpanCol] = useState<number>(6);
-    const [numberOfCardShow, setNumberOfCardShow] = useState<number>(4);
-    const [numberOfCardNext, setNumberOfCardNext] = useState<number>(4);
     const [windowSize, setWindowSize] = useState([
         window.innerWidth,
         window.innerHeight,
     ]);
     const [isShowButtonFilter, setIsShowButtonFilter] = useState<boolean>(false);
-    const [isShowFilter, setIsShowFilter] = useState<boolean>(true);
 
     useEffect(() => {
         const handleWindowResize = () => {
@@ -189,27 +186,17 @@ const AdvancedSeaching = () => {
         window.addEventListener('resize', handleWindowResize);
         if (window.innerWidth > 900) {
             setSpanCol(6);
-            setNumberOfCardShow(4);
-            setNumberOfCardNext(4);
             setIsShowButtonFilter(false)
-            setIsShowFilter(true);
         }
         if (window.innerWidth <= 900) {
             setSpanCol(8);
-            setNumberOfCardShow(3);
-            setNumberOfCardNext(5);
             setIsShowButtonFilter(true)
-            setIsShowFilter(false);
         }
         if (window.innerWidth <= 600) {
             setSpanCol(12);
-            setNumberOfCardShow(2);
-            setNumberOfCardNext(6);
         }
         if (window.innerWidth <= 400) {
             setSpanCol(24);
-            setNumberOfCardShow(1);
-            setNumberOfCardNext(7);
         }
         return () => {
             window.removeEventListener('resize', handleWindowResize);
@@ -217,24 +204,9 @@ const AdvancedSeaching = () => {
     }, [window.innerWidth]);
     return (
         <div className='main'>
-            <div className='sidebar'>
-                <CFilter
-                    isOpen={isShowFilter} />
-            </div>
+            <CFilter />
             <div className='filtered-items'>
                 <div className='author-introduction'>
-                    {isShowButtonFilter &&
-                        <motion.div
-                            initial={{ x: 0 }}
-                            animate={{ x: isShowFilter ? 200 : 0 }}
-                            transition={{ duration: 0.5 }}
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.95 }}
-                            style={{ width: '1em' }}>
-                            <Button className='show-filter' onClick={() => setIsShowFilter(!isShowFilter)} >Hiển thị danh mục</Button>
-                        </motion.div>
-                    }
-
                     <div className='searched-author-title'>
                         <div className='text-title'><UserOutlined /> Tác giả liên quan đến <strong>{'"Bản vẽ biệt thự 2 tầng"'}</strong> </div>
 
@@ -255,34 +227,13 @@ const AdvancedSeaching = () => {
                     <Row className='detail-list' gutter={[16, 24]}>
                         {data.map((card) => (
                             <Col span={spanCol} key={card.id}>
-                                <Card
-                                    className='card'
-                                    hoverable
-                                    cover={<img alt="example" src={card.imageUrl} />}
-                                >
-                                    <div className='title-and-price'>
-                                        <Meta
-                                            title={
-                                                <div className='home-card-title'>
-                                                    <div className='h-c-t-title'>{card.title}</div>
-                                                    <div className='h-c-t-view-point'>
-                                                        <EyeOutlined />
-                                                        <div className='number-of-view'>{card.view}</div>
-                                                    </div>
-                                                </div>
-                                            }
-                                        />
-                                    </div>
-                                    <div className='home-card-description'>
-                                        {card.type}
-                                    </div>
-                                    {card.price === 'Free'
-                                        ?
-                                        <div className='home-card-price free'>Miễn Phí</div>
-                                        :
-                                        <div className='home-card-price'>{card.price}</div>
-                                    }
-                                </Card>
+                                <CProductCard
+                                    imageUrl={card.imageUrl}
+                                    title={card.title}
+                                    view={card.view}
+                                    price={card.price}
+                                    type={card.type}
+                                />
                             </Col>
                         ))}
                     </Row>

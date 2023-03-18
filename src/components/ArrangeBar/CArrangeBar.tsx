@@ -16,44 +16,42 @@ const CArrangeBar = () => {
     };
     return (
         <div className='main-arrange'>
-            <div className='container'>
-                <div className='title'>Sắp xếp theo</div>
-                <Button.Group>
-                    <motion.div
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}>
-                        <Button
-                            type={activeButton === 1 ? 'primary' : 'default'}
-                            onClick={() => handleButtonClick(1)}
-                        >
-                            Mới nhất
-                        </Button>
-                    </motion.div>
-                    <motion.div
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}>
-                        <Button
-                            type={activeButton === 2 ? 'primary' : 'default'}
-                            onClick={() => handleButtonClick(2)}
-                        >
-                            Thuê nhiều nhất
-                        </Button>
-                    </motion.div>
-                </Button.Group>
-                <div className='select-box'>
-                    <motion.div
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}>
-                        <Select
-                            suffixIcon={<CaretDownOutlined />}
-                            placeholder="Chọn cách sắp xếp"
-                        >
-                            <Option value='1'>Từ cao đến thấp</Option>
-                            <Option value='2'>Từ thấp đến cao</Option>
-                        </Select>
+            <div className='title'>Sắp xếp theo</div>
+            <Button.Group>
+                <motion.div
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}>
+                    <Button
+                        type={activeButton === 1 ? 'primary' : 'default'}
+                        onClick={() => handleButtonClick(1)}
+                    >
+                        Mới nhất
+                    </Button>
+                </motion.div>
+                <motion.div
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}>
+                    <Button
+                        type={activeButton === 2 ? 'primary' : 'default'}
+                        onClick={() => handleButtonClick(2)}
+                    >
+                        Thuê nhiều nhất
+                    </Button>
+                </motion.div>
+            </Button.Group>
+            <div className='select-box'>
+                <motion.div
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}>
+                    <Select
+                        suffixIcon={<CaretDownOutlined />}
+                        placeholder="Chọn cách sắp xếp"
+                    >
+                        <Option value='1'>Từ cao đến thấp</Option>
+                        <Option value='2'>Từ thấp đến cao</Option>
+                    </Select>
 
-                    </motion.div>
-                </div>
+                </motion.div>
             </div>
         </div>
     )

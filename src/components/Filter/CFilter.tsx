@@ -6,7 +6,6 @@ import { FormatPainterOutlined, HomeOutlined, ToolOutlined } from '@ant-design/i
 import { motion } from 'framer-motion'
 
 interface props {
-    isOpen: boolean
 }
 
 const optionsTools = [
@@ -32,7 +31,7 @@ const CFilter = (props: props) => {
     return (
         <motion.div className='main-filter'
             initial={{ x: -300 }}
-            animate={{ x: props.isOpen ? 0 : -300 }}
+            animate={{ x: 0 }}
             transition={{ duration: 0.5 }}>
             <Form>
                 <Form.Item className='form-item' name="checkbox-group">
