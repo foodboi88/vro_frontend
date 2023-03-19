@@ -240,7 +240,7 @@
             }
         }
 
-        .menubtn {
+        .menubtn.login {
             display: block;
         }
 
@@ -264,6 +264,9 @@
             }
         }
 
+        .menubtn {
+            display: block;
+        }
     }
 
     .post-btn {

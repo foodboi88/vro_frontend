@@ -5,6 +5,7 @@ import Meta from 'antd/lib/card/Meta';
 import { EyeOutlined } from '@ant-design/icons';
 import BietThu from '../../images/homepage/bietthu1.png';
 import { useNavigate } from 'react-router-dom';
+import './styles.productcard.scss'
 interface props {
     imageUrl: string;
     title: string;
@@ -22,7 +23,6 @@ const CProductCard = (props: props) => {
 
     }
     return (
-
         <Card
             className='card'
             hoverable
