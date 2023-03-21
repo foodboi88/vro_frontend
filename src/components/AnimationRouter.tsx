@@ -5,6 +5,7 @@ import Login from '../pages/login/Login'
 import AdvancedSeaching from '../pages/AdvancedSearching/AdvancedSeaching'
 import { AnimatePresence } from 'framer-motion'
 import DetailSketch from '../pages/DetailSketch/DetailSketch'
+import UploadSketch from '../pages/UploadSketch/UploadSketch'
 
 // Dùng để set animation cho các router với nhau
 const AnimationRouter = () => {
@@ -15,6 +16,7 @@ const AnimationRouter = () => {
                 <Route path="/" element={<Home />}></Route>
                 <Route path='/searching' element={<AdvancedSeaching />}></Route>
                 <Route path='/detail-sketch' element={<DetailSketch />}></Route>
+                <Route path='/upload-sketch' element={<UploadSketch/>}></Route>
             </Routes>
         </AnimatePresence>
     )
