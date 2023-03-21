@@ -26,6 +26,7 @@ import DrawHomeImage13 from '../../images/homepage/home_img_13.png';
 import DrawHomeImage14 from '../../images/homepage/home_img_14.png';
 import DrawHomeImage15 from '../../images/homepage/home_img_15.png';
 import DrawHomeImage16 from '../../images/homepage/home_img_16.png';
+import CProductCard from '../../components/ProductCard/CProductCard';
 
 interface CardData {
     id: number;
@@ -284,41 +285,23 @@ const Home = () => {
                 </div>
                 <div className="lst-tool">
                     <Col>
-                        <Button icon={<ArrowLeftOutlined />} onClick={handlePrevCard} disabled={currentIndex === 0 && true} />
+                        <Button icon={<ArrowLeftOutlined />} className='btn-icon' onClick={handlePrevCard} disabled={currentIndex === 0 && true} />
                     </Col>
                     <Row gutter={[16, 16]}>
                         {featuredLst.slice(currentIndex, currentIndex + numberOfCardShow).map((card) => (
                             <Col span={spanCol} key={card.id}>
-                                <Card
-                                    className='card'
-                                    hoverable
-                                    cover={<img alt="example" src={card.imageUrl} />}
-                                >
-                                    <div className='title-and-price'>
-                                        <Meta
-                                            title={
-                                                <div className='home-card-title'>
-                                                    <div className='h-c-t-title'>{card.title}</div>
-                                                    <div className='h-c-t-view-point'>
-                                                        <EyeOutlined />
-                                                        <div className='number-of-view'>{card.view}</div>
-                                                    </div>
-                                                </div>
-                                            }
-                                            description={card.type} />
-                                        {card.price === 'Free'
-                                            ?
-                                            <div className='home-card-price free'>Miễn Phí</div>
-                                            :
-                                            <div className='home-card-price'>{card.price}</div>
-                                        }
-                                    </div>
-                                </Card>
+                                <CProductCard
+                                    imageUrl={card.imageUrl}
+                                    title={card.title}
+                                    view={card.view}
+                                    price={card.price}
+                                    type={card.type}
+                                />
                             </Col>
                         ))}
                     </Row>
                     <Col>
-                        <Button icon={<ArrowRightOutlined />} onClick={handleNextCard} disabled={currentIndex >= numberOfCardNext - 4 && true} />
+                        <Button icon={<ArrowRightOutlined />} className='btn-icon' onClick={handleNextCard} disabled={currentIndex >= numberOfCardNext - 4 && true} />
                     </Col>
                 </div>
             </div>
@@ -333,41 +316,23 @@ const Home = () => {
                 </div>
                 <div className="lst-tool">
                     <Col>
-                        <Button icon={<ArrowLeftOutlined />} onClick={handlePrevCard} disabled={currentIndex === 0 && true} />
+                        <Button icon={<ArrowLeftOutlined />} className='btn-icon' onClick={handlePrevCard} disabled={currentIndex === 0 && true} />
                     </Col>
                     <Row gutter={[16, 16]}>
                         {newLst.slice(currentIndex, currentIndex + numberOfCardShow).map((card) => (
                             <Col span={spanCol} key={card.id}>
-                                <Card
-                                    className='card'
-                                    hoverable
-                                    cover={<img alt="example" src={card.imageUrl} />}
-                                >
-                                    <div className='title-and-price'>
-                                        <Meta
-                                            title={
-                                                <div className='home-card-title'>
-                                                    <div className='h-c-t-title'>{card.title}</div>
-                                                    <div className='h-c-t-view-point'>
-                                                        <EyeOutlined />
-                                                        <div className='number-of-view'>{card.view}</div>
-                                                    </div>
-                                                </div>
-                                            }
-                                            description={card.type} />
-                                        {card.price === 'Free'
-                                            ?
-                                            <div className='home-card-price free'>Miễn Phí</div>
-                                            :
-                                            <div className='home-card-price'>{card.price}</div>
-                                        }
-                                    </div>
-                                </Card>
+                                <CProductCard
+                                    imageUrl={card.imageUrl}
+                                    title={card.title}
+                                    view={card.view}
+                                    price={card.price}
+                                    type={card.type}
+                                />
                             </Col>
                         ))}
                     </Row>
                     <Col>
-                        <Button icon={<ArrowRightOutlined />} onClick={handleNextCard} disabled={currentIndex >= numberOfCardNext - 4 && true} />
+                        <Button icon={<ArrowRightOutlined />} className='btn-icon' onClick={handleNextCard} disabled={currentIndex >= numberOfCardNext - 4 && true} />
                     </Col>
                 </div>
             </div>
@@ -382,41 +347,23 @@ const Home = () => {
                 </div>
                 <div className="lst-tool">
                     <Col>
-                        <Button icon={<ArrowLeftOutlined />} onClick={handlePrevCard} disabled={currentIndex === 0 && true} />
+                        <Button icon={<ArrowLeftOutlined />} className='btn-icon' onClick={handlePrevCard} disabled={currentIndex === 0 && true} />
                     </Col>
                     <Row gutter={[16, 16]}>
                         {suggestLst.slice(currentIndex, currentIndex + numberOfCardShow).map((card) => (
                             <Col span={spanCol} key={card.id}>
-                                <Card
-                                    className='card'
-                                    hoverable
-                                    cover={<img alt="example" src={card.imageUrl} />}
-                                >
-                                    <div className='title-and-price'>
-                                        <Meta
-                                            title={
-                                                <div className='home-card-title'>
-                                                    <div className='h-c-t-title'>{card.title}</div>
-                                                    <div className='h-c-t-view-point'>
-                                                        <EyeOutlined />
-                                                        <div className='number-of-view'>{card.view}</div>
-                                                    </div>
-                                                </div>
-                                            }
-                                            description={card.type} />
-                                        {card.price === 'Free'
-                                            ?
-                                            <div className='home-card-price free'>Miễn Phí</div>
-                                            :
-                                            <div className='home-card-price'>{card.price}</div>
-                                        }
-                                    </div>
-                                </Card>
+                                <CProductCard
+                                    imageUrl={card.imageUrl}
+                                    title={card.title}
+                                    view={card.view}
+                                    price={card.price}
+                                    type={card.type}
+                                />
                             </Col>
                         ))}
                     </Row>
                     <Col>
-                        <Button icon={<ArrowRightOutlined />} onClick={handleNextCard} disabled={currentIndex >= numberOfCardNext - 4 && true} />
+                        <Button icon={<ArrowRightOutlined />} className='btn-icon' onClick={handleNextCard} disabled={currentIndex >= numberOfCardNext - 4 && true} />
                     </Col>
                 </div>
             </div>
@@ -431,41 +378,23 @@ const Home = () => {
                 </div>
                 <div className="lst-tool">
                     <Col>
-                        <Button icon={<ArrowLeftOutlined />} onClick={handlePrevCard} disabled={currentIndex === 0 && true} />
+                        <Button icon={<ArrowLeftOutlined />} className='btn-icon' onClick={handlePrevCard} disabled={currentIndex === 0 && true} />
                     </Col>
                     <Row gutter={[16, 16]}>
                         {webSuggestLst.slice(currentIndex, currentIndex + numberOfCardShow).map((card) => (
                             <Col span={spanCol} key={card.id}>
-                                <Card
-                                    className='card'
-                                    hoverable
-                                    cover={<img alt="example" src={card.imageUrl} />}
-                                >
-                                    <div className='title-and-price'>
-                                        <Meta
-                                            title={
-                                                <div className='home-card-title'>
-                                                    <div className='h-c-t-title'>{card.title}</div>
-                                                    <div className='h-c-t-view-point'>
-                                                        <EyeOutlined />
-                                                        <div className='number-of-view'>{card.view}</div>
-                                                    </div>
-                                                </div>
-                                            }
-                                            description={card.type} />
-                                        {card.price === 'Free'
-                                            ?
-                                            <div className='home-card-price free'>{card.price}</div>
-                                            :
-                                            <div className='home-card-price'>{card.price}</div>
-                                        }
-                                    </div>
-                                </Card>
+                                <CProductCard
+                                    imageUrl={card.imageUrl}
+                                    title={card.title}
+                                    view={card.view}
+                                    price={card.price}
+                                    type={card.type}
+                                />
                             </Col>
                         ))}
                     </Row>
                     <Col>
-                        <Button icon={<ArrowRightOutlined />} onClick={handleNextCard} disabled={currentIndex >= numberOfCardNext - 4 && true} />
+                        <Button icon={<ArrowRightOutlined />} className='btn-icon' onClick={handleNextCard} disabled={currentIndex >= numberOfCardNext - 4 && true} />
                     </Col>
                 </div>
             </div>

@@ -1,66 +1,73 @@
 .main-arrange {
-    .container {
-        padding: 1em;
+    padding: 1em;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background: #E5E5E5;
+    border-radius: 20px;
+    font-size: 1em;
+    line-height: 24px;
+    color: #858585;
+    gap: 1em;
+
+    .title {}
+
+    .ant-btn-group {
         display: flex;
-        justify-content: flex-start;
         align-items: center;
-        background: #E5E5E5;
-        border-radius: 20px;
-        font-size: 1em;
-        line-height: 24px;
-        color: #858585;
         gap: 1em;
 
-        .title {}
-
-        .ant-btn-group {
+        .ant-btn {
+            background: linear-gradient(180deg, var(--second-main-color) 0%, var(--main-color) 100%);
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: .8em;
             display: flex;
             align-items: center;
-            gap: 1em;
-
-            .ant-btn {
-                background: linear-gradient(180deg, var(--second-main-color) 0%, var(--main-color) 100%);
-                border-radius: 10px;
-                font-weight: 700;
-                font-size: .8em;
-                display: flex;
-                align-items: center;
-                text-align: center;
-                color: #FFFFFF;
-                border: none;
-                transition: all 0.5s;
-            }
-
-            .ant-btn.ant-btn-default {
-                background: #FFFFFF;
-                color: #858585;
-            }
+            text-align: center;
+            color: #FFFFFF;
+            border: none;
+            transition: all 0.5s;
         }
 
-        .select-box {
-            .ant-select {
-                width: 15em;
+        .ant-btn.ant-btn-default {
+            background: #FFFFFF;
+            color: #858585;
+        }
+    }
 
-                .ant-select-selector {
-                    border-radius: 10px;
-                }
+    .select-box {
+        .ant-select {
+            width: 15em;
 
-                .ant-select-selector:hover {
-                    outline: none;
-                }
+            .ant-select-selector {
+                border-radius: 10px;
 
-
-                .ant-select-selection-placeholder {
-                    font-weight: 400;
+                .ant-select-selection-item {
+                    font-weight: 700;
                     font-size: 14px;
                     line-height: 20px;
                     display: flex;
                     align-items: center;
                     color: #858585;
                 }
-
-
             }
+
+            .ant-select-selector:hover {
+                outline: none;
+            }
+
+
+            .ant-select-selection-placeholder {
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 20px;
+                display: flex;
+                align-items: center;
+                color: #858585;
+            }
+
+
         }
     }
 }
@@ -83,7 +90,39 @@
 
 .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
     background-color: #c30300be;
-    color: white;
+
+    .ant-select-item-option-content {
+        color: white;
+    }
 }
 
-.ant-select-dropdown {}
+.ant-select-item-option-content {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    color: #858585;
+}
+
+@media (max-width: 700px) {
+    .main-arrange {
+        flex-direction: column;
+        align-items: baseline;
+    }
+}
+
+@media (max-width: 400px) {
+    .main-arrange {
+        .ant-btn-group {
+            flex-direction: column;
+            align-items: baseline;
+        }
+
+        .select-box {
+            .ant-select {
+                width: 12em;
+            }
+        }
+    }
+}
