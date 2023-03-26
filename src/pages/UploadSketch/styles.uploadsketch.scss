@@ -1,0 +1,69 @@
+.main-upload{
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+
+    .upload-area{
+        background: #FFFFFF;
+        width: 60%;
+        height: 100%;
+        border-radius: 20px;
+        padding: 60px;
+
+        .upload-step{
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            .step1{
+                display: flex;
+                cursor: pointer;
+            }
+            .step2{
+                display: flex;
+                cursor: pointer;
+
+            }
+            .step3{
+                display: flex;
+                cursor: pointer;
+
+            }
+            .text{
+                font-size: 14px;
+                margin-left: 4px;
+                margin-top: 9px;
+                font-weight: 550;
+            
+                
+            }
+            .connector-icon{
+                margin-top: 12px;
+                
+            }
+        }
+        .sketch-content-area{
+            border: 1px solid #DFDFDF;
+            border-radius: 16px;
+            padding: 50px;
+            .type-of-sketch{
+                .title{
+                    font-size: 23px;
+                    font-weight: 550;
+                }
+                .description{
+                    margin-bottom: 30px;
+                }
+                .ant-input{
+                    border-radius: 20px;
+                    margin-bottom: 30px;
+                }
+            }
+            .description-of-sketch{
+
+            }
+            .information-of-sketch{
+
+            }
+        }
+    }
+}
