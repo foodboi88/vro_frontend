@@ -41,28 +41,103 @@
                 
             }
         }
-        .sketch-content-area{
-            border: 1px solid #DFDFDF;
-            border-radius: 16px;
-            padding: 50px;
-            .type-of-sketch{
-                .title{
-                    font-size: 23px;
-                    font-weight: 550;
-                }
+        .form{
+            padding: 32px;
+            .sketch-content-area{
+                border: 1px solid #DFDFDF;
+                border-radius: 16px;
+                padding: 50px;
                 .description{
-                    margin-bottom: 30px;
+                    margin-bottom: 50px;
                 }
-                .ant-input{
-                    border-radius: 20px;
-                    margin-bottom: 30px;
+                .type-of-sketch{
+                    .title{
+                        font-size: 23px;
+                        font-weight: 550;
+                    }
+                    .description{
+                    }
+                    .ant-input{
+                        border-radius: 20px;
+                    }
+                }
+                .description-of-sketch{
+                    .title{
+                        font-size: 23px;
+                        font-weight: 550;
+
+                    }
+                    .description{
+
+                    }
+                    
+                    .image{
+                        display: flex;
+                        justify-content: space-around;
+
+                        .thumbnail{
+
+                        }
+                        .image-list{
+
+                        }
+                    }
+                    .ant-input{
+                        border-radius: 20px;
+                        width: 500px;
+
+                    }
+                }
+                .information-of-sketch{
+                    .title{
+                        font-size: 23px;
+                        font-weight: 550;
+
+                    }
+                    .description{
+                    }
+                    
+                    .style{
+                        .title{
+                            
+                        }
+                        .button-group{
+                            display: flex;
+                            .end-left-button{
+                                border-radius: 20px 0px 0px 20px;
+
+                            }
+                            .end-right-button{
+                                border-radius: 0px 20px 20px 0px;
+
+                            }
+                        }
+                    }
+                    .tool{
+                        
+                    }
+                    .type{
+
+                    }
+                    .rule{
+                        .rule-list{
+                            border-radius: 20px;
+                            background: #F0FFF2;
+                            padding: 20px;
+                        }
+                    }
+                    .commit{
+                        margin-top: 20px;
+                    }
                 }
             }
-            .description-of-sketch{
-
-            }
-            .information-of-sketch{
-
+            .confirm-button-group{
+                display: flex;
+                justify-content: center;
+                margin: 15px;
+                .btn{
+                    margin-right: 20px;
+                }
             }
         }
     }
