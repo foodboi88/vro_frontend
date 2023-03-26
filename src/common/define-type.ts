@@ -2,16 +2,15 @@ import { AnyAction } from "redux";
 import { Epic } from "redux-observable";
 import { RootState } from "../redux/root.reducer";
 // import { ThemePalette } from "theme";
-import { IconName } from "./define-icon";
 
 export type RootEpic = Epic<AnyAction, AnyAction, RootState>;
 export interface SystemConfig {
-    protocol: 'http' | 'https';
+    protocol: "http" | "https";
     hostIdentity: string;
-    hostMailService: string,
-    hostMeetings: string,
-    hostMember: string,
-    hostTask: string,
+    hostMailService: string;
+    hostMeetings: string;
+    hostMember: string;
+    hostTask: string;
 }
 export interface RouterItem {
     path: string;
@@ -25,31 +24,31 @@ export interface User {
     email: string;
     id: string;
     roles: string;
-    client_id: string,
-    expires_in: string
+    client_id: string;
+    expires_in: string;
 }
 export interface Login {
     loginName: string;
     password: string;
-    remember: boolean
+    remember: boolean;
 }
 export interface ForgotType {
     email: string;
 }
 export interface UserResponse {
-    amr: string[],
-    aud: string,
-    auth_time: number,
-    client_id: string,
-    exp: number,
-    iat: number,
-    idp: string,
-    iss: string,
-    nbf: number,
-    profile: User,
-    role: string,
-    scope: string[],
-    sub: string
+    amr: string[];
+    aud: string;
+    auth_time: number;
+    client_id: string;
+    exp: number;
+    iat: number;
+    idp: string;
+    iss: string;
+    nbf: number;
+    profile: User;
+    role: string;
+    scope: string[];
+    sub: string;
 }
 
 // export type ColorCustom = keyof ThemePalette;
@@ -168,7 +167,7 @@ export type NavbarType =
     | "report"
     | "tools"
     | "miscellaneous"
-    | 'room-management'
+    | "room-management";
 //| "search";
 export type LanguageType = "en" | "vi";
 export const ArrayNavbar = [
@@ -181,59 +180,57 @@ export const ArrayNavbar = [
     "report",
     "tools",
     "room-management",
-    "miscellaneous"
+    "miscellaneous",
     //"search",
 ];
 export interface IHotel {
     hotelName: string;
     hotelId: string;
     businessDate: string;
-    lastNightAudit: string,
-    organizationId?: string
+    lastNightAudit: string;
+    organizationId?: string;
 }
 export interface Attendee {
-    id: string,
-    name: string,
-    email: string,
+    id: string;
+    name: string;
+    email: string;
 }
 
 export interface Color {
-    id: string,
-    color: string,
-    bgColor: string,
-    dragBgColor: string,
-    borderColor: string
+    id: string;
+    color: string;
+    bgColor: string;
+    dragBgColor: string;
+    borderColor: string;
 }
 export interface Calendar {
-    id: string,
-    name: string
+    id: string;
+    name: string;
 }
 
 export interface Role {
-    id: string,
-    name: string
+    id: string;
+    name: string;
 }
 
-export interface Paging{
-    offset: number,
-    size: number
+export interface Paging {
+    offset: number;
+    size: number;
 }
 
 export interface MemberMeeting {
-    id: string
-    attendeeID: string,
-    meetingID: string,
-    roleID: string
+    id: string;
+    attendeeID: string;
+    meetingID: string;
+    roleID: string;
 }
 
-export interface GetAllMemberReq extends Paging{
-    startTime: Date,
-    endTime: Date
+export interface GetAllMemberReq extends Paging {
+    startTime: Date;
+    endTime: Date;
 }
 
-export interface GetAllMembersWithRoleReq extends Paging{
-
-}
-export interface GetAllTaskReq extends Paging{
-    name?: string
+export interface GetAllMembersWithRoleReq extends Paging {}
+export interface GetAllTaskReq extends Paging {
+    name?: string;
 }
