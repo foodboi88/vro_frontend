@@ -128,22 +128,25 @@
                 }
             }
 
-            .header-button button {
-                background: #E60200;
-                border-radius: 30px;
-                color: #FFFFFF;
-                border: none;
-                font-weight: 400;
-                font-size: 14px;
-                display: flex;
-                gap: 10px;
-                align-items: center;
+            .header-button {
+                // width: 1vw;
+
+                button {
+                    background: #E60200;
+                    border-radius: 30px;
+                    color: #FFFFFF;
+                    border: none;
+                    font-weight: 400;
+                    font-size: 14px;
+                    display: flex;
+                    gap: 10px;
+                    align-items: center;
+                }
+
+                button:hover {}
             }
 
 
-            .header-button button:hover {
-                font-weight: 700;
-            }
 
 
         }
