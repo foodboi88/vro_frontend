@@ -1,144 +1,221 @@
-.main-upload{
-    margin-top: 100px;
+.main-upload {
+    margin-top: 7.5em;
     display: flex;
     justify-content: center;
+    font-family: 'Lexend Deca';
+    font-style: normal;
 
-    .upload-area{
+    .upload-area {
         background: #FFFFFF;
-        width: 60%;
-        height: 100%;
-        border-radius: 20px;
-        padding: 60px;
+        width: 100%;
+        margin: 0px 15em;
+        border-radius: 1em;
+        padding: 2em;
 
-        .upload-step{
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 30px;
-            .step1{
-                display: flex;
-                cursor: pointer;
-            }
-            .step2{
-                display: flex;
-                cursor: pointer;
+        .upload-step {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: 1fr;
+            margin-left: 60px;
 
-            }
-            .step3{
-                display: flex;
-                cursor: pointer;
+            .ant-steps-item {
+                .ant-steps-item-container {
+                    .ant-steps-item-icon {
+                        .ant-steps-icon {
+                            top: -5px;
 
+                            .anticon {
+                                background: #DFDFDF;
+                                border-radius: 30px;
+                                padding: 7px;
+                                font-size: .75em;
+                            }
+                        }
+                    }
+
+                    .ant-steps-item-content {
+                        .ant-steps-item-title {
+                            margin-top: 6px;
+                            font-weight: 400;
+                            font-size: 16px;
+                            line-height: 24px;
+                            text-align: center;
+                            color: #858585 !important;
+                        }
+                    }
+                }
             }
-            .text{
-                font-size: 14px;
-                margin-left: 4px;
-                margin-top: 9px;
-                font-weight: 550;
-            
-                
-            }
-            .connector-icon{
-                margin-top: 12px;
-                
+
+            .ant-steps-item.ant-steps-item-active,
+            .ant-steps-item-finish {
+                .ant-steps-item-container {
+                    .ant-steps-item-icon {
+                        .ant-steps-icon {
+                            .anticon {
+                                background: linear-gradient(180deg, #E60200 0%, #C30200 100%);
+                                color: white;
+                            }
+                        }
+                    }
+                }
             }
         }
-        .form{
-            padding: 32px;
-            .sketch-content-area{
+
+        .form {
+            padding: 4em;
+
+            .sketch-content-area {
                 border: 1px solid #DFDFDF;
                 border-radius: 16px;
-                padding: 50px;
-                .description{
+                padding: 2em;
+
+                .description {
                     margin-bottom: 50px;
                 }
-                .type-of-sketch{
-                    .title{
-                        font-size: 23px;
-                        font-weight: 550;
+
+                .type-of-sketch {
+                    .title {
+                        font-weight: 700;
+                        font-size: 1.5em;
+                        line-height: 32px;
+                        color: #4E4E4E;
                     }
-                    .description{
+
+                    .description {
+                        font-weight: 400;
+                        font-size: 1em;
+                        line-height: 20px;
+                        color: #858585;
                     }
-                    .ant-input{
-                        border-radius: 20px;
+
+                    .header-content-input {
+                        position: relative;
+                        display: flex;
+                        align-items: center;
+                        margin-right: 5px;
+
+                        .search-input {
+                            letter-spacing: 0;
+                            white-space: nowrap;
+                            border-radius: 20px;
+                            font-size: .8em;
+                            font-weight: 500;
+                            display: flex;
+                            align-items: center;
+                            color: var(--text-color);
+                            background: #F5F5F5;
+                        }
+
+                        .search-input:hover {
+                            border: 1px solid var(--main-color) !important;
+                        }
+
+                        .search-input:focus {
+                            border: 1px solid var(--main-color) !important;
+                            // border-color: var(--main-color);
+                            box-shadow: 0 0 0 1px var(--main-color);
+                            caret-color: var(--main-color);
+                        }
+
+                        .icon-search {
+                            position: absolute;
+                            right: 1em;
+                            padding: .5em;
+                            pointer-events: none;
+                            width: 2em;
+                            height: 2em;
+                        }
                     }
                 }
-                .description-of-sketch{
-                    .title{
+
+                .description-of-sketch {
+                    .title {
                         font-size: 23px;
                         font-weight: 550;
 
                     }
-                    .description{
 
-                    }
-                    
-                    .image{
+                    .description {}
+
+                    .image {
                         display: flex;
                         justify-content: space-around;
 
-                        .thumbnail{
+                        .thumbnail {}
 
-                        }
-                        .image-list{
-
-                        }
+                        .image-list {}
                     }
-                    .ant-input{
+
+                    .ant-input {
                         border-radius: 20px;
                         width: 500px;
 
                     }
                 }
-                .information-of-sketch{
-                    .title{
+
+                .information-of-sketch {
+                    .title {
                         font-size: 23px;
                         font-weight: 550;
 
                     }
-                    .description{
-                    }
-                    
-                    .style{
-                        .title{
-                            
-                        }
-                        .button-group{
+
+                    .description {}
+
+                    .style {
+                        .title {}
+
+                        .button-group {
                             display: flex;
-                            .end-left-button{
+
+                            .end-left-button {
                                 border-radius: 20px 0px 0px 20px;
 
                             }
-                            .end-right-button{
+
+                            .end-right-button {
                                 border-radius: 0px 20px 20px 0px;
 
                             }
                         }
                     }
-                    .tool{
-                        
-                    }
-                    .type{
 
-                    }
-                    .rule{
-                        .rule-list{
+                    .tool {}
+
+                    .type {}
+
+                    .rule {
+                        .rule-list {
                             border-radius: 20px;
                             background: #F0FFF2;
                             padding: 20px;
                         }
                     }
-                    .commit{
+
+                    .commit {
                         margin-top: 20px;
                     }
                 }
             }
-            .confirm-button-group{
+
+            .confirm-button-group {
                 display: flex;
                 justify-content: center;
                 margin: 15px;
-                .btn{
+
+                .btn {
                     margin-right: 20px;
                 }
             }
         }
     }
+}
+
+.ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title::after {
+    background-color: #858585 !important;
+}
+
+.ant-steps-item-title::after {
+    height: 2px;
+    top: 12px
 }

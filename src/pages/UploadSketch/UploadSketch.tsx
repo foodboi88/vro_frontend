@@ -12,6 +12,8 @@ import {
     Button,
     Radio,
     Checkbox,
+    Steps,
+    Image,
 } from "antd";
 import React, { useState } from "react";
 import VirtualList from "rc-virtual-list";
@@ -22,10 +24,11 @@ import Step2 from "../../images/upload-sketch/Step2.png";
 import Step3 from "../../images/upload-sketch/Step3.png";
 
 import "./styles.uploadsketch.scss";
-import { InboxOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import { InboxOutlined, MinusOutlined, PlusOutlined, PictureOutlined, ProfileOutlined, FolderOutlined } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
 import { RcFile } from "antd/lib/upload";
 import FormItem from "antd/es/form/FormItem";
+import SearchIcon from '../../images/Search_Icon.png'
 
 const { Dragger } = Upload;
 const { Search } = Input;
@@ -45,45 +48,25 @@ const TypeList = [
         title: "Lâu đài, dinh thự",
     },
     {
-        id: 1,
-        title: "Lâu đài, dinh thự",
+        id: 2,
+        title: 'Biệt thự 1 tầng',
     },
     {
-        id: 1,
-        title: "Lâu đài, dinh thự",
+        id: 3,
+        title: 'Biệt thự 2 tầng',
     },
     {
-        id: 1,
-        title: "Lâu đài, dinh thự",
+        id: 4,
+        title: 'Biệt thự trên 3 tầng',
     },
     {
-        id: 1,
-        title: "Lâu đài, dinh thự",
+        id: 5,
+        title: 'Nhà phố 1 tầng',
     },
     {
-        id: 1,
-        title: "Lâu đài, dinh thự",
-    },
-    {
-        id: 1,
-        title: "Lâu đài, dinh thự",
-    },
-    {
-        id: 1,
-        title: "Lâu đài, dinh thự",
-    },
-    {
-        id: 1,
-        title: "Lâu đài, dinh thự",
-    },
-    {
-        id: 1,
-        title: "Lâu đài, dinh thự",
-    },
-    {
-        id: 1,
-        title: "Lâu đài, dinh thự",
-    },
+        id: 6,
+        title: 'Nhà phố 2 tầng',
+    }
 ];
 
 const props: UploadProps = {
@@ -125,20 +108,26 @@ const UploadSketch = () => {
     const [step, setStep] = useState<string>("type");
     const [currentAvatar, setCurrentAvatar] = useState<File>();
     const [avatarUrl, setAvatarUrl] = useState<string>("");
+    const [current, setCurrent] = useState(1);
+    const [searchType, setSearchType] = useState('');
 
-    const onScroll = () => {};
+    const onScroll = () => { };
 
     const selectStepHandle = (value: string) => {
         setStep(value);
     };
 
-    const onSearch = () => {};
+    const onChange = (value: number) => {
+        console.log('onChange:', value);
+        setCurrent(value);
+    };
+    const onSearch = () => { };
 
-    const handleChangeMultivalueKey = () => {};
+    const handleChangeMultivalueKey = () => { };
 
-    const onSelectTool = () => {};
+    const onSelectTool = () => { };
 
-    const onSelectCategory = () => {};
+    const onSelectCategory = () => { };
 
     const beforeUploadAvatar = (file: any) => {
         console.log(file);
@@ -169,39 +158,34 @@ const UploadSketch = () => {
         return false;
     };
 
+    const filteredData = TypeList.filter(item => item.title.toLowerCase().includes(searchType.toLowerCase()));
+
+    const handleSearchType = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+        setSearchType(e.target.value);
+    }
     return (
         <div className="main-upload">
             <div className="upload-area">
-                <div className="upload-step">
-                    <div
-                        className="step1"
-                        onClick={() => selectStepHandle("type")}
-                    >
-                        <img src={Step1} />
-                        <div className="text">Danh mục bản vẽ</div>
-                    </div>
-                    <MinusOutlined className="connector-icon" />
-                    <div
-                        className="step2"
-                        onClick={() => selectStepHandle("description")}
-                    >
-                        <img src={Step2} />
-                        <div className="text">Mô tả bản vẽ</div>
-                    </div>
-                    <MinusOutlined className="connector-icon" />
-                    <div
-                        className="step3"
-                        onClick={() => selectStepHandle("information")}
-                    >
-                        <img src={Step3} />
-                        <div className="text">Thông tin bản vẽ</div>
-                    </div>
-                </div>
+                <Steps
+                    className="upload-step"
+                    current={current}
+                    items={[
+                        {
+                            title: 'Danh mục bản vẽ',
+                            icon: <FolderOutlined />
+                        },
+                        {
+                            title: 'Mô tả bản vẽ',
+                            icon: <ProfileOutlined />
+                        },
+                        {
+                            title: 'Thông tin bản vẽ',
+                            icon: <PictureOutlined />,
+                        },
+                    ]}
+                />
                 <Form
                     className="form"
-                    labelCol={{ span: 4 }}
-                    wrapperCol={{ span: 14 }}
-                    layout="horizontal"
                 >
                     <div className="sketch-content-area">
                         {step === "type" && (
@@ -211,32 +195,25 @@ const UploadSketch = () => {
                                     Vui lòng nhập các thông tin chung
                                 </div>
                                 <Form.Item>
-                                    <Search
-                                        placeholder="input search text"
-                                        onSearch={onSearch}
+                                    <div className={`header-content-input`}>
+                                        <Input
+                                            className='search-input'
+                                            placeholder='Tìm kiếm danh mục bản vẽ'
+                                            onChange={handleSearchType}
+                                        />
+                                        <img src={SearchIcon} className='icon-search'></img>
+                                    </div>
+                                    <List
+                                        itemLayout="horizontal"
+                                        dataSource={filteredData}
+                                        renderItem={item => (
+                                            <List.Item>
+                                                <List.Item.Meta
+                                                    title={item.title}
+                                                />
+                                            </List.Item>
+                                        )}
                                     />
-                                    <List>
-                                        <VirtualList
-                                            data={TypeList}
-                                            itemHeight={47}
-                                            itemKey="id"
-                                            height={400}
-                                            onScroll={onScroll}
-                                        >
-                                            {(item: any) => (
-                                                <List.Item key={item.id}>
-                                                    <List.Item.Meta
-                                                        title={
-                                                            <a href="https://ant.design">
-                                                                {item.title}
-                                                            </a>
-                                                        }
-                                                    />
-                                                    <div>Content</div>
-                                                </List.Item>
-                                            )}
-                                        </VirtualList>
-                                    </List>
                                 </Form.Item>
                             </div>
                         )}
@@ -359,10 +336,10 @@ const UploadSketch = () => {
                                                         index === 0
                                                             ? "end-left-button"
                                                             : index ===
-                                                              styleList.length -
-                                                                  1
-                                                            ? "end-right-button"
-                                                            : ""
+                                                                styleList.length -
+                                                                1
+                                                                ? "end-right-button"
+                                                                : ""
                                                     }
                                                 >
                                                     {item}
