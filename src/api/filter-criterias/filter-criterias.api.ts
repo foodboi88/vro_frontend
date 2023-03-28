@@ -11,11 +11,13 @@ import { catchError, map } from "rxjs/operators";
 import { API_URL } from "../../enum/api.enum";
 import { IReqGetLatestSketchs } from "../../common/sketch.interface";
 
-export default class SketchsApi {
+export default class FilterCriteriasApi {
     static apiURL = API_URL;
 
-    static getSketchById(sketchId: string): Observable<any> {
-        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.GET_DETAIL_SKETCH}?id=${sketchId}`;
+    //Doi lai Endpoint API sau khi co API moi
+
+    static getTools(params: IReqGetLatestSketchs): Observable<any> {
+        const api = `${FilterCriteriasApi.apiURL.HOST}/${this.apiURL.GET_ALL_TOOLS}?size=${params.size}&offset=${params.offset}`;
         return HttpClient.get(api).pipe(
             map(
                 (res) => (res as any) || null,
@@ -24,28 +26,8 @@ export default class SketchsApi {
         );
     }
 
-    static getLatestSketchs(params: IReqGetLatestSketchs): Observable<any> {
-        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.GET_LATEST_SKETCH}?size=${params.size}&offset=${params.offset}`;
-        return HttpClient.get(api).pipe(
-            map(
-                (res) => (res as any) || null,
-                catchError((error) => new Observable())
-            )
-        );
-    }
-
-    static getMostViewsSketchs(params: IReqGetLatestSketchs): Observable<any> {
-        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.GET_MOST_VIEWS_SKETCH}?size=${params.size}&offset=${params.offset}`;
-        return HttpClient.get(api).pipe(
-            map(
-                (res) => (res as any) || null,
-                catchError((error) => new Observable())
-            )
-        );
-    }
-
-    static createMeetings(body: any): Observable<any> {
-        const api = `${SketchsApi.apiURL}/${SYSTEM_CONSTANTS.API.MEETINGS.CREATE_MEETINGS}`;
+    static createTools(body: any): Observable<any> {
+        const api = `${FilterCriteriasApi.apiURL}/${SYSTEM_CONSTANTS.API.MEETINGS.CREATE_MEETINGS}`;
         return HttpClient.post(api, body).pipe(
             map(
                 (res) => (res as any) || null,
@@ -54,9 +36,9 @@ export default class SketchsApi {
         );
     }
 
-    static updateMeetings(meetingId: string, body: any): Observable<any> {
+    static updateTools(meetingId: string, body: any): Observable<any> {
         const api = `${
-            SketchsApi.apiURL.HOST
+            FilterCriteriasApi.apiURL.HOST
         }/${SYSTEM_CONSTANTS.API.MEETINGS.UPDATE_MEETINGS.replace(
             "{meetingId}",
             meetingId
@@ -69,14 +51,34 @@ export default class SketchsApi {
         );
     }
 
-    static deleteMeetings(meetingId: string): Observable<any> {
+    static deleteTools(meetingId: string): Observable<any> {
         const api = `${
-            SketchsApi.apiURL.HOST
+            FilterCriteriasApi.apiURL.HOST
         }/${SYSTEM_CONSTANTS.API.MEETINGS.DELETE_MEETINGS.replace(
             "{meetingId}",
             meetingId
         )}`;
         return HttpClient.delete(api).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
+
+    static getStyles(params: IReqGetLatestSketchs): Observable<any> {
+        const api = `${FilterCriteriasApi.apiURL.HOST}/${this.apiURL.GET_ALL_TOOLS}?size=${params.size}&offset=${params.offset}`;
+        return HttpClient.get(api).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
+
+    static getArchitectures(params: IReqGetLatestSketchs): Observable<any> {
+        const api = `${FilterCriteriasApi.apiURL.HOST}/${this.apiURL.GET_ALL_TOOLS}?size=${params.size}&offset=${params.offset}`;
+        return HttpClient.get(api).pipe(
             map(
                 (res) => (res as any) || null,
                 catchError((error) => new Observable())

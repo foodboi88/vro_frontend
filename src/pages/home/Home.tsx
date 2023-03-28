@@ -211,7 +211,10 @@ const hoverVariants = {
 
 // Phần trang chủ của trang web
 const Home = () => {
-    const { tokenLogin, user } = useSelectorRoot((state) => state.login);
+    const { latestSketchsList, mostViewedSketchList } = useSelectorRoot(
+        (state) => state.sketch
+    ); // Lst cac ban ve
+
     const dispatch = useDispatchRoot();
 
     const navigate = useNavigate();
