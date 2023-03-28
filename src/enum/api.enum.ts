@@ -5,4 +5,5 @@ export enum API_URL {
     GET_ALL_TOOLS = "designTools",
     GET_DETAIL_SKETCH = "Products/byId",
     GET_COMMENTS_BY_SKETCH_ID = "comments",
+    ADVANCED_SEARCHING = "products/advanced-searching",
 }

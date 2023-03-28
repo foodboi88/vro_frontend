@@ -8,3 +8,15 @@ export interface ITool {
     description: string;
     id: string;
 }
+
+export interface IArchitecture {
+    name: string;
+    description: string;
+    id: string;
+}
+
+export interface IStyle {
+    name: string;
+    description: string;
+    id: string;
+}

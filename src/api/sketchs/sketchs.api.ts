@@ -44,6 +44,16 @@ export default class SketchsApi {
         );
     }
 
+    static advancedSearching(body: any): Observable<any> {
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.ADVANCED_SEARCHING}}`;
+        return HttpClient.post(api, body).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
+
     static createMeetings(body: any): Observable<any> {
         const api = `${SketchsApi.apiURL}/${SYSTEM_CONSTANTS.API.MEETINGS.CREATE_MEETINGS}`;
         return HttpClient.post(api, body).pipe(

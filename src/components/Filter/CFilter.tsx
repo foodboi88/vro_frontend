@@ -10,6 +10,7 @@ import {
 import { motion } from "framer-motion";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
 import {
+    advancedSearchingRequest,
     getAllFilterCriteriasRequest,
     getAllToolsRequest,
 } from "../../redux/controller";
@@ -38,9 +39,13 @@ const stylesTools = [
 ];
 const CFilter = (props: props) => {
     const dispatch = useDispatchRoot();
-    const { toolList, architectureList, styleList } = useSelectorRoot(
-        (state) => state.sketch
-    );
+    const {
+        toolList,
+        architectureList,
+        styleList,
+        filteredSketchs,
+        filteredAuthors,
+    } = useSelectorRoot((state) => state.sketch);
     const [form] = Form.useForm();
 
     useEffect(() => {
@@ -49,7 +54,12 @@ const CFilter = (props: props) => {
 
     const handleSearch = (event: any) => {
         console.log(event);
-        console.log(form);
+        const bodyrequest = {
+            toolList: form.getFieldValue("tool"),
+            architectureList: form.getFieldValue("architecture"),
+            style: form.getFieldValue("style"),
+        };
+        dispatch(advancedSearchingRequest(bodyrequest));
     };
 
     return (

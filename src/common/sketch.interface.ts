@@ -1,3 +1,5 @@
+import { IArchitecture, IStyle, ITool } from "./tool.interface";
+
 export interface IReqGetLatestSketchs {
     size: number;
     offset: number;
@@ -10,4 +12,11 @@ export interface ISketch {
     size: string;
     designToolId: string;
     collectionId: string;
+}
+
+export interface ICurrentSearchValue {
+    text: string;
+    tool: ITool[];
+    architecture: IArchitecture[];
+    style: IStyle[];
 }

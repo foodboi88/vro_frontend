@@ -9,10 +9,15 @@ import Utils from "../../common/utils";
 import IdentityApi from "../../api/identity/identity.api";
 import SketchsApi from "../../api/sketchs/sketchs.api";
 import { forkJoin } from "rxjs";
-import { IReqGetLatestSketchs, ISketch } from "../../common/sketch.interface";
+import {
+    ICurrentSearchValue,
+    IReqGetLatestSketchs,
+    ISketch,
+} from "../../common/sketch.interface";
 import { ITool } from "../../common/tool.interface";
 import FilterCriteriasApi from "../../api/filter-criterias/filter-criterias.api";
 import CommentsApi from "../../api/comment/comment.api";
+import { IUser } from "../../common/user.interface";
 
 type MessageLogin = {
     content: string;
@@ -40,6 +45,9 @@ interface SketchState {
     mostViewedSketchList: ISketch[];
     detailSketch?: ISketch;
     commentList?: any[];
+    filteredSketchs?: ISketch[];
+    filteredAuthors?: IUser[];
+    currentSearchValue?: ICurrentSearchValue;
 }
 
 const initState: SketchState = {
@@ -60,6 +68,9 @@ const initState: SketchState = {
     mostViewedSketchList: [],
     detailSketch: undefined,
     commentList: [],
+    filteredSketchs: [],
+    filteredAuthors: [],
+    currentSearchValue: undefined,
 };
 
 const sketchSlice = createSlice({
@@ -216,6 +227,25 @@ const sketchSlice = createSlice({
 
         getDetailSketchPageContentSuccess(state) {
             state.loading = false;
+        },
+
+        advancedSearchingRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        advancedSearchingSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            state.filteredAuthors = action.payload.data.author;
+            state.filteredSketchs = action.payload.data.sketch;
+
+            state.currentSearchValue = {
+                text: action.payload.text ? action.payload.text : "",
+                tool: action.payload.tool ? action.payload.tool : "",
+                architecture: action.payload.architecture
+                    ? action.payload.architecture
+                    : "",
+                style: action.payload.style ? action.payload.style : "",
+            };
         },
     },
 });
@@ -428,6 +458,7 @@ const getDetailSketch$: RootEpic = (action$) =>
             );
         })
     );
+// advancedSearchingRequest
 
 const getCommentBySketchId$: RootEpic = (action$) =>
     action$.pipe(
@@ -449,6 +480,32 @@ const getCommentBySketchId$: RootEpic = (action$) =>
         })
     );
 
+const advancedSearchSketch$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(advancedSearchingRequest.match),
+        switchMap((re) => {
+            // IdentityApi.login(re.payload) ?
+            console.log(re);
+            const bodyrequest: ICurrentSearchValue = {
+                text: re.payload.text ? re.payload.text : "",
+                tool: re.payload.tool ? re.payload.tool : "",
+                architecture: re.payload.architecture
+                    ? re.payload.architecture
+                    : "",
+                style: re.payload.style ? re.payload.style : "",
+            };
+
+            return SketchsApi.advancedSearching(bodyrequest).pipe(
+                mergeMap((res: any) => {
+                    console.log(res);
+                    res = { ...bodyrequest, res };
+                    return [sketchSlice.actions.advancedSearchingSuccess(res)];
+                }),
+                catchError((err) => [])
+            );
+        })
+    );
+
 export const SketchEpics = [
     uploadSketch$,
     getHomeListSketch$,
@@ -462,6 +519,7 @@ export const SketchEpics = [
     getDetailSketch$,
     getCommentBySketchId$,
     getDetailSketchPageContent$,
+    advancedSearchSketch$,
 ];
 export const {
     getLatestSketchRequest,
@@ -474,5 +532,6 @@ export const {
     getDetailSketchRequest,
     getCommentBySketchIdRequest,
     getDetailSketchPageContentRequest,
+    advancedSearchingRequest,
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;
