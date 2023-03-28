@@ -41,10 +41,17 @@ const CFilter = (props: props) => {
     const { toolList, architectureList, styleList } = useSelectorRoot(
         (state) => state.sketch
     );
+    const [form] = Form.useForm();
 
     useEffect(() => {
         dispatch(getAllFilterCriteriasRequest());
     }, []);
+
+    const handleSearch = (event: any) => {
+        console.log(event);
+        console.log(form);
+    };
+
     return (
         <motion.div
             className="main-filter"
@@ -52,33 +59,42 @@ const CFilter = (props: props) => {
             animate={{ x: 0 }}
             transition={{ duration: 0.5 }}
         >
-            <Form>
-                <Form.Item className="form-item" name="checkbox-group">
+            <Form form={form}>
+                <Form.Item className="form-item" name="tool">
                     <div className="title">
                         <div className="icon">
                             <ToolOutlined />
                         </div>
                         <div className="text">Công cụ</div>
                     </div>
-                    <Checkbox.Group options={toolList} />
+                    <Checkbox.Group
+                        onChange={handleSearch}
+                        options={toolList}
+                    />
                 </Form.Item>
-                <Form.Item className="form-item" name="checkbox-group">
+                <Form.Item className="form-item" name="architecture">
                     <div className="title">
                         <div className="icon">
                             <HomeOutlined />
                         </div>
                         <div className="text">Kiến trúc</div>
                     </div>
-                    <Checkbox.Group options={architectureTools} />
+                    <Checkbox.Group
+                        onChange={handleSearch}
+                        options={architectureTools}
+                    />
                 </Form.Item>
-                <Form.Item className="form-item" name="checkbox-group">
+                <Form.Item className="form-item" name="style">
                     <div className="title">
                         <div className="icon">
                             <FormatPainterOutlined />
                         </div>
                         <div className="text">Phong cách</div>
                     </div>
-                    <Checkbox.Group options={stylesTools} />
+                    <Checkbox.Group
+                        onChange={handleSearch}
+                        options={stylesTools}
+                    />
                 </Form.Item>
             </Form>
         </motion.div>
