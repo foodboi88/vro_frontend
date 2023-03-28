@@ -1,43 +1,17 @@
-import {
-    Form,
-    Input,
-    List,
-    Select,
-    SelectProps,
-    Upload,
-    message,
-    Row,
-    Col,
-    notification,
-    Button,
-    Radio,
-    Checkbox,
-} from "antd";
-import React, { useState } from "react";
+import { Button, Checkbox, Form, Input, List, Modal, Select, SelectProps, Steps, Upload } from "antd";
 import VirtualList from "rc-virtual-list";
-import type { UploadProps } from "antd";
-
-import Step1 from "../../images/upload-sketch/Step1.png";
-import Step2 from "../../images/upload-sketch/Step2.png";
-import Step3 from "../../images/upload-sketch/Step3.png";
-
-import "./styles.uploadsketch.scss";
-import { InboxOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import React, { useEffect, useState } from "react";
+import { FolderOutlined, PictureOutlined, PlusOutlined, ProfileOutlined } from "@ant-design/icons";
+import type { RcFile, UploadProps } from 'antd/es/upload';
+import type { UploadFile } from 'antd/es/upload/interface';
 import TextArea from "antd/lib/input/TextArea";
-import { RcFile } from "antd/lib/upload";
-import FormItem from "antd/es/form/FormItem";
-
-const { Dragger } = Upload;
-const { Search } = Input;
+import { motion } from "framer-motion";
+import SearchIcon from '../../images/Search_Icon.png';
+import "./styles.uploadsketch.scss";
+import { CheckboxValueType } from "antd/lib/checkbox/Group";
+import { CheckboxChangeEvent } from "antd/lib/checkbox";
 
 const options: SelectProps["options"] = [];
-
-for (let i = 10; i < 36; i++) {
-    options.push({
-        label: i.toString(36) + i,
-        value: i.toString(36) + i,
-    });
-}
 
 const TypeList = [
     {
@@ -45,72 +19,59 @@ const TypeList = [
         title: "Lâu đài, dinh thự",
     },
     {
-        id: 1,
-        title: "Lâu đài, dinh thự",
+        id: 2,
+        title: 'Biệt thự 1 tầng',
     },
     {
-        id: 1,
-        title: "Lâu đài, dinh thự",
+        id: 3,
+        title: 'Biệt thự 2 tầng',
     },
     {
-        id: 1,
-        title: "Lâu đài, dinh thự",
+        id: 4,
+        title: 'Biệt thự trên 3 tầng',
     },
     {
-        id: 1,
-        title: "Lâu đài, dinh thự",
+        id: 5,
+        title: 'Nhà phố 1 tầng',
     },
     {
-        id: 1,
-        title: "Lâu đài, dinh thự",
+        id: 6,
+        title: 'Nhà phố 2 tầng',
     },
     {
-        id: 1,
-        title: "Lâu đài, dinh thự",
+        id: 7,
+        title: 'Nhà phố trên 3 tầng',
     },
     {
-        id: 1,
-        title: "Lâu đài, dinh thự",
+        id: 8,
+        title: 'Nhà ống',
     },
     {
-        id: 1,
-        title: "Lâu đài, dinh thự",
+        id: 9,
+        title: 'Nhà xưởng',
     },
     {
-        id: 1,
-        title: "Lâu đài, dinh thự",
+        id: 10,
+        title: 'Nhà hàng, khách sạn',
     },
     {
-        id: 1,
-        title: "Lâu đài, dinh thự",
+        id: 11,
+        title: 'Nhà trọ, phòng trọ',
+    },
+    {
+        id: 12,
+        title: 'Nhà ở',
     },
 ];
 
-const props: UploadProps = {
-    name: "file",
-    multiple: true,
-    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-    onChange(info) {
-        const { status } = info.file;
-        if (status !== "uploading") {
-            console.log(info.file, info.fileList);
-        }
-        if (status === "done") {
-            message.success(`${info.file.name} file uploaded successfully.`);
-        } else if (status === "error") {
-            message.error(`${info.file.name} file upload failed.`);
-        }
-    },
-    onDrop(e) {
-        console.log("Dropped files", e.dataTransfer.files);
-    },
-};
-
-const toolOptions = ["Autocad", "Revit", "Sketchup", "3D MAX", "Khác"];
-
-const categoryOptions = ["Apple", "Pear", "Orange"];
-
-const styleList = ["Hiện đại", "Tân cổ điển", "Khác"];
+for (let i = 0; i < TypeList.length; i++) {
+    if (TypeList[i]) {
+        options.push({
+            label: TypeList[i].title,
+            value: TypeList[i].id.toString(36),
+        });
+    }
+}
 
 const ruleList = [
     "Mọi thông tin của thành viên đăng tải trên diễn đàn VRO Group phải chính xác",
@@ -121,334 +82,408 @@ const ruleList = [
     "Bản vẽ đã đăng trên VRO Group là thành viên đã đồng ý cho phép các thành viên download và sử dụng",
 ];
 
+const optionsTools = [
+    { label: 'Autocad', value: 'Autocad' },
+    { label: '3D max', value: '3D max' },
+    { label: 'Revit', value: 'Revit' },
+    { label: 'Sketchup', value: 'Sketchup' },
+    { label: 'Khác', value: 'Khác' },
+];
+const optionsCategorys = [
+    { label: 'Kiến trúc', value: 'Kiến trúc' },
+    { label: 'Kết cấu', value: 'Kết cấu' },
+    { label: 'Điện', value: 'Điện' },
+    { label: 'Nước', value: 'Nước' },
+    { label: 'PCCC', value: 'PCCC' },
+    { label: 'Phối cảnh', value: 'Phối cảnh' },
+    { label: 'Dự toán', value: 'Dự toán' },
+    { label: 'Tài liệu', value: 'Tài liệu' },
+    { label: 'Khác', value: 'Khác' },
+];
+const getBase64 = (file: RcFile): Promise<string> =>
+    new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = (error) => reject(error);
+    });
 const UploadSketch = () => {
-    const [step, setStep] = useState<string>("type");
-    const [currentAvatar, setCurrentAvatar] = useState<File>();
-    const [avatarUrl, setAvatarUrl] = useState<string>("");
+    const [current, setCurrent] = useState(2); // Biến kiểm tra bước hiện tại
+    const [searchType, setSearchType] = useState(''); // Biến lưu giá trị tìm kiếm loại bản vẽ
+    const [selectedType, setSelectedType] = useState<number>(); // Biến lưu giá trị loại bản vẽ
+    const [selectTitle, setSelectTitle] = useState(''); // Biến lưu giá trị tiêu đề bản vẽ
+    const [selectTag, setSelectTag] = useState(''); // Biến lưu giá trị tag bản vẽ
+    const [imageUploadLst, setImageUpload] = useState<UploadFile[]>([]); // Biến lưu giá trị ảnh bản vẽ đã upload
+    const [fileUploadLst, setFileUploadList] = useState<RcFile[]>([]); // Biến lưu giá trị file bản vẽ đã upload
+    const [selectPrice, setSelectPrice] = useState(''); // Biến lưu giá trị giá bản vẽ
+    const [note, setNote] = useState(''); // Biến lưu giá trị ghi chú bản vẽ
+    const [selectStyle, setSelectStyle] = useState(1); // Biến lưu giá trị kiểu bản vẽ
+    const [selectTool, setSelectTool] = useState<CheckboxValueType[]>([]); // Biến lưu giá trị công cụ vẽ bản vẽ
+    const [selectCategory, setSelectCategory] = useState<CheckboxValueType[]>([]); // Biến lưu giá trị danh mục bản vẽ
+    const [isCheckedRules, setIsCheckedRules] = useState(false); // Biến lưu giá trị quy tắc bản vẽ
+    const [previewOpen, setPreviewOpen] = useState(false);
+    const [previewImage, setPreviewImage] = useState('');
+    const [previewTitle, setPreviewTitle] = useState('');
 
-    const onScroll = () => {};
+    const handleCancelPreview = () => setPreviewOpen(false); // Hàm xử lý khi click hủy xem ảnh
 
-    const selectStepHandle = (value: string) => {
-        setStep(value);
+    const handlePreview = async (file: UploadFile) => { // Hàm xử lý khi click xem ảnh
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj as RcFile);
+        }
+        setPreviewImage(file.url || (file.preview as string));
+        setPreviewOpen(true);
+        setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1));
     };
 
-    const onSearch = () => {};
+    const [windowSize, setWindowSize] = useState([
+        window.innerWidth,
+        window.innerHeight,
+    ]);
 
-    const handleChangeMultivalueKey = () => {};
+    useEffect(() => {
+        const handleWindowResize = () => {
+            setWindowSize([window.innerWidth, window.innerHeight]);
+        };
 
-    const onSelectTool = () => {};
+        window.addEventListener('resize', handleWindowResize);
+        return () => {
+            window.removeEventListener('resize', handleWindowResize);
+        };
+    });
 
-    const onSelectCategory = () => {};
 
-    const beforeUploadAvatar = (file: any) => {
-        console.log(file);
-        const isJpgOrPng = file.type === "image/jpeg";
-        if (!isJpgOrPng) {
-            notification.open({
-                message: "Notification Title",
-                description:
-                    "This is the content of the notification. This is the content of the notification. This is the content of the notification.",
-                onClick: () => {
-                    console.log("Notification Clicked!");
-                },
-            });
-        }
-        const isLt2M = file.size! / 1024 / 1024 < 2;
-        if (!isLt2M) {
-            notification.open({
-                message: "Notification Title",
-                description:
-                    "This is the content of the notification. This is the content of the notification. This is the content of the notification.",
-                onClick: () => {
-                    console.log("Notification Clicked!");
-                },
-            });
-        }
+    const handleChangeFileLst: UploadProps['onChange'] = ({ fileList: newFileList }) => { // Hàm xử lý khi thay đổi file upload
+        setImageUpload(newFileList);
+        console.log(newFileList);
+    }
 
-        setAvatarUrl(URL.createObjectURL(file));
-        return false;
+    const uploadButton = ( // Hàm xử lý khi click upload ảnh
+        <div>
+            <PlusOutlined />
+            <div style={{ marginTop: 8 }}>Tải ảnh</div>
+        </div>
+    );
+
+    const handleChangeMultivalueKey = (val: React.SetStateAction<string>) => { // Hàm xử lý khi thay đổi giá trị select
+        setSelectTag(val)
     };
 
+    const filteredData = TypeList.filter(item => item.title.toLowerCase().includes(searchType.toLowerCase())); // Hàm xử lý khi tìm kiếm loại bản vẽ
+
+    const handleSearchType = (e: { target: { value: React.SetStateAction<string>; }; }) => { // Hàm xử lý khi thay đổi giá trị tìm kiếm loại bản vẽ
+        setSearchType(e.target.value);
+    }
+
+    const handleClickType = (item: { id: number; title: string; }) => { // Hàm xử lý khi click chọn loại bản vẽ
+        setSelectedType(item.id)
+        console.log(item);
+    }
+
+    const handleClickNextBtn = () => { // Hàm xử lý khi click nút tiếp theo
+        setCurrent(current + 1);
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    }
+
+    const handleClickBackBtn = () => { // Hàm xử lý khi click nút quay lại
+        setCurrent(current - 1);
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    }
+
+    const handleClickBtnStyle = (val: React.SetStateAction<number>) => { // Hàm xử lý khi click chọn kiểu bản vẽ
+        setSelectStyle(val);
+    };
     return (
         <div className="main-upload">
             <div className="upload-area">
-                <div className="upload-step">
-                    <div
-                        className="step1"
-                        onClick={() => selectStepHandle("type")}
-                    >
-                        <img src={Step1} />
-                        <div className="text">Danh mục bản vẽ</div>
-                    </div>
-                    <MinusOutlined className="connector-icon" />
-                    <div
-                        className="step2"
-                        onClick={() => selectStepHandle("description")}
-                    >
-                        <img src={Step2} />
-                        <div className="text">Mô tả bản vẽ</div>
-                    </div>
-                    <MinusOutlined className="connector-icon" />
-                    <div
-                        className="step3"
-                        onClick={() => selectStepHandle("information")}
-                    >
-                        <img src={Step3} />
-                        <div className="text">Thông tin bản vẽ</div>
-                    </div>
-                </div>
-                <Form
-                    className="form"
-                    labelCol={{ span: 4 }}
-                    wrapperCol={{ span: 14 }}
-                    layout="horizontal"
-                >
+                <Steps
+                    responsive={false}
+                    direction="horizontal"
+                    className="upload-step"
+                    current={current}
+                    items={
+                        windowSize[0] >= 700 ?
+                            [
+                                {
+                                    title: 'Danh mục bản vẽ',
+                                    icon: <FolderOutlined />
+                                },
+                                {
+                                    title: 'Mô tả bản vẽ',
+                                    icon: <ProfileOutlined />
+                                },
+                                {
+                                    title: 'Thông tin bản vẽ',
+                                    icon: <PictureOutlined />,
+                                },
+                            ] :
+                            [
+                                {
+                                    // title: 'Danh mục bản vẽ',
+                                    icon: <FolderOutlined />
+                                },
+                                {
+                                    // title: 'Mô tả bản vẽ',
+                                    icon: <ProfileOutlined />
+                                },
+                                {
+                                    // title: 'Thông tin bản vẽ',
+                                    icon: <PictureOutlined />,
+                                },
+                            ]
+                    }
+                />
+                <Form className="form">
                     <div className="sketch-content-area">
-                        {step === "type" && (
-                            <div className="type-of-sketch">
-                                <div className="title">Danh mục bản vẽ</div>
-                                <div className="description">
-                                    Vui lòng nhập các thông tin chung
-                                </div>
-                                <Form.Item>
-                                    <Search
-                                        placeholder="input search text"
-                                        onSearch={onSearch}
-                                    />
-                                    <List>
-                                        <VirtualList
-                                            data={TypeList}
-                                            itemHeight={47}
-                                            itemKey="id"
-                                            height={400}
-                                            onScroll={onScroll}
-                                        >
-                                            {(item: any) => (
-                                                <List.Item key={item.id}>
-                                                    <List.Item.Meta
-                                                        title={
-                                                            <a href="https://ant.design">
-                                                                {item.title}
-                                                            </a>
-                                                        }
-                                                    />
-                                                    <div>Content</div>
-                                                </List.Item>
-                                            )}
-                                        </VirtualList>
-                                    </List>
-                                </Form.Item>
-                            </div>
-                        )}
-                        {step === "description" && (
-                            <div className="description-of-sketch">
-                                <div className="title">Mô tả bản vẽ</div>
-                                <div className="description">
-                                    Vui lòng nhập các thông tin chung
-                                </div>
-                                <Form.Item>
-                                    <div>Tiêu đề</div>
-                                    <Input />
-                                </Form.Item>
-                                <Form.Item>
-                                    <div>Từ khóa</div>
-                                    <Select
-                                        mode="multiple"
-                                        style={{ width: "100%" }}
-                                        placeholder="Please select"
-                                        defaultValue={["a10", "c12"]}
-                                        onChange={handleChangeMultivalueKey}
-                                        options={options}
-                                    />
-                                </Form.Item>
-                                <div className="image">
-                                    <Form.Item
-                                        className="thumbnail"
-                                        valuePropName="fileList"
-                                    >
-                                        <div>Ảnh đại diện</div>
-                                        <Upload
-                                            action="/upload.do"
-                                            listType="picture-card"
-                                            name="avatar"
-                                            showUploadList={false}
-                                            multiple={false}
-                                            beforeUpload={beforeUploadAvatar}
-                                        >
-                                            {avatarUrl ? (
-                                                <img
-                                                    src={avatarUrl}
-                                                    alt="avatar"
-                                                    style={{
-                                                        width: "100%",
-                                                    }}
-                                                />
-                                            ) : (
-                                                <div>
-                                                    <PlusOutlined />
-                                                    <div
-                                                        style={{
-                                                            marginTop: 8,
-                                                        }}
-                                                    >
-                                                        Upload
-                                                    </div>
-                                                </div>
-                                            )}
-                                        </Upload>
-                                    </Form.Item>
-                                    <Form.Item
-                                        className="image-list"
-                                        valuePropName="fileList"
-                                    >
-                                        <div>Các ảnh chi tiết</div>
-                                        <Upload
-                                            action="/upload.do"
-                                            listType="picture-card"
-                                        >
-                                            <div>
-                                                <PlusOutlined />
-                                                <div
-                                                    style={{
-                                                        marginTop: 8,
-                                                    }}
-                                                >
-                                                    Upload
-                                                </div>
-                                            </div>
-                                        </Upload>
-                                    </Form.Item>
-                                </div>
-                                <Form.Item>
-                                    <Dragger {...props}>
-                                        <p className="ant-upload-drag-icon">
-                                            <InboxOutlined />
-                                        </p>
-                                        <p className="ant-upload-text">
-                                            Click hoặc kéo file bản vẽ vào đây
-                                        </p>
-                                        <p className="ant-upload-hint">
-                                            Lưu ý zip file trước khi upload
-                                        </p>
-                                    </Dragger>
-                                </Form.Item>
-                                <Form.Item>
-                                    <div>Phí download</div>
-                                    <Input />
-                                </Form.Item>
-
-                                <Form.Item>
-                                    <div>Mô tả chi tiết</div>
-                                    <TextArea rows={4} />
-                                </Form.Item>
-                            </div>
-                        )}
-                        {step === "information" && (
-                            <div className="information-of-sketch">
-                                <div className="title">Thông tin bản vẽ</div>
-                                <div className="description">
-                                    Vui lòng nhập các thông tin chung
-                                </div>
-                                <div className="style">
+                        {current === 0 && (
+                            <div className="content-area">
+                                <div className="sketch-content">
+                                    <div className="title">Danh mục bản vẽ</div>
+                                    <div className="description">
+                                        Vui lòng nhập các thông tin chung
+                                    </div>
                                     <Form.Item>
-                                        <div>Phong cách</div>
-                                        <div className="button-group">
-                                            {styleList.map((item, index) => (
-                                                <Button
-                                                    className={
-                                                        index === 0
-                                                            ? "end-left-button"
-                                                            : index ===
-                                                              styleList.length -
-                                                                  1
-                                                            ? "end-right-button"
-                                                            : ""
-                                                    }
-                                                >
-                                                    {item}
-                                                </Button>
-                                            ))}
+                                        <div className={`header-content-input`}>
+                                            <Input
+                                                className='search-input'
+                                                placeholder='Tìm kiếm danh mục bản vẽ'
+                                                onChange={handleSearchType}
+                                            />
+                                            <img src={SearchIcon} className='icon-search'></img>
                                         </div>
+                                        <List>
+                                            <VirtualList
+                                                data={filteredData}
+                                                height={300}
+                                                itemHeight={47}
+                                                itemKey="email"
+                                            >
+                                                {(item: any) => (
+                                                    <List.Item
+                                                        className={`${selectedType === item.id ? 'selected-item' : ''}`}
+                                                        onClick={() => handleClickType(item)}
+                                                    >
+                                                        <List.Item.Meta
+                                                            title={item.title}
+                                                        />
+                                                    </List.Item>
+                                                )}
+                                            </VirtualList>
+                                        </List>
                                     </Form.Item>
+                                </div>
+                                <motion.div className="btn-submit-upload">
+                                    {selectedType ?
+                                        <Button onClick={() => handleClickNextBtn()}>
+                                            Tiếp tục
+                                        </Button>
+                                        :
+                                        <Button disabled={true}>
+                                            Tiếp tục
+                                        </Button>
+                                    }
+                                </motion.div>
+                            </div>
+                        )}
+                        {current === 1 && (
+                            <div className="content-area">
+                                <div className="sketch-content">
+                                    <div className="title">Mô tả bản vẽ</div>
+                                    <div className="description">
+                                        Vui lòng nhập các thông tin chung
+                                    </div>
                                     <Form.Item>
-                                        <div>Công cụ</div>
-                                        <div className="tool-list">
-                                            <Radio.Group
-                                                options={toolOptions}
-                                                onChange={onSelectTool}
+                                        <div className="title-input">Tiêu đề <strong>*</strong></div>
+                                        <div className={`header-content-input`}>
+                                            <Input
+                                                className='search-input'
+                                                placeholder='Nhập tiêu đề'
+                                                onChange={(e) => setSelectTitle(e.target.value)}
                                             />
                                         </div>
                                     </Form.Item>
                                     <Form.Item>
-                                        <div>Công cụ</div>
-                                        <div className="tool-list">
-                                            <Checkbox.Group
-                                                style={{ width: "100%" }}
-                                                onChange={onSelectCategory}
+                                        <div className="title-input">Từ khóa <strong>*</strong></div>
+                                        <Select
+                                            mode="tags"
+                                            placeholder="Nhập từ khóa"
+                                            onChange={handleChangeMultivalueKey}
+                                            options={options}
+                                        />
+                                    </Form.Item>
+                                    <div className="image">
+                                        <Form.Item
+                                            className="thumbnail"
+                                            valuePropName="imageList"
+                                        >
+                                            <div className="title-input">Hình ảnh <strong>*</strong></div>
+                                            <Upload
+                                                action={"https://localhost:3000/"}
+                                                multiple
+                                                listType="picture-card"
+                                                showUploadList={{ showRemoveIcon: true }}
+                                                fileList={imageUploadLst}
+                                                onPreview={handlePreview}
+                                                onChange={handleChangeFileLst}
+                                                accept=".png, .jpeg, .jpg"
+                                                beforeUpload={(file) => {
+                                                    console.log(file);
+                                                    return false;
+                                                }}
+                                                progress={{
+                                                    strokeWidth: 3,
+                                                    strokeColor: {
+                                                        "0%": "#a9eab3",
+                                                        "100%": "#27CA40"
+                                                    },
+                                                    style: { top: 12 }
+                                                }}
                                             >
-                                                <Row>
-                                                    <Col span={8}>
-                                                        <Checkbox value="A">
-                                                            A
-                                                        </Checkbox>
-                                                    </Col>
-                                                    <Col span={8}>
-                                                        <Checkbox value="B">
-                                                            B
-                                                        </Checkbox>
-                                                    </Col>
-                                                    <Col span={8}>
-                                                        <Checkbox value="C">
-                                                            C
-                                                        </Checkbox>
-                                                    </Col>
-                                                    <Col span={8}>
-                                                        <Checkbox value="D">
-                                                            D
-                                                        </Checkbox>
-                                                    </Col>
-                                                    <Col span={8}>
-                                                        <Checkbox value="E">
-                                                            E
-                                                        </Checkbox>
-                                                    </Col>
-                                                </Row>
-                                            </Checkbox.Group>
+                                                {imageUploadLst.length >= 8 ? null : uploadButton}
+                                            </Upload>
+                                            <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancelPreview}>
+                                                <img alt="example" style={{ width: '100%' }} src={previewImage} />
+                                            </Modal>
+                                        </Form.Item>
+                                        <Form.Item
+                                            className="image-list"
+                                            valuePropName="fileList"
+                                        >
+                                            <div className="title-input">Tải bản vẽ chi tiết <strong>*</strong></div>
+                                            <Upload.Dragger
+                                                multiple
+                                                listType="picture"
+                                                action={"https://localhost:3000/"}
+                                                showUploadList={{ showRemoveIcon: true }}
+                                                accept=".png, .jpeg, .jpg, .pdf, .zip, .rar, .7z, .doc"
+                                                beforeUpload={(file) => {
+                                                    let tmplst = fileUploadLst;
+                                                    tmplst.push(file);
+                                                    setFileUploadList(tmplst);
+                                                    return false;
+                                                }}
+                                                progress={{
+                                                    strokeWidth: 3,
+                                                    strokeColor: {
+                                                        "0%": "#a9eab3",
+                                                        "100%": "#27CA40"
+                                                    },
+                                                    style: { top: 12 }
+                                                }}
+                                            >
+                                                Click hoặc kéo file bản vẽ vào đây
+                                                <br />
+                                            </Upload.Dragger>
+                                        </Form.Item>
+                                    </div>
+                                    <Form.Item>
+                                        <div className="title-input">Phí download (VNĐ) <strong>*</strong></div>
+                                        <div className={`header-content-input`}>
+                                            <Input
+                                                type="number"
+                                                className='search-input'
+                                                placeholder='Nhập phí download'
+                                                onChange={(e) => setSelectPrice(e.target.value)}
+                                            />
                                         </div>
                                     </Form.Item>
-                                    <div className="rule">
-                                        <div>Quy định chung</div>
+
+                                    <Form.Item>
+                                        <div className="title-input">Mô tả chi tiết <strong>*</strong></div>
+                                        <div className={`header-content-input`}>
+                                            <TextArea rows={4} placeholder="Nhập mô tả" onChange={(e) => setNote(e.target.value)} />
+                                        </div>
+                                    </Form.Item>
+                                </div>
+                                <motion.div className="btn-submit-upload">
+                                    <Button className="btn-back" onClick={() => handleClickBackBtn()}>
+                                        Quay lại
+                                    </Button>
+                                    {selectTitle && selectTag && imageUploadLst && fileUploadLst && selectPrice && note ?
+                                        <Button onClick={() => handleClickNextBtn()}>
+                                            Tiếp tục
+                                        </Button>
+                                        :
+                                        <Button onClick={() => handleClickNextBtn()} disabled>
+                                            Tiếp tục
+                                        </Button>
+                                    }
+                                </motion.div>
+                            </div>
+                        )}
+                        {current === 2 && (
+                            <div className="content-area">
+                                <div className="sketch-content">
+                                    <div className="title">Thông tin bản vẽ</div>
+                                    <div className="description">
+                                        Vui lòng nhập các thông tin chung
+                                    </div>
+                                    <Form.Item>
+                                        <div className="title-input">Phong cách <strong>*</strong></div>
+                                        <div className="button-group">
+                                            <Button
+                                                className={selectStyle === 1 ? "active" : ""}
+                                                onClick={() => handleClickBtnStyle(1)}>
+                                                Hiện đại
+                                            </Button>
+                                            <Button
+                                                className={selectStyle === 2 ? "active" : ""}
+                                                onClick={() => handleClickBtnStyle(2)}>
+                                                Tân cổ điển
+                                            </Button>
+                                            <Button
+                                                className={selectStyle === 3 ? "active" : ""}
+                                                onClick={() => handleClickBtnStyle(3)}>
+                                                Chưa xác định
+                                            </Button>
+                                        </div>
+                                    </Form.Item>
+                                    <Form.Item>
+                                        <div className="title-input">Công cụ <strong>*</strong></div>
+                                        <div className="tool-list">
+                                            <Checkbox.Group className="lst-tool" options={optionsTools} onChange={(e) => setSelectTool(e)} />
+                                        </div>
+                                    </Form.Item>
+                                    <Form.Item>
+                                        <div className="title-input">Hạng mục <strong>*</strong></div>
+                                        <div className="tool-list">
+                                            <Checkbox.Group className="lst-category" options={optionsCategorys} onChange={(e) => setSelectCategory(e)} />
+                                        </div>
+                                    </Form.Item>
+                                    <Form.Item >
+                                        <div className="title-input">Quy định chung</div>
                                         <div className="rule-list">
                                             {ruleList.map((item) => (
                                                 <div>{`- ${item}`}</div>
                                             ))}
                                         </div>
-                                    </div>
-                                    <div className="commit">
-                                        <Form.Item>
-                                            <Checkbox>
-                                                Tôi đã đọc và đồng ý với quy
-                                                định chung của VRO Group
-                                            </Checkbox>
-                                        </Form.Item>
-                                    </div>
+                                    </Form.Item>
+                                    <Form.Item>
+                                        <Checkbox onChange={(e) => setIsCheckedRules(e.target.checked)}>Tôi đã đọc và đồng ý với quy định chung của VRO Group</Checkbox>
+                                    </Form.Item>
                                 </div>
+                                <motion.div className="btn-submit-upload">
+                                    <Button className="btn-back" onClick={() => handleClickBackBtn()}>
+                                        Quay lại
+                                    </Button>
+                                    {selectStyle && selectTool && selectCategory && isCheckedRules ?
+                                        <Button onClick={() => handleClickNextBtn()}>
+                                            Đăng bài
+                                        </Button>
+                                        :
+                                        <Button onClick={() => handleClickNextBtn()} disabled>
+                                            Đăng bài
+                                        </Button>
+                                    }
+                                </motion.div>
                             </div>
                         )}
                     </div>
-                    {step === "information" && (
-                        <div className="confirm-button-group">
-                            <Form.Item>
-                                <Button className="btn">Quay lại</Button>
-                            </Form.Item>
-                            <Form.Item>
-                                <Button className="btn">Đăng bài</Button>
-                            </Form.Item>
-                        </div>
-                    )}
                 </Form>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 };
 
