@@ -108,7 +108,7 @@ const getBase64 = (file: RcFile): Promise<string> =>
         reader.onerror = (error) => reject(error);
     });
 const UploadSketch = () => {
-    const [current, setCurrent] = useState(2); // Biến kiểm tra bước hiện tại
+    const [current, setCurrent] = useState(0); // Biến kiểm tra bước hiện tại
     const [searchType, setSearchType] = useState(''); // Biến lưu giá trị tìm kiếm loại bản vẽ
     const [selectedType, setSelectedType] = useState<number>(); // Biến lưu giá trị loại bản vẽ
     const [selectTitle, setSelectTitle] = useState(''); // Biến lưu giá trị tiêu đề bản vẽ
