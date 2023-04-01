@@ -17,7 +17,7 @@ export interface ISketch {
 
 export interface ICurrentSearchValue {
     text: string;
-    tool: ITool[];
-    architecture: IArchitecture[];
-    style: IStyle[];
+    tool: string[];
+    architecture: string[];
+    style: string[];
 }

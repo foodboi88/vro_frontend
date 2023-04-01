@@ -47,7 +47,7 @@ interface SketchState {
     commentList?: any[];
     filteredSketchs?: ISketch[];
     filteredAuthors?: IUser[];
-    currentSearchValue?: ICurrentSearchValue;
+    currentSearchValue: ICurrentSearchValue;
 }
 
 const initState: SketchState = {
@@ -70,7 +70,12 @@ const initState: SketchState = {
     commentList: [],
     filteredSketchs: [],
     filteredAuthors: [],
-    currentSearchValue: undefined,
+    currentSearchValue: {
+        architecture: [],
+        style: [],
+        text: "",
+        tool: [],
+    },
 };
 
 const sketchSlice = createSlice({
@@ -114,9 +119,8 @@ const sketchSlice = createSlice({
 
         getLatestSketchFail(state, action: PayloadAction<any>) {
             console.log(action);
-            state.mostViewedSketchList = action.payload.data[0].items;
             notification.open({
-                message: "Load success",
+                message: "Load fail",
                 // description:
                 //     action.payload.response.message,
                 onClick: () => {
@@ -230,23 +234,34 @@ const sketchSlice = createSlice({
             state.loading = false;
         },
 
-        advancedSearchingRequest(state, action: PayloadAction<any>) {
+        advancedSearchingRequest(
+            state,
+            action: PayloadAction<ICurrentSearchValue>
+        ) {
             state.loading = true;
+
+            state.currentSearchValue = {
+                // Xu ly de lay duoc ca gia tri cua o input cua header va cac o selectbox cua filter. Neu co
+                // truong nao khong co gia tri thi lay gia tri hien tai duoc luu trong redux
+                architecture: action.payload.architecture
+                    ? action.payload.architecture
+                    : state.currentSearchValue.architecture,
+                style: action.payload.style
+                    ? action.payload.style
+                    : state.currentSearchValue.style,
+                text: action.payload.text
+                    ? action.payload.text
+                    : state.currentSearchValue.text,
+                tool: action.payload.tool
+                    ? action.payload.tool
+                    : state.currentSearchValue.tool,
+            };
         },
 
         advancedSearchingSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
             state.filteredAuthors = action.payload.data.author;
             state.filteredSketchs = action.payload.data.sketch;
-
-            state.currentSearchValue = {
-                text: action.payload.text ? action.payload.text : "",
-                tool: action.payload.tool ? action.payload.tool : "",
-                architecture: action.payload.architecture
-                    ? action.payload.architecture
-                    : "",
-                style: action.payload.style ? action.payload.style : "",
-            };
         },
     },
 });
@@ -433,7 +448,7 @@ const getDetailSketchPageContent$: RootEpic = (
     action$ // Lay tat ca noi dung cua trang detail sketch: noi dung ban ve + comment
 ) =>
     action$.pipe(
-        filter(getAllFilterCriteriasRequest.match),
+        filter(getDetailSketchPageContentRequest.match),
         switchMap((re) => {
             return [
                 sketchSlice.actions.getDetailSketchRequest(re.payload),
@@ -463,7 +478,7 @@ const getDetailSketch$: RootEpic = (action$) =>
 
 const getCommentBySketchId$: RootEpic = (action$) =>
     action$.pipe(
-        filter(getDetailSketchRequest.match),
+        filter(getCommentBySketchIdRequest.match),
         switchMap((re) => {
             // IdentityApi.login(re.payload) ?
             console.log(re);
@@ -489,17 +504,16 @@ const advancedSearchSketch$: RootEpic = (action$) =>
             console.log(re);
             const bodyrequest: ICurrentSearchValue = {
                 text: re.payload.text ? re.payload.text : "",
-                tool: re.payload.tool ? re.payload.tool : "",
+                tool: re.payload.tool ? re.payload.tool : [],
                 architecture: re.payload.architecture
                     ? re.payload.architecture
-                    : "",
-                style: re.payload.style ? re.payload.style : "",
+                    : [],
+                style: re.payload.style ? re.payload.style : [],
             };
 
             return SketchsApi.advancedSearching(bodyrequest).pipe(
                 mergeMap((res: any) => {
                     console.log(res);
-                    res = { ...bodyrequest, res };
                     return [sketchSlice.actions.advancedSearchingSuccess(res)];
                 }),
                 catchError((err) => [])

@@ -1,7 +1,7 @@
 import { Checkbox, Col, Form, Row, Select } from "antd";
 import { Option } from "antd/lib/mentions";
 import "./styles.filter.scss";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
     FormatPainterOutlined,
     HomeOutlined,
@@ -37,6 +37,12 @@ const stylesTools = [
     { label: "Cổ điển", value: "Cổ điển" },
     { label: "Hiện đại", value: "Hiển đại" },
 ];
+
+interface DATA_TRANFER {
+    target: string;
+    value: string[];
+}
+
 const CFilter = (props: props) => {
     const dispatch = useDispatchRoot();
     const {
@@ -45,20 +51,37 @@ const CFilter = (props: props) => {
         styleList,
         filteredSketchs,
         filteredAuthors,
+        currentSearchValue,
     } = useSelectorRoot((state) => state.sketch);
     const [form] = Form.useForm();
+    const [selectedTool, setSelectedTool] = useState<string[]>([]);
+    const [selectedArchitecture, setSelectedArchitecture] = useState<string[]>(
+        []
+    );
+    const [selectedStyle, setSelectedStyle] = useState<string[]>([]);
 
     useEffect(() => {
         dispatch(getAllFilterCriteriasRequest());
     }, []);
 
-    const handleSearch = (event: any) => {
-        console.log(event);
+    const handleSearch = (param: DATA_TRANFER) => {
+        console.log(param);
         const bodyrequest = {
-            toolList: form.getFieldValue("tool"),
-            architectureList: form.getFieldValue("architecture"),
-            style: form.getFieldValue("style"),
+            tool: param.target === "tool" ? param.value : selectedTool,
+            architecture:
+                param.target === "architecture"
+                    ? param.value
+                    : selectedArchitecture,
+            style: param.target === "style" ? param.value : selectedStyle,
+            text: currentSearchValue.text, // Lay ra gia tri text luu trong redux
         };
+
+        if (param.target === "tool") setSelectedTool(param.value);
+        if (param.target === "architecture")
+            setSelectedArchitecture(param.value);
+        if (param.target === "style") setSelectedStyle(param.value);
+        console.log(bodyrequest);
+
         dispatch(advancedSearchingRequest(bodyrequest));
     };
 
@@ -78,7 +101,12 @@ const CFilter = (props: props) => {
                         <div className="text">Công cụ</div>
                     </div>
                     <Checkbox.Group
-                        onChange={handleSearch}
+                        onChange={(event) =>
+                            handleSearch({
+                                target: "tool",
+                                value: event as string[],
+                            })
+                        }
                         options={toolList}
                     />
                 </Form.Item>
@@ -90,7 +118,12 @@ const CFilter = (props: props) => {
                         <div className="text">Kiến trúc</div>
                     </div>
                     <Checkbox.Group
-                        onChange={handleSearch}
+                        onChange={(event) =>
+                            handleSearch({
+                                target: "architecture",
+                                value: event as string[],
+                            })
+                        }
                         options={architectureTools}
                     />
                 </Form.Item>
@@ -102,7 +135,12 @@ const CFilter = (props: props) => {
                         <div className="text">Phong cách</div>
                     </div>
                     <Checkbox.Group
-                        onChange={handleSearch}
+                        onChange={(event) =>
+                            handleSearch({
+                                target: "style",
+                                value: event as string[],
+                            })
+                        }
                         options={stylesTools}
                     />
                 </Form.Item>
