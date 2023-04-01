@@ -7,11 +7,12 @@ export interface IReqGetLatestSketchs {
 
 export interface ISketch {
     title: string;
-    content: string;
-    price: 0;
-    size: string;
-    designToolId: string;
-    collectionId: string;
+    price: number;
+    views: number;
+    likes: number;
+    quantityPurchased: number;
+    id: string;
+    images: string[];
 }
 
 export interface ICurrentSearchValue {

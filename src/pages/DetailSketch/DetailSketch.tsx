@@ -47,7 +47,7 @@ interface CardData {
     id: number;
     title: string;
     type: string;
-    price: string;
+    price: number;
     view: number;
     imageUrl: string;
 }
@@ -57,7 +57,7 @@ const featuredLst: CardData[] = [
         id: 1,
         title: "Bản vẽ biệt thự 2 tầng",
         type: "File Sketchup",
-        price: "500.000VNĐ",
+        price: 0,
         view: 96,
         imageUrl: DrawHomeImage1,
     },
@@ -65,7 +65,7 @@ const featuredLst: CardData[] = [
         id: 2,
         title: "Bản vẽ biệt thự 4 tầng",
         type: "File 3D Max",
-        price: "1.500.000VNĐ",
+        price: 0,
         view: 105,
         imageUrl: DrawHomeImage2,
     },
@@ -73,7 +73,7 @@ const featuredLst: CardData[] = [
         id: 3,
         title: "Bản vẽ biệt thự 3 tầng",
         type: "File Sketchup",
-        price: "Free",
+        price: 0,
         view: 365,
         imageUrl: DrawHomeImage3,
     },
@@ -81,7 +81,7 @@ const featuredLst: CardData[] = [
         id: 4,
         title: "Thiết kế nhà gác lửng hiện đại",
         type: "File Auto Cad",
-        price: "2.500.000VNĐ",
+        price: 0,
         view: 25,
         imageUrl: DrawHomeImage4,
     },

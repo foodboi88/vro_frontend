@@ -25,6 +25,7 @@ export default class SketchsApi {
     }
 
     static getLatestSketchs(params: IReqGetLatestSketchs): Observable<any> {
+        console.log(params);
         const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.GET_LATEST_SKETCH}?size=${params.size}&offset=${params.offset}`;
         return HttpClient.get(api).pipe(
             map(

@@ -41,85 +41,17 @@ interface CardData {
     id: number;
     title: string;
     type: string;
-    price: string;
+    price: number;
     view: number;
     imageUrl: string;
 }
 
-const featuredLst: CardData[] = [
-    {
-        id: 1,
-        title: "Bản vẽ biệt thự 2 tầng",
-        type: "File Sketchup",
-        price: "500.000VNĐ",
-        view: 96,
-        imageUrl: DrawHomeImage1,
-    },
-    {
-        id: 2,
-        title: "Bản vẽ biệt thự 4 tầng",
-        type: "File 3D Max",
-        price: "1.500.000VNĐ",
-        view: 105,
-        imageUrl: DrawHomeImage2,
-    },
-    {
-        id: 3,
-        title: "Bản vẽ biệt thự 3 tầng",
-        type: "File Sketchup",
-        price: "Free",
-        view: 365,
-        imageUrl: DrawHomeImage3,
-    },
-    {
-        id: 4,
-        title: "Thiết kế nhà gác lửng hiện đại",
-        type: "File Auto Cad",
-        price: "2.500.000VNĐ",
-        view: 25,
-        imageUrl: DrawHomeImage4,
-    },
-];
-const newLst: CardData[] = [
-    {
-        id: 1,
-        title: "Dựng ngoại cảnh căn biệt thự",
-        type: "File Auto cad",
-        price: "865.000VNĐ",
-        view: 245,
-        imageUrl: DrawHomeImage5,
-    },
-    {
-        id: 2,
-        title: "Thiết kế biệt thự 2 tầng",
-        type: "File Sketchup",
-        price: "Free",
-        view: 32,
-        imageUrl: DrawHomeImage6,
-    },
-    {
-        id: 3,
-        title: "Bản vẽ biệt thự 2 tầng",
-        type: "File Sketchup",
-        price: "300.000VNĐ",
-        view: 26,
-        imageUrl: DrawHomeImage7,
-    },
-    {
-        id: 4,
-        title: "Bản vẽ biệt thự 2 tầng",
-        type: "File Sketchup",
-        price: "Free",
-        view: 85,
-        imageUrl: DrawHomeImage8,
-    },
-];
 const suggestLst: CardData[] = [
     {
         id: 1,
         title: "Bản vẽ biệt thự 3 tầng cổ điển",
         type: "File 3D Max",
-        price: "Free",
+        price: 0,
         view: 265,
         imageUrl: DrawHomeImage9,
     },
@@ -127,7 +59,7 @@ const suggestLst: CardData[] = [
         id: 2,
         title: "Bản vẽ nhà xưởng",
         type: "File Revit",
-        price: "Free",
+        price: 0,
         view: 500,
         imageUrl: DrawHomeImage10,
     },
@@ -135,7 +67,7 @@ const suggestLst: CardData[] = [
         id: 3,
         title: "Bản vẽ biệt thự phong cách Nhật",
         type: "File Revit",
-        price: "3.500.000VNĐ",
+        price: 3500000,
         view: 65,
         imageUrl: DrawHomeImage11,
     },
@@ -143,7 +75,7 @@ const suggestLst: CardData[] = [
         id: 4,
         title: "Biệt thự phong cách Roman",
         type: "File 3D Max",
-        price: "10.000.000VNĐ",
+        price: 10000000,
         view: 152,
         imageUrl: DrawHomeImage12,
     },
@@ -153,7 +85,7 @@ const webSuggestLst: CardData[] = [
         id: 1,
         title: "Biệt thự mái thái",
         type: "File Revit",
-        price: "700.000VNĐ",
+        price: 700000,
         view: 65,
         imageUrl: DrawHomeImage13,
     },
@@ -161,7 +93,7 @@ const webSuggestLst: CardData[] = [
         id: 2,
         title: "Biệt thự Tân cổ điển",
         type: "File Auto cad",
-        price: "670.000VNĐ",
+        price: 670000,
         view: 98,
         imageUrl: DrawHomeImage14,
     },
@@ -169,7 +101,7 @@ const webSuggestLst: CardData[] = [
         id: 3,
         title: "Bản vẽ biệt thự mái thái",
         type: "File Sketchup",
-        price: "Free",
+        price: 0,
         view: 32,
         imageUrl: DrawHomeImage15,
     },
@@ -177,7 +109,7 @@ const webSuggestLst: CardData[] = [
         id: 4,
         title: "Bản vẽ quán ăn",
         type: "File Auto cad",
-        price: "Free",
+        price: 0,
         view: 75,
         imageUrl: DrawHomeImage16,
     },
@@ -219,8 +151,8 @@ const Home = () => {
 
     const navigate = useNavigate();
     const [spanCol, setSpanCol] = useState<number>(6);
-    const [numberOfCardShow, setNumberOfCardShow] = useState<number>(4);
-    const [numberOfCardNext, setNumberOfCardNext] = useState<number>(4);
+    const [numberOfCardShow, setNumberOfCardShow] = useState<number>(10);
+    const [numberOfCardNext, setNumberOfCardNext] = useState<number>(10);
 
     const [windowSize, setWindowSize] = useState([
         window.innerWidth,
@@ -301,7 +233,7 @@ const Home = () => {
                         />
                     </Col>
                     <Row gutter={[16, 16]}>
-                        {featuredLst
+                        {mostViewedSketchList
                             .slice(
                                 currentIndex,
                                 currentIndex + numberOfCardShow
@@ -309,11 +241,11 @@ const Home = () => {
                             .map((card) => (
                                 <Col span={spanCol} key={card.id}>
                                     <CProductCard
-                                        imageUrl={card.imageUrl}
+                                        imageUrl={card.images[0]}
                                         title={card.title}
-                                        view={card.view}
+                                        view={card.views}
                                         price={card.price}
-                                        type={card.type}
+                                        // type={card.type}
                                     />
                                 </Col>
                             ))}
@@ -345,7 +277,7 @@ const Home = () => {
                         />
                     </Col>
                     <Row gutter={[16, 16]}>
-                        {newLst
+                        {latestSketchsList
                             .slice(
                                 currentIndex,
                                 currentIndex + numberOfCardShow
@@ -353,11 +285,11 @@ const Home = () => {
                             .map((card) => (
                                 <Col span={spanCol} key={card.id}>
                                     <CProductCard
-                                        imageUrl={card.imageUrl}
+                                        imageUrl={card.images[0]}
                                         title={card.title}
-                                        view={card.view}
+                                        view={card.views}
                                         price={card.price}
-                                        type={card.type}
+                                        // type={card.type}
                                     />
                                 </Col>
                             ))}

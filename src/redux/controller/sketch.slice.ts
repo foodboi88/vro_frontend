@@ -92,13 +92,12 @@ const sketchSlice = createSlice({
 
         getLatestSketchRequest(state, action: PayloadAction<any>) {
             state.loading = true;
-            state.registerSuccess = false;
             console.log("Da chui vao voi action: ", action);
         },
 
         getLatestSketchSuccess(state, action: PayloadAction<any>) {
             console.log(action);
-            state.latestSketchsList = action.payload.data[0].items;
+            state.latestSketchsList = action.payload.data;
             notification.open({
                 message: "Load success",
                 // description:
@@ -135,6 +134,8 @@ const sketchSlice = createSlice({
 
         getMostViewdSketchsSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
+            state.mostViewedSketchList = action.payload.data;
+
             console.log("Da chui vao voi action: ", action);
         },
 
@@ -250,30 +251,30 @@ const sketchSlice = createSlice({
     },
 });
 
-const uploadSketch$: RootEpic = (action$) =>
-    action$.pipe(
-        filter(getLatestSketchRequest.match),
-        switchMap((re) => {
-            // IdentityApi.login(re.payload) ?
-            console.log(re);
-            const body: any = {
-                email: re.payload.email,
-                password: re.payload.password,
-                remember: re.payload.remember,
-                additionalProp1: {},
-            };
+// const uploadSketch$: RootEpic = (action$) =>
+//     action$.pipe(
+//         filter(getLatestSketchRequest.match),
+//         switchMap((re) => {
+//             // IdentityApi.login(re.payload) ?
+//             console.log(re);
+//             const body: any = {
+//                 email: re.payload.email,
+//                 password: re.payload.password,
+//                 remember: re.payload.remember,
+//                 additionalProp1: {},
+//             };
 
-            return SketchsApi.getLatestSketchs(body).pipe(
-                mergeMap((res: any) => {
-                    console.log(res);
-                    console.log(res.data.accessToken);
-                    const token = res.data.accessToken;
-                    return [];
-                }),
-                catchError((err) => [])
-            );
-        })
-    );
+//             return SketchsApi.getLatestSketchs(body).pipe(
+//                 mergeMap((res: any) => {
+//                     console.log(res);
+//                     console.log(res.data.accessToken);
+//                     const token = res.data.accessToken;
+//                     return [];
+//                 }),
+//                 catchError((err) => [])
+//             );
+//         })
+//     );
 
 const getHomeListSketch$: RootEpic = (action$) =>
     action$.pipe(
@@ -329,30 +330,30 @@ const getMostViewdSketchs$: RootEpic = (action$) =>
         })
     );
 
-const getMostDownloadedSketchs$: RootEpic = (action$) =>
-    action$.pipe(
-        filter(getLatestSketchRequest.match),
-        switchMap((re) => {
-            // IdentityApi.login(re.payload) ?
-            console.log(re);
-            const body: any = {
-                email: re.payload.email,
-                password: re.payload.password,
-                remember: re.payload.remember,
-                additionalProp1: {},
-            };
+// const getMostDownloadedSketchs$: RootEpic = (action$) =>
+//     action$.pipe(
+//         filter(getLatestSketchRequest.match),
+//         switchMap((re) => {
+//             // IdentityApi.login(re.payload) ?
+//             console.log(re);
+//             const body: any = {
+//                 email: re.payload.email,
+//                 password: re.payload.password,
+//                 remember: re.payload.remember,
+//                 additionalProp1: {},
+//             };
 
-            return IdentityApi.login(body).pipe(
-                mergeMap((res: any) => {
-                    console.log(res);
-                    console.log(res.data.accessToken);
-                    const token = res.data.accessToken;
-                    return [];
-                }),
-                catchError((err) => [])
-            );
-        })
-    );
+//             return IdentityApi.login(body).pipe(
+//                 mergeMap((res: any) => {
+//                     console.log(res);
+//                     console.log(res.data.accessToken);
+//                     const token = res.data.accessToken;
+//                     return [];
+//                 }),
+//                 catchError((err) => [])
+//             );
+//         })
+//     );
 
 const getAllFitlerCriterias$: RootEpic = (action$) =>
     action$.pipe(
@@ -507,11 +508,11 @@ const advancedSearchSketch$: RootEpic = (action$) =>
     );
 
 export const SketchEpics = [
-    uploadSketch$,
+    // uploadSketch$,
     getHomeListSketch$,
     getLatestSketchs$,
     getMostViewdSketchs$,
-    getMostDownloadedSketchs$,
+    // getMostDownloadedSketchs$,
     getAllTools$,
     getAllStyles$,
     getAllArchitectures$,
