@@ -203,6 +203,11 @@ const Home = () => {
     const handlePrevCard = () => {
         setCurrentIndex(currentIndex - 1);
     };
+
+    const handleClickCard = (sketchId: string) => {
+        navigate(`/detail-sketch/${sketchId}`);
+    };
+
     return (
         <motion.div
             className="main-home"
@@ -239,7 +244,13 @@ const Home = () => {
                                 currentIndex + numberOfCardShow
                             )
                             .map((card) => (
-                                <Col span={spanCol} key={card.id}>
+                                <Col
+                                    onClick={() => {
+                                        handleClickCard(card.id);
+                                    }}
+                                    span={spanCol}
+                                    key={card.id}
+                                >
                                     <CProductCard
                                         imageUrl={card.images[0]}
                                         title={card.title}
@@ -283,7 +294,13 @@ const Home = () => {
                                 currentIndex + numberOfCardShow
                             )
                             .map((card) => (
-                                <Col span={spanCol} key={card.id}>
+                                <Col
+                                    onClick={() => {
+                                        handleClickCard(card.id);
+                                    }}
+                                    span={spanCol}
+                                    key={card.id}
+                                >
                                     <CProductCard
                                         imageUrl={card.images[0]}
                                         title={card.title}

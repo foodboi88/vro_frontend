@@ -226,7 +226,10 @@ const sketchSlice = createSlice({
             state.commentList = action.payload.data[0].items;
         },
 
-        getDetailSketchPageContentRequest(state) {
+        getDetailSketchPageContentRequest(
+            state,
+            action: PayloadAction<string>
+        ) {
             state.loading = true;
         },
 
