@@ -444,9 +444,8 @@ const getAllArchitectures$: RootEpic = (action$) =>
         })
     );
 
-const getDetailSketchPageContent$: RootEpic = (
-    action$ // Lay tat ca noi dung cua trang detail sketch: noi dung ban ve + comment
-) =>
+// Lay tat ca noi dung cua trang detail sketch: noi dung ban ve + comment
+const getDetailSketchPageContent$: RootEpic = (action$) =>
     action$.pipe(
         filter(getDetailSketchPageContentRequest.match),
         switchMap((re) => {

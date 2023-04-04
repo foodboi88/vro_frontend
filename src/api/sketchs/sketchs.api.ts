@@ -55,8 +55,8 @@ export default class SketchsApi {
         );
     }
 
-    static createMeetings(body: any): Observable<any> {
-        const api = `${SketchsApi.apiURL}/${SYSTEM_CONSTANTS.API.MEETINGS.CREATE_MEETINGS}`;
+    static uploadSketchContent(body: any): Observable<any> {
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.UPLOAD_CONTENT_OF_SKETCH}}`;
         return HttpClient.post(api, body).pipe(
             map(
                 (res) => (res as any) || null,
@@ -65,29 +65,9 @@ export default class SketchsApi {
         );
     }
 
-    static updateMeetings(meetingId: string, body: any): Observable<any> {
-        const api = `${
-            SketchsApi.apiURL.HOST
-        }/${SYSTEM_CONSTANTS.API.MEETINGS.UPDATE_MEETINGS.replace(
-            "{meetingId}",
-            meetingId
-        )}`;
-        return HttpClient.put(api, body).pipe(
-            map(
-                (res) => (res as any) || null,
-                catchError((error) => new Observable())
-            )
-        );
-    }
-
-    static deleteMeetings(meetingId: string): Observable<any> {
-        const api = `${
-            SketchsApi.apiURL.HOST
-        }/${SYSTEM_CONSTANTS.API.MEETINGS.DELETE_MEETINGS.replace(
-            "{meetingId}",
-            meetingId
-        )}`;
-        return HttpClient.delete(api).pipe(
+    static uploadSketchFile(body: any): Observable<any> {
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.UPLOAD_FILES_OF_SKETCH}}`;
+        return HttpClient.post(api, body).pipe(
             map(
                 (res) => (res as any) || null,
                 catchError((error) => new Observable())
