@@ -27,7 +27,7 @@ import "./styles.uploadsketch.scss";
 import { CheckboxValueType } from "antd/lib/checkbox/Group";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import { useDispatchRoot } from "../../redux/store";
-// import { uploadSketchRequest } from "../../redux/controller";
+import { uploadSketchRequest } from "../../redux/controller";
 
 const options: SelectProps["options"] = [];
 
@@ -102,23 +102,51 @@ const ruleList = [
 
 const optionsTools = [
     // Call API chu khong de cung ntn
-    { label: "Autocad", value: "Autocad" },
-    { label: "3D max", value: "3D max" },
-    { label: "Revit", value: "Revit" },
-    { label: "Sketchup", value: "Sketchup" },
-    { label: "Khác", value: "Khác" },
+    { label: "Autocad", value: "64230e9fedf9dd11e488c23b" },
+    { label: "3D max", value: "64230ef9edf9dd11e488c23e" },
+    { label: "Revit", value: "64230f07edf9dd11e488c240" },
+    { label: "Sketchup", value: "64230f1eedf9dd11e488c242" },
 ];
-const optionsCategorys = [
-    // Call API chu khong de cung ntn
-    { label: "Kiến trúc", value: "Kiến trúc" },
-    { label: "Kết cấu", value: "Kết cấu" },
-    { label: "Điện", value: "Điện" },
-    { label: "Nước", value: "Nước" },
-    { label: "PCCC", value: "PCCC" },
-    { label: "Phối cảnh", value: "Phối cảnh" },
-    { label: "Dự toán", value: "Dự toán" },
-    { label: "Tài liệu", value: "Tài liệu" },
-    { label: "Khác", value: "Khác" },
+const optionsArchitectures = [
+    {
+        label: "Biệt thự",
+        value: "64230f48edf9dd11e488c245",
+    },
+    {
+        label: "Nhà phố",
+        value: "64230fd4edf9dd11e488c247",
+    },
+    {
+        label: "Nhà xưởng",
+        value: "64230fdaedf9dd11e488c249",
+    },
+    {
+        label: "Nội thất",
+        value: "64230fe3edf9dd11e488c24b",
+    },
+    {
+        label: "Ngoại thất",
+        value: "64230ff3edf9dd11e488c24d",
+    },
+    {
+        label: "Cửa Hàng",
+        value: "6424328312e8bd3a84ff912a",
+    },
+];
+
+const optionsStyles = [
+    {
+        label: "Cổ điển",
+        value: "64231026edf9dd11e488c250",
+    },
+    {
+        label: "Hiện đại",
+        value: "64231030edf9dd11e488c252",
+    },
+    {
+        label: "Chưa xác định",
+        value: "",
+    },
 ];
 const getBase64 = (file: RcFile): Promise<string> =>
     new Promise((resolve, reject) => {
@@ -135,9 +163,9 @@ const UploadSketch = () => {
     const [selectTag, setSelectTag] = useState(""); // Biến lưu giá trị tag bản vẽ
     const [imageUploadLst, setImageUpload] = useState<UploadFile[]>([]); // Biến lưu giá trị ảnh bản vẽ đã upload
     const [fileUploadLst, setFileUploadList] = useState<RcFile[]>([]); // Biến lưu giá trị file bản vẽ đã upload
-    const [selectPrice, setSelectPrice] = useState(""); // Biến lưu giá trị giá bản vẽ
+    const [selectPrice, setSelectPrice] = useState(0); // Biến lưu giá trị giá bản vẽ
     const [note, setNote] = useState(""); // Biến lưu giá trị ghi chú bản vẽ
-    const [selectStyle, setSelectStyle] = useState(1); // Biến lưu giá trị kiểu bản vẽ
+    const [selectStyle, setSelectStyle] = useState(""); // Biến lưu giá trị kiểu bản vẽ
     const [selectTool, setSelectTool] = useState<CheckboxValueType[]>([]); // Biến lưu giá trị công cụ vẽ bản vẽ
     const [selectCategory, setSelectCategory] = useState<CheckboxValueType[]>(
         []
@@ -231,7 +259,7 @@ const UploadSketch = () => {
         document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
     };
 
-    const handleClickBtnStyle = (val: React.SetStateAction<number>) => {
+    const handleClickBtnStyle = (val: string) => {
         // Hàm xử lý khi click chọn kiểu bản vẽ
         setSelectStyle(val);
     };
@@ -244,8 +272,8 @@ const UploadSketch = () => {
             // selectedTag: selectTag,
             imageUploadLst: imageUploadLst,
             fileUploadLst: fileUploadLst,
-            size: 0,
-            price: selectPrice as unknown as number,
+            size: "40m*40m",
+            price: selectPrice,
             content: note,
             productDesignStyles: selectStyle,
             productDesignTools: selectTool,
@@ -254,7 +282,7 @@ const UploadSketch = () => {
 
         console.log(bodyrequest);
 
-        // dispatch(uploadSketchRequest(bodyrequest));
+        dispatch(uploadSketchRequest(bodyrequest));
     };
     return (
         <div className="main-upload">
@@ -498,7 +526,7 @@ const UploadSketch = () => {
                                                 placeholder="Nhập phí download"
                                                 onChange={(e) =>
                                                     setSelectPrice(
-                                                        e.target.value
+                                                        +e.target.value
                                                     )
                                                 }
                                             />
@@ -563,42 +591,23 @@ const UploadSketch = () => {
                                             Phong cách <strong>*</strong>
                                         </div>
                                         <div className="button-group">
-                                            <Button
-                                                className={
-                                                    selectStyle === 1
-                                                        ? "active"
-                                                        : ""
-                                                }
-                                                onClick={() =>
-                                                    handleClickBtnStyle(1)
-                                                }
-                                            >
-                                                Hiện đại
-                                            </Button>
-                                            <Button
-                                                className={
-                                                    selectStyle === 2
-                                                        ? "active"
-                                                        : ""
-                                                }
-                                                onClick={() =>
-                                                    handleClickBtnStyle(2)
-                                                }
-                                            >
-                                                Tân cổ điển
-                                            </Button>
-                                            <Button
-                                                className={
-                                                    selectStyle === 3
-                                                        ? "active"
-                                                        : ""
-                                                }
-                                                onClick={() =>
-                                                    handleClickBtnStyle(3)
-                                                }
-                                            >
-                                                Chưa xác định
-                                            </Button>
+                                            {optionsStyles.map((item) => (
+                                                <Button
+                                                    className={
+                                                        selectStyle ===
+                                                        item.value
+                                                            ? "active"
+                                                            : ""
+                                                    }
+                                                    onClick={() =>
+                                                        handleClickBtnStyle(
+                                                            item.value
+                                                        )
+                                                    }
+                                                >
+                                                    {item.label}
+                                                </Button>
+                                            ))}
                                         </div>
                                     </Form.Item>
                                     <Form.Item>
@@ -617,12 +626,12 @@ const UploadSketch = () => {
                                     </Form.Item>
                                     <Form.Item>
                                         <div className="title-input">
-                                            Hạng mục <strong>*</strong>
+                                            Kiến trúc <strong>*</strong>
                                         </div>
                                         <div className="tool-list">
                                             <Checkbox.Group
                                                 className="lst-category"
-                                                options={optionsCategorys}
+                                                options={optionsArchitectures}
                                                 onChange={(e) =>
                                                     setSelectCategory(e)
                                                 }

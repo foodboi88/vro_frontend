@@ -18,6 +18,7 @@ import { ITool } from "../../common/tool.interface";
 import FilterCriteriasApi from "../../api/filter-criterias/filter-criterias.api";
 import CommentsApi from "../../api/comment/comment.api";
 import { IUser } from "../../common/user.interface";
+import ImageSketchApi from "../../api/image-sketch/image-sketch.api";
 
 type MessageLogin = {
     content: string;
@@ -48,6 +49,7 @@ interface SketchState {
     filteredSketchs?: ISketch[];
     filteredAuthors?: IUser[];
     currentSearchValue: ICurrentSearchValue;
+    checkWhetherSketchUploaded: number; // Là số chẵn thì chắc chắn file đó đã đc up cả ảnh + file + content thành công
 }
 
 const initState: SketchState = {
@@ -56,9 +58,9 @@ const initState: SketchState = {
     user: undefined,
     message: undefined,
     messageForgot: undefined,
-    refresh_token: "",
+    refresh_token: Utils.getValueLocalStorage("refresh_token"),
     statusCode: undefined,
-    tokenLogin: undefined,
+    tokenLogin: Utils.getValueLocalStorage("token"),
     isExistEmail: true,
     registerSuccess: false,
     toolList: [],
@@ -76,6 +78,7 @@ const initState: SketchState = {
         text: "",
         tool: [],
     },
+    checkWhetherSketchUploaded: 0,
 };
 
 const sketchSlice = createSlice({
@@ -263,6 +266,54 @@ const sketchSlice = createSlice({
             state.filteredAuthors = action.payload.data.author;
             state.filteredSketchs = action.payload.data.sketch;
         },
+
+        uploadSketchRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        uploadSketchSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            state.checkWhetherSketchUploaded += 1;
+            if (state.checkWhetherSketchUploaded % 2 === 0) {
+                // Cu chia het cho 2 thi la up file thanh cong
+
+                notification.open({
+                    message: "Tải bản vẽ lên thành công",
+                    description: action.payload.response.message,
+                    onClick: () => {
+                        console.log("Notification Clicked!");
+                    },
+                });
+            }
+        },
+
+        uploadSketchFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+
+            notification.open({
+                message: "Tải bản vẽ lên không thành công",
+                description: action.payload.response.message,
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+        },
+
+        uploadFileSketchRequest(state, action: PayloadAction<any>) {
+            state.loading = false;
+        },
+
+        uploadImageSketchRequest(state, action: PayloadAction<any>) {
+            state.loading = false;
+        },
+
+        uploadContentSketchRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        uploadContentSketchSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+        },
     },
 });
 
@@ -291,6 +342,7 @@ const sketchSlice = createSlice({
 //         })
 //     );
 
+// Lay ra tat ca du lieu cua trang home
 const getHomeListSketch$: RootEpic = (action$) =>
     action$.pipe(
         filter(getHomeListSketchRequest.match),
@@ -370,6 +422,7 @@ const getMostViewdSketchs$: RootEpic = (action$) =>
 //         })
 //     );
 
+//Lay ra cac tieu chi filter
 const getAllFitlerCriterias$: RootEpic = (action$) =>
     action$.pipe(
         filter(getAllFilterCriteriasRequest.match),
@@ -473,7 +526,6 @@ const getDetailSketch$: RootEpic = (action$) =>
             );
         })
     );
-// advancedSearchingRequest
 
 const getCommentBySketchId$: RootEpic = (action$) =>
     action$.pipe(
@@ -520,6 +572,96 @@ const advancedSearchSketch$: RootEpic = (action$) =>
         })
     );
 
+// Upload ban ve: upload anh + upload file + upload content
+const uploadImageSketch$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(uploadImageSketchRequest.match),
+        switchMap((re) => {
+            // IdentityApi.login(re.payload) ?
+            console.log(re);
+
+            const imageData = new FormData();
+            imageData.append("files", re.payload.imageUploadLst, "images"); // chinh lai ten file anh sau
+            imageData.append("productId_in", re.payload.id);
+
+            // const bodyrequest = {
+            //     productId_in: re.payload.id,
+            //     files: re.payload.imageUploadLst,
+            // };
+
+            return ImageSketchApi.uploadSketchImage(imageData).pipe(
+                mergeMap((res: any) => {
+                    console.log(res);
+                    return [
+                        sketchSlice.actions.uploadFileSketchRequest(res),
+                        sketchSlice.actions.uploadSketchSuccess(res), // vao luu gia tri check thanh cong lan 1
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.uploadSketchFail(err)])
+            );
+        })
+    );
+
+const uploadFileSketch$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(uploadFileSketchRequest.match),
+        switchMap((re) => {
+            // IdentityApi.login(re.payload) ?
+            console.log(re);
+
+            const fileData = new FormData();
+            fileData.append("files", re.payload.fileUploadLst[0], "file"); // chinh lai ten file anh sau
+            fileData.append("productId_in", re.payload.id);
+
+            return SketchsApi.uploadSketchFile(fileData).pipe(
+                mergeMap((res: any) => {
+                    console.log(res);
+                    return [
+                        sketchSlice.actions.uploadContentSketchRequest(res),
+                        sketchSlice.actions.uploadSketchSuccess(res), // vao luu gia tri check thanh cong lan 2
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.uploadSketchFail(err)])
+            );
+        })
+    );
+
+const uploadContentSketch$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(uploadSketchRequest.match),
+        switchMap((re) => {
+            // IdentityApi.login(re.payload) ?
+            console.log(re);
+
+            const bodyrequest = {
+                // searchType: searchType,
+                // selectedType: selectedType,
+                title: re.payload.title,
+                // selectedTag: selectTag,
+                // imageUploadLst: re.payload.imageUploadLst,
+                // fileUploadLst: re.payload.fileUploadLst,
+                size: re.payload.size,
+                price: re.payload.price,
+                content: re.payload.content,
+                productDesignStyles: re.payload.productDesignStyles,
+                productDesignTools: re.payload.productDesignTools,
+                productTypeOfArchitecture: re.payload.productTypeOfArchitecture,
+            };
+
+            return SketchsApi.uploadSketchContent(bodyrequest).pipe(
+                mergeMap((res: any) => {
+                    console.log(res);
+                    res = { ...res.data, ...re.payload };
+                    return [
+                        sketchSlice.actions.uploadFileSketchRequest(res),
+                        // sketchSlice.actions.uploadImageSketchRequest(res),
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.uploadSketchFail(err)])
+            );
+        })
+    );
+
 export const SketchEpics = [
     // uploadSketch$,
     getHomeListSketch$,
@@ -534,6 +676,9 @@ export const SketchEpics = [
     getCommentBySketchId$,
     getDetailSketchPageContent$,
     advancedSearchSketch$,
+    uploadImageSketch$,
+    uploadContentSketch$,
+    uploadFileSketch$,
 ];
 export const {
     getLatestSketchRequest,
@@ -547,5 +692,9 @@ export const {
     getCommentBySketchIdRequest,
     getDetailSketchPageContentRequest,
     advancedSearchingRequest,
+    uploadSketchRequest,
+    uploadContentSketchRequest,
+    uploadFileSketchRequest,
+    uploadImageSketchRequest,
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;

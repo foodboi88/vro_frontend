@@ -46,7 +46,7 @@ export default class SketchsApi {
     }
 
     static advancedSearching(body: any): Observable<any> {
-        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.ADVANCED_SEARCHING}}`;
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.ADVANCED_SEARCHING}`;
         return HttpClient.post(api, body).pipe(
             map(
                 (res) => (res as any) || null,
@@ -56,7 +56,7 @@ export default class SketchsApi {
     }
 
     static uploadSketchContent(body: any): Observable<any> {
-        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.UPLOAD_CONTENT_OF_SKETCH}}`;
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.UPLOAD_CONTENT_OF_SKETCH}`;
         return HttpClient.post(api, body).pipe(
             map(
                 (res) => (res as any) || null,
@@ -66,7 +66,7 @@ export default class SketchsApi {
     }
 
     static uploadSketchFile(body: any): Observable<any> {
-        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.UPLOAD_FILES_OF_SKETCH}}`;
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.UPLOAD_FILES_OF_SKETCH}`;
         return HttpClient.post(api, body).pipe(
             map(
                 (res) => (res as any) || null,

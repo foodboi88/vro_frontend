@@ -53,9 +53,11 @@ const loginSlice = createSlice({
             state.loading = true;
             // console.log("da chui vao",state.loading)
         },
-        loginSuccess(state, action: PayloadAction<{ token: string }>) {
-            Utils.setLocalStorage("token", action.payload.token);
-            state.tokenLogin = action.payload.token;
+        loginSuccess(state, action: PayloadAction<any>) {
+            Utils.setLocalStorage("token", action.payload.accessToken);
+            Utils.setLocalStorage("refresh_token", action.payload.refreshToken);
+
+            state.tokenLogin = action.payload.accessToken;
             state.loading = false;
             state.isSuccess = true;
             notification.open({
@@ -282,9 +284,9 @@ const login$: RootEpic = (action$) =>
                 mergeMap((res: any) => {
                     console.log(res);
                     console.log(res.data.accessToken);
-                    const token = res.data.accessToken;
+
                     return [
-                        loginSlice.actions.loginSuccess({ token: token }),
+                        loginSlice.actions.loginSuccess(res.data),
                         loginSlice.actions.setLoading(false),
                         loginSlice.actions.setStatusCode(res.statusCode),
                     ];
@@ -331,7 +333,7 @@ const register$: RootEpic = (action$) =>
                 positionId: re.payload.positionId,
                 additionalProp1: {},
             };
-            return IdentityApi.register(body).pipe(
+            return IdentityApi.reqister(body).pipe(
                 mergeMap((res: any) => {
                     return [
                         loginSlice.actions.setLoading(false),

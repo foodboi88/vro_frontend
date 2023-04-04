@@ -9,4 +9,6 @@ export enum API_URL {
     UPLOAD_IMAGE_OF_SKETCH = "product-images",
     UPLOAD_CONTENT_OF_SKETCH = "products",
     UPLOAD_FILES_OF_SKETCH = "product-files",
+    LOGIN = "users/login",
+    REGISTER = "users/register",
 }

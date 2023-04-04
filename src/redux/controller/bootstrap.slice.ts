@@ -13,11 +13,11 @@ const PATH_SYSTEM_CONFIG = `${process.env.PUBLIC_URL}/assets/system-config.json`
 const IS_CONFIG_LOCAL = false;
 const DEFAULT_CONFIG: SystemConfig = {
     protocol: "http",
-    hostIdentity: "http://localhost:3005",
-    hostMailService: "http://localhost:3005",
-    hostMeetings: "http://localhost:3005",
-    hostMember: "http://localhost:3005",
-    hostTask: "http://localhost:3005",
+    hostIdentity: "http://14.231.84.10:6068",
+    hostMailService: "http://14.231.84.10:6068",
+    hostMeetings: "http://14.231.84.10:6068",
+    hostMember: "http://14.231.84.10:6068",
+    hostTask: "hhttp://14.231.84.10:6068",
 };
 const initialStateBootstrap: BootstrapState = {
     systemConfig: DEFAULT_CONFIG,
@@ -25,7 +25,7 @@ const initialStateBootstrap: BootstrapState = {
 };
 
 function updateHostService(host: SystemConfig) {
-    IdentityApi.host = host.hostIdentity;
+    // IdentityApi.apiURL = host.hostIdentity;
 }
 const bootstrapSlice = createSlice({
     name: "bootstrap",

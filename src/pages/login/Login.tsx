@@ -19,13 +19,15 @@ const regexPass =
 const Login = (props: MyProps) => {
     const [userEmailLogin, setUserEmailLogin] = useState<string>("");
     const [userPassLogin, setUserPassLogin] = useState<string>("");
-    const [checkLoginBtn, setCheckLoginBtn] = useState<boolean>(false);
+    const [checkLoginBtn, setCheckLoginBtn] = useState<boolean>(true);
 
-    useEffect(() => {
-        userEmailLogin && regexPass.test(userPassLogin)
-            ? setCheckLoginBtn(true)
-            : setCheckLoginBtn(false);
-    }, [userEmailLogin, userPassLogin]);
+    const dispatch = useDispatchRoot();
+
+    // useEffect(() => {
+    //     userEmailLogin && regexPass.test(userPassLogin)
+    //         ? setCheckLoginBtn(true)
+    //         : setCheckLoginBtn(false);
+    // }, [userEmailLogin, userPassLogin]);
 
     const handleInputEmailLoginChange = (event: { target: { value: any } }) => {
         setUserEmailLogin(event.target.value);
@@ -80,6 +82,12 @@ const Login = (props: MyProps) => {
     const onFinish = async (account: any): Promise<any> => {};
 
     const handleClickSubmit = () => {
+        const bodyrequest = {
+            email: userEmailLogin,
+            password: userPassLogin,
+            remember: true,
+        };
+        dispatch(loginRequest(bodyrequest));
         props.toggleLoginModal();
         props.checkIsLogin(true);
     };
