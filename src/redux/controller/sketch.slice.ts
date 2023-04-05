@@ -610,7 +610,9 @@ const uploadFileSketch$: RootEpic = (action$) =>
             console.log(re);
 
             const fileData = new FormData();
-            fileData.append("files", re.payload.fileUploadLst[0], "file"); // chinh lai ten file anh sau
+            const tranformedFile = re.payload
+                .fileUploadLst[0] as unknown as File;
+            fileData.append("file", tranformedFile, "file"); // chinh lai ten file anh sau
             fileData.append("productId_in", re.payload.id);
 
             return SketchsApi.uploadSketchFile(fileData).pipe(
