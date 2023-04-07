@@ -29,7 +29,7 @@ const CProductCard = (props: props) => {
         <Card
             className="card"
             hoverable
-            cover={<img alt="example" src={props.imageUrl} />}
+            cover={<img className="image-card" alt="example" src={props.imageUrl} />}
             onClick={handleNavigate}
         >
             <div className="title-and-price">

@@ -224,14 +224,14 @@ const Home = () => {
                     <div className="sub-title">{"Xem thêm"}</div>
                 </div>
                 <div className="lst-tool">
-                    <Col>
+                    {/* <Col>
                         <Button
                             icon={<ArrowLeftOutlined />}
                             className="btn-icon"
                             onClick={handlePrevCard}
                             disabled={currentIndex === 0 && true}
                         />
-                    </Col>
+                    </Col> */}
                     <Row gutter={[16, 16]}>
                         {mostViewedSketchList
                             .slice(
@@ -245,12 +245,12 @@ const Home = () => {
                                         title={card.title}
                                         view={card.views}
                                         price={card.price}
-                                        // type={card.type}
+                                    // type={card.type}
                                     />
                                 </Col>
                             ))}
                     </Row>
-                    <Col>
+                    {/* <Col>
                         <Button
                             icon={<ArrowRightOutlined />}
                             className="btn-icon"
@@ -259,7 +259,7 @@ const Home = () => {
                                 currentIndex >= numberOfCardNext - 4 && true
                             }
                         />
-                    </Col>
+                    </Col> */}
                 </div>
             </div>
             <div className="tool-of-web">
@@ -268,14 +268,14 @@ const Home = () => {
                     <div className="sub-title">{"Xem thêm"}</div>
                 </div>
                 <div className="lst-tool">
-                    <Col>
+                    {/* <Col>
                         <Button
                             icon={<ArrowLeftOutlined />}
                             className="btn-icon"
                             onClick={handlePrevCard}
                             disabled={currentIndex === 0 && true}
                         />
-                    </Col>
+                    </Col> */}
                     <Row gutter={[16, 16]}>
                         {latestSketchsList
                             .slice(
@@ -289,12 +289,12 @@ const Home = () => {
                                         title={card.title}
                                         view={card.views}
                                         price={card.price}
-                                        // type={card.type}
+                                    // type={card.type}
                                     />
                                 </Col>
                             ))}
                     </Row>
-                    <Col>
+                    {/* <Col>
                         <Button
                             icon={<ArrowRightOutlined />}
                             className="btn-icon"
@@ -303,7 +303,7 @@ const Home = () => {
                                 currentIndex >= numberOfCardNext - 4 && true
                             }
                         />
-                    </Col>
+                    </Col> */}
                 </div>
             </div>
             <div className="tool-of-web">

@@ -50,8 +50,7 @@ export const CHeader = (props: MyProps) => {
 
     const navigate = useNavigate();
     const [isOpenLoginModal, setIsOpenLoginModal] = useState<boolean>(false); // Biến kiểm tra đang mở modal login hay chưa
-    const [isOpenRegisterModal, setIsOpenRegisterModal] =
-        useState<boolean>(false); // Biến kiểm tra đang mở modal registration hay chưa
+    const [isOpenRegisterModal, setIsOpenRegisterModal] = useState<boolean>(false); // Biến kiểm tra đang mở modal registration hay chưa
     const [isLogin, setIsLogin] = useState<boolean>(false);
     const { currentSearchValue } = useSelectorRoot((state) => state.sketch);
 
@@ -209,13 +208,13 @@ export const CHeader = (props: MyProps) => {
                     ) : (
                         <>
                             <motion.div
-                                className={`header-button post ${
-                                    isLogin && "login"
-                                }`}
+                                className={`header-button post ${isLogin && "login"
+                                    }`}
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.95 }}
                             >
                                 <Button
+                                    className="btn-upload-sketch"
                                     onClick={handleUpload}
                                     icon={<img src={HeaderIcon} />}
                                 >
@@ -223,13 +222,13 @@ export const CHeader = (props: MyProps) => {
                                 </Button>
                             </motion.div>
                             <div className="icon-group">
-                                <Badge count={10} size="small">
+                                <Badge count={10} size="default">
                                     <BellOutlined />
                                 </Badge>
-                                <Badge count={10} size="small">
+                                <Badge count={10} size="default">
                                     <MessageOutlined />
                                 </Badge>
-                                <Badge count={10} size="small">
+                                <Badge count={10} size="default">
                                     <ShoppingCartOutlined />
                                 </Badge>
                             </div>
@@ -299,9 +298,8 @@ export const CHeader = (props: MyProps) => {
                                 Đăng bản vẽ
                             </Button>
                             <div
-                                className={`header-content-input draw ${
-                                    isLogin && "login"
-                                }`}
+                                className={`header-content-input draw ${isLogin && "login"
+                                    }`}
                             >
                                 <Input
                                     className="search-input"

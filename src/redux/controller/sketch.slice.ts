@@ -106,14 +106,14 @@ const sketchSlice = createSlice({
         getLatestSketchSuccess(state, action: PayloadAction<any>) {
             console.log(action);
             state.latestSketchsList = action.payload.data;
-            notification.open({
-                message: "Load success",
-                // description:
-                //     action.payload.response.message,
-                onClick: () => {
-                    console.log("Notification Clicked!");
-                },
-            });
+            // notification.open({
+            //     message: "Load success",
+            //     // description:
+            //     //     action.payload.response.message,
+            //     onClick: () => {
+            //         console.log("Notification Clicked!");
+            //     },
+            // });
 
             // state.user = action.payload.user
             state.isSuccess = true;
@@ -156,10 +156,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data[0].items);
             state.toolList = action.payload.data[0].items.map(
                 (item: ITool) =>
-                    ({
-                        label: item.name,
-                        value: item.id,
-                    } as CheckboxOptionType)
+                ({
+                    label: item.name,
+                    value: item.id,
+                } as CheckboxOptionType)
             );
             console.log(state.toolList);
             console.log("Da chui vao voi action: ", action);
@@ -175,10 +175,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data[0].items);
             state.styleList = action.payload.data[0].items.map(
                 (item: ITool) =>
-                    ({
-                        label: item.name,
-                        value: item.id,
-                    } as CheckboxOptionType)
+                ({
+                    label: item.name,
+                    value: item.id,
+                } as CheckboxOptionType)
             );
             console.log(state.toolList);
             console.log("Da chui vao voi action: ", action);
@@ -194,10 +194,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data[0].items);
             state.architectureList = action.payload.data[0].items.map(
                 (item: ITool) =>
-                    ({
-                        label: item.name,
-                        value: item.id,
-                    } as CheckboxOptionType)
+                ({
+                    label: item.name,
+                    value: item.id,
+                } as CheckboxOptionType)
             );
             console.log(state.architectureList);
             console.log("Da chui vao voi action: ", action);

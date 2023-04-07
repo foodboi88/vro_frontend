@@ -84,21 +84,29 @@
 
         .user-infor {
             display: flex;
+            align-items: center;
             // justify-content: space-around;
             gap: 2em;
 
             .icon-group {
                 display: flex;
-                align-items: center;
                 gap: 2em;
 
                 .ant-badge {
+                    font-size: 1.5em;
+                    color: black;
+                    line-height: 0px;
+
                     .ant-scroll-number {
                         position: absolute;
                         top: 0px;
                         right: -4px;
                         transform: translate(50%, -50%);
                         transform-origin: 100% 0%;
+
+                        span {
+                            color: #FFFFFF;
+                        }
                     }
                 }
 
@@ -144,6 +152,12 @@
                 }
 
                 button:hover {}
+
+                .btn-upload-sketch {
+                    span {
+                        color: #FFFFFF;
+                    }
+                }
             }
 
 
