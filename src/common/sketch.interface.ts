@@ -16,8 +16,10 @@ export interface ISketch {
 }
 
 export interface ICurrentSearchValue {
-    text: string;
+    name: string;
     tool: string[];
     architecture: string[];
     style: string[];
+    size?: number;
+    offset?: number;
 }

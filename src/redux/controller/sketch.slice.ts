@@ -75,7 +75,7 @@ const initState: SketchState = {
     currentSearchValue: {
         architecture: [],
         style: [],
-        text: "",
+        name: "",
         tool: [],
     },
     checkWhetherSketchUploaded: 0,
@@ -153,8 +153,8 @@ const sketchSlice = createSlice({
 
         getAllToolsSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
-            console.log(action.payload.data[0].items);
-            state.toolList = action.payload.data[0].items.map(
+            console.log(action.payload.data);
+            state.toolList = action.payload.data.map(
                 (item: ITool) =>
                     ({
                         label: item.name,
@@ -172,8 +172,8 @@ const sketchSlice = createSlice({
 
         getAllStylesSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
-            console.log(action.payload.data[0].items);
-            state.styleList = action.payload.data[0].items.map(
+            console.log(action.payload.data);
+            state.styleList = action.payload.data.map(
                 (item: ITool) =>
                     ({
                         label: item.name,
@@ -191,8 +191,8 @@ const sketchSlice = createSlice({
 
         getAllArchitecturesSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
-            console.log(action.payload.data[0].items);
-            state.architectureList = action.payload.data[0].items.map(
+            console.log(action.payload.data);
+            state.architectureList = action.payload.data.map(
                 (item: ITool) =>
                     ({
                         label: item.name,
@@ -252,9 +252,9 @@ const sketchSlice = createSlice({
                 style: action.payload.style
                     ? action.payload.style
                     : state.currentSearchValue.style,
-                text: action.payload.text
-                    ? action.payload.text
-                    : state.currentSearchValue.text,
+                name: action.payload.name
+                    ? action.payload.name
+                    : state.currentSearchValue.name,
                 tool: action.payload.tool
                     ? action.payload.tool
                     : state.currentSearchValue.tool,
@@ -264,7 +264,7 @@ const sketchSlice = createSlice({
         advancedSearchingSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
             state.filteredAuthors = action.payload.data.author;
-            state.filteredSketchs = action.payload.data.sketch;
+            state.filteredSketchs = action.payload.data[0].items;
         },
 
         uploadSketchRequest(state, action: PayloadAction<any>) {
@@ -547,6 +547,8 @@ const getCommentBySketchId$: RootEpic = (action$) =>
         })
     );
 
+// http://14.231.84.10:6068/products/filter?size=10&offset=0&name=a
+
 const advancedSearchSketch$: RootEpic = (action$) =>
     action$.pipe(
         filter(advancedSearchingRequest.match),
@@ -554,7 +556,9 @@ const advancedSearchSketch$: RootEpic = (action$) =>
             // IdentityApi.login(re.payload) ?
             console.log(re);
             const bodyrequest: ICurrentSearchValue = {
-                text: re.payload.text ? re.payload.text : "",
+                size: 30,
+                offset: 0,
+                name: re.payload.name ? re.payload.name : "",
                 tool: re.payload.tool ? re.payload.tool : [],
                 architecture: re.payload.architecture
                     ? re.payload.architecture

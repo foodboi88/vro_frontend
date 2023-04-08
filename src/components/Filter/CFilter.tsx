@@ -73,7 +73,7 @@ const CFilter = (props: props) => {
                     ? param.value
                     : selectedArchitecture,
             style: param.target === "style" ? param.value : selectedStyle,
-            text: currentSearchValue.text, // Lay ra gia tri text luu trong redux
+            name: currentSearchValue.name, // Lay ra gia tri text luu trong redux
         };
 
         if (param.target === "tool") setSelectedTool(param.value);
@@ -124,7 +124,7 @@ const CFilter = (props: props) => {
                                 value: event as string[],
                             })
                         }
-                        options={architectureTools}
+                        options={architectureList}
                     />
                 </Form.Item>
                 <Form.Item className="form-item" name="style">
@@ -141,7 +141,7 @@ const CFilter = (props: props) => {
                                 value: event as string[],
                             })
                         }
-                        options={stylesTools}
+                        options={styleList}
                     />
                 </Form.Item>
             </Form>

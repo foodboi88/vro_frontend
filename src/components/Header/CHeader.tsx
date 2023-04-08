@@ -141,7 +141,7 @@ export const CHeader = (props: MyProps) => {
     const handleSearching = (event: any) => {
         console.log(event);
         const bodyrequest: ICurrentSearchValue = {
-            text: event.target.value,
+            name: event.target.value,
             architecture: currentSearchValue.architecture,
             tool: currentSearchValue.tool,
             style: currentSearchValue.style,

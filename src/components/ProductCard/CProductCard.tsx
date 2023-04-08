@@ -12,7 +12,7 @@ import BietThu from "../../images/homepage/bietthu1.png";
 import { useNavigate } from "react-router-dom";
 import "./styles.productcard.scss";
 interface props {
-    imageUrl: string;
+    imageUrl?: string;
     title: string;
     view: number;
     price: number;

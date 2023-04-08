@@ -17,7 +17,7 @@ export default class FilterCriteriasApi {
     //Doi lai Endpoint API sau khi co API moi
 
     static getTools(params: IReqGetLatestSketchs): Observable<any> {
-        const api = `${FilterCriteriasApi.apiURL.HOST}/${this.apiURL.GET_ALL_TOOLS}?size=${params.size}&offset=${params.offset}`;
+        const api = `${FilterCriteriasApi.apiURL.HOST}/${this.apiURL.GET_ALL_TOOLS}`;
         return HttpClient.get(api).pipe(
             map(
                 (res) => (res as any) || null,
@@ -67,7 +67,7 @@ export default class FilterCriteriasApi {
     }
 
     static getStyles(params: IReqGetLatestSketchs): Observable<any> {
-        const api = `${FilterCriteriasApi.apiURL.HOST}/${this.apiURL.GET_ALL_TOOLS}?size=${params.size}&offset=${params.offset}`;
+        const api = `${FilterCriteriasApi.apiURL.HOST}/${this.apiURL.GET_ALL_STYLE}`;
         return HttpClient.get(api).pipe(
             map(
                 (res) => (res as any) || null,
@@ -77,7 +77,7 @@ export default class FilterCriteriasApi {
     }
 
     static getArchitectures(params: IReqGetLatestSketchs): Observable<any> {
-        const api = `${FilterCriteriasApi.apiURL.HOST}/${this.apiURL.GET_ALL_TOOLS}?size=${params.size}&offset=${params.offset}`;
+        const api = `${FilterCriteriasApi.apiURL.HOST}/${this.apiURL.GET_ALL_ARCHITECTURE}`;
         return HttpClient.get(api).pipe(
             map(
                 (res) => (res as any) || null,
