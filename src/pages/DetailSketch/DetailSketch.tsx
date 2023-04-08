@@ -42,6 +42,9 @@ import IconDetail5 from "../../images/detail/icon-detail-5.png";
 import IconDetail6 from "../../images/detail/icon-detail-6.png";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
 import { getDetailSketchPageContentRequest } from "../../redux/controller";
+import { IArchitecture, IStyle, ITool } from "../../common/tool.interface";
+import { IImagesSketch, IInFoSketch } from "../../common/sketch.interface";
+import { format } from "date-fns";
 
 interface CardData {
     id: number;
@@ -91,20 +94,24 @@ const DetailSketch = () => {
     const navigate = useNavigate();
     const { detailSketch, commentList } = useSelectorRoot(
         (state) => state.sketch
-    );
+    ); // Lấy ra dữ liệu detail sketch và danh sách comment từ redux
     const dispatch = useDispatchRoot();
-    const { sketchId } = useParams();
+    const { sketchId } = useParams(); // Lấy ra id của sketch từ url
 
     const [spanCol, setSpanCol] = useState<number>(6);
     const [numberOfCardShow, setNumberOfCardShow] = useState<number>(4);
     const [numberOfCardNext, setNumberOfCardNext] = useState<number>(4);
     const [currentIndex, setCurrentIndex] = useState(0);
 
+    const [designStyles, setDesignStyles] = useState<IStyle[]>([]);
+    const [designTools, setDesignTools] = useState<ITool[]>([]);
+    const [images, setImages] = useState<IImagesSketch[]>([]);
+    const [info, setInfo] = useState<IInFoSketch>();
+    const [typeOfArchitectures, setTypeOfArchitectures] = useState<IArchitecture[]>([]);
     const [windowSize, setWindowSize] = useState([
         window.innerWidth,
         window.innerHeight,
     ]);
-
     useEffect(() => {
         const handleWindowResize = () => {
             setWindowSize([window.innerWidth, window.innerHeight]);
@@ -140,6 +147,24 @@ const DetailSketch = () => {
         if (sketchId) dispatch(getDetailSketchPageContentRequest(sketchId));
     }, []);
 
+    // Kiểm tra xem có chi tiết bản vẽ hay không
+    useEffect(() => {
+        if (detailSketch) {
+            setDesignStyles(detailSketch.designStyles);
+            setDesignTools(detailSketch.designTools);
+            setImages(detailSketch.images);
+            setInfo(detailSketch.info);
+            setTypeOfArchitectures(detailSketch.typeOfArchitectures);
+            console.log(detailSketch);
+        }
+    }, [detailSketch])
+
+    useEffect(() => {
+        if (commentList) {
+            console.log("comment list: " + commentList);
+        }
+    }, [commentList]);
+
     const handleNextCard = () => {
         setCurrentIndex(currentIndex + 1);
     };
@@ -164,87 +189,89 @@ const DetailSketch = () => {
             <div className="detail-sketch">
                 <div className="image-carousel">
                     <Carousel>
-                        <motion.div>
-                            <img alt="" src={DrawDetailImage1} />
-                        </motion.div>
-                        <motion.div>
-                            <img alt="" src={DrawDetailImage2} />
-                        </motion.div>
-                        <motion.div>
-                            <img alt="" src={DrawDetailImage3} />
-                        </motion.div>
-                        <motion.div>
-                            <img alt="" src={DrawDetailImage4} />
-                        </motion.div>
+                        {images && images.slice(0, 4).map((image, index) => (
+                            <div key={index}>
+                                <img alt="" src={image.filePath} />
+                            </div>
+                        ))}
                     </Carousel>
                 </div>
                 <div className="content">
-                    <div className="title">Biệt thự 2 tầng</div>
-                    <div className="price">500.000Đ</div>
-                    <div className="rate">
-                        <Rate defaultValue={2} disabled count={3} />
-                    </div>
-                    <div className="property">
-                        <div className="content">
-                            <img src={IconDetail1} />
-                            <div className="text">Ngày đăng: 03/02/2023</div>
+                    {info && designStyles && designTools && typeOfArchitectures && <>
+                        <div className="title">{info.title}</div>
+                        <div className="price">{info.price} VNĐ</div>
+                        <div className="rate">
+                            <Rate defaultValue={2} disabled count={3} />
                         </div>
-                        <div className="content">
-                            <img src={IconDetail2} />
-                            <div className="text">Phong cách: Hiện đại</div>
-                        </div>
-                        <div className="content">
-                            <img src={IconDetail3} />
-                            <div className="text">Công cụ: 3D Max</div>
-                        </div>
-                        <div className="content">
-                            <img src={IconDetail4} />
-                            <div className="text">Dung lượng file: 68 MB</div>
-                        </div>
-                        <div className="content">
-                            <img src={IconDetail5} />
-                            <div className="text">
-                                Kích thước: Rộng 4m, Dài 15,5m, DT 62 m2
+                        <div className="property">
+                            <div className="content">
+                                <img src={IconDetail1} alt="" />
+                                <div className="text">Ngày đăng: {new Date(info.updatedAt).toLocaleDateString("en-GB")}</div>
+                            </div>
+                            <div className="content">
+                                <img src={IconDetail2} alt="" />
+                                <div className="text">Phong cách:
+                                    {designStyles.map((style, index) => (
+                                        (index === designStyles.length - 1) ? <span key={index}> {style.name}</span> : <span key={index}> {style.name},</span>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="content">
+                                <img src={IconDetail3} alt="" />
+                                <div className="text">Công cụ:
+                                    {designTools.map((tool, index) => (
+                                        (index === designTools.length - 1) ? <span key={index}> {tool.name}</span> : <span key={index}> {tool.name},</span>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="content">
+                                <img src={IconDetail4} alt="" />
+                                <div className="text">
+                                    {/* Dung lượng file: {info.fileSize} MB */}
+                                    Dung lượng file:
+                                </div>
+                            </div>
+                            <div className="content">
+                                <img src={IconDetail5} alt="" />
+                                <div className="text">
+                                    {/* Kích thước: {info.width} x {info.height} cm */}
+                                    Kích thước:
+                                </div>
+                            </div>
+                            <div className="content">
+                                <img src={IconDetail6} alt="" />
+                                <div className="text">
+                                    Hạng mục: {typeOfArchitectures.map((type, index) => (
+                                        (index === typeOfArchitectures.length - 1) ? <span key={index}> {type.name}</span> : <span key={index}> {type.name},</span>
+                                    ))}
+                                </div>
                             </div>
                         </div>
-                        <div className="content">
-                            <img src={IconDetail6} />
-                            <div className="text">
-                                Hạng mục:Kiến trúc, phối cảnh
+                        <div className="description">
+                            <div className="des-title">Mô tả</div>
+                            <div className="des-text">
+                                {info.content}
                             </div>
                         </div>
-                    </div>
-                    <div className="description">
-                        <div className="des-title">Mô tả</div>
-                        <div className="des-text">
-                            Lorem ipsum dolor sit amet consectetur. Vitae in
-                            integer euismod sit vehicula hac sit eget sed.
-                            Sociis commodo sit a feugiat molestie blandit. Sed
-                            massa eu facilisi proin at morbi hac. Et varius
-                            vitae eleifend in velit id scelerisque. Viverra
-                            elementum mi eleifend bibendum. Odio erat cursus ac
-                            mus ornare rhoncus auctor. Amet pharetra ac sed
-                            ornare arcu facilisi.{" "}
+                        <div className="action">
+                            <motion.div
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                <Button className="add-to-card">
+                                    Thêm vào giỏ hàng
+                                </Button>
+                            </motion.div>
+                            <motion.div
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                <Button className="download-now">
+                                    Tải xuống ngay
+                                </Button>
+                            </motion.div>
                         </div>
-                    </div>
-                    <div className="action">
-                        <motion.div
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.95 }}
-                        >
-                            <Button className="add-to-card">
-                                Thêm vào giỏ hàng
-                            </Button>
-                        </motion.div>
-                        <motion.div
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.95 }}
-                        >
-                            <Button className="download-now">
-                                Tải xuống ngay
-                            </Button>
-                        </motion.div>
-                    </div>
+                    </>}
                 </div>
             </div>
             <CAuthorIntroduction />

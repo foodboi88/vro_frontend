@@ -205,6 +205,7 @@ const Home = () => {
     };
 
     const handleClickCard = (sketchId: string) => {
+        console.log("sketchId", sketchId);
         navigate(`/detail-sketch/${sketchId}`);
     };
 
@@ -246,10 +247,10 @@ const Home = () => {
                             .map((card) => (
                                 <Col
                                     onClick={() => {
-                                        handleClickCard(card._id);
+                                        handleClickCard(card.id);
                                     }}
                                     span={spanCol}
-                                    key={card._id}
+                                    key={card.id}
                                 >
                                     <CProductCard
                                         imageUrl={card.images[0]}
@@ -296,10 +297,10 @@ const Home = () => {
                             .map((card) => (
                                 <Col
                                     onClick={() => {
-                                        handleClickCard(card._id);
+                                        handleClickCard(card.id);
                                     }}
                                     span={spanCol}
-                                    key={card._id}
+                                    key={card.id}
                                 >
                                     <CProductCard
                                         imageUrl={card.images[0]}

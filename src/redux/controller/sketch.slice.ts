@@ -11,6 +11,7 @@ import SketchsApi from "../../api/sketchs/sketchs.api";
 import { forkJoin } from "rxjs";
 import {
     ICurrentSearchValue,
+    IDetailSketch,
     IReqGetLatestSketchs,
     ISketch,
 } from "../../common/sketch.interface";
@@ -44,7 +45,7 @@ interface SketchState {
     styleList: CheckboxOptionType[];
     latestSketchsList: ISketch[];
     mostViewedSketchList: ISketch[];
-    detailSketch?: ISketch;
+    detailSketch?: IDetailSketch;
     commentList?: any[];
     filteredSketchs?: ISketch[];
     filteredAuthors?: IUser[];

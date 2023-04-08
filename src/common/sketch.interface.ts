@@ -11,7 +11,7 @@ export interface ISketch {
     views: number;
     likes: number;
     quantityPurchased: number;
-    _id: string;
+    id: string;
     images: string[];
 }
 
@@ -22,4 +22,29 @@ export interface ICurrentSearchValue {
     style: string[];
     size?: number;
     offset?: number;
+}
+export interface IInFoSketch {
+    title: string;
+    content: string;
+    price: number;
+    views: number;
+    likes: number;
+    quantityPurchased: number;
+    userId: string;
+    collectionId: string;
+    createdAt: Date;
+    updatedAt: Date;
+    id: string;
+}
+export interface IImagesSketch {
+    filePath: string;
+    id: string;
+    isMain: boolean;
+}
+export interface IDetailSketch {
+    designStyles: IStyle[];
+    designTools: ITool[];
+    images: IImagesSketch[];
+    info: IInFoSketch;
+    typeOfArchitectures: IArchitecture[];
 }
