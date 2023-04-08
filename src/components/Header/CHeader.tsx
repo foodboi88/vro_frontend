@@ -44,9 +44,10 @@ interface MyProps {
 export const CHeader = (props: MyProps) => {
     const [visible, setVisible] = useState(false); // Biến thể hiện nút thu gọn menu có đang mở hay không
     const [current, setCurrent] = useState<string>("1"); // Biến thể hiện giá trị cho nút hiện tại
-    // const { tokenLogin, user } = useSelectorRoot((state) => state.login);
+    const { tokenLogin, user } = useSelectorRoot((state) => state.login);
     // const [userName, setUserName] = useState<string>(user?.name ? user.name : '')
     // const [userEmail, setUserEmail] = useState<string>(user?.email ? user.email : '')
+
     const navigate = useNavigate();
     const [isOpenLoginModal, setIsOpenLoginModal] = useState<boolean>(false); // Biến kiểm tra đang mở modal login hay chưa
     const [isOpenRegisterModal, setIsOpenRegisterModal] =
@@ -91,6 +92,7 @@ export const CHeader = (props: MyProps) => {
         Utils.removeItemLocalStorage("token");
         Utils.removeItemLocalStorage("userMail");
         Utils.removeItemLocalStorage("userName");
+        Utils.removeItemLocalStorage("refresh_token");
         setIsLogin(!isLogin);
         window.location.reload();
     };
@@ -139,13 +141,16 @@ export const CHeader = (props: MyProps) => {
     const handleSearching = (event: any) => {
         console.log(event);
         const bodyrequest: ICurrentSearchValue = {
-            text: event.target.value,
+            name: event.target.value,
             architecture: currentSearchValue.architecture,
             tool: currentSearchValue.tool,
             style: currentSearchValue.style,
         };
         dispatch(advancedSearchingRequest(bodyrequest));
         navigate("/searching");
+    };
+    const handleUpload = () => {
+        navigate("/upload-sketch");
     };
     const checkIsLogin = (val: boolean) => {
         setIsLogin(val);
@@ -176,7 +181,7 @@ export const CHeader = (props: MyProps) => {
             {/* {tokenLogin && */}
             <div className="header-right">
                 <div className="user-infor">
-                    {!isLogin ? (
+                    {!tokenLogin ? (
                         <>
                             <motion.div
                                 className="header-button login"
@@ -210,7 +215,10 @@ export const CHeader = (props: MyProps) => {
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.95 }}
                             >
-                                <Button icon={<img src={HeaderIcon} />}>
+                                <Button
+                                    onClick={handleUpload}
+                                    icon={<img src={HeaderIcon} />}
+                                >
                                     Đăng bản vẽ
                                 </Button>
                             </motion.div>

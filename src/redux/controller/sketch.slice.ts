@@ -18,6 +18,7 @@ import { ITool } from "../../common/tool.interface";
 import FilterCriteriasApi from "../../api/filter-criterias/filter-criterias.api";
 import CommentsApi from "../../api/comment/comment.api";
 import { IUser } from "../../common/user.interface";
+import ImageSketchApi from "../../api/image-sketch/image-sketch.api";
 
 type MessageLogin = {
     content: string;
@@ -48,6 +49,7 @@ interface SketchState {
     filteredSketchs?: ISketch[];
     filteredAuthors?: IUser[];
     currentSearchValue: ICurrentSearchValue;
+    checkWhetherSketchUploaded: number; // Là số chẵn thì chắc chắn file đó đã đc up cả ảnh + file + content thành công
 }
 
 const initState: SketchState = {
@@ -56,9 +58,9 @@ const initState: SketchState = {
     user: undefined,
     message: undefined,
     messageForgot: undefined,
-    refresh_token: "",
+    refresh_token: Utils.getValueLocalStorage("refresh_token"),
     statusCode: undefined,
-    tokenLogin: undefined,
+    tokenLogin: Utils.getValueLocalStorage("token"),
     isExistEmail: true,
     registerSuccess: false,
     toolList: [],
@@ -73,9 +75,10 @@ const initState: SketchState = {
     currentSearchValue: {
         architecture: [],
         style: [],
-        text: "",
+        name: "",
         tool: [],
     },
+    checkWhetherSketchUploaded: 0,
 };
 
 const sketchSlice = createSlice({
@@ -150,8 +153,8 @@ const sketchSlice = createSlice({
 
         getAllToolsSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
-            console.log(action.payload.data[0].items);
-            state.toolList = action.payload.data[0].items.map(
+            console.log(action.payload.data);
+            state.toolList = action.payload.data.map(
                 (item: ITool) =>
                     ({
                         label: item.name,
@@ -169,8 +172,8 @@ const sketchSlice = createSlice({
 
         getAllStylesSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
-            console.log(action.payload.data[0].items);
-            state.styleList = action.payload.data[0].items.map(
+            console.log(action.payload.data);
+            state.styleList = action.payload.data.map(
                 (item: ITool) =>
                     ({
                         label: item.name,
@@ -188,8 +191,8 @@ const sketchSlice = createSlice({
 
         getAllArchitecturesSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
-            console.log(action.payload.data[0].items);
-            state.architectureList = action.payload.data[0].items.map(
+            console.log(action.payload.data);
+            state.architectureList = action.payload.data.map(
                 (item: ITool) =>
                     ({
                         label: item.name,
@@ -252,9 +255,9 @@ const sketchSlice = createSlice({
                 style: action.payload.style
                     ? action.payload.style
                     : state.currentSearchValue.style,
-                text: action.payload.text
-                    ? action.payload.text
-                    : state.currentSearchValue.text,
+                name: action.payload.name
+                    ? action.payload.name
+                    : state.currentSearchValue.name,
                 tool: action.payload.tool
                     ? action.payload.tool
                     : state.currentSearchValue.tool,
@@ -264,7 +267,55 @@ const sketchSlice = createSlice({
         advancedSearchingSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
             state.filteredAuthors = action.payload.data.author;
-            state.filteredSketchs = action.payload.data.sketch;
+            state.filteredSketchs = action.payload.data[0].items;
+        },
+
+        uploadSketchRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        uploadSketchSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            state.checkWhetherSketchUploaded += 1;
+            if (state.checkWhetherSketchUploaded % 2 === 0) {
+                // Cu chia het cho 2 thi la up file thanh cong
+
+                notification.open({
+                    message: "Tải bản vẽ lên thành công",
+                    description: action.payload.response.message,
+                    onClick: () => {
+                        console.log("Notification Clicked!");
+                    },
+                });
+            }
+        },
+
+        uploadSketchFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+
+            notification.open({
+                message: "Tải bản vẽ lên không thành công",
+                description: action.payload.response.message,
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+        },
+
+        uploadFileSketchRequest(state, action: PayloadAction<any>) {
+            state.loading = false;
+        },
+
+        uploadImageSketchRequest(state, action: PayloadAction<any>) {
+            state.loading = false;
+        },
+
+        uploadContentSketchRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        uploadContentSketchSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
         },
     },
 });
@@ -294,6 +345,7 @@ const sketchSlice = createSlice({
 //         })
 //     );
 
+// Lay ra tat ca du lieu cua trang home
 const getHomeListSketch$: RootEpic = (action$) =>
     action$.pipe(
         filter(getHomeListSketchRequest.match),
@@ -373,6 +425,7 @@ const getMostViewdSketchs$: RootEpic = (action$) =>
 //         })
 //     );
 
+//Lay ra cac tieu chi filter
 const getAllFitlerCriterias$: RootEpic = (action$) =>
     action$.pipe(
         filter(getAllFilterCriteriasRequest.match),
@@ -447,9 +500,8 @@ const getAllArchitectures$: RootEpic = (action$) =>
         })
     );
 
-const getDetailSketchPageContent$: RootEpic = (
-    action$ // Lay tat ca noi dung cua trang detail sketch: noi dung ban ve + comment
-) =>
+// Lay tat ca noi dung cua trang detail sketch: noi dung ban ve + comment
+const getDetailSketchPageContent$: RootEpic = (action$) =>
     action$.pipe(
         filter(getDetailSketchPageContentRequest.match),
         switchMap((re) => {
@@ -477,7 +529,6 @@ const getDetailSketch$: RootEpic = (action$) =>
             );
         })
     );
-// advancedSearchingRequest
 
 const getCommentBySketchId$: RootEpic = (action$) =>
     action$.pipe(
@@ -499,6 +550,8 @@ const getCommentBySketchId$: RootEpic = (action$) =>
         })
     );
 
+// http://14.231.84.10:6068/products/filter?size=10&offset=0&name=a
+
 const advancedSearchSketch$: RootEpic = (action$) =>
     action$.pipe(
         filter(advancedSearchingRequest.match),
@@ -506,7 +559,9 @@ const advancedSearchSketch$: RootEpic = (action$) =>
             // IdentityApi.login(re.payload) ?
             console.log(re);
             const bodyrequest: ICurrentSearchValue = {
-                text: re.payload.text ? re.payload.text : "",
+                size: 30,
+                offset: 0,
+                name: re.payload.name ? re.payload.name : "",
                 tool: re.payload.tool ? re.payload.tool : [],
                 architecture: re.payload.architecture
                     ? re.payload.architecture
@@ -520,6 +575,98 @@ const advancedSearchSketch$: RootEpic = (action$) =>
                     return [sketchSlice.actions.advancedSearchingSuccess(res)];
                 }),
                 catchError((err) => [])
+            );
+        })
+    );
+
+// Upload ban ve: upload anh + upload file + upload content
+const uploadImageSketch$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(uploadImageSketchRequest.match),
+        switchMap((re) => {
+            // IdentityApi.login(re.payload) ?
+            console.log(re);
+
+            let imageData = new FormData();
+            re.payload.imageUploadLst.forEach((item: File) => {
+                imageData.append("files", item); // chinh lai ten file anh sau
+            });
+            imageData.append("productId_in", re.payload.id);
+
+            // const bodyrequest = {
+            //     productId_in: re.payload.id,
+            //     files: re.payload.imageUploadLst,
+            // };
+
+            return ImageSketchApi.uploadSketchImage(imageData).pipe(
+                mergeMap((res: any) => {
+                    console.log(res);
+                    return [
+                        sketchSlice.actions.uploadFileSketchRequest(res),
+                        sketchSlice.actions.uploadSketchSuccess(res), // vao luu gia tri check thanh cong lan 1
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.uploadSketchFail(err)])
+            );
+        })
+    );
+
+const uploadFileSketch$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(uploadFileSketchRequest.match),
+        switchMap((re) => {
+            const { id, fileUploadLst } = re.payload;
+            const file = fileUploadLst[0] as File;
+
+            const formData = new FormData();
+            formData.append("productId_in", id);
+            formData.append("file", file);
+
+            return SketchsApi.uploadSketchFile(formData).pipe(
+                mergeMap((res: any) => {
+                    console.log(res);
+                    return [
+                        sketchSlice.actions.uploadContentSketchRequest(res),
+                        sketchSlice.actions.uploadSketchSuccess(res), // vao luu gia tri check thanh cong lan 2
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.uploadSketchFail(err)])
+            );
+        })
+    );
+
+const uploadContentSketch$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(uploadSketchRequest.match),
+        switchMap((re) => {
+            // IdentityApi.login(re.payload) ?
+            console.log(re);
+
+            const bodyrequest = {
+                // searchType: searchType,
+                // selectedType: selectedType,
+                title: re.payload.title,
+                // selectedTag: selectTag,
+                // imageUploadLst: re.payload.imageUploadLst,
+                // fileUploadLst: re.payload.fileUploadLst,
+                size: re.payload.size,
+                price: re.payload.price,
+                content: re.payload.content,
+                productDesignStyles: re.payload.productDesignStyles,
+                productDesignTools: re.payload.productDesignTools,
+                productTypeOfArchitecture: re.payload.productTypeOfArchitecture,
+            };
+
+            return SketchsApi.uploadSketchContent(bodyrequest).pipe(
+                mergeMap((res: any) => {
+                    console.log(res);
+                    res = { ...res.data, ...re.payload };
+                    return [
+                        sketchSlice.actions.uploadFileSketchRequest(res),
+                        sketchSlice.actions.uploadImageSketchRequest(res),
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.uploadSketchFail(err)])
             );
         })
     );
@@ -538,6 +685,9 @@ export const SketchEpics = [
     getCommentBySketchId$,
     getDetailSketchPageContent$,
     advancedSearchSketch$,
+    uploadImageSketch$,
+    uploadContentSketch$,
+    uploadFileSketch$,
 ];
 export const {
     getLatestSketchRequest,
@@ -551,5 +701,9 @@ export const {
     getCommentBySketchIdRequest,
     getDetailSketchPageContentRequest,
     advancedSearchingRequest,
+    uploadSketchRequest,
+    uploadContentSketchRequest,
+    uploadFileSketchRequest,
+    uploadImageSketchRequest,
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;

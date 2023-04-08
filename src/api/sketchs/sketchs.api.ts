@@ -9,7 +9,10 @@ import {
 import { Observable } from "rxjs/internal/Observable";
 import { catchError, map } from "rxjs/operators";
 import { API_URL } from "../../enum/api.enum";
-import { IReqGetLatestSketchs } from "../../common/sketch.interface";
+import {
+    ICurrentSearchValue,
+    IReqGetLatestSketchs,
+} from "../../common/sketch.interface";
 
 export default class SketchsApi {
     static apiURL = API_URL;
@@ -45,8 +48,19 @@ export default class SketchsApi {
         );
     }
 
-    static advancedSearching(body: any): Observable<any> {
-        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.ADVANCED_SEARCHING}}`;
+    //Tim kiem nang cao
+    static advancedSearching(body: ICurrentSearchValue): Observable<any> {
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.ADVANCED_SEARCHING}?size=${body.size}&offset=${body.size}&name=${body.name}`;
+        return HttpClient.get(api).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
+
+    static uploadSketchContent(body: any): Observable<any> {
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.UPLOAD_CONTENT_OF_SKETCH}`;
         return HttpClient.post(api, body).pipe(
             map(
                 (res) => (res as any) || null,
@@ -55,39 +69,9 @@ export default class SketchsApi {
         );
     }
 
-    static createMeetings(body: any): Observable<any> {
-        const api = `${SketchsApi.apiURL}/${SYSTEM_CONSTANTS.API.MEETINGS.CREATE_MEETINGS}`;
+    static uploadSketchFile(body: any): Observable<any> {
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.UPLOAD_FILES_OF_SKETCH}`;
         return HttpClient.post(api, body).pipe(
-            map(
-                (res) => (res as any) || null,
-                catchError((error) => new Observable())
-            )
-        );
-    }
-
-    static updateMeetings(meetingId: string, body: any): Observable<any> {
-        const api = `${
-            SketchsApi.apiURL.HOST
-        }/${SYSTEM_CONSTANTS.API.MEETINGS.UPDATE_MEETINGS.replace(
-            "{meetingId}",
-            meetingId
-        )}`;
-        return HttpClient.put(api, body).pipe(
-            map(
-                (res) => (res as any) || null,
-                catchError((error) => new Observable())
-            )
-        );
-    }
-
-    static deleteMeetings(meetingId: string): Observable<any> {
-        const api = `${
-            SketchsApi.apiURL.HOST
-        }/${SYSTEM_CONSTANTS.API.MEETINGS.DELETE_MEETINGS.replace(
-            "{meetingId}",
-            meetingId
-        )}`;
-        return HttpClient.delete(api).pipe(
             map(
                 (res) => (res as any) || null,
                 catchError((error) => new Observable())
