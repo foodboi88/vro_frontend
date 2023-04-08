@@ -11,14 +11,12 @@ import { catchError, map } from "rxjs/operators";
 import { API_URL } from "../../enum/api.enum";
 import { IReqGetLatestSketchs } from "../../common/sketch.interface";
 
-export default class CommentsApi {
+export default class ImageSketchApi {
     static apiURL = API_URL;
 
-    //Doi lai Endpoint API sau khi co API moi
-
-    static getCommentsBySketchId(params: any): Observable<any> {
-        const api = `${CommentsApi.apiURL.HOST}/${this.apiURL.GET_COMMENTS_BY_SKETCH_ID}?size=${params.size}&offset=${params.offset}&productId=${params.productId}`;
-        return HttpClient.get(api).pipe(
+    static uploadSketchImage(param: any): Observable<any> {
+        const api = `${ImageSketchApi.apiURL.HOST}/${this.apiURL.UPLOAD_IMAGE_OF_SKETCH}`;
+        return HttpClient.post(api, param).pipe(
             map(
                 (res) => (res as any) || null,
                 catchError((error) => new Observable())

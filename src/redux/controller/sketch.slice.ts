@@ -75,7 +75,7 @@ const initState: SketchState = {
     currentSearchValue: {
         architecture: [],
         style: [],
-        text: "",
+        name: "",
         tool: [],
     },
     checkWhetherSketchUploaded: 0,
@@ -153,8 +153,8 @@ const sketchSlice = createSlice({
 
         getAllToolsSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
-            console.log(action.payload.data[0].items);
-            state.toolList = action.payload.data[0].items.map(
+            console.log(action.payload.data);
+            state.toolList = action.payload.data.map(
                 (item: ITool) =>
                 ({
                     label: item.name,
@@ -172,8 +172,8 @@ const sketchSlice = createSlice({
 
         getAllStylesSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
-            console.log(action.payload.data[0].items);
-            state.styleList = action.payload.data[0].items.map(
+            console.log(action.payload.data);
+            state.styleList = action.payload.data.map(
                 (item: ITool) =>
                 ({
                     label: item.name,
@@ -191,8 +191,8 @@ const sketchSlice = createSlice({
 
         getAllArchitecturesSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
-            console.log(action.payload.data[0].items);
-            state.architectureList = action.payload.data[0].items.map(
+            console.log(action.payload.data);
+            state.architectureList = action.payload.data.map(
                 (item: ITool) =>
                 ({
                     label: item.name,
@@ -229,7 +229,10 @@ const sketchSlice = createSlice({
             state.commentList = action.payload.data[0].items;
         },
 
-        getDetailSketchPageContentRequest(state) {
+        getDetailSketchPageContentRequest(
+            state,
+            action: PayloadAction<string>
+        ) {
             state.loading = true;
         },
 
@@ -252,9 +255,9 @@ const sketchSlice = createSlice({
                 style: action.payload.style
                     ? action.payload.style
                     : state.currentSearchValue.style,
-                text: action.payload.text
-                    ? action.payload.text
-                    : state.currentSearchValue.text,
+                name: action.payload.name
+                    ? action.payload.name
+                    : state.currentSearchValue.name,
                 tool: action.payload.tool
                     ? action.payload.tool
                     : state.currentSearchValue.tool,
@@ -264,7 +267,7 @@ const sketchSlice = createSlice({
         advancedSearchingSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
             state.filteredAuthors = action.payload.data.author;
-            state.filteredSketchs = action.payload.data.sketch;
+            state.filteredSketchs = action.payload.data[0].items;
         },
 
         uploadSketchRequest(state, action: PayloadAction<any>) {
@@ -534,7 +537,13 @@ const getCommentBySketchId$: RootEpic = (action$) =>
             // IdentityApi.login(re.payload) ?
             console.log(re);
 
-            return CommentsApi.getCommentsBySketchId(re.payload).pipe(
+            const params = {
+                size: 20,
+                offset: 0,
+                productId: re.payload,
+            };
+
+            return CommentsApi.getCommentsBySketchId(params).pipe(
                 mergeMap((res: any) => {
                     console.log(res);
 
@@ -547,6 +556,8 @@ const getCommentBySketchId$: RootEpic = (action$) =>
         })
     );
 
+// http://14.231.84.10:6068/products/filter?size=10&offset=0&name=a
+
 const advancedSearchSketch$: RootEpic = (action$) =>
     action$.pipe(
         filter(advancedSearchingRequest.match),
@@ -554,7 +565,9 @@ const advancedSearchSketch$: RootEpic = (action$) =>
             // IdentityApi.login(re.payload) ?
             console.log(re);
             const bodyrequest: ICurrentSearchValue = {
-                text: re.payload.text ? re.payload.text : "",
+                size: 30,
+                offset: 0,
+                name: re.payload.name ? re.payload.name : "",
                 tool: re.payload.tool ? re.payload.tool : [],
                 architecture: re.payload.architecture
                     ? re.payload.architecture
@@ -580,8 +593,10 @@ const uploadImageSketch$: RootEpic = (action$) =>
             // IdentityApi.login(re.payload) ?
             console.log(re);
 
-            const imageData = new FormData();
-            imageData.append("files", re.payload.imageUploadLst, "images"); // chinh lai ten file anh sau
+            let imageData = new FormData();
+            re.payload.imageUploadLst.forEach((item: File) => {
+                imageData.append("files", item); // chinh lai ten file anh sau
+            });
             imageData.append("productId_in", re.payload.id);
 
             // const bodyrequest = {
@@ -606,16 +621,14 @@ const uploadFileSketch$: RootEpic = (action$) =>
     action$.pipe(
         filter(uploadFileSketchRequest.match),
         switchMap((re) => {
-            // IdentityApi.login(re.payload) ?
-            console.log(re);
+            const { id, fileUploadLst } = re.payload;
+            const file = fileUploadLst[0] as File;
 
-            const fileData = new FormData();
-            const tranformedFile = re.payload
-                .fileUploadLst[0] as unknown as File;
-            fileData.append("file", tranformedFile, "file"); // chinh lai ten file anh sau
-            fileData.append("productId_in", re.payload.id);
+            const formData = new FormData();
+            formData.append("productId_in", id);
+            formData.append("file", file);
 
-            return SketchsApi.uploadSketchFile(fileData).pipe(
+            return SketchsApi.uploadSketchFile(formData).pipe(
                 mergeMap((res: any) => {
                     console.log(res);
                     return [
@@ -656,7 +669,7 @@ const uploadContentSketch$: RootEpic = (action$) =>
                     res = { ...res.data, ...re.payload };
                     return [
                         sketchSlice.actions.uploadFileSketchRequest(res),
-                        // sketchSlice.actions.uploadImageSketchRequest(res),
+                        sketchSlice.actions.uploadImageSketchRequest(res),
                     ];
                 }),
                 catchError((err) => [sketchSlice.actions.uploadSketchFail(err)])

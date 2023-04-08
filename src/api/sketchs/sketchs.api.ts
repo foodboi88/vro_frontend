@@ -9,7 +9,10 @@ import {
 import { Observable } from "rxjs/internal/Observable";
 import { catchError, map } from "rxjs/operators";
 import { API_URL } from "../../enum/api.enum";
-import { IReqGetLatestSketchs } from "../../common/sketch.interface";
+import {
+    ICurrentSearchValue,
+    IReqGetLatestSketchs,
+} from "../../common/sketch.interface";
 
 export default class SketchsApi {
     static apiURL = API_URL;
@@ -45,9 +48,10 @@ export default class SketchsApi {
         );
     }
 
-    static advancedSearching(body: any): Observable<any> {
-        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.ADVANCED_SEARCHING}`;
-        return HttpClient.post(api, body).pipe(
+    //Tim kiem nang cao
+    static advancedSearching(body: ICurrentSearchValue): Observable<any> {
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.ADVANCED_SEARCHING}?size=${body.size}&offset=${body.size}&name=${body.name}`;
+        return HttpClient.get(api).pipe(
             map(
                 (res) => (res as any) || null,
                 catchError((error) => new Observable())
@@ -68,6 +72,16 @@ export default class SketchsApi {
     static uploadSketchFile(body: any): Observable<any> {
         const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.UPLOAD_FILES_OF_SKETCH}`;
         return HttpClient.post(api, body).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
+
+    static getAuthorBySketchId(sketchId: string): Observable<any> {
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.ADVANCED_SEARCHING}?name=${sketchId}`;
+        return HttpClient.get(api).pipe(
             map(
                 (res) => (res as any) || null,
                 catchError((error) => new Observable())

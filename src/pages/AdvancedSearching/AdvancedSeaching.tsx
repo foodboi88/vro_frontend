@@ -25,6 +25,7 @@ import DrawHomeImage15 from "../../images/homepage/home_img_15.png";
 import DrawHomeImage16 from "../../images/homepage/home_img_16.png";
 import Meta from "antd/lib/card/Meta";
 import { useNavigate } from "react-router-dom";
+import { useSelectorRoot } from "../../redux/store";
 
 interface CardData {
     id: number;
@@ -159,6 +160,15 @@ const AdvancedSeaching = () => {
     const [isShowButtonFilter, setIsShowButtonFilter] =
         useState<boolean>(false);
 
+    const {
+        toolList,
+        architectureList,
+        styleList,
+        filteredSketchs,
+        filteredAuthors,
+        currentSearchValue,
+    } = useSelectorRoot((state) => state.sketch);
+
     useEffect(() => {
         const handleWindowResize = () => {
             setWindowSize([window.innerWidth, window.innerHeight]);
@@ -183,6 +193,11 @@ const AdvancedSeaching = () => {
             window.removeEventListener("resize", handleWindowResize);
         };
     }, [window.innerWidth]);
+
+    const goToDetailPageHandle = (id: string) => {
+        navigate(`/detail-sketch/${id}`);
+    };
+
     return (
         <div className="main">
             <CFilter />
@@ -212,17 +227,24 @@ const AdvancedSeaching = () => {
                     </div>
                     <CArrangeBar />
                     <Row className="detail-list" gutter={[16, 24]}>
-                        {data.map((card) => (
-                            <Col span={spanCol} key={card.id}>
-                                <CProductCard
-                                    imageUrl={card.imageUrl}
-                                    title={card.title}
-                                    view={card.view}
-                                    price={card.price}
-                                    type={card.type}
-                                />
-                            </Col>
-                        ))}
+                        {filteredSketchs &&
+                            filteredSketchs.map((card) => (
+                                <Col
+                                    onClick={() => {
+                                        goToDetailPageHandle(card._id);
+                                    }}
+                                    span={spanCol}
+                                    key={card._id}
+                                >
+                                    <CProductCard
+                                        // imageUrl={card.images[0]}
+                                        title={card.title}
+                                        view={card.views}
+                                        price={card.price}
+                                        // type={card.}
+                                    />
+                                </Col>
+                            ))}
                     </Row>
                 </div>
             </div>

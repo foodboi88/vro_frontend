@@ -27,7 +27,11 @@ import "./styles.uploadsketch.scss";
 import { CheckboxValueType } from "antd/lib/checkbox/Group";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import { useDispatchRoot } from "../../redux/store";
-import { uploadSketchRequest } from "../../redux/controller";
+import {
+    uploadFileSketchRequest,
+    uploadImageSketchRequest,
+    uploadSketchRequest,
+} from "../../redux/controller";
 
 const options: SelectProps["options"] = [];
 
@@ -282,7 +286,15 @@ const UploadSketch = () => {
 
         console.log(bodyrequest);
 
+        // const bodyrequestTest = {
+        //     imageUploadLst: imageUploadLst,
+        //     fileUploadLst: fileUploadLst,
+        //     id: "6423f410c55e590e7080e5fa",
+        // };
+
         dispatch(uploadSketchRequest(bodyrequest));
+        // dispatch(uploadFileSketchRequest(bodyrequestTest));
+        // dispatch(uploadImageSketchRequest(bodyrequestTest));
     };
     return (
         <div className="main-upload">

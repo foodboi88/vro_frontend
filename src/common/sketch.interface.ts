@@ -11,13 +11,15 @@ export interface ISketch {
     views: number;
     likes: number;
     quantityPurchased: number;
-    id: string;
+    _id: string;
     images: string[];
 }
 
 export interface ICurrentSearchValue {
-    text: string;
+    name: string;
     tool: string[];
     architecture: string[];
     style: string[];
+    size?: number;
+    offset?: number;
 }

@@ -6,7 +6,7 @@ import CComment from "../../components/Comment/CComment";
 import CProductCard from "../../components/ProductCard/CProductCard";
 import "./styles.detailsketch.scss";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { motion } from "framer-motion";
 import {
     ArrowLeftOutlined,
@@ -93,6 +93,7 @@ const DetailSketch = () => {
         (state) => state.sketch
     );
     const dispatch = useDispatchRoot();
+    const { sketchId } = useParams();
 
     const [spanCol, setSpanCol] = useState<number>(6);
     const [numberOfCardShow, setNumberOfCardShow] = useState<number>(4);
@@ -136,7 +137,7 @@ const DetailSketch = () => {
     });
 
     useEffect(() => {
-        dispatch(getDetailSketchPageContentRequest());
+        if (sketchId) dispatch(getDetailSketchPageContentRequest(sketchId));
     }, []);
 
     const handleNextCard = () => {
