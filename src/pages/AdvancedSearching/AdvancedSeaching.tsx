@@ -193,6 +193,11 @@ const AdvancedSeaching = () => {
             window.removeEventListener("resize", handleWindowResize);
         };
     }, [window.innerWidth]);
+
+    const goToDetailPageHandle = (id: string) => {
+        navigate(`/detail-sketch/${id}`);
+    };
+
     return (
         <div className="main">
             <CFilter />
@@ -224,7 +229,13 @@ const AdvancedSeaching = () => {
                     <Row className="detail-list" gutter={[16, 24]}>
                         {filteredSketchs &&
                             filteredSketchs.map((card) => (
-                                <Col span={spanCol} key={card.id}>
+                                <Col
+                                    onClick={() => {
+                                        goToDetailPageHandle(card._id);
+                                    }}
+                                    span={spanCol}
+                                    key={card._id}
+                                >
                                     <CProductCard
                                         // imageUrl={card.images[0]}
                                         title={card.title}

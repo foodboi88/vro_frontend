@@ -11,7 +11,7 @@ export interface ISketch {
     views: number;
     likes: number;
     quantityPurchased: number;
-    id: string;
+    _id: string;
     images: string[];
 }
 

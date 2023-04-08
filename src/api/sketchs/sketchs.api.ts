@@ -78,4 +78,14 @@ export default class SketchsApi {
             )
         );
     }
+
+    static getAuthorBySketchId(sketchId: string): Observable<any> {
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.ADVANCED_SEARCHING}?name=${sketchId}`;
+        return HttpClient.get(api).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
 }

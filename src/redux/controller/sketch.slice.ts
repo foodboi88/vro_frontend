@@ -537,7 +537,13 @@ const getCommentBySketchId$: RootEpic = (action$) =>
             // IdentityApi.login(re.payload) ?
             console.log(re);
 
-            return CommentsApi.getCommentsBySketchId(re.payload).pipe(
+            const params = {
+                size: 20,
+                offset: 0,
+                productId: re.payload,
+            };
+
+            return CommentsApi.getCommentsBySketchId(params).pipe(
                 mergeMap((res: any) => {
                     console.log(res);
 

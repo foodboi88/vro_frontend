@@ -16,34 +16,9 @@ export default class CommentsApi {
 
     //Doi lai Endpoint API sau khi co API moi
 
-    static getCommentsBySketchId(sketchId: string): Observable<any> {
-        const api = `${CommentsApi.apiURL.HOST}/${this.apiURL.GET_COMMENTS_BY_SKETCH_ID}?size=${sketchId}`;
+    static getCommentsBySketchId(params: any): Observable<any> {
+        const api = `${CommentsApi.apiURL.HOST}/${this.apiURL.GET_COMMENTS_BY_SKETCH_ID}?size=${params.size}&offset=${params.offset}&productId=${params.productId}`;
         return HttpClient.get(api).pipe(
-            map(
-                (res) => (res as any) || null,
-                catchError((error) => new Observable())
-            )
-        );
-    }
-
-    static createTools(body: any): Observable<any> {
-        const api = `${CommentsApi.apiURL}/${SYSTEM_CONSTANTS.API.MEETINGS.CREATE_MEETINGS}`;
-        return HttpClient.post(api, body).pipe(
-            map(
-                (res) => (res as any) || null,
-                catchError((error) => new Observable())
-            )
-        );
-    }
-
-    static updateTools(meetingId: string, body: any): Observable<any> {
-        const api = `${
-            CommentsApi.apiURL.HOST
-        }/${SYSTEM_CONSTANTS.API.MEETINGS.UPDATE_MEETINGS.replace(
-            "{meetingId}",
-            meetingId
-        )}`;
-        return HttpClient.put(api, body).pipe(
             map(
                 (res) => (res as any) || null,
                 catchError((error) => new Observable())

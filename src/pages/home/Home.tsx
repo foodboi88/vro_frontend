@@ -246,10 +246,10 @@ const Home = () => {
                             .map((card) => (
                                 <Col
                                     onClick={() => {
-                                        handleClickCard(card.id);
+                                        handleClickCard(card._id);
                                     }}
                                     span={spanCol}
-                                    key={card.id}
+                                    key={card._id}
                                 >
                                     <CProductCard
                                         imageUrl={card.images[0]}
@@ -296,10 +296,10 @@ const Home = () => {
                             .map((card) => (
                                 <Col
                                     onClick={() => {
-                                        handleClickCard(card.id);
+                                        handleClickCard(card._id);
                                     }}
                                     span={spanCol}
-                                    key={card.id}
+                                    key={card._id}
                                 >
                                     <CProductCard
                                         imageUrl={card.images[0]}
