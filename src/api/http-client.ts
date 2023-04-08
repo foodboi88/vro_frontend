@@ -96,7 +96,9 @@ function mapAjaxRequest(request?: PartAjaxRequest) {
     const newHeaders = {
         Authorization: token ? `Bearer ${token}` : "",
         Accept: "application/json",
-        "Content-Type": "application/json",
+        // "Content-Type": "application/json",
+        // "Content-Type": "multipart/form-data",
+
         timezone: -new Date().getTimezoneOffset() / 60,
         ...mapHeaders,
     };
@@ -150,20 +152,20 @@ export default class HttpClient {
     ): Observable<unknown> {
         return commonApiCall("PUT", { url, data, headers });
     }
-    static upload(
-        url: string,
-        data: unknown,
-        headers?: PartAjaxRequest
-    ): Observable<unknown> {
-        const newHeaders = mapAjaxRequest(headers);
-        const { headers: newHeadersUpload, ...res } = newHeaders;
-        const { "Content-Type": tem, ...resUpload } = newHeadersUpload;
-        const resultHeaders = { ...res, headers: resUpload };
+    // static upload(
+    //     url: string,
+    //     data: unknown,
+    //     headers?: PartAjaxRequest
+    // ): Observable<unknown> {
+    //     const newHeaders = mapAjaxRequest(headers);
+    //     const { headers: newHeadersUpload, ...res } = newHeaders;
+    //     // const { "Content-Type": tem, ...resUpload } = newHeadersUpload;
+    //     // const resultHeaders = { ...res, headers: resUpload };
 
-        return ajax({ url, method: "POST", body: data, ...resultHeaders }).pipe(
-            map((res: AjaxResponse) => mapResponse(res)),
-            retry(2),
-            catchError((err: any) => handleError$(err))
-        );
-    }
+    //     return ajax({ url, method: "POST", body: data, ...resultHeaders }).pipe(
+    //         map((res: AjaxResponse) => mapResponse(res)),
+    //         retry(2),
+    //         catchError((err: any) => handleError$(err))
+    //     );
+    // }
 }

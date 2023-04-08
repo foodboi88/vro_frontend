@@ -15,7 +15,7 @@ export default class ImageSketchApi {
     static apiURL = API_URL;
 
     static uploadSketchImage(body: any): Observable<any> {
-        const api = `${ImageSketchApi.apiURL.HOST}/${this.apiURL.UPLOAD_IMAGE_OF_SKETCH}}`;
+        const api = `${ImageSketchApi.apiURL.HOST}/${this.apiURL.UPLOAD_IMAGE_OF_SKETCH}`;
         return HttpClient.post(api, body).pipe(
             map(
                 (res) => (res as any) || null,

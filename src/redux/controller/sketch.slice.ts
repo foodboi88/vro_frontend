@@ -580,8 +580,10 @@ const uploadImageSketch$: RootEpic = (action$) =>
             // IdentityApi.login(re.payload) ?
             console.log(re);
 
-            const imageData = new FormData();
-            imageData.append("files", re.payload.imageUploadLst, "images"); // chinh lai ten file anh sau
+            let imageData = new FormData();
+            re.payload.imageUploadLst.forEach((item: File) => {
+                imageData.append("files", item); // chinh lai ten file anh sau
+            });
             imageData.append("productId_in", re.payload.id);
 
             // const bodyrequest = {
@@ -606,16 +608,14 @@ const uploadFileSketch$: RootEpic = (action$) =>
     action$.pipe(
         filter(uploadFileSketchRequest.match),
         switchMap((re) => {
-            // IdentityApi.login(re.payload) ?
-            console.log(re);
+            const { id, fileUploadLst } = re.payload;
+            const file = fileUploadLst[0] as File;
 
-            const fileData = new FormData();
-            const tranformedFile = re.payload
-                .fileUploadLst[0] as unknown as File;
-            fileData.append("file", tranformedFile, "file"); // chinh lai ten file anh sau
-            fileData.append("productId_in", re.payload.id);
+            const formData = new FormData();
+            formData.append("productId_in", id);
+            formData.append("file", file);
 
-            return SketchsApi.uploadSketchFile(fileData).pipe(
+            return SketchsApi.uploadSketchFile(formData).pipe(
                 mergeMap((res: any) => {
                     console.log(res);
                     return [
@@ -656,7 +656,7 @@ const uploadContentSketch$: RootEpic = (action$) =>
                     res = { ...res.data, ...re.payload };
                     return [
                         sketchSlice.actions.uploadFileSketchRequest(res),
-                        // sketchSlice.actions.uploadImageSketchRequest(res),
+                        sketchSlice.actions.uploadImageSketchRequest(res),
                     ];
                 }),
                 catchError((err) => [sketchSlice.actions.uploadSketchFail(err)])
