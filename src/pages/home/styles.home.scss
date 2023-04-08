@@ -17,7 +17,7 @@
 
     .tool-of-web {
         margin: 3em auto;
-        width: 1100px;
+        width: clamp(1100px, 80vw, 1300px);
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -40,6 +40,12 @@
             .sub-title {
                 font-weight: 400;
                 font-size: 14px;
+                transition: 0.3s ease-in-out all;
+            }
+
+            .sub-title:hover {
+                cursor: pointer;
+                scale: 1.3;
             }
         }
 
@@ -65,223 +71,6 @@
             }
         }
     }
-
-    .right-of-user {
-        z-index: 1;
-        position: relative;
-        margin-top: 40px;
-
-        .title {
-            text-align: center;
-            font-weight: 640;
-            font-size: 30px;
-            padding-bottom: 40px;
-        }
-
-        .right-lst {
-            display: flex;
-            margin: 10px 20px;
-            justify-content: center;
-            margin-bottom: 50px;
-
-            .lst-item {
-                width: 200px;
-                text-align: center;
-                margin: 10px;
-                border-radius: 15px;
-                padding: 20px;
-                position: relative;
-                cursor: pointer;
-                user-select: none;
-
-                .lst-item-image {
-                    position: absolute;
-                    top: -50px;
-                    left: -20px;
-                    height: 100px;
-                    width: 100px;
-                }
-
-                .lst-item-title {
-                    font-weight: 700;
-                    font-size: 16px;
-                    line-height: 32px;
-                    text-align: center;
-                    color: #FFFFFF;
-                    margin-top: 30px;
-                }
-
-                .lst-item-content {
-                    font-weight: 500;
-                    font-size: 14px;
-                    line-height: 32px;
-                    text-align: center;
-                    color: #FFFFFF;
-                }
-            }
-
-            .lst-item:nth-child(1) {
-                // background-color: #a027ff;
-                // background-color: #59009c;
-                background-image: url("../../images/right-of-user-1.png");
-                background-repeat: no-repeat;
-                background-size: cover;
-
-                .lst-item-image {
-                    top: -60px;
-                    left: -20px;
-                    width: 109px;
-                    height: 100px;
-                }
-            }
-
-            .lst-item:nth-child(2) {
-                background-color: #20c3b5;
-
-                .lst-item-image {
-                    top: -55px;
-                    left: -45px;
-                    width: 156px;
-                    height: 100px;
-                }
-            }
-
-            .lst-item:nth-child(3) {
-                background-image: url("../../images/right-of-user-3.png");
-                background-repeat: no-repeat;
-                background-size: cover;
-
-                .lst-item-image {
-                    top: -53px;
-                    left: -15px;
-                    width: 68px;
-                    height: 100px;
-                }
-            }
-
-            .lst-item:nth-child(4) {
-                background-image: url("../../images/right-of-user-4.png");
-                background-repeat: no-repeat;
-                background-size: cover;
-
-                .lst-item-image {
-                    top: -42px;
-                    left: -15px;
-                    width: 80px;
-                    height: 80px;
-                }
-            }
-
-            .lst-item:nth-child(5) {
-                background-image: url("../../images/right-of-user-5.png");
-                background-repeat: no-repeat;
-                background-size: cover;
-
-                .lst-item-image {
-                    width: 131px;
-                    height: 72px;
-                    top: -40px;
-                    left: -20px;
-                }
-            }
-        }
-    }
-
-    .how-to-use {
-        display: flex;
-        z-index: 2;
-        position: relative;
-        justify-content: space-around;
-        border-radius: 0 192px 192px 0;
-        padding: 40px;
-        // margin-bottom: -300px;
-
-        .tutorial-image {
-            display: flex;
-            justify-content: start;
-            align-items: center;
-            margin-top: -70px;
-            margin-right: -100px;
-
-            img {
-                height: 80%;
-            }
-        }
-
-        .content {
-            margin-top: 30px;
-
-            .title {
-                font-weight: 700;
-                font-size: 30px;
-                color: #1E1E1E;
-            }
-
-            .subtitle {
-                font-weight: 500;
-                font-size: 20px;
-                color: #4E4E4E;
-            }
-
-            .step-lst {
-                .lst-item {
-                    display: flex;
-                    align-items: center;
-                    margin: 20px 0px;
-
-                    .img-item {
-                        margin-right: 20px;
-                    }
-
-                    .text-item {
-                        font-weight: 500;
-                        font-size: 14px;
-                        color: #4E4E4E;
-
-                    }
-                }
-            }
-        }
-    }
-
-    .gmap_iframe {
-        height: 500px;
-        width: 100%;
-        border-radius: 40px;
-    }
-
-    .our-partner {
-        // margin-top: -200px;
-        z-index: 2;
-        position: relative;
-        border-radius: 0 192px 0 0;
-        padding-bottom: 80px;
-
-        .title {
-            padding-top: 50px;
-            text-align: center;
-            font-weight: 700;
-            font-size: 30px;
-            line-height: 56px;
-            color: #1E1E1E;
-        }
-
-        .partner-lst {
-            max-width: 1200px;
-            padding: 0px 50px;
-            margin: 50px auto;
-            display: grid;
-            gap: 2rem;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-
-            .item {
-                background-color: #EEF2F6;
-                color: #858585;
-                padding: 1rem;
-                height: 4rem;
-            }
-        }
-    }
 }
 
 @media (min-width: 1300px) {
@@ -296,42 +85,11 @@
     }
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 1150px) {
     .main-home {
-        .intro-part {
-
-            .image-of-intro {
-                img {
-                    margin-left: -275px !important;
-                }
-            }
-        }
-    }
-}
-
-@media (max-width: 1100px) {
-    .main-home {
-        .intro-part {
-
-            .text-of-intro {
-                .title {
-                    font-size: 25px;
-                }
-
-                .detail {
-                    font-size: 13px;
-                }
-            }
-
-            .image-of-intro {
-                img {
-                    margin-top: 100px;
-                    margin-left: -400px !important;
-                }
-            }
-        }
-
         .tool-of-web {
+            width: 850px;
+
             .subtitle {
                 padding: 0px 50px;
             }
@@ -348,51 +106,13 @@
                 }
             }
         }
-
-        .how-to-use {
-            .tutorial-image {
-                margin-top: -125px;
-                margin-right: -0px;
-
-                img {
-                    height: 60%;
-                    margin-right: -300px;
-                }
-            }
-        }
-
-        .right-of-user {
-            .right-lst {
-                .lst-item {
-                    .lst-item-title {
-                        font-size: 14px;
-                    }
-
-                    .lst-item-content {
-                        font-size: 12px;
-                    }
-                }
-            }
-        }
     }
 }
 
 @media (max-width: 900px) {
     .main-home {
-        .intro-part {
-
-            .text-of-intro {
-                width: 100%;
-                margin: 100px 25px 50px 25px;
-            }
-
-            .image-of-intro {
-                display: none !important;
-            }
-        }
-
         .tool-of-web {
-            margin: 20px;
+            width: 650px;
 
             .title {}
 
@@ -402,103 +122,17 @@
                         .ant-card-meta-title {}
 
                         .home-card-title {
-                            .h-c-t-title {
-                                font-size: clamp(0.5em, 1.8vw, 1.1em);
-                            }
+                            .h-c-t-title {}
 
-                            .h-c-t-view-point {
-                                font-size: clamp(0.5em, 2.5vw, 1.1em);
-                            }
+                            .h-c-t-view-point {}
                         }
                     }
 
-                    .home-card-description {
-                        font-size: clamp(0.5em, 2.5vw, 1.1em);
-                    }
+                    .home-card-description {}
 
-                    .home-card-price {
-                        font-size: clamp(0.5em, 2.5vw, 1.1em);
-                    }
+                    .home-card-price {}
 
                     .home-card-price.free {}
-                }
-            }
-        }
-
-        .how-to-use {
-            .tutorial-image {
-                display: none !important;
-            }
-        }
-
-
-        .right-of-user {
-            .right-lst {
-                .lst-item {
-                    padding: 10px;
-
-                    .lst-item-title {
-                        font-size: 12px;
-                    }
-
-                    .lst-item-content {
-                        font-size: 11px;
-                    }
-                }
-
-                .lst-item:nth-child(1) {
-                    background-color: #a027ff;
-
-                    .lst-item-image {
-                        top: -35px;
-                        left: -20px;
-                        width: calc(100px - 20px);
-                        height: calc(100px - 20px);
-                    }
-                }
-
-                .lst-item:nth-child(2) {
-                    background-color: #20c3b5;
-
-                    .lst-item-image {
-                        top: -30px;
-                        left: -45px;
-                        width: calc(156px - 20px);
-                        height: calc(100px - 20px);
-                    }
-                }
-
-                .lst-item:nth-child(3) {
-                    background-color: #ff6e83;
-
-                    .lst-item-image {
-                        top: -38px;
-                        left: -10px;
-                        width: calc(68px - 10px);
-                        height: calc(100px - 10px);
-                    }
-                }
-
-                .lst-item:nth-child(4) {
-                    background-color: #446cfa;
-
-                    .lst-item-image {
-                        top: calc(-42px + 20px);
-                        left: -15px;
-                        width: calc(80px - 20px);
-                        height: calc(80px - 20px);
-                    }
-                }
-
-                .lst-item:nth-child(5) {
-                    background-color: #fda932;
-
-                    .lst-item-image {
-                        top: calc(-40px + 20px);
-                        left: -20px;
-                        width: calc(131px - 20px);
-                        height: calc(72px - 20px);
-                    }
                 }
             }
         }
@@ -508,6 +142,8 @@
 @media (max-width: 700px) {
     .main-home {
         .tool-of-web {
+            width: 450px;
+
             .lst-tool {
                 .tool {
                     width: calc(269.33px - 100px);
@@ -532,129 +168,17 @@
     }
 }
 
-@media (max-width: 600px) {
-    .main-home {
-        .intro-part {
-
-            .text-of-intro {
-                margin: 100px 25px 50px 25px;
-
-                .title {
-                    font-size: 20px;
-                }
-
-                .detail {
-                    font-size: 12px;
-                }
-
-                .button-start {
-                    font-size: 12px;
-                }
-            }
-
-            .image-of-intro {
-                display: none !important;
-            }
-        }
-
-        .tool-of-web {
-            margin: 20px;
-
-            .title {}
-
-            .lst-tool {
-                .ant-card-body {
-                    .title-and-price {
-                        .ant-card-meta-title {}
-
-                        .home-card-title {
-                            .h-c-t-title {
-                                font-size: clamp(0.8em, 2.5vw, 1.5em);
-                            }
-
-                            .h-c-t-view-point {
-                                font-size: clamp(0.5em, 2.5vw, 1em);
-                            }
-                        }
-                    }
-
-                    .home-card-description {
-                        font-size: clamp(0.5em, 2.5vw, 1em);
-                    }
-
-                    .home-card-price {
-                        font-size: clamp(0.5em, 2.5vw, 1em);
-                    }
-
-                    .home-card-price.free {}
-                }
-            }
-        }
-
-        .how-to-use {
-            .content {
-                .title {
-                    font-size: 20px;
-                }
-
-                .subtitle {
-                    font-size: 14px;
-                }
-
-                .step-lst {
-                    .lst-item {
-                        .text-item {
-                            font-size: 12px;
-                        }
-                    }
-                }
-            }
-        }
-
-        .right-of-user {
-            z-index: 3;
-
-            .right-lst {
-                flex-direction: column;
-
-                .lst-item {
-                    width: 100%;
-                    margin: 10px 0px;
-
-                    .lst-item-title {
-                        font-size: 12px;
-                        margin-top: 0 !important;
-                    }
-
-                    .lst-item-content {
-                        font-size: 11px;
-                    }
-
-                    .lst-item-image {
-                        display: none;
-                    }
-                }
-            }
-        }
-
-        .our-partner {
-            .title {
-                font-size: 25px;
-            }
-
-        }
-    }
-}
-
 @media (max-width: 500px) {
     .main-home {
         .tool-of-web {
-            .title {
-                font-size: 20px;
-            }
+            width: 300px;
 
-            .subtitle {
-                font-size: 12px;
+            .title {
+                font-size: 1em;
+
+                .sub-title {
+                    font-size: .8em;
+                }
             }
 
             .lst-tool {
@@ -673,107 +197,6 @@
                     }
                 }
 
-            }
-        }
-    }
-}
-
-@media (max-width: 400px) {
-    .main-home {
-        .tool-of-web {
-            margin: 20px;
-
-            .title {
-                text-align: start;
-                font-size: 1em;
-
-                .sub-title {
-                    font-size: .7em;
-                }
-            }
-
-            .lst-tool {
-                .ant-card-body {
-                    .title-and-price {
-                        .ant-card-meta-title {}
-
-                        .home-card-title {
-                            .h-c-t-title {
-                                font-size: clamp(0.7em, 4vw, 2em);
-                            }
-
-                            .h-c-t-view-point {
-                                font-size: clamp(0.5em, 4vw, 2em);
-                            }
-                        }
-                    }
-
-                    .home-card-description {
-                        font-size: clamp(0.5em, 4vw, 2em);
-                    }
-
-                    .home-card-price {
-                        font-size: clamp(0.5em, 4vw, 2em);
-                    }
-
-                    .home-card-price.free {}
-                }
-            }
-        }
-
-        .intro-part {
-            .text-of-intro {
-                margin: 100px 25px 50px 25px;
-
-                .title {
-                    // font-size: 15px;
-                }
-
-                .detail {
-                    // font-size: 10px;
-                }
-
-                .button-start {
-                    // font-size: 12px;
-                }
-            }
-
-        }
-
-
-
-        .right-of-user {
-            z-index: 3;
-
-            .right-lst {
-                flex-direction: column;
-
-                .lst-item {
-                    width: 100%;
-
-                    .lst-item-title {
-                        font-size: 12px;
-                        margin-top: 0 !important;
-                    }
-
-                    .lst-item-content {
-                        font-size: 11px;
-                    }
-
-                    .lst-item-image {
-                        display: none;
-                    }
-                }
-            }
-        }
-
-        .our-partner {
-            .title {
-                font-size: 20px;
-            }
-
-            .partner-lst {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             }
         }
     }

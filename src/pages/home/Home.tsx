@@ -175,12 +175,12 @@ const Home = () => {
             setNumberOfCardShow(3);
             setNumberOfCardNext(5);
         }
-        if (window.innerWidth <= 600) {
+        if (window.innerWidth <= 700) {
             setSpanCol(12);
             setNumberOfCardShow(2);
             setNumberOfCardNext(6);
         }
-        if (window.innerWidth <= 400) {
+        if (window.innerWidth <= 500) {
             setSpanCol(24);
             setNumberOfCardShow(1);
             setNumberOfCardNext(7);
@@ -323,7 +323,7 @@ const Home = () => {
                     </Col> */}
                 </div>
             </div>
-            <div className="tool-of-web">
+            {/* <div className="tool-of-web">
                 <div className="title">
                     <div>Gợi ý cho bạn</div>
                     <div className="sub-title">{"Xem thêm"}</div>
@@ -410,7 +410,7 @@ const Home = () => {
                         />
                     </Col>
                 </div>
-            </div>
+            </div> */}
         </motion.div>
     );
 };
