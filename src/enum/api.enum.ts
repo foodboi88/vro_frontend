@@ -8,7 +8,7 @@ export enum API_URL {
     GET_DETAIL_SKETCH = "products/by-id",
     GET_COMMENTS_BY_SKETCH_ID = "comments",
     ADVANCED_SEARCHING = "products/filter",
-    UPLOAD_IMAGE_OF_SKETCH = "product-images",
+    UPLOAD_IMAGE_OF_SKETCH = "product-images/one-image",
     UPLOAD_CONTENT_OF_SKETCH = "products",
     UPLOAD_FILES_OF_SKETCH = "product-files",
     LOGIN = "users/login",

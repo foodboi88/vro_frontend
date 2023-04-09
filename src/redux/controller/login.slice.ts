@@ -40,7 +40,7 @@ const initState: LoginState = {
     messageForgot: undefined,
     refresh_token: "",
     statusCode: undefined,
-    tokenLogin: undefined,
+    tokenLogin: Utils.getValueLocalStorage("token"),
     isExistEmail: true,
     registerSuccess: false,
 };

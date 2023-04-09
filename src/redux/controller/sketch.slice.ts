@@ -157,10 +157,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data);
             state.toolList = action.payload.data.map(
                 (item: ITool) =>
-                ({
-                    label: item.name,
-                    value: item.id,
-                } as CheckboxOptionType)
+                    ({
+                        label: item.name,
+                        value: item.id,
+                    } as CheckboxOptionType)
             );
             console.log(state.toolList);
             console.log("Da chui vao voi action: ", action);
@@ -176,10 +176,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data);
             state.styleList = action.payload.data.map(
                 (item: ITool) =>
-                ({
-                    label: item.name,
-                    value: item.id,
-                } as CheckboxOptionType)
+                    ({
+                        label: item.name,
+                        value: item.id,
+                    } as CheckboxOptionType)
             );
             console.log(state.toolList);
             console.log("Da chui vao voi action: ", action);
@@ -195,10 +195,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data);
             state.architectureList = action.payload.data.map(
                 (item: ITool) =>
-                ({
-                    label: item.name,
-                    value: item.id,
-                } as CheckboxOptionType)
+                    ({
+                        label: item.name,
+                        value: item.id,
+                    } as CheckboxOptionType)
             );
             console.log(state.architectureList);
             console.log("Da chui vao voi action: ", action);
@@ -596,7 +596,7 @@ const uploadImageSketch$: RootEpic = (action$) =>
 
             let imageData = new FormData();
             re.payload.imageUploadLst.forEach((item: File) => {
-                imageData.append("files", item); // chinh lai ten file anh sau
+                imageData.append("file", item); // chinh lai ten file anh sau
             });
             imageData.append("productId_in", re.payload.id);
 
