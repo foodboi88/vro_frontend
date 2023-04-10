@@ -471,9 +471,7 @@ const UploadSketch = () => {
                                                 className="search-input"
                                                 placeholder="Nhập phí download"
                                                 onChange={(e) =>
-                                                    setSelectPrice(
-                                                        +e.target.value
-                                                    )
+                                                    setSelectPrice(parseInt(e.target.value))
                                                 }
                                             />
                                         </div>
@@ -499,7 +497,7 @@ const UploadSketch = () => {
                                         selectTag &&
                                         imageUploadLst &&
                                         fileUploadLst &&
-                                        selectPrice &&
+                                        selectPrice >= 0 &&
                                         note ? (
                                         <Button
                                             onClick={() => handleClickNextBtn()}
