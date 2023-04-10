@@ -258,6 +258,7 @@ const UploadSketch = () => {
 
     const handleClickBackBtn = () => {
         // Hàm xử lý khi click nút quay lại
+
         setCurrent(current - 1);
         document.body.scrollTop = 0; // For Safari
         document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
@@ -305,104 +306,35 @@ const UploadSketch = () => {
                     className="upload-step"
                     current={current}
                     items={
-                        windowSize[0] >= 700
+                        windowSize[0] >= 850
                             ? [
-                                  {
-                                      title: "Danh mục bản vẽ",
-                                      icon: <FolderOutlined />,
-                                  },
-                                  {
-                                      title: "Mô tả bản vẽ",
-                                      icon: <ProfileOutlined />,
-                                  },
-                                  {
-                                      title: "Thông tin bản vẽ",
-                                      icon: <PictureOutlined />,
-                                  },
-                              ]
+
+                                {
+                                    title: "Mô tả bản vẽ",
+                                    icon: <ProfileOutlined />,
+                                },
+                                {
+                                    title: "Thông tin bản vẽ",
+                                    icon: <PictureOutlined />,
+                                },
+                            ]
                             : [
-                                  {
-                                      // title: 'Danh mục bản vẽ',
-                                      icon: <FolderOutlined />,
-                                  },
-                                  {
-                                      // title: 'Mô tả bản vẽ',
-                                      icon: <ProfileOutlined />,
-                                  },
-                                  {
-                                      // title: 'Thông tin bản vẽ',
-                                      icon: <PictureOutlined />,
-                                  },
-                              ]
+
+                                {
+                                    // title: 'Mô tả bản vẽ',
+                                    icon: <ProfileOutlined />,
+                                },
+                                {
+                                    // title: 'Thông tin bản vẽ',
+                                    icon: <PictureOutlined />,
+                                },
+                            ]
                     }
                 />
                 <Form className="form">
                     <div className="sketch-content-area">
+
                         {current === 0 && (
-                            <div className="content-area">
-                                <div className="sketch-content">
-                                    <div className="title">Danh mục bản vẽ</div>
-                                    <div className="description">
-                                        Vui lòng nhập các thông tin chung
-                                    </div>
-                                    <Form.Item>
-                                        <div className={`header-content-input`}>
-                                            <Input
-                                                className="search-input"
-                                                placeholder="Tìm kiếm danh mục bản vẽ"
-                                                onChange={handleSearchType}
-                                            />
-                                            <img
-                                                src={SearchIcon}
-                                                className="icon-search"
-                                            ></img>
-                                        </div>
-                                        <List>
-                                            <VirtualList
-                                                data={filteredData}
-                                                height={300}
-                                                itemHeight={47}
-                                                itemKey="email"
-                                            >
-                                                {(item: any) => (
-                                                    <List.Item
-                                                        className={`${
-                                                            selectedType ===
-                                                            item.id
-                                                                ? "selected-item"
-                                                                : ""
-                                                        }`}
-                                                        onClick={() =>
-                                                            handleClickType(
-                                                                item
-                                                            )
-                                                        }
-                                                    >
-                                                        <List.Item.Meta
-                                                            title={item.title}
-                                                        />
-                                                    </List.Item>
-                                                )}
-                                            </VirtualList>
-                                        </List>
-                                    </Form.Item>
-                                </div>
-                                <motion.div className="btn-submit-upload">
-                                    {selectedType ? (
-                                        <Button
-                                            onClick={() => handleClickNextBtn()}
-                                        >
-                                            Tiếp tục
-                                        </Button>
-                                    ) : (
-                                        <Button disabled={true}>
-                                            Tiếp tục
-                                        </Button>
-                                    )}
-                                </motion.div>
-                            </div>
-                        )}
-                        {current === 1 && (
                             <div className="content-area">
                                 <div className="sketch-content">
                                     <div className="title">Mô tả bản vẽ</div>
@@ -506,7 +438,7 @@ const UploadSketch = () => {
                                                 showUploadList={{
                                                     showRemoveIcon: true,
                                                 }}
-                                                accept=".png, .jpeg, .jpg, .pdf, .zip, .rar, .7z, .doc"
+                                                accept=".zip, .rar"
                                                 beforeUpload={(file) => {
                                                     let tmplst = fileUploadLst;
                                                     tmplst.push(file);
@@ -563,18 +495,12 @@ const UploadSketch = () => {
                                     </Form.Item>
                                 </div>
                                 <motion.div className="btn-submit-upload">
-                                    <Button
-                                        className="btn-back"
-                                        onClick={() => handleClickBackBtn()}
-                                    >
-                                        Quay lại
-                                    </Button>
                                     {selectTitle &&
-                                    selectTag &&
-                                    imageUploadLst &&
-                                    fileUploadLst &&
-                                    selectPrice &&
-                                    note ? (
+                                        selectTag &&
+                                        imageUploadLst &&
+                                        fileUploadLst &&
+                                        selectPrice &&
+                                        note ? (
                                         <Button
                                             onClick={() => handleClickNextBtn()}
                                         >
@@ -591,7 +517,7 @@ const UploadSketch = () => {
                                 </motion.div>
                             </div>
                         )}
-                        {current === 2 && (
+                        {current === 1 && (
                             <div className="content-area">
                                 <div className="sketch-content">
                                     <div className="title">
@@ -609,7 +535,7 @@ const UploadSketch = () => {
                                                 <Button
                                                     className={
                                                         selectStyle ===
-                                                        item.value
+                                                            item.value
                                                             ? "active"
                                                             : ""
                                                     }
@@ -683,9 +609,9 @@ const UploadSketch = () => {
                                         Quay lại
                                     </Button>
                                     {selectStyle &&
-                                    selectTool &&
-                                    selectCategory &&
-                                    isCheckedRules ? (
+                                        selectTool &&
+                                        selectCategory &&
+                                        isCheckedRules ? (
                                         <Button
                                             onClick={() => handleUploadSketch()}
                                         >

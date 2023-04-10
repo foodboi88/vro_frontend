@@ -19,8 +19,8 @@
             // display: grid;
             // grid-template-columns: repeat(3, 1fr);
             // grid-template-rows: 1fr;
-            // width: 95%;
-            // margin-left: 60px;
+            width: 50%;
+            margin: 0px auto;
 
             .ant-steps-item {
                 .ant-steps-item-container {
@@ -469,6 +469,12 @@ input::-webkit-inner-spin-button {
 .ant-upload.ant-upload-select-picture-card {
     height: 99px;
     width: 99px;
+}
+
+.ant-upload-list-item-actions {
+    a {
+        display: none;
+    }
 }
 
 @media(min-width: 700px) {
