@@ -26,12 +26,13 @@ import SearchIcon from "../../images/Search_Icon.png";
 import "./styles.uploadsketch.scss";
 import { CheckboxValueType } from "antd/lib/checkbox/Group";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
-import { useDispatchRoot } from "../../redux/store";
+import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
 import {
     uploadFileSketchRequest,
     uploadImageSketchRequest,
     uploadSketchRequest,
 } from "../../redux/controller";
+import { useNavigate } from "react-router-dom";
 
 const options: SelectProps["options"] = [];
 
@@ -114,42 +115,38 @@ const optionsTools = [
 const optionsArchitectures = [
     {
         label: "Biệt thự",
-        value: "64230f48edf9dd11e488c245",
+        value: "64231026edf9dd11e488c250",
     },
     {
         label: "Nhà phố",
-        value: "64230fd4edf9dd11e488c247",
+        value: "64231030edf9dd11e488c252",
     },
     {
         label: "Nhà xưởng",
-        value: "64230fdaedf9dd11e488c249",
+        value: "642ce3895de07140c4f4cd61",
     },
     {
         label: "Nội thất",
-        value: "64230fe3edf9dd11e488c24b",
+        value: "642ce3965de07140c4f4cd62",
     },
     {
         label: "Ngoại thất",
-        value: "64230ff3edf9dd11e488c24d",
-    },
-    {
-        label: "Cửa Hàng",
-        value: "6424328312e8bd3a84ff912a",
+        value: "642ce3a35de07140c4f4cd63",
     },
 ];
 
 const optionsStyles = [
     {
         label: "Cổ điển",
-        value: "64231026edf9dd11e488c250",
+        value: "64230f48edf9dd11e488c245",
     },
     {
         label: "Hiện đại",
-        value: "64231030edf9dd11e488c252",
+        value: "64230fd4edf9dd11e488c247",
     },
     {
         label: "Chưa xác định",
-        value: "",
+        value: "64230fdaedf9dd11e488c249",
     },
 ];
 const getBase64 = (file: RcFile): Promise<string> =>
@@ -179,7 +176,10 @@ const UploadSketch = () => {
     const [previewImage, setPreviewImage] = useState("");
     const [previewTitle, setPreviewTitle] = useState("");
 
+    const { checkProductsFile } = useSelectorRoot((state) => state.sketch
+    ); // Lst cac ban ve        
     const dispatch = useDispatchRoot();
+    const navigate = useNavigate();
 
     const handleCancelPreview = () => setPreviewOpen(false); // Hàm xử lý khi click hủy xem ảnh
 
@@ -294,6 +294,7 @@ const UploadSketch = () => {
         // };
 
         dispatch(uploadSketchRequest(bodyrequest));
+
         // dispatch(uploadFileSketchRequest(bodyrequestTest));
         // dispatch(uploadImageSketchRequest(bodyrequestTest));
     };
@@ -438,7 +439,7 @@ const UploadSketch = () => {
                                                 showUploadList={{
                                                     showRemoveIcon: true,
                                                 }}
-                                                accept=".zip, .rar"
+                                                accept=".zip, .rar, .png, .jpeg, .jpg"
                                                 beforeUpload={(file) => {
                                                     let tmplst = fileUploadLst;
                                                     tmplst.push(file);
@@ -470,6 +471,7 @@ const UploadSketch = () => {
                                                 type="number"
                                                 className="search-input"
                                                 placeholder="Nhập phí download"
+                                                min={0}
                                                 onChange={(e) =>
                                                     setSelectPrice(parseInt(e.target.value))
                                                 }

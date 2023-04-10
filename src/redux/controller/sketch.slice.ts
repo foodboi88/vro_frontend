@@ -56,6 +56,7 @@ interface SketchState {
     checkWhetherSketchUploaded: number; // Là số chẵn thì chắc chắn file đó đã đc up cả ảnh + file + content thành công
     ratesLst: IRates | undefined;
     productsFile: string | undefined;
+    checkProductsFile: boolean;
 }
 
 const initState: SketchState = {
@@ -87,6 +88,7 @@ const initState: SketchState = {
     checkWhetherSketchUploaded: 0,
     ratesLst: undefined,
     productsFile: undefined,
+    checkProductsFile: false,
 };
 
 const sketchSlice = createSlice({
@@ -164,10 +166,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data);
             state.toolList = action.payload.data.map(
                 (item: ITool) =>
-                    ({
-                        label: item.name,
-                        value: item.id,
-                    } as CheckboxOptionType)
+                ({
+                    label: item.name,
+                    value: item.id,
+                } as CheckboxOptionType)
             );
             console.log(state.toolList);
             console.log("Da chui vao voi action: ", action);
@@ -183,10 +185,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data);
             state.styleList = action.payload.data.map(
                 (item: ITool) =>
-                    ({
-                        label: item.name,
-                        value: item.id,
-                    } as CheckboxOptionType)
+                ({
+                    label: item.name,
+                    value: item.id,
+                } as CheckboxOptionType)
             );
             console.log(state.toolList);
             console.log("Da chui vao voi action: ", action);
@@ -202,10 +204,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data);
             state.architectureList = action.payload.data.map(
                 (item: ITool) =>
-                    ({
-                        label: item.name,
-                        value: item.id,
-                    } as CheckboxOptionType)
+                ({
+                    label: item.name,
+                    value: item.id,
+                } as CheckboxOptionType)
             );
             console.log(state.architectureList);
             console.log("Da chui vao voi action: ", action);
@@ -287,9 +289,9 @@ const sketchSlice = createSlice({
             // state.checkWhetherSketchUploaded += 1;
             // if (state.checkWhetherSketchUploaded % 2 === 0) {
             // Cu chia het cho 2 thi la up file thanh cong
+            state.checkProductsFile = true;
             notification.open({
                 message: "Thành công",
-
                 description: "Tải bản vẽ lên thành công",
                 onClick: () => {
                     console.log("Notification Clicked!");
@@ -300,10 +302,9 @@ const sketchSlice = createSlice({
 
         uploadSketchFail(state, action: PayloadAction<any>) {
             state.loading = false;
-
             notification.open({
-                message: "Thành công",
-                description: "Tải bản vẽ lên thành công",
+                message: "Thất bại",
+                description: "Tải bản vẽ lên thất bại",
                 onClick: () => {
                     console.log("Notification Clicked!");
                 },
