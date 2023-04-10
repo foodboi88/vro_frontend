@@ -201,7 +201,10 @@ const DetailSketch = () => {
                         <div className="title">{info.title}</div>
                         <div className="price">{info.price} VNĐ</div>
                         <div className="rate">
-                            <Rate defaultValue={2} disabled count={3} />
+                            {detailSketch && detailSketch.star
+                                ? <Rate defaultValue={detailSketch.star} disabled count={3} />
+                                : <Rate defaultValue={0} disabled count={3} />
+                            }
                         </div>
                         <div className="property">
                             <div className="content">

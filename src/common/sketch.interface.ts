@@ -47,4 +47,5 @@ export interface IDetailSketch {
     images: IImagesSketch[];
     info: IInFoSketch;
     typeOfArchitectures: IArchitecture[];
+    star: number | null;
 }
