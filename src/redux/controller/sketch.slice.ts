@@ -268,7 +268,7 @@ const sketchSlice = createSlice({
         advancedSearchingSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
             state.filteredAuthors = action.payload.data.author;
-            state.filteredSketchs = action.payload.data[0].items;
+            state.filteredSketchs = action.payload.data;
         },
 
         uploadSketchRequest(state, action: PayloadAction<any>) {
