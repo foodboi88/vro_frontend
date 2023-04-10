@@ -215,8 +215,8 @@ const UploadSketch = () => {
         fileList: newFileList,
     }) => {
         // Hàm xử lý khi thay đổi file upload
-        setImageUpload(newFileList);
-        console.log(newFileList);
+        // setImageUpload(newFileList);
+        // console.log(newFileList);
     };
 
     const uploadButton = // Hàm xử lý khi click upload ảnh
@@ -458,7 +458,9 @@ const UploadSketch = () => {
                                                 onChange={handleChangeFileLst}
                                                 accept=".png, .jpeg, .jpg"
                                                 beforeUpload={(file) => {
-                                                    console.log(file);
+                                                    let tmplst = imageUploadLst;
+                                                    tmplst.push(file);
+                                                    setImageUpload(tmplst);
                                                     return false;
                                                 }}
                                                 progress={{

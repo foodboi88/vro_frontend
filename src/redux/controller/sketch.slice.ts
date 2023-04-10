@@ -594,10 +594,14 @@ const uploadImageSketch$: RootEpic = (action$) =>
             // IdentityApi.login(re.payload) ?
             console.log(re);
 
+            const { id, imageUploadLst } = re.payload;
+            const file = imageUploadLst[0] as File;
+
             let imageData = new FormData();
-            re.payload.imageUploadLst.forEach((item: File) => {
-                imageData.append("file", item); // chinh lai ten file anh sau
+            re.payload.imageUploadLst.forEach((item: any) => {
+                imageData.append("files", item as File); // chinh lai ten file anh sau
             });
+            // imageData.append("file", file);
             imageData.append("productId_in", re.payload.id);
 
             // const bodyrequest = {
