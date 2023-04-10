@@ -41,7 +41,7 @@ import IconDetail4 from "../../images/detail/icon-detail-4.png";
 import IconDetail5 from "../../images/detail/icon-detail-5.png";
 import IconDetail6 from "../../images/detail/icon-detail-6.png";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
-import { getDetailSketchPageContentRequest } from "../../redux/controller";
+import { getDetailSketchPageContentRequest, getProductFilesByIdRequest, getRatesBySketchIdRequest } from "../../redux/controller";
 import { IArchitecture, IStyle, ITool } from "../../common/tool.interface";
 import { IImagesSketch, IInFoSketch } from "../../common/sketch.interface";
 import { format } from "date-fns";
@@ -92,9 +92,7 @@ const featuredLst: CardData[] = [
 
 const DetailSketch = () => {
     const navigate = useNavigate();
-    const { detailSketch, commentList } = useSelectorRoot(
-        (state) => state.sketch
-    ); // Lấy ra dữ liệu detail sketch và danh sách comment từ redux
+    const { detailSketch, commentList, ratesLst, productsFile } = useSelectorRoot((state) => state.sketch); // Lấy ra dữ liệu detail sketch và danh sách comment từ redux
     const dispatch = useDispatchRoot();
     const { sketchId } = useParams(); // Lấy ra id của sketch từ url
 
@@ -144,8 +142,31 @@ const DetailSketch = () => {
     });
 
     useEffect(() => {
-        if (sketchId) dispatch(getDetailSketchPageContentRequest(sketchId));
+        if (sketchId) {
+            dispatch(getDetailSketchPageContentRequest(sketchId));
+            dispatch(getRatesBySketchIdRequest(sketchId));
+            let token = localStorage.getItem("token");
+            if (token) {
+                token = token.slice(1);
+                token = token.slice(0, token.length - 1);
+                const req = {
+                    sketchId: sketchId,
+                    token: token,
+                }
+                dispatch(getProductFilesByIdRequest(req));
+            }
+        }
     }, []);
+
+    useEffect(() => {
+        if (productsFile) {
+            console.log(productsFile);
+        }
+    }, [productsFile])
+
+    useEffect(() => {
+        console.log(ratesLst);
+    }, [ratesLst])
 
     // Kiểm tra xem có chi tiết bản vẽ hay không
     useEffect(() => {
@@ -199,11 +220,11 @@ const DetailSketch = () => {
                 <div className="content">
                     {info && designStyles && designTools && typeOfArchitectures && <>
                         <div className="title">{info.title}</div>
-                        <div className="price">{info.price} VNĐ</div>
+                        {info.price === 0 ? <div className="price" style={{ color: 'green' }}>Miễn phí</div> : <div className="price">{info.price} VNĐ</div>}
                         <div className="rate">
                             {detailSketch && detailSketch.star
-                                ? <Rate defaultValue={detailSketch.star} disabled count={3} />
-                                : <Rate defaultValue={0} disabled count={3} />
+                                ? <Rate defaultValue={detailSketch.star} disabled count={5} />
+                                : <Rate defaultValue={0} disabled count={5} />
                             }
                         </div>
                         <div className="property">
@@ -270,7 +291,13 @@ const DetailSketch = () => {
                                 whileTap={{ scale: 0.95 }}
                             >
                                 <Button className="download-now">
-                                    Tải xuống ngay
+                                    {productsFile ?
+                                        <a href={productsFile} download>Tải xuống ngay</a>
+                                        :
+                                        <a>
+                                            Tải xuống ngay
+                                        </a>
+                                    }
                                 </Button>
                             </motion.div>
                         </div>

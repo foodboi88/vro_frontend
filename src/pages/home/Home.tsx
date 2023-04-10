@@ -247,17 +247,17 @@ const Home = () => {
                             .map((card) => (
                                 <Col
                                     onClick={() => {
-                                        handleClickCard(card._id);
+                                        handleClickCard(card.id);
                                     }}
                                     span={spanCol}
-                                    key={card._id}
+                                    key={card.id}
                                 >
                                     <CProductCard
                                         imageUrl={card.images[0]}
                                         title={card.title}
                                         view={card.views}
                                         price={card.price}
-                                        // type={card.type}
+                                    // type={card.type}
                                     />
                                 </Col>
                             ))}
@@ -297,17 +297,17 @@ const Home = () => {
                             .map((card) => (
                                 <Col
                                     onClick={() => {
-                                        handleClickCard(card._id);
+                                        handleClickCard(card.id);
                                     }}
                                     span={spanCol}
-                                    key={card._id}
+                                    key={card.id}
                                 >
                                     <CProductCard
                                         imageUrl={card.images[0]}
                                         title={card.title}
                                         view={card.views}
                                         price={card.price}
-                                        // type={card.type}
+                                    // type={card.type}
                                     />
                                 </Col>
                             ))}

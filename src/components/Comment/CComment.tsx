@@ -7,6 +7,7 @@ import Avatar3 from '../../images/detail/avata-comment-3.png'
 
 import './styles.comment.scss'
 import { motion } from 'framer-motion'
+import { useSelectorRoot } from '../../redux/store'
 
 const commentList = [
     {
@@ -46,6 +47,7 @@ const commentList = [
 
 const CComment = () => {
     const [activeButton, setActiveButton] = useState<number>(1);
+    const { ratesLst } = useSelectorRoot((state) => state.sketch); // Lấy ra dữ liệu detail sketch và danh sách comment từ redux
 
     const handleButtonClick = (buttonNumber: number) => {
         setActiveButton(buttonNumber);
@@ -72,7 +74,7 @@ const CComment = () => {
                             type={activeButton === 2 ? 'primary' : 'default'}
                             onClick={() => handleButtonClick(2)}
                         >
-                            3 sao (0)
+                            5 sao (0)
                         </Button>
                     </motion.div>
                     <motion.div
@@ -82,7 +84,7 @@ const CComment = () => {
                             type={activeButton === 3 ? 'primary' : 'default'}
                             onClick={() => handleButtonClick(3)}
                         >
-                            2 sao (56)
+                            4 sao (0)
                         </Button>
                     </motion.div>
                     <motion.div
@@ -92,6 +94,26 @@ const CComment = () => {
                             type={activeButton === 4 ? 'primary' : 'default'}
                             onClick={() => handleButtonClick(4)}
                         >
+                            3 sao (0)
+                        </Button>
+                    </motion.div>
+                    <motion.div
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}>
+                        <Button
+                            type={activeButton === 5 ? 'primary' : 'default'}
+                            onClick={() => handleButtonClick(5)}
+                        >
+                            2 sao (56)
+                        </Button>
+                    </motion.div>
+                    <motion.div
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}>
+                        <Button
+                            type={activeButton === 6 ? 'primary' : 'default'}
+                            onClick={() => handleButtonClick(6)}
+                        >
                             1 sao (32)
                         </Button>
                     </motion.div>
@@ -99,34 +121,35 @@ const CComment = () => {
                 <div
                     className='total-rate'
                 >
-                    <div className='number'>2,9</div>
+
+                    <div className='number'>{ratesLst?.TotalStar}</div>
                     <Rate
                         allowHalf
-                        defaultValue={2}
-                        count={3}
+                        defaultValue={ratesLst?.TotalStar}
+                        count={5}
                         disabled
                     />
                 </div>
             </div>
             <div className='comment-list'>
                 {
-                    commentList.map((item) => (
+                    ratesLst?.RateUser.map((item) => (
                         <div className='comment'>
                             <div className='avatar'>
-                                <img src={item.user.avatar} />
+                                <img src={Avatar} />
                             </div>
                             <div className='content'>
-                                <div className='name'>{item.user.name}</div>
+                                <div className='name'>{item.nameUser}</div>
                                 <div>
                                     <Rate
                                         allowHalf
-                                        defaultValue={item.comment.rate}
-                                        count={3}
+                                        defaultValue={item.rate}
+                                        count={5}
                                         disabled
                                     />
                                 </div>
-                                <div className='comment-content'>{item.comment.content}</div>
-                                <div className='time'>{item.comment.time}</div>
+                                <div className='comment-content'>{item.description}</div>
+                                <div className='time'>{new Date(item.createdAt).toLocaleDateString('en-GB')}</div>
                             </div>
                         </div>
                     ))

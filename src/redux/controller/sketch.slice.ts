@@ -13,6 +13,7 @@ import {
     ICurrentSearchValue,
     IDetailSketch,
     IReqGetLatestSketchs,
+    IReqProductsFiles,
     ISketch,
 } from "../../common/sketch.interface";
 import { ITool } from "../../common/tool.interface";
@@ -20,6 +21,8 @@ import FilterCriteriasApi from "../../api/filter-criterias/filter-criterias.api"
 import CommentsApi from "../../api/comment/comment.api";
 import { IUser } from "../../common/user.interface";
 import ImageSketchApi from "../../api/image-sketch/image-sketch.api";
+import { IRates } from "../../common/rates.interface";
+import RatesApi from "../../api/rates/rates.api";
 
 type MessageLogin = {
     content: string;
@@ -51,6 +54,8 @@ interface SketchState {
     filteredAuthors?: IUser[];
     currentSearchValue: ICurrentSearchValue;
     checkWhetherSketchUploaded: number; // Là số chẵn thì chắc chắn file đó đã đc up cả ảnh + file + content thành công
+    ratesLst: IRates | undefined;
+    productsFile: string | undefined;
 }
 
 const initState: SketchState = {
@@ -80,6 +85,8 @@ const initState: SketchState = {
         tool: [],
     },
     checkWhetherSketchUploaded: 0,
+    ratesLst: undefined,
+    productsFile: undefined,
 };
 
 const sketchSlice = createSlice({
@@ -157,10 +164,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data);
             state.toolList = action.payload.data.map(
                 (item: ITool) =>
-                    ({
-                        label: item.name,
-                        value: item.id,
-                    } as CheckboxOptionType)
+                ({
+                    label: item.name,
+                    value: item.id,
+                } as CheckboxOptionType)
             );
             console.log(state.toolList);
             console.log("Da chui vao voi action: ", action);
@@ -176,10 +183,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data);
             state.styleList = action.payload.data.map(
                 (item: ITool) =>
-                    ({
-                        label: item.name,
-                        value: item.id,
-                    } as CheckboxOptionType)
+                ({
+                    label: item.name,
+                    value: item.id,
+                } as CheckboxOptionType)
             );
             console.log(state.toolList);
             console.log("Da chui vao voi action: ", action);
@@ -195,10 +202,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data);
             state.architectureList = action.payload.data.map(
                 (item: ITool) =>
-                    ({
-                        label: item.name,
-                        value: item.id,
-                    } as CheckboxOptionType)
+                ({
+                    label: item.name,
+                    value: item.id,
+                } as CheckboxOptionType)
             );
             console.log(state.architectureList);
             console.log("Da chui vao voi action: ", action);
@@ -317,33 +324,32 @@ const sketchSlice = createSlice({
         uploadContentSketchSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
         },
+
+        getRatesBySketchIdRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+        getRatesBySketchIdSuccess(state, action: PayloadAction<IRates>) {
+            state.loading = false;
+            state.ratesLst = action.payload;
+        },
+        getRatesBySketchIdFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+        },
+
+        getProductFilesByIdRequest(state, action: PayloadAction<IReqProductsFiles>) {
+            state.loading = true;
+        },
+        getProductFilesByIdSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload);
+            state.productsFile = action.payload[0].filePath;
+        },
+        getProductFilesByIdFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+        },
     },
 });
 
-// const uploadSketch$: RootEpic = (action$) =>
-//     action$.pipe(
-//         filter(getLatestSketchRequest.match),
-//         switchMap((re) => {
-//             // IdentityApi.login(re.payload) ?
-//             console.log(re);
-//             const body: any = {
-//                 email: re.payload.email,
-//                 password: re.payload.password,
-//                 remember: re.payload.remember,
-//                 additionalProp1: {},
-//             };
-
-//             return SketchsApi.getLatestSketchs(body).pipe(
-//                 mergeMap((res: any) => {
-//                     console.log(res);
-//                     console.log(res.data.accessToken);
-//                     const token = res.data.accessToken;
-//                     return [];
-//                 }),
-//                 catchError((err) => [])
-//             );
-//         })
-//     );
 
 // Lay ra tat ca du lieu cua trang home
 const getHomeListSketch$: RootEpic = (action$) =>
@@ -680,6 +686,38 @@ const uploadContentSketch$: RootEpic = (action$) =>
         })
     );
 
+const getRatesBySketchId$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getRatesBySketchIdRequest.match),
+        switchMap((re) => {
+            // IdentityApi.login(re.payload) ?
+            console.log(re);
+            return RatesApi.getRatesBySketchId(re.payload).pipe(
+                mergeMap((res: IRates) => {
+                    return [
+                        sketchSlice.actions.getRatesBySketchIdSuccess(res),
+                    ];
+                }),
+                catchError((err) => [])
+            );
+        })
+    );
+const getProductFilesById$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getProductFilesByIdRequest.match),
+        switchMap((re) => {
+            // IdentityApi.login(re.payload) ?
+            console.log(re);
+            return SketchsApi.getProductFilesById(re.payload.sketchId, re.payload.token).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getProductFilesByIdSuccess(res),
+                    ];
+                }),
+                catchError((err) => [])
+            );
+        })
+    );
 export const SketchEpics = [
     // uploadSketch$,
     getHomeListSketch$,
@@ -697,6 +735,9 @@ export const SketchEpics = [
     uploadImageSketch$,
     uploadContentSketch$,
     uploadFileSketch$,
+    getRatesBySketchId$,
+    getProductFilesById$,
+
 ];
 export const {
     getLatestSketchRequest,
@@ -714,5 +755,7 @@ export const {
     uploadContentSketchRequest,
     uploadFileSketchRequest,
     uploadImageSketchRequest,
+    getRatesBySketchIdRequest,
+    getProductFilesByIdRequest,
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;
