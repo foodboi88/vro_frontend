@@ -164,10 +164,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data);
             state.toolList = action.payload.data.map(
                 (item: ITool) =>
-                ({
-                    label: item.name,
-                    value: item.id,
-                } as CheckboxOptionType)
+                    ({
+                        label: item.name,
+                        value: item.id,
+                    } as CheckboxOptionType)
             );
             console.log(state.toolList);
             console.log("Da chui vao voi action: ", action);
@@ -183,10 +183,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data);
             state.styleList = action.payload.data.map(
                 (item: ITool) =>
-                ({
-                    label: item.name,
-                    value: item.id,
-                } as CheckboxOptionType)
+                    ({
+                        label: item.name,
+                        value: item.id,
+                    } as CheckboxOptionType)
             );
             console.log(state.toolList);
             console.log("Da chui vao voi action: ", action);
@@ -202,10 +202,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data);
             state.architectureList = action.payload.data.map(
                 (item: ITool) =>
-                ({
-                    label: item.name,
-                    value: item.id,
-                } as CheckboxOptionType)
+                    ({
+                        label: item.name,
+                        value: item.id,
+                    } as CheckboxOptionType)
             );
             console.log(state.architectureList);
             console.log("Da chui vao voi action: ", action);
@@ -288,8 +288,9 @@ const sketchSlice = createSlice({
             // if (state.checkWhetherSketchUploaded % 2 === 0) {
             // Cu chia het cho 2 thi la up file thanh cong
             notification.open({
-                message: "Tải bản vẽ lên thành công",
-                description: action.payload.response.message,
+                message: "Thành công",
+
+                description: "Tải bản vẽ lên thành công",
                 onClick: () => {
                     console.log("Notification Clicked!");
                 },
@@ -301,8 +302,8 @@ const sketchSlice = createSlice({
             state.loading = false;
 
             notification.open({
-                message: "Tải bản vẽ lên không thành công",
-                description: action.payload.response.message,
+                message: "Thành công",
+                description: "Tải bản vẽ lên thành công",
                 onClick: () => {
                     console.log("Notification Clicked!");
                 },
@@ -336,7 +337,10 @@ const sketchSlice = createSlice({
             state.loading = false;
         },
 
-        getProductFilesByIdRequest(state, action: PayloadAction<IReqProductsFiles>) {
+        getProductFilesByIdRequest(
+            state,
+            action: PayloadAction<IReqProductsFiles>
+        ) {
             state.loading = true;
         },
         getProductFilesByIdSuccess(state, action: PayloadAction<any>) {
@@ -349,7 +353,6 @@ const sketchSlice = createSlice({
         },
     },
 });
-
 
 // Lay ra tat ca du lieu cua trang home
 const getHomeListSketch$: RootEpic = (action$) =>
@@ -617,8 +620,8 @@ const uploadImageSketch$: RootEpic = (action$) =>
                 mergeMap((res: any) => {
                     console.log(res);
                     return [
-                        sketchSlice.actions.uploadFileSketchRequest(res),
-                        sketchSlice.actions.uploadSketchSuccess(res), // vao luu gia tri check thanh cong lan 1
+                        // sketchSlice.actions.uploadFileSketchRequest(res),
+                        // sketchSlice.actions.uploadSketchSuccess(res), // vao luu gia tri check thanh cong lan 1
                     ];
                 }),
                 catchError((err) => [sketchSlice.actions.uploadSketchFail(err)])
@@ -641,8 +644,8 @@ const uploadFileSketch$: RootEpic = (action$) =>
                 mergeMap((res: any) => {
                     console.log(res);
                     return [
-                        sketchSlice.actions.uploadContentSketchRequest(res),
-                        // sketchSlice.actions.uploadSketchSuccess(res), // vao luu gia tri check thanh cong lan 2
+                        // sketchSlice.actions.uploadContentSketchRequest(res),
+                        sketchSlice.actions.uploadSketchSuccess(res), // vao luu gia tri check thanh cong lan 2
                     ];
                 }),
                 catchError((err) => [sketchSlice.actions.uploadSketchFail(err)])
@@ -694,9 +697,7 @@ const getRatesBySketchId$: RootEpic = (action$) =>
             console.log(re);
             return RatesApi.getRatesBySketchId(re.payload).pipe(
                 mergeMap((res: IRates) => {
-                    return [
-                        sketchSlice.actions.getRatesBySketchIdSuccess(res),
-                    ];
+                    return [sketchSlice.actions.getRatesBySketchIdSuccess(res)];
                 }),
                 catchError((err) => [])
             );
@@ -708,7 +709,10 @@ const getProductFilesById$: RootEpic = (action$) =>
         switchMap((re) => {
             // IdentityApi.login(re.payload) ?
             console.log(re);
-            return SketchsApi.getProductFilesById(re.payload.sketchId, re.payload.token).pipe(
+            return SketchsApi.getProductFilesById(
+                re.payload.sketchId,
+                re.payload.token
+            ).pipe(
                 mergeMap((res: any) => {
                     return [
                         sketchSlice.actions.getProductFilesByIdSuccess(res),
@@ -737,7 +741,6 @@ export const SketchEpics = [
     uploadFileSketch$,
     getRatesBySketchId$,
     getProductFilesById$,
-
 ];
 export const {
     getLatestSketchRequest,
