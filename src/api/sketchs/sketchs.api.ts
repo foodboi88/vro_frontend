@@ -50,7 +50,7 @@ export default class SketchsApi {
 
     //Tim kiem nang cao
     static advancedSearching(body: ICurrentSearchValue): Observable<any> {
-        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.ADVANCED_SEARCHING}?size=${body.size}&offset=${body.size}&name=${body.name}`;
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.ADVANCED_SEARCHING}?size=${body.size}&offset=${body.offset}&name=${body.name}`;
         return HttpClient.get(api).pipe(
             map(
                 (res) => (res as any) || null,

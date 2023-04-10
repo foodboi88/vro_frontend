@@ -231,17 +231,17 @@ const AdvancedSeaching = () => {
                             filteredSketchs.map((card) => (
                                 <Col
                                     onClick={() => {
-                                        goToDetailPageHandle(card.id);
+                                        goToDetailPageHandle(card._id);
                                     }}
                                     span={spanCol}
-                                    key={card.id}
+                                    key={card._id}
                                 >
                                     <CProductCard
-                                        // imageUrl={card.images[0]}
+                                        imageUrl={card.images[0]}
                                         title={card.title}
                                         view={card.views}
                                         price={card.price}
-                                    // type={card.}
+                                        // type={card.}
                                     />
                                 </Col>
                             ))}

@@ -268,7 +268,7 @@ const sketchSlice = createSlice({
         advancedSearchingSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
             state.filteredAuthors = action.payload.data.author;
-            state.filteredSketchs = action.payload.data[0].items;
+            state.filteredSketchs = action.payload.data;
         },
 
         uploadSketchRequest(state, action: PayloadAction<any>) {
@@ -277,18 +277,17 @@ const sketchSlice = createSlice({
 
         uploadSketchSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
-            state.checkWhetherSketchUploaded += 1;
-            if (state.checkWhetherSketchUploaded % 2 === 0) {
-                // Cu chia het cho 2 thi la up file thanh cong
-
-                notification.open({
-                    message: "Tải bản vẽ lên thành công",
-                    description: action.payload.response.message,
-                    onClick: () => {
-                        console.log("Notification Clicked!");
-                    },
-                });
-            }
+            // state.checkWhetherSketchUploaded += 1;
+            // if (state.checkWhetherSketchUploaded % 2 === 0) {
+            // Cu chia het cho 2 thi la up file thanh cong
+            notification.open({
+                message: "Tải bản vẽ lên thành công",
+                description: action.payload.response.message,
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+            // }
         },
 
         uploadSketchFail(state, action: PayloadAction<any>) {
@@ -558,7 +557,6 @@ const getCommentBySketchId$: RootEpic = (action$) =>
     );
 
 // http://14.231.84.10:6068/products/filter?size=10&offset=0&name=a
-
 const advancedSearchSketch$: RootEpic = (action$) =>
     action$.pipe(
         filter(advancedSearchingRequest.match),
@@ -638,7 +636,7 @@ const uploadFileSketch$: RootEpic = (action$) =>
                     console.log(res);
                     return [
                         sketchSlice.actions.uploadContentSketchRequest(res),
-                        sketchSlice.actions.uploadSketchSuccess(res), // vao luu gia tri check thanh cong lan 2
+                        // sketchSlice.actions.uploadSketchSuccess(res), // vao luu gia tri check thanh cong lan 2
                     ];
                 }),
                 catchError((err) => [sketchSlice.actions.uploadSketchFail(err)])
