@@ -33,4 +33,14 @@ export default class IdentityApi {
             )
         );
     }
+
+    static getUserInfo(token: any): Observable<any> {
+        const api = `${IdentityApi.apiURL.HOST}/${this.apiURL.GET_USER_INFO}`;
+        return HttpClient.get(api, { headers: { Authorization: `Bearer ${token}` } }).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
 }

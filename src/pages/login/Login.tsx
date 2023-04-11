@@ -72,14 +72,16 @@ const Login = (props: MyProps) => {
     ) => {
         if (!value) {
             callback("Vui lòng nhập mật khẩu.");
-        } else if (!regexPass.test(value)) {
-            callback("Mật khẩu không hợp lệ.");
-        } else {
+        }
+        // } else if (!regexPass.test(value)) {
+        //     callback("Mật khẩu không hợp lệ.");
+        // }
+        else {
             callback();
         }
     };
 
-    const onFinish = async (account: any): Promise<any> => {};
+    const onFinish = async (account: any): Promise<any> => { };
 
     const handleClickSubmit = () => {
         const bodyrequest = {
@@ -90,6 +92,9 @@ const Login = (props: MyProps) => {
         dispatch(loginRequest(bodyrequest));
         props.toggleLoginModal();
         props.checkIsLogin(true);
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
     };
     return (
         <>
@@ -154,10 +159,10 @@ const Login = (props: MyProps) => {
                                 onChange={handleInputPassLoginChange}
                             />
                         </Form.Item>
-                        <div className="check-label">
+                        {/* <div className="check-label">
                             Mật khẩu phải lớn hơn 6 ký tự, có chữ hoa, chữ
                             thường, số và ký tự đặc biệt.
-                        </div>
+                        </div> */}
                     </div>
                     <Form.Item
                         className="remember-forgot-password"

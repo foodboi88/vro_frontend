@@ -13,6 +13,7 @@ export enum API_URL {
     UPLOAD_FILES_OF_SKETCH = "product-files",
     LOGIN = "users/login",
     REGISTER = "users/register",
+    GET_USER_INFO = "users/profile",
     GET_RATES_BY_SKETCH_ID = "rates/by-id-product",
     GET_PRODUCT_FILE_BY_ID = "product-files/by-id-product",
 }
