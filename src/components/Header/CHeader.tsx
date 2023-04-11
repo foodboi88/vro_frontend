@@ -53,7 +53,8 @@ export const CHeader = (props: MyProps) => {
     const [isOpenRegisterModal, setIsOpenRegisterModal] = useState<boolean>(false); // Biến kiểm tra đang mở modal registration hay chưa
     const [isLogin, setIsLogin] = useState<boolean>(false);
     const { currentSearchValue } = useSelectorRoot((state) => state.sketch);
-
+    const [userName, setUserName] = useState<string>(user?.name ? user.name : "");
+    const [userEmail, setUserEmail] = useState<string>(user?.email ? user.email : "")
     const dispatch = useDispatchRoot();
 
     // useEffect(() => {
@@ -154,6 +155,13 @@ export const CHeader = (props: MyProps) => {
     const checkIsLogin = (val: boolean) => {
         setIsLogin(val);
     };
+
+    useEffect(() => {
+        let checkLogin = localStorage.getItem('token') ? localStorage.getItem('token') : ''
+        if (checkLogin) {
+            setIsLogin(true)
+        }
+    }, [])
     return (
         <div className="main-header">
             <div className="header-left">
@@ -180,7 +188,7 @@ export const CHeader = (props: MyProps) => {
             {/* {tokenLogin && */}
             <div className="header-right">
                 <div className="user-infor">
-                    {!tokenLogin ? (
+                    {!isLogin ? (
                         <>
                             <motion.div
                                 className="header-button login"
@@ -235,10 +243,10 @@ export const CHeader = (props: MyProps) => {
                             <div className="user-info-content">
                                 <Avatar className="avatar" src={UserIcon} />
                                 <div className="name-and-balance">
-                                    <div className="name">Nguyễn Trần Kiên</div>
-                                    <div className="balance">
+                                    <div className="name">{user?.name}</div>
+                                    {/* <div className="balance">
                                         Số dư: {"1.500.000Đ"}
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <Dropdown
                                     className="drop-down"

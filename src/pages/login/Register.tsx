@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import "./login.scss";
 import { Rule } from "antd/lib/form";
 import { motion } from "framer-motion";
+import { useDispatchRoot } from "../../redux/store";
+import { registerRequest } from "../../redux/controller";
 interface MyProps {
     isOpenModal: boolean;
     toggleRegisterModal: () => void;
@@ -23,13 +25,14 @@ const Register = (props: MyProps) => {
     const [userConfirmPassReq, setUserConfirmPassReq] = useState<string>("");
 
     const [checkReqBtn, setCheckReqBtn] = useState<boolean>(false);
+    const dispatch = useDispatchRoot();
 
     useEffect(() => {
         userNameReq &&
-        regexPhoneNumber.test(userNumberPhoneReq) &&
-        regexEmail.test(userEmailReq) &&
-        regexPass.test(userPassReq) &&
-        userConfirmPassReq === userPassReq
+            regexPhoneNumber.test(userNumberPhoneReq) &&
+            regexEmail.test(userEmailReq) &&
+            regexPass.test(userPassReq) &&
+            userConfirmPassReq === userPassReq
             ? setCheckReqBtn(true)
             : setCheckReqBtn(false);
     }, [
@@ -102,7 +105,22 @@ const Register = (props: MyProps) => {
         }
     };
 
-    const onFinish = async (account: any): Promise<any> => {};
+    const onFinish = async (account: any): Promise<any> => {
+        console.log(account);
+        const bodyrequest = {
+            email: account.emailReg,
+            password: account.passwordReq,
+            confirmPassword: account.confirmPasswordReq,
+            name: account.nameReg,
+            phone: account.phoneNumberReg,
+            address: "string",
+            dob: "2023-04-11T04:18:58.326Z",
+            gender: true,
+            additionalProp1: {}
+        };
+        dispatch(registerRequest(bodyrequest));
+        checkReqBtn && props.toggleLoginModal();
+    };
 
     return (
         <>
@@ -222,7 +240,7 @@ const Register = (props: MyProps) => {
                                         if (
                                             !value ||
                                             getFieldValue("passwordReq") ===
-                                                value
+                                            value
                                         ) {
                                             return Promise.resolve();
                                         }

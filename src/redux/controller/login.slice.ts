@@ -56,7 +56,6 @@ const loginSlice = createSlice({
         loginSuccess(state, action: PayloadAction<any>) {
             Utils.setLocalStorage("token", action.payload.accessToken);
             Utils.setLocalStorage("refresh_token", action.payload.refreshToken);
-
             state.tokenLogin = action.payload.accessToken;
             state.loading = false;
             state.isSuccess = true;
@@ -66,6 +65,7 @@ const loginSlice = createSlice({
                     console.log("Notification Clicked!");
                 },
                 style: {
+                    marginTop: 50,
                     paddingTop: 40,
                 },
             });
@@ -327,10 +327,8 @@ const register$: RootEpic = (action$) =>
                 name: re.payload.name,
                 phone: re.payload.phone,
                 address: re.payload.address,
-                type: re.payload.type,
-                addressId: re.payload.addressId,
-                facilityId: re.payload.facilityId,
-                positionId: re.payload.positionId,
+                dob: re.payload.dob,
+                gender: re.payload.gender,
                 additionalProp1: {},
             };
             return IdentityApi.reqister(body).pipe(
@@ -348,8 +346,36 @@ const register$: RootEpic = (action$) =>
             );
         })
     );
-
-export const LoginEpics = [login$, clearMessage$, logOut$, register$];
+const getUserInfo$: RootEpic = (action$) => action$.pipe(
+    filter(getUserInfoRequest.match),
+    switchMap((re) => {
+        console.log(re);
+        return IdentityApi.getUserInfo(re.payload).pipe(
+            mergeMap((res: any) => {
+                console.log(res);
+                const token = res.data.accessToken;
+                const user = {
+                    email: res.data.email,
+                    name: res.data.name,
+                    phone: res.data.phone,
+                    address: res.data.address,
+                    dob: res.data.dob,
+                    gender: res.data.gender,
+                    createdAt: res.data.createdAt,
+                    updatedAt: res.data.updatedAt,
+                };
+                console.log(user);
+                return [
+                    loginSlice.actions.getUserInfoSuccess({ user, token: token }),
+                ];
+            }),
+            catchError(err =>
+                [loginSlice.actions.getUserInfoFail(err)]
+            )
+        )
+    })
+)
+export const LoginEpics = [login$, clearMessage$, logOut$, register$, getUserInfo$];
 export const {
     getUserInfoRequest,
     loginRequest,

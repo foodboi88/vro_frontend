@@ -133,26 +133,32 @@ const CComment = () => {
             </div>
             <div className='comment-list'>
                 {
-                    ratesLst?.RateUser.map((item) => (
-                        <div className='comment'>
-                            <div className='avatar'>
-                                <img src={Avatar} />
-                            </div>
-                            <div className='content'>
-                                <div className='name'>{item.nameUser}</div>
-                                <div>
-                                    <Rate
-                                        allowHalf
-                                        defaultValue={item.rate}
-                                        count={5}
-                                        disabled
-                                    />
+                    (ratesLst?.RateUser && ratesLst?.RateUser.length === 0)
+                        ?
+                        ratesLst?.RateUser.map((item) => (
+                            <div className='comment'>
+                                <div className='avatar'>
+                                    <img src={Avatar} />
                                 </div>
-                                <div className='comment-content'>{item.description}</div>
-                                <div className='time'>{new Date(item.createdAt).toLocaleDateString('en-GB')}</div>
+                                <div className='content'>
+                                    <div className='name'>{item.nameUser}</div>
+                                    <div>
+                                        <Rate
+                                            allowHalf
+                                            defaultValue={item.rate}
+                                            count={5}
+                                            disabled
+                                        />
+                                    </div>
+                                    <div className='comment-content'>{item.description}</div>
+                                    <div className='time'>{new Date(item.createdAt).toLocaleDateString('en-GB')}</div>
+                                </div>
                             </div>
+                        ))
+                        :
+                        <div className='comment'>
+                            Chưa có đánh giá
                         </div>
-                    ))
                 }
             </div>
             <div className='more-comment'>
