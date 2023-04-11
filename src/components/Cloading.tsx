@@ -38,7 +38,7 @@ const CLoading = (props: any) => {
                     <div className="shadow"></div>
                     <div className="shadow"></div>
                     <div className="shadow"></div>
-                    <span>{`Đợi một xíu nha <3`}</span>
+                    <span>{`Loading...`}</span>
                 </div>
             </DarkBackground>
         </div>
