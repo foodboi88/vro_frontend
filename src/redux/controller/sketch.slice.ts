@@ -127,6 +127,8 @@ const sketchSlice = createSlice({
 
             // state.user = action.payload.user
             state.isSuccess = true;
+            state.loading = false;
+
             state.registerSuccess = true;
         },
 
@@ -166,10 +168,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data);
             state.toolList = action.payload.data.map(
                 (item: ITool) =>
-                ({
-                    label: item.name,
-                    value: item.id,
-                } as CheckboxOptionType)
+                    ({
+                        label: item.name,
+                        value: item.id,
+                    } as CheckboxOptionType)
             );
             console.log(state.toolList);
             console.log("Da chui vao voi action: ", action);
@@ -185,10 +187,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data);
             state.styleList = action.payload.data.map(
                 (item: ITool) =>
-                ({
-                    label: item.name,
-                    value: item.id,
-                } as CheckboxOptionType)
+                    ({
+                        label: item.name,
+                        value: item.id,
+                    } as CheckboxOptionType)
             );
             console.log(state.toolList);
             console.log("Da chui vao voi action: ", action);
@@ -204,10 +206,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data);
             state.architectureList = action.payload.data.map(
                 (item: ITool) =>
-                ({
-                    label: item.name,
-                    value: item.id,
-                } as CheckboxOptionType)
+                    ({
+                        label: item.name,
+                        value: item.id,
+                    } as CheckboxOptionType)
             );
             console.log(state.architectureList);
             console.log("Da chui vao voi action: ", action);
@@ -235,7 +237,7 @@ const sketchSlice = createSlice({
         },
 
         getCommentBySketchIdSuccess(state, action: PayloadAction<any>) {
-            state.loading = true;
+            state.loading = false;
             state.commentList = action.payload.data[0].items;
         },
 
@@ -312,10 +314,18 @@ const sketchSlice = createSlice({
         },
 
         uploadFileSketchRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        uploadFileSketchSuccess(state) {
             state.loading = false;
         },
 
         uploadImageSketchRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        uploadImageSketchSuccess(state) {
             state.loading = false;
         },
 
@@ -517,7 +527,7 @@ const getDetailSketchPageContent$: RootEpic = (action$) =>
         switchMap((re) => {
             return [
                 sketchSlice.actions.getDetailSketchRequest(re.payload),
-                sketchSlice.actions.getCommentBySketchIdRequest(re.payload),
+                // sketchSlice.actions.getCommentBySketchIdRequest(re.payload),
             ];
         })
     );
@@ -533,7 +543,10 @@ const getDetailSketch$: RootEpic = (action$) =>
                 mergeMap((res: any) => {
                     console.log(res);
 
-                    return [sketchSlice.actions.getDetailSketchSuccess(res)];
+                    return [
+                        sketchSlice.actions.getDetailSketchSuccess(res),
+                        sketchSlice.actions.getDetailSketchPageContentSuccess(),
+                    ];
                 }),
                 catchError((err) => [])
             );
@@ -621,6 +634,7 @@ const uploadImageSketch$: RootEpic = (action$) =>
                 mergeMap((res: any) => {
                     console.log(res);
                     return [
+                        sketchSlice.actions.uploadImageSketchSuccess(),
                         // sketchSlice.actions.uploadFileSketchRequest(res),
                         // sketchSlice.actions.uploadSketchSuccess(res), // vao luu gia tri check thanh cong lan 1
                     ];
@@ -645,6 +659,7 @@ const uploadFileSketch$: RootEpic = (action$) =>
                 mergeMap((res: any) => {
                     console.log(res);
                     return [
+                        sketchSlice.actions.uploadFileSketchSuccess(),
                         // sketchSlice.actions.uploadContentSketchRequest(res),
                         sketchSlice.actions.uploadSketchSuccess(res), // vao luu gia tri check thanh cong lan 2
                     ];
