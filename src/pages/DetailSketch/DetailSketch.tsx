@@ -41,7 +41,11 @@ import IconDetail4 from "../../images/detail/icon-detail-4.png";
 import IconDetail5 from "../../images/detail/icon-detail-5.png";
 import IconDetail6 from "../../images/detail/icon-detail-6.png";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
-import { getDetailSketchPageContentRequest, getProductFilesByIdRequest, getRatesBySketchIdRequest } from "../../redux/controller";
+import {
+    getDetailSketchPageContentRequest,
+    getProductFilesByIdRequest,
+    getRatesBySketchIdRequest,
+} from "../../redux/controller";
 import { IArchitecture, IStyle, ITool } from "../../common/tool.interface";
 import { IImagesSketch, IInFoSketch } from "../../common/sketch.interface";
 import { format } from "date-fns";
@@ -92,7 +96,8 @@ const featuredLst: CardData[] = [
 
 const DetailSketch = () => {
     const navigate = useNavigate();
-    const { detailSketch, commentList, ratesLst, productsFile } = useSelectorRoot((state) => state.sketch); // Lấy ra dữ liệu detail sketch và danh sách comment từ redux
+    const { detailSketch, commentList, ratesLst, productsFile } =
+        useSelectorRoot((state) => state.sketch); // Lấy ra dữ liệu detail sketch và danh sách comment từ redux
     const dispatch = useDispatchRoot();
     const { sketchId } = useParams(); // Lấy ra id của sketch từ url
 
@@ -105,11 +110,14 @@ const DetailSketch = () => {
     const [designTools, setDesignTools] = useState<ITool[]>([]);
     const [images, setImages] = useState<IImagesSketch[]>([]);
     const [info, setInfo] = useState<IInFoSketch>();
-    const [typeOfArchitectures, setTypeOfArchitectures] = useState<IArchitecture[]>([]);
+    const [typeOfArchitectures, setTypeOfArchitectures] = useState<
+        IArchitecture[]
+    >([]);
     const [windowSize, setWindowSize] = useState([
         window.innerWidth,
         window.innerHeight,
     ]);
+
     useEffect(() => {
         const handleWindowResize = () => {
             setWindowSize([window.innerWidth, window.innerHeight]);
@@ -152,7 +160,7 @@ const DetailSketch = () => {
                 const req = {
                     sketchId: sketchId,
                     token: token,
-                }
+                };
                 dispatch(getProductFilesByIdRequest(req));
             }
         }
@@ -162,11 +170,11 @@ const DetailSketch = () => {
         if (productsFile) {
             console.log(productsFile);
         }
-    }, [productsFile])
+    }, [productsFile]);
 
     useEffect(() => {
         console.log(ratesLst);
-    }, [ratesLst])
+    }, [ratesLst]);
 
     // Kiểm tra xem có chi tiết bản vẽ hay không
     useEffect(() => {
@@ -178,7 +186,7 @@ const DetailSketch = () => {
             setTypeOfArchitectures(detailSketch.typeOfArchitectures);
             console.log(detailSketch);
         }
-    }, [detailSketch])
+    }, [detailSketch]);
 
     useEffect(() => {
         if (commentList) {
@@ -210,104 +218,173 @@ const DetailSketch = () => {
             <div className="detail-sketch">
                 <div className="image-carousel">
                     <Carousel>
-                        {images && images.slice(0, 4).map((image, index) => (
-                            <div key={index}>
-                                <img alt="" src={image.filePath} />
-                            </div>
-                        ))}
+                        {images &&
+                            images.slice(0, 4).map((image, index) => (
+                                <div key={index}>
+                                    <img alt="" src={image.filePath} />
+                                </div>
+                            ))}
                     </Carousel>
                 </div>
                 <div className="content">
-                    {info && designStyles && designTools && typeOfArchitectures && <>
-                        <div className="title">{info.title}</div>
-                        {info.price === 0 ? <div className="price" style={{ color: 'green' }}>Miễn phí</div> : <div className="price">{info.price} VNĐ</div>}
-                        <div className="rate">
-                            {detailSketch && detailSketch.star
-                                ? <Rate defaultValue={detailSketch.star} disabled count={5} />
-                                : <Rate defaultValue={0} disabled count={5} />
-                            }
-                        </div>
-                        <div className="property">
-                            <div className="content">
-                                <img src={IconDetail1} alt="" />
-                                <div className="text">Ngày đăng: {new Date(info.updatedAt).toLocaleDateString("en-GB")}</div>
-                            </div>
-                            <div className="content">
-                                <img src={IconDetail2} alt="" />
-                                <div className="text">Phong cách:
-                                    {designStyles.map((style, index) => (
-                                        (index === designStyles.length - 1) ? <span key={index}> {style.name}</span> : <span key={index}> {style.name},</span>
-                                    ))}
+                    {info &&
+                        designStyles &&
+                        designTools &&
+                        typeOfArchitectures && (
+                            <>
+                                <div className="title">{info.title}</div>
+                                {info.price === 0 ? (
+                                    <div
+                                        className="price"
+                                        style={{ color: "green" }}
+                                    >
+                                        Miễn phí
+                                    </div>
+                                ) : (
+                                    <div className="price">
+                                        {info.price} VNĐ
+                                    </div>
+                                )}
+                                <div className="rate">
+                                    {detailSketch && detailSketch.star ? (
+                                        <Rate
+                                            defaultValue={detailSketch.star}
+                                            disabled
+                                            count={5}
+                                        />
+                                    ) : (
+                                        <Rate
+                                            defaultValue={0}
+                                            disabled
+                                            count={5}
+                                        />
+                                    )}
                                 </div>
-                            </div>
-                            <div className="content">
-                                <img src={IconDetail3} alt="" />
-                                <div className="text">Công cụ:
-                                    {designTools.map((tool, index) => (
-                                        (index === designTools.length - 1) ? <span key={index}> {tool.name}</span> : <span key={index}> {tool.name},</span>
-                                    ))}
+                                <div className="property">
+                                    <div className="content">
+                                        <img src={IconDetail1} alt="" />
+                                        <div className="text">
+                                            Ngày đăng:{" "}
+                                            {new Date(
+                                                info.updatedAt
+                                            ).toLocaleDateString("en-GB")}
+                                        </div>
+                                    </div>
+                                    <div className="content">
+                                        <img src={IconDetail2} alt="" />
+                                        <div className="text">
+                                            Phong cách:
+                                            {designStyles.map((style, index) =>
+                                                index ===
+                                                designStyles.length - 1 ? (
+                                                    <span key={index}>
+                                                        {" "}
+                                                        {style.name}
+                                                    </span>
+                                                ) : (
+                                                    <span key={index}>
+                                                        {" "}
+                                                        {style.name},
+                                                    </span>
+                                                )
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className="content">
+                                        <img src={IconDetail3} alt="" />
+                                        <div className="text">
+                                            Công cụ:
+                                            {designTools.map((tool, index) =>
+                                                index ===
+                                                designTools.length - 1 ? (
+                                                    <span key={index}>
+                                                        {" "}
+                                                        {tool.name}
+                                                    </span>
+                                                ) : (
+                                                    <span key={index}>
+                                                        {" "}
+                                                        {tool.name},
+                                                    </span>
+                                                )
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className="content">
+                                        <img src={IconDetail4} alt="" />
+                                        <div className="text">
+                                            {/* Dung lượng file: {info.fileSize} MB */}
+                                            Dung lượng file:
+                                        </div>
+                                    </div>
+                                    <div className="content">
+                                        <img src={IconDetail5} alt="" />
+                                        <div className="text">
+                                            {/* Kích thước: {info.width} x {info.height} cm */}
+                                            Kích thước:
+                                        </div>
+                                    </div>
+                                    <div className="content">
+                                        <img src={IconDetail6} alt="" />
+                                        <div className="text">
+                                            Hạng mục:{" "}
+                                            {typeOfArchitectures.map(
+                                                (type, index) =>
+                                                    index ===
+                                                    typeOfArchitectures.length -
+                                                        1 ? (
+                                                        <span key={index}>
+                                                            {" "}
+                                                            {type.name}
+                                                        </span>
+                                                    ) : (
+                                                        <span key={index}>
+                                                            {" "}
+                                                            {type.name},
+                                                        </span>
+                                                    )
+                                            )}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="content">
-                                <img src={IconDetail4} alt="" />
-                                <div className="text">
-                                    {/* Dung lượng file: {info.fileSize} MB */}
-                                    Dung lượng file:
+                                <div className="description">
+                                    <div className="des-title">Mô tả</div>
+                                    <div className="des-text">
+                                        {info.content}
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="content">
-                                <img src={IconDetail5} alt="" />
-                                <div className="text">
-                                    {/* Kích thước: {info.width} x {info.height} cm */}
-                                    Kích thước:
+                                <div className="action">
+                                    <motion.div
+                                        whileHover={{ scale: 1.1 }}
+                                        whileTap={{ scale: 0.95 }}
+                                    >
+                                        <Button className="add-to-card">
+                                            Thêm vào giỏ hàng
+                                        </Button>
+                                    </motion.div>
+                                    <motion.div
+                                        whileHover={{ scale: 1.1 }}
+                                        whileTap={{ scale: 0.95 }}
+                                    >
+                                        <Button className="download-now">
+                                            {productsFile ? (
+                                                <a href={productsFile} download>
+                                                    Tải xuống ngay
+                                                </a>
+                                            ) : (
+                                                <a>Tải xuống ngay</a>
+                                            )}
+                                        </Button>
+                                    </motion.div>
                                 </div>
-                            </div>
-                            <div className="content">
-                                <img src={IconDetail6} alt="" />
-                                <div className="text">
-                                    Hạng mục: {typeOfArchitectures.map((type, index) => (
-                                        (index === typeOfArchitectures.length - 1) ? <span key={index}> {type.name}</span> : <span key={index}> {type.name},</span>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                        <div className="description">
-                            <div className="des-title">Mô tả</div>
-                            <div className="des-text">
-                                {info.content}
-                            </div>
-                        </div>
-                        <div className="action">
-                            <motion.div
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                <Button className="add-to-card">
-                                    Thêm vào giỏ hàng
-                                </Button>
-                            </motion.div>
-                            <motion.div
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                <Button className="download-now">
-                                    {productsFile ?
-                                        <a href={productsFile} download>Tải xuống ngay</a>
-                                        :
-                                        <a>
-                                            Tải xuống ngay
-                                        </a>
-                                    }
-                                </Button>
-                            </motion.div>
-                        </div>
-                    </>}
+                            </>
+                        )}
                 </div>
             </div>
             <CAuthorIntroduction />
-            <div className="comment">
+            {/* <div className="comment">
                 <CComment />
-            </div>
+            </div> */}
             <div className="similar-sketch">
                 <div className="title">
                     <div>Bản vẽ tương tự</div>
