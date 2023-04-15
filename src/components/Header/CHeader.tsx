@@ -155,7 +155,9 @@ export const CHeader = (props: MyProps) => {
     const checkIsLogin = (val: boolean) => {
         setIsLogin(val);
     };
-
+    const handleClickCart = () => {
+        navigate("/cart");
+    }
     useEffect(() => {
         let checkLogin = localStorage.getItem('token') ? localStorage.getItem('token') : ''
         if (checkLogin) {
@@ -236,8 +238,8 @@ export const CHeader = (props: MyProps) => {
                                 <Badge count={10} size="default">
                                     <MessageOutlined />
                                 </Badge>
-                                <Badge count={10} size="default">
-                                    <ShoppingCartOutlined />
+                                <Badge count={10} size="default" >
+                                    <ShoppingCartOutlined onClick={handleClickCart} />
                                 </Badge>
                             </div>
                             <div className="user-info-content">

@@ -276,7 +276,7 @@ const DetailSketch = () => {
                                             Phong cách:
                                             {designStyles.map((style, index) =>
                                                 index ===
-                                                designStyles.length - 1 ? (
+                                                    designStyles.length - 1 ? (
                                                     <span key={index}>
                                                         {" "}
                                                         {style.name}
@@ -296,7 +296,7 @@ const DetailSketch = () => {
                                             Công cụ:
                                             {designTools.map((tool, index) =>
                                                 index ===
-                                                designTools.length - 1 ? (
+                                                    designTools.length - 1 ? (
                                                     <span key={index}>
                                                         {" "}
                                                         {tool.name}
@@ -331,7 +331,7 @@ const DetailSketch = () => {
                                             {typeOfArchitectures.map(
                                                 (type, index) =>
                                                     index ===
-                                                    typeOfArchitectures.length -
+                                                        typeOfArchitectures.length -
                                                         1 ? (
                                                         <span key={index}>
                                                             {" "}

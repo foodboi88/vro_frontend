@@ -89,10 +89,10 @@
 }
 
 .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
-    background-color: #c30300be;
+    background-color: #c30300be !important;
 
     .ant-select-item-option-content {
-        color: white;
+        color: white !important;
     }
 }
 

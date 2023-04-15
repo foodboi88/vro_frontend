@@ -26,6 +26,11 @@ export interface ICurrentSearchValue {
     size?: number;
     offset?: number;
 }
+export interface ISize {
+    width: string;
+    height: string;
+    area: string;
+}
 export interface IInFoSketch {
     title: string;
     content: string;
@@ -38,6 +43,10 @@ export interface IInFoSketch {
     createdAt: Date;
     updatedAt: Date;
     id: string;
+    fileSize?: number;
+    size?: ISize;
+    newPrice?: string;
+    oldPrice?: string;
 }
 export interface IImagesSketch {
     filePath: string;
