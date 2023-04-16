@@ -11,7 +11,6 @@
     .title {
         font-weight: 700;
         font-size: 1.5em;
-        line-height: 32px;
         color: #1E1E1E;
     }
 
@@ -44,7 +43,6 @@
                     .ant-table-cell {
                         font-weight: 400;
                         font-size: 1.2em;
-                        line-height: 24px;
                         color: #4E4E4E;
                         background-color: white;
                         border: none;
@@ -87,7 +85,6 @@
                         .sketch-cart-content-title {
                             font-weight: 700;
                             font-size: 1em;
-                            line-height: 24px;
                             color: #4E4E4E;
                         }
 
@@ -96,7 +93,6 @@
                             flex-direction: column;
                             font-weight: 400;
                             font-size: .9em;
-                            line-height: 20px;
                             color: #858585;
                             gap: .5em;
 
@@ -232,6 +228,12 @@
                         align-items: center;
                         text-align: center;
                         color: #FFFFFF;
+                        border: none;
+                        transition: all .2s ease-in-out;
+                    }
+
+                    .ant-btn:hover {
+                        scale: 1.1;
                     }
                 }
 
@@ -253,7 +255,6 @@
                 border-radius: 16px;
                 font-weight: 700;
                 font-size: .8em;
-                line-height: 24px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -277,4 +278,716 @@
 
 .ant-table-thead>tr>th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
     display: none;
+}
+
+@media (max-width: 1150px) {
+    .main-cart {
+        .title {}
+
+        .content-cart {
+            .left-content-cart {
+                .ant-table {
+
+                    .ant-table-thead {
+                        tr {
+                            th {}
+
+                            th:first-child {}
+
+                            th:last-child {}
+
+                        }
+
+                        .ant-table-cell {
+                            font-size: .9em;
+
+                            .sketch-cart-action-title {}
+
+
+                        }
+
+                    }
+
+                    .ant-table-tbody>tr>td {}
+
+                    .sketch-cart-info {
+
+                        .sketch-cart-info-img {
+                            img {}
+                        }
+
+                        .sketch-cart-content {
+                            .sketch-cart-content-title {
+                                font-size: .8em;
+                            }
+
+                            .sketch-cart-content-info {
+                                font-size: .7em;
+
+                                img {}
+
+                                .content {}
+                            }
+                        }
+                    }
+
+                    .sketch-cart-action {
+                        .sketch-cart-action-new-price {
+                            font-size: 1em;
+                        }
+
+                        .sketch-cart-action-new-price.free {}
+
+                        .sketch-cart-action-old-price {
+                            font-size: .8em;
+                        }
+
+                        .sketch-cart-action-delete {
+                            font-size: .8em;
+                        }
+                    }
+                }
+            }
+
+            .right-content-cart {
+
+                .right-content-cart-info-user,
+                .right-content-cart-info-cart {
+                    .title {
+                        font-size: .8em;
+
+                        .title-edit {}
+                    }
+
+                    .info-user,
+                    .info-cart,
+                    .discount,
+                    .total-price {
+                        .label-info-user {
+                            font-size: .6em;
+                        }
+
+                        .value-info-user {
+                            font-size: .6em;
+                        }
+                    }
+
+                    .discount {
+                        .select-discount {
+                            .ant-select-selector {
+                                .ant-select-selection-item {
+                                    font-size: .7em;
+                                }
+                            }
+
+                            .ant-select-selection-placeholder {
+                                font-size: .8em;
+                            }
+                        }
+
+                        .ant-btn {
+                            font-size: .7em;
+                            padding: 0 1em;
+                        }
+                    }
+
+                    .total-price {
+                        font-size: .8em;
+
+                        .total-price-title {}
+
+                        .total-price-value {}
+                    }
+                }
+
+                .to-payment {}
+            }
+        }
+
+        .ant-checkbox-inner {}
+    }
+
+    .ant-select-item-option-content {
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 1000px) {
+    .main-cart {
+        .title {}
+
+        .content-cart {
+            .left-content-cart {
+                .ant-table {
+
+                    .ant-table-thead {
+                        tr {
+                            th {}
+
+                            th:first-child {}
+
+                            th:last-child {}
+
+                        }
+
+                        .ant-table-cell {
+                            font-size: .9em;
+
+                            .sketch-cart-action-title {}
+
+
+                        }
+
+                    }
+
+                    .ant-table-tbody>tr>td {}
+
+                    .sketch-cart-info {
+
+                        .sketch-cart-info-img {
+                            img {
+                                height: 8em;
+                                width: 8em;
+                            }
+                        }
+
+                        .sketch-cart-content {
+                            .sketch-cart-content-title {
+                                font-size: .8em;
+                            }
+
+                            .sketch-cart-content-info {
+                                font-size: .7em;
+
+                                img {}
+
+                                .content {}
+                            }
+                        }
+                    }
+
+                    .sketch-cart-action {
+                        .sketch-cart-action-new-price {
+                            font-size: 1em;
+                        }
+
+                        .sketch-cart-action-new-price.free {}
+
+                        .sketch-cart-action-old-price {
+                            font-size: .8em;
+                        }
+
+                        .sketch-cart-action-delete {
+                            font-size: .8em;
+                        }
+                    }
+                }
+            }
+
+            .right-content-cart {
+
+                .right-content-cart-info-user,
+                .right-content-cart-info-cart {
+
+                    .title {
+
+                        font-size: .7em;
+
+                        .title-edit {}
+                    }
+
+                    .info-user,
+                    .info-cart,
+                    .discount,
+                    .total-price {
+                        .label-info-user {
+                            font-size: .6em;
+                        }
+
+                        .value-info-user {
+                            font-size: .6em;
+                        }
+                    }
+
+                    .discount {
+                        .select-discount {
+                            .ant-select-selector {
+                                .ant-select-selection-item {
+                                    font-size: .7em;
+                                }
+                            }
+
+                            .ant-select-selection-placeholder {
+                                font-size: .8em;
+                            }
+                        }
+
+                        .ant-btn {
+                            font-size: .7em;
+                            padding: 0 1em;
+                        }
+                    }
+
+                    .total-price {
+                        font-size: .8em;
+
+                        .total-price-title {}
+
+                        .total-price-value {}
+                    }
+                }
+
+                .to-payment {}
+            }
+        }
+
+        .ant-checkbox-inner {}
+    }
+
+    .ant-select-item-option-content {
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 900px) {
+    .main-cart {
+        .title {}
+
+        .content-cart {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: repeat(2, 1fr);
+
+            .left-content-cart {
+                .ant-table {
+
+                    .ant-table-thead {
+                        tr {
+                            th {}
+
+                            th:first-child {}
+
+                            th:last-child {}
+
+                        }
+
+                        .ant-table-cell {
+                            font-size: .9em;
+
+                            .sketch-cart-action-title {}
+
+
+                        }
+
+                    }
+
+                    .ant-table-tbody>tr>td {}
+
+                    .sketch-cart-info {
+
+                        .sketch-cart-info-img {
+                            img {
+                                height: 8em;
+                                width: 8em;
+                            }
+                        }
+
+                        .sketch-cart-content {
+                            .sketch-cart-content-title {
+                                font-size: .8em;
+                            }
+
+                            .sketch-cart-content-info {
+                                font-size: .7em;
+
+                                img {}
+
+                                .content {}
+                            }
+                        }
+                    }
+
+                    .sketch-cart-action {
+                        .sketch-cart-action-new-price {
+                            font-size: 1em;
+                        }
+
+                        .sketch-cart-action-new-price.free {}
+
+                        .sketch-cart-action-old-price {
+                            font-size: .8em;
+                        }
+
+                        .sketch-cart-action-delete {
+                            font-size: .8em;
+                        }
+                    }
+                }
+            }
+
+            .right-content-cart {
+
+                .right-content-cart-info-user,
+                .right-content-cart-info-cart {
+
+                    .title {
+
+                        font-size: .7em;
+
+                        .title-edit {}
+                    }
+
+                    .info-user,
+                    .info-cart,
+                    .discount,
+                    .total-price {
+                        .label-info-user {
+                            font-size: .6em;
+                        }
+
+                        .value-info-user {
+                            font-size: .6em;
+                        }
+                    }
+
+                    .discount {
+                        .select-discount {
+                            .ant-select-selector {
+                                .ant-select-selection-item {
+                                    font-size: .7em;
+                                }
+                            }
+
+                            .ant-select-selection-placeholder {
+                                font-size: .8em;
+                            }
+                        }
+
+                        .ant-btn {
+                            font-size: .7em;
+                            padding: 0 1em;
+                        }
+                    }
+
+                    .total-price {
+                        font-size: .8em;
+
+                        .total-price-title {}
+
+                        .total-price-value {}
+                    }
+                }
+
+                .to-payment {}
+            }
+        }
+
+        .ant-checkbox-inner {}
+    }
+
+    .ant-select-item-option-content {
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 650px) {
+    .main-cart {
+        padding: 5em 1em;
+
+        .title {}
+
+        .content-cart {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: repeat(2, 1fr);
+
+            .left-content-cart {
+                .ant-table {
+
+                    .ant-table-thead {
+                        tr {
+                            th {}
+
+                            th:first-child {}
+
+                            th:last-child {}
+
+                        }
+
+                        .ant-table-cell {
+                            font-size: .9em;
+
+                            .sketch-cart-action-title {}
+
+
+                        }
+
+                    }
+
+                    .ant-table-tbody>tr>td {}
+
+                    .sketch-cart-info {
+                        display: flex;
+                        flex-direction: column;
+
+                        .sketch-cart-info-img {
+                            img {
+                                height: 8em;
+                                width: 8em;
+                            }
+                        }
+
+                        .sketch-cart-content {
+                            .sketch-cart-content-title {
+                                font-size: .8em;
+                            }
+
+                            .sketch-cart-content-info {
+                                font-size: .7em;
+
+                                img {}
+
+                                .content {}
+                            }
+                        }
+                    }
+
+                    .sketch-cart-action {
+                        .sketch-cart-action-new-price {
+                            font-size: 1em;
+                        }
+
+                        .sketch-cart-action-new-price.free {}
+
+                        .sketch-cart-action-old-price {
+                            font-size: .8em;
+                        }
+
+                        .sketch-cart-action-delete {
+                            font-size: .8em;
+                        }
+                    }
+                }
+            }
+
+            .right-content-cart {
+
+                .right-content-cart-info-user,
+                .right-content-cart-info-cart {
+
+                    .title {
+
+                        font-size: .7em;
+
+                        .title-edit {}
+                    }
+
+                    .info-user,
+                    .info-cart,
+                    .discount,
+                    .total-price {
+                        .label-info-user {
+                            font-size: .6em;
+                        }
+
+                        .value-info-user {
+                            font-size: .6em;
+                        }
+                    }
+
+                    .discount {
+                        .select-discount {
+                            .ant-select-selector {
+                                .ant-select-selection-item {
+                                    font-size: .7em;
+                                }
+                            }
+
+                            .ant-select-selection-placeholder {
+                                font-size: .8em;
+                            }
+                        }
+
+                        .ant-btn {
+                            font-size: .7em;
+                            padding: 0 1em;
+                        }
+                    }
+
+                    .total-price {
+                        font-size: .8em;
+
+                        .total-price-title {}
+
+                        .total-price-value {}
+                    }
+                }
+
+                .to-payment {}
+            }
+        }
+
+        .ant-checkbox-inner {}
+    }
+
+    .ant-select-item-option-content {
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 400px) {
+    .main-cart {
+        padding: 5em 1em;
+
+        .title {
+            font-size: 1em;
+        }
+
+        .content-cart {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: repeat(2, 1fr);
+
+            .left-content-cart {
+                .ant-table {
+
+                    .ant-table-thead {
+                        tr {
+                            th {}
+
+                            th:first-child {}
+
+                            th:last-child {}
+
+                        }
+
+                        .ant-table-cell {
+                            font-size: .8em;
+
+                            .sketch-cart-action-title {}
+
+
+                        }
+
+                    }
+
+                    .ant-table-tbody>tr>td {}
+
+                    .sketch-cart-info {
+                        display: flex;
+                        flex-direction: column;
+
+                        .sketch-cart-info-img {
+                            img {
+                                height: 8em;
+                                width: 8em;
+                            }
+                        }
+
+                        .sketch-cart-content {
+                            .sketch-cart-content-title {
+                                font-size: .8em;
+                            }
+
+                            .sketch-cart-content-info {
+                                font-size: .6em;
+
+                                img {}
+
+                                .content {}
+                            }
+                        }
+                    }
+
+                    .sketch-cart-action {
+                        .sketch-cart-action-new-price {
+                            font-size: .8em;
+                        }
+
+                        .sketch-cart-action-new-price.free {}
+
+                        .sketch-cart-action-old-price {
+                            font-size: .6em;
+                        }
+
+                        .sketch-cart-action-delete {
+                            font-size: .6em;
+                        }
+                    }
+                }
+            }
+
+            .right-content-cart {
+
+                .right-content-cart-info-user,
+                .right-content-cart-info-cart {
+
+                    .title {
+
+                        font-size: .7em;
+
+                        .title-edit {}
+                    }
+
+                    .info-user,
+                    .info-cart,
+                    .discount,
+                    .total-price {
+                        .label-info-user {
+                            font-size: .6em;
+                        }
+
+                        .value-info-user {
+                            font-size: .6em;
+                        }
+                    }
+
+                    .discount {
+                        .select-discount {
+                            .ant-select-selector {
+                                .ant-select-selection-item {
+                                    font-size: .7em;
+                                }
+                            }
+
+                            .ant-select-selection-placeholder {
+                                font-size: .8em;
+                            }
+                        }
+
+                        .ant-btn {
+                            font-size: .7em;
+                            padding: 0 1em;
+                        }
+                    }
+
+                    .total-price {
+                        font-size: .8em;
+
+                        .total-price-title {}
+
+                        .total-price-value {}
+                    }
+                }
+
+                .to-payment {}
+            }
+        }
+
+        .ant-checkbox-inner {
+            height: 1em;
+            width: 1em;
+        }
+    }
+
+    .ant-select-item-option-content {
+        font-size: 0.8em;
+    }
+
+    .ant-table-thead>tr>th,
+    .ant-table-tbody>tr>td,
+    .ant-table tfoot>tr>th,
+    .ant-table tfoot>tr>td {
+        padding: .5em !important;
+    }
 }
