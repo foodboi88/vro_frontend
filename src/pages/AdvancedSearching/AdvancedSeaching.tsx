@@ -218,7 +218,7 @@ const AdvancedSeaching = () => {
                             </div>
                         </motion.div>
                     </div>
-                    <CAuthorIntroduction />
+                    {/* <CAuthorIntroduction /> */}
                 </div>
                 <div className="sketch-list">
                     <div className="searched-sketch-title">
@@ -241,7 +241,7 @@ const AdvancedSeaching = () => {
                                         title={card.title}
                                         view={card.views}
                                         price={card.price}
-                                    // type={card.}
+                                        // type={card.}
                                     />
                                 </Col>
                             ))}

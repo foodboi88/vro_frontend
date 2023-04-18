@@ -19,7 +19,7 @@ import {
 import { ITool } from "../../common/tool.interface";
 import FilterCriteriasApi from "../../api/filter-criterias/filter-criterias.api";
 import CommentsApi from "../../api/comment/comment.api";
-import { IUser } from "../../common/user.interface";
+import { IAuthor, IUser } from "../../common/user.interface";
 import ImageSketchApi from "../../api/image-sketch/image-sketch.api";
 import { IRates } from "../../common/rates.interface";
 import RatesApi from "../../api/rates/rates.api";
@@ -57,6 +57,7 @@ interface SketchState {
     ratesLst: IRates | undefined;
     productsFile: string | undefined;
     checkProductsFile: boolean;
+    authorIntroduction: IAuthor | undefined;
 }
 
 const initState: SketchState = {
@@ -89,6 +90,7 @@ const initState: SketchState = {
     ratesLst: undefined,
     productsFile: undefined,
     checkProductsFile: false,
+    authorIntroduction: undefined,
 };
 
 const sketchSlice = createSlice({
@@ -230,6 +232,7 @@ const sketchSlice = createSlice({
         getDetailSketchSuccess(state, action: PayloadAction<any>) {
             state.loading = true;
             state.detailSketch = action.payload.data;
+            console.log(action.payload.data);
         },
 
         getCommentBySketchIdRequest(state, action: PayloadAction<any>) {
@@ -360,6 +363,32 @@ const sketchSlice = createSlice({
             state.productsFile = action.payload[0].filePath;
         },
         getProductFilesByIdFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+        },
+
+        // Get Author intro
+        getAuthorIntroductionByIdRequest(state, action: PayloadAction<string>) {
+            state.loading = true;
+        },
+        getAuthorIntroductionByIdSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload);
+            state.authorIntroduction = action.payload;
+        },
+        getAuthorIntroductionByIdFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+        },
+
+        // get Sketch List By Author Id
+        getSketchListByAuthorIdRequest(state, action: PayloadAction<string>) {
+            state.loading = true;
+        },
+        getSketchListByAuthorIdSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload);
+            state.filteredSketchs = action.payload.data;
+        },
+        getSketchListByAuthorIdFail(state, action: PayloadAction<any>) {
             state.loading = false;
         },
     },
@@ -545,6 +574,10 @@ const getDetailSketch$: RootEpic = (action$) =>
 
                     return [
                         sketchSlice.actions.getDetailSketchSuccess(res),
+                        sketchSlice.actions.getAuthorIntroductionByIdRequest(
+                            res.data.info.userId
+                        ),
+
                         sketchSlice.actions.getDetailSketchPageContentSuccess(),
                     ];
                 }),
@@ -572,6 +605,28 @@ const getCommentBySketchId$: RootEpic = (action$) =>
 
                     return [
                         sketchSlice.actions.getCommentBySketchIdSuccess(res),
+                    ];
+                }),
+                catchError((err) => [])
+            );
+        })
+    );
+
+const getAuthorIntroductionById$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getAuthorIntroductionByIdRequest.match),
+        switchMap((re) => {
+            // IdentityApi.login(re.payload) ?
+            console.log(re);
+
+            return SketchsApi.getAuthorById(re.payload).pipe(
+                mergeMap((res: any) => {
+                    console.log(res);
+
+                    return [
+                        sketchSlice.actions.getAuthorIntroductionByIdSuccess(
+                            res.data
+                        ),
                     ];
                 }),
                 catchError((err) => [])
@@ -705,15 +760,17 @@ const uploadContentSketch$: RootEpic = (action$) =>
         })
     );
 
-const getRatesBySketchId$: RootEpic = (action$) =>
+const getSketchListByAuthorId$: RootEpic = (action$) =>
     action$.pipe(
-        filter(getRatesBySketchIdRequest.match),
+        filter(getSketchListByAuthorIdRequest.match),
         switchMap((re) => {
             // IdentityApi.login(re.payload) ?
             console.log(re);
-            return RatesApi.getRatesBySketchId(re.payload).pipe(
+            return SketchsApi.getSketchListByAuthorId(re.payload).pipe(
                 mergeMap((res: IRates) => {
-                    return [sketchSlice.actions.getRatesBySketchIdSuccess(res)];
+                    return [
+                        sketchSlice.actions.getSketchListByAuthorIdSuccess(res),
+                    ];
                 }),
                 catchError((err) => [])
             );
@@ -738,6 +795,22 @@ const getProductFilesById$: RootEpic = (action$) =>
             );
         })
     );
+
+const getRatesBySketchId$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getRatesBySketchIdRequest.match),
+        switchMap((re) => {
+            // IdentityApi.login(re.payload) ?
+            console.log(re);
+            return RatesApi.getRatesBySketchId(re.payload).pipe(
+                mergeMap((res: IRates) => {
+                    return [sketchSlice.actions.getRatesBySketchIdSuccess(res)];
+                }),
+                catchError((err) => [])
+            );
+        })
+    );
+
 export const SketchEpics = [
     // uploadSketch$,
     getHomeListSketch$,
@@ -757,6 +830,9 @@ export const SketchEpics = [
     uploadFileSketch$,
     getRatesBySketchId$,
     getProductFilesById$,
+    getAuthorIntroductionById$,
+    getRatesBySketchId$,
+    getSketchListByAuthorId$,
 ];
 export const {
     getLatestSketchRequest,
@@ -776,5 +852,7 @@ export const {
     uploadImageSketchRequest,
     getRatesBySketchIdRequest,
     getProductFilesByIdRequest,
+    getAuthorIntroductionByIdRequest,
+    getSketchListByAuthorIdRequest,
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;
