@@ -96,8 +96,13 @@ const featuredLst: CardData[] = [
 
 const DetailSketch = () => {
     const navigate = useNavigate();
-    const { detailSketch, commentList, ratesLst, productsFile } =
-        useSelectorRoot((state) => state.sketch); // Lấy ra dữ liệu detail sketch và danh sách comment từ redux
+    const {
+        detailSketch,
+        commentList,
+        ratesLst,
+        productsFile,
+        authorIntroduction,
+    } = useSelectorRoot((state) => state.sketch); // Lấy ra dữ liệu detail sketch và danh sách comment từ redux
     const dispatch = useDispatchRoot();
     const { sketchId } = useParams(); // Lấy ra id của sketch từ url
 
@@ -200,6 +205,10 @@ const DetailSketch = () => {
 
     const handlePrevCard = () => {
         setCurrentIndex(currentIndex - 1);
+    };
+
+    const handleRoutingToAuthorPage = () => {
+        navigate(`/author-page/${detailSketch?.info.userId}`);
     };
 
     return (
@@ -381,7 +390,18 @@ const DetailSketch = () => {
                         )}
                 </div>
             </div>
-            <CAuthorIntroduction />
+            {authorIntroduction && (
+                <div onClick={handleRoutingToAuthorPage}>
+                    <CAuthorIntroduction
+                        createdAt={authorIntroduction?.createdAt}
+                        address={authorIntroduction.address}
+                        name={authorIntroduction.name}
+                        phone={authorIntroduction.phone}
+                        totalProduct={authorIntroduction.totalProduct}
+                        totalRating={authorIntroduction.totalRating}
+                    />
+                </div>
+            )}
             {/* <div className="comment">
                 <CComment />
             </div> */}
