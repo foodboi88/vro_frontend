@@ -89,9 +89,26 @@ export default class SketchsApi {
         );
     }
 
-    static getProductFilesById(sketchId: string, token: string): Observable<any> {
+    static getProductFilesById(
+        sketchId: string,
+        token: string
+    ): Observable<any> {
         const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.GET_PRODUCT_FILE_BY_ID}?id=${sketchId}`;
-        return HttpClient.get(api, { headers: { Authorization: `Bearer ${token}` } }).pipe(
+        return HttpClient.get(api, {
+            headers: { Authorization: `Bearer ${token}` },
+        }).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
+
+    static addSketchToCart(sketchId: string): Observable<any> {
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.ADD_SKETCH_TO_CART}`;
+        return HttpClient.post(api, {
+            productId: sketchId,
+        }).pipe(
             map(
                 (res) => (res as any) || null,
                 catchError((error) => new Observable())

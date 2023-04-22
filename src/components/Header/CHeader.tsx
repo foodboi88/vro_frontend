@@ -45,16 +45,23 @@ export const CHeader = (props: MyProps) => {
     const [visible, setVisible] = useState(false); // Biến thể hiện nút thu gọn menu có đang mở hay không
     const [current, setCurrent] = useState<string>("1"); // Biến thể hiện giá trị cho nút hiện tại
     const { tokenLogin, user } = useSelectorRoot((state) => state.login);
+    const { sketchsQuantityInCart } = useSelectorRoot((state) => state.sketch);
+
     // const [userName, setUserName] = useState<string>(user?.name ? user.name : '')
     // const [userEmail, setUserEmail] = useState<string>(user?.email ? user.email : '')
 
     const navigate = useNavigate();
     const [isOpenLoginModal, setIsOpenLoginModal] = useState<boolean>(false); // Biến kiểm tra đang mở modal login hay chưa
-    const [isOpenRegisterModal, setIsOpenRegisterModal] = useState<boolean>(false); // Biến kiểm tra đang mở modal registration hay chưa
+    const [isOpenRegisterModal, setIsOpenRegisterModal] =
+        useState<boolean>(false); // Biến kiểm tra đang mở modal registration hay chưa
     const [isLogin, setIsLogin] = useState<boolean>(false);
     const { currentSearchValue } = useSelectorRoot((state) => state.sketch);
-    const [userName, setUserName] = useState<string>(user?.name ? user.name : "");
-    const [userEmail, setUserEmail] = useState<string>(user?.email ? user.email : "")
+    const [userName, setUserName] = useState<string>(
+        user?.name ? user.name : ""
+    );
+    const [userEmail, setUserEmail] = useState<string>(
+        user?.email ? user.email : ""
+    );
     const dispatch = useDispatchRoot();
 
     // useEffect(() => {
@@ -157,13 +164,15 @@ export const CHeader = (props: MyProps) => {
     };
     const handleClickCart = () => {
         navigate("/cart");
-    }
+    };
     useEffect(() => {
-        let checkLogin = localStorage.getItem('token') ? localStorage.getItem('token') : ''
+        let checkLogin = localStorage.getItem("token")
+            ? localStorage.getItem("token")
+            : "";
         if (checkLogin) {
-            setIsLogin(true)
+            setIsLogin(true);
         }
-    }, [])
+    }, []);
     return (
         <div className="main-header">
             <div className="header-left">
@@ -218,8 +227,9 @@ export const CHeader = (props: MyProps) => {
                     ) : (
                         <>
                             <motion.div
-                                className={`header-button post ${isLogin && "login"
-                                    }`}
+                                className={`header-button post ${
+                                    isLogin && "login"
+                                }`}
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.95 }}
                             >
@@ -238,8 +248,13 @@ export const CHeader = (props: MyProps) => {
                                 <Badge count={10} size="default">
                                     <MessageOutlined />
                                 </Badge>
-                                <Badge count={10} size="default" >
-                                    <ShoppingCartOutlined onClick={handleClickCart} />
+                                <Badge
+                                    count={sketchsQuantityInCart}
+                                    size="default"
+                                >
+                                    <ShoppingCartOutlined
+                                        onClick={handleClickCart}
+                                    />
                                 </Badge>
                             </div>
                             <div className="user-info-content">
@@ -308,8 +323,9 @@ export const CHeader = (props: MyProps) => {
                                 Đăng bản vẽ
                             </Button>
                             <div
-                                className={`header-content-input draw ${isLogin && "login"
-                                    }`}
+                                className={`header-content-input draw ${
+                                    isLogin && "login"
+                                }`}
                             >
                                 <Input
                                     className="search-input"

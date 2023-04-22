@@ -42,6 +42,7 @@ import IconDetail5 from "../../images/detail/icon-detail-5.png";
 import IconDetail6 from "../../images/detail/icon-detail-6.png";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
 import {
+    addSketchToCartRequest,
     getDetailSketchPageContentRequest,
     getProductFilesByIdRequest,
     getRatesBySketchIdRequest,
@@ -202,6 +203,10 @@ const DetailSketch = () => {
         setCurrentIndex(currentIndex - 1);
     };
 
+    const handleAddToCart = (sketchId: string) => {
+        dispatch(addSketchToCartRequest(sketchId));
+    };
+
     return (
         <div className="main-detail">
             <div className="breadcrumb">
@@ -276,7 +281,7 @@ const DetailSketch = () => {
                                             Phong cách:
                                             {designStyles.map((style, index) =>
                                                 index ===
-                                                    designStyles.length - 1 ? (
+                                                designStyles.length - 1 ? (
                                                     <span key={index}>
                                                         {" "}
                                                         {style.name}
@@ -296,7 +301,7 @@ const DetailSketch = () => {
                                             Công cụ:
                                             {designTools.map((tool, index) =>
                                                 index ===
-                                                    designTools.length - 1 ? (
+                                                designTools.length - 1 ? (
                                                     <span key={index}>
                                                         {" "}
                                                         {tool.name}
@@ -331,7 +336,7 @@ const DetailSketch = () => {
                                             {typeOfArchitectures.map(
                                                 (type, index) =>
                                                     index ===
-                                                        typeOfArchitectures.length -
+                                                    typeOfArchitectures.length -
                                                         1 ? (
                                                         <span key={index}>
                                                             {" "}
@@ -358,7 +363,12 @@ const DetailSketch = () => {
                                         whileHover={{ scale: 1.1 }}
                                         whileTap={{ scale: 0.95 }}
                                     >
-                                        <Button className="add-to-card">
+                                        <Button
+                                            className="add-to-card"
+                                            onClick={() =>
+                                                handleAddToCart(info.id)
+                                            }
+                                        >
                                             Thêm vào giỏ hàng
                                         </Button>
                                     </motion.div>

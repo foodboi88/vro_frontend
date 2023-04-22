@@ -23,6 +23,7 @@ import { IUser } from "../../common/user.interface";
 import ImageSketchApi from "../../api/image-sketch/image-sketch.api";
 import { IRates } from "../../common/rates.interface";
 import RatesApi from "../../api/rates/rates.api";
+import { IInFoSketch } from "../../common/sketch.interface";
 
 type MessageLogin = {
     content: string;
@@ -57,6 +58,8 @@ interface SketchState {
     ratesLst: IRates | undefined;
     productsFile: string | undefined;
     checkProductsFile: boolean;
+    sketchsInCart: IInFoSketch[];
+    sketchsQuantityInCart: number;
 }
 
 const initState: SketchState = {
@@ -89,6 +92,8 @@ const initState: SketchState = {
     ratesLst: undefined,
     productsFile: undefined,
     checkProductsFile: false,
+    sketchsInCart: [],
+    sketchsQuantityInCart: 0,
 };
 
 const sketchSlice = createSlice({
@@ -360,6 +365,34 @@ const sketchSlice = createSlice({
             state.productsFile = action.payload[0].filePath;
         },
         getProductFilesByIdFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+        },
+        addSketchToCartRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+        addSketchToCartSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            if (typeof action.payload === "string") {
+                notification.open({
+                    message: "Lỗi",
+                    description: "Sản phẩm đã có trong giỏ",
+                    onClick: () => {
+                        console.log("Notification Clicked!");
+                    },
+                });
+            } else {
+                state.sketchsQuantityInCart = action.payload.Quantity;
+                notification.open({
+                    message: "Thành công",
+                    description: "Thêm sản phẩm vào giỏ hàng thành công",
+                    onClick: () => {
+                        console.log("Notification Clicked!");
+                    },
+                });
+            }
+            // state.sketchsInCart = action.payload;
+        },
+        addSketchToCartFail(state, action: PayloadAction<any>) {
             state.loading = false;
         },
     },
@@ -738,6 +771,23 @@ const getProductFilesById$: RootEpic = (action$) =>
             );
         })
     );
+
+//Add sketch to cart
+const addSketchToCart$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(addSketchToCartRequest.match),
+        switchMap((re) => {
+            // IdentityApi.login(re.payload) ?
+            console.log(re);
+            return SketchsApi.addSketchToCart(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [sketchSlice.actions.addSketchToCartSuccess(res)];
+                }),
+                catchError((err) => [])
+            );
+        })
+    );
+
 export const SketchEpics = [
     // uploadSketch$,
     getHomeListSketch$,
@@ -757,6 +807,7 @@ export const SketchEpics = [
     uploadFileSketch$,
     getRatesBySketchId$,
     getProductFilesById$,
+    addSketchToCart$,
 ];
 export const {
     getLatestSketchRequest,
@@ -776,5 +827,6 @@ export const {
     uploadImageSketchRequest,
     getRatesBySketchIdRequest,
     getProductFilesByIdRequest,
+    addSketchToCartRequest,
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;
