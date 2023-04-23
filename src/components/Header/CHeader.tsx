@@ -60,12 +60,6 @@ export const CHeader = (props: MyProps) => {
         useState<boolean>(false); // Biến kiểm tra đang mở modal registration hay chưa
     const [isLogin, setIsLogin] = useState<boolean>(false);
     const { currentSearchValue } = useSelectorRoot((state) => state.sketch);
-    const [userName, setUserName] = useState<string>(
-        user?.name ? user.name : ""
-    );
-    const [userEmail, setUserEmail] = useState<string>(
-        user?.email ? user.email : ""
-    );
     const dispatch = useDispatchRoot();
 
     // useEffect(() => {
@@ -107,6 +101,8 @@ export const CHeader = (props: MyProps) => {
         Utils.removeItemLocalStorage("token");
         Utils.removeItemLocalStorage("userMail");
         Utils.removeItemLocalStorage("userName");
+        Utils.removeItemLocalStorage("userPhone");
+
         Utils.removeItemLocalStorage("refresh_token");
         setIsLogin(!isLogin);
         window.location.reload();
@@ -236,9 +232,8 @@ export const CHeader = (props: MyProps) => {
                     ) : (
                         <>
                             <motion.div
-                                className={`header-button post ${
-                                    isLogin && "login"
-                                }`}
+                                className={`header-button post ${isLogin && "login"
+                                    }`}
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.95 }}
                             >
@@ -332,9 +327,8 @@ export const CHeader = (props: MyProps) => {
                                 Đăng bản vẽ
                             </Button>
                             <div
-                                className={`header-content-input draw ${
-                                    isLogin && "login"
-                                }`}
+                                className={`header-content-input draw ${isLogin && "login"
+                                    }`}
                             >
                                 <Input
                                     className="search-input"

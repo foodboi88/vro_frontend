@@ -1,55 +1,31 @@
-import { Breadcrumb, Button, Col, Rate, Row } from "antd";
-import { Carousel } from "react-responsive-carousel";
-import React, { useEffect, useState } from "react";
-import CAuthorIntroduction from "../../components/AuthorIntroduction/CAuthorIntroduction";
-import CComment from "../../components/Comment/CComment";
-import CProductCard from "../../components/ProductCard/CProductCard";
-import "./styles.detailsketch.scss";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { useNavigate, useParams } from "react-router";
-import { motion } from "framer-motion";
 import {
     ArrowLeftOutlined,
-    ArrowRightOutlined,
-    EyeOutlined,
+    ArrowRightOutlined
 } from "@ant-design/icons";
+import { Breadcrumb, Button, Col, Rate, Row } from "antd";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { useNavigate, useParams } from "react-router";
+import CAuthorIntroduction from "../../components/AuthorIntroduction/CAuthorIntroduction";
+import CProductCard from "../../components/ProductCard/CProductCard";
+import "./styles.detailsketch.scss";
 
-import DrawHomeImage1 from "../../images/homepage/home_img_1.png";
-import DrawHomeImage2 from "../../images/homepage/home_img_2.png";
-import DrawHomeImage3 from "../../images/homepage/home_img_3.png";
-import DrawHomeImage4 from "../../images/homepage/home_img_4.png";
-import DrawHomeImage5 from "../../images/homepage/home_img_5.png";
-import DrawHomeImage6 from "../../images/homepage/home_img_6.png";
-import DrawHomeImage7 from "../../images/homepage/home_img_7.png";
-import DrawHomeImage8 from "../../images/homepage/home_img_8.png";
-import DrawHomeImage9 from "../../images/homepage/home_img_9.png";
-import DrawHomeImage10 from "../../images/homepage/home_img_10.png";
-import DrawHomeImage11 from "../../images/homepage/home_img_11.png";
-import DrawHomeImage12 from "../../images/homepage/home_img_12.png";
-import DrawHomeImage13 from "../../images/homepage/home_img_13.png";
-import DrawHomeImage14 from "../../images/homepage/home_img_14.png";
-import DrawHomeImage15 from "../../images/homepage/home_img_15.png";
-import DrawHomeImage16 from "../../images/homepage/home_img_16.png";
-import DrawDetailImage1 from "../../images/detail/DrawDetailImage1.png";
-import DrawDetailImage2 from "../../images/detail/DrawDetailImage2.png";
-import DrawDetailImage3 from "../../images/detail/DrawDetailImage3.png";
-import DrawDetailImage4 from "../../images/detail/DrawDetailImage4.png";
+import { IImagesSketch, IInFoSketch } from "../../common/sketch.interface";
+import { IArchitecture, IStyle, ITool } from "../../common/tool.interface";
 import IconDetail1 from "../../images/detail/icon-detail-1.png";
 import IconDetail2 from "../../images/detail/icon-detail-2.png";
 import IconDetail3 from "../../images/detail/icon-detail-3.png";
 import IconDetail4 from "../../images/detail/icon-detail-4.png";
 import IconDetail5 from "../../images/detail/icon-detail-5.png";
 import IconDetail6 from "../../images/detail/icon-detail-6.png";
+import DrawHomeImage1 from "../../images/homepage/home_img_1.png";
+import DrawHomeImage2 from "../../images/homepage/home_img_2.png";
+import DrawHomeImage3 from "../../images/homepage/home_img_3.png";
+import DrawHomeImage4 from "../../images/homepage/home_img_4.png";
+import { addSketchToCartRequest, getDetailSketchPageContentRequest, getProductFilesByIdRequest, getRatesBySketchIdRequest, } from "../../redux/controller";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
-import {
-    addSketchToCartRequest,
-    getDetailSketchPageContentRequest,
-    getProductFilesByIdRequest,
-    getRatesBySketchIdRequest,
-} from "../../redux/controller";
-import { IArchitecture, IStyle, ITool } from "../../common/tool.interface";
-import { IImagesSketch, IInFoSketch } from "../../common/sketch.interface";
-import { format } from "date-fns";
 
 interface CardData {
     id: number;
@@ -111,9 +87,7 @@ const DetailSketch = () => {
     const [designTools, setDesignTools] = useState<ITool[]>([]);
     const [images, setImages] = useState<IImagesSketch[]>([]);
     const [info, setInfo] = useState<IInFoSketch>();
-    const [typeOfArchitectures, setTypeOfArchitectures] = useState<
-        IArchitecture[]
-    >([]);
+    const [typeOfArchitectures, setTypeOfArchitectures] = useState<IArchitecture[]>([]);
     const [windowSize, setWindowSize] = useState([
         window.innerWidth,
         window.innerHeight,
@@ -204,7 +178,11 @@ const DetailSketch = () => {
     };
 
     const handleAddToCart = (sketchId: string) => {
-        dispatch(addSketchToCartRequest(sketchId));
+        const req = {
+            productId: sketchId,
+            "additionalProp1": {}
+        }
+        dispatch(addSketchToCartRequest(req));
     };
 
     return (
@@ -281,7 +259,7 @@ const DetailSketch = () => {
                                             Phong cách:
                                             {designStyles.map((style, index) =>
                                                 index ===
-                                                designStyles.length - 1 ? (
+                                                    designStyles.length - 1 ? (
                                                     <span key={index}>
                                                         {" "}
                                                         {style.name}
@@ -301,7 +279,7 @@ const DetailSketch = () => {
                                             Công cụ:
                                             {designTools.map((tool, index) =>
                                                 index ===
-                                                designTools.length - 1 ? (
+                                                    designTools.length - 1 ? (
                                                     <span key={index}>
                                                         {" "}
                                                         {tool.name}
@@ -336,7 +314,7 @@ const DetailSketch = () => {
                                             {typeOfArchitectures.map(
                                                 (type, index) =>
                                                     index ===
-                                                    typeOfArchitectures.length -
+                                                        typeOfArchitectures.length -
                                                         1 ? (
                                                         <span key={index}>
                                                             {" "}

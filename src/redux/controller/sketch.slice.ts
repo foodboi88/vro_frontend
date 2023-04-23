@@ -2,7 +2,7 @@
 /* eslint-disable no-debugger */
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { CheckboxOptionType, notification } from "antd";
-import { catchError, filter, map, mergeMap, switchMap } from "rxjs/operators";
+import { catchError, concatMap, filter, map, mergeMap, switchMap } from "rxjs/operators";
 // import IdentityApi from "../../api/identity.api";
 import { RootEpic } from "../../common/define-type";
 import Utils from "../../common/utils";
@@ -15,6 +15,7 @@ import {
     IReqGetLatestSketchs,
     IReqProductsFiles,
     ISketch,
+    ISketchInCart,
 } from "../../common/sketch.interface";
 import { ITool } from "../../common/tool.interface";
 import FilterCriteriasApi from "../../api/filter-criterias/filter-criterias.api";
@@ -58,7 +59,7 @@ interface SketchState {
     ratesLst: IRates | undefined;
     productsFile: string | undefined;
     checkProductsFile: boolean;
-    sketchsInCart: IInFoSketch[];
+    lstSketchsInCart: ISketchInCart[];
     sketchsQuantityInCart: number;
 }
 
@@ -92,7 +93,7 @@ const initState: SketchState = {
     ratesLst: undefined,
     productsFile: undefined,
     checkProductsFile: false,
-    sketchsInCart: [],
+    lstSketchsInCart: [],
     sketchsQuantityInCart: 0,
 };
 
@@ -173,10 +174,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data);
             state.toolList = action.payload.data.map(
                 (item: ITool) =>
-                    ({
-                        label: item.name,
-                        value: item.id,
-                    } as CheckboxOptionType)
+                ({
+                    label: item.name,
+                    value: item.id,
+                } as CheckboxOptionType)
             );
             console.log(state.toolList);
             console.log("Da chui vao voi action: ", action);
@@ -192,10 +193,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data);
             state.styleList = action.payload.data.map(
                 (item: ITool) =>
-                    ({
-                        label: item.name,
-                        value: item.id,
-                    } as CheckboxOptionType)
+                ({
+                    label: item.name,
+                    value: item.id,
+                } as CheckboxOptionType)
             );
             console.log(state.toolList);
             console.log("Da chui vao voi action: ", action);
@@ -211,10 +212,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data);
             state.architectureList = action.payload.data.map(
                 (item: ITool) =>
-                    ({
-                        label: item.name,
-                        value: item.id,
-                    } as CheckboxOptionType)
+                ({
+                    label: item.name,
+                    value: item.id,
+                } as CheckboxOptionType)
             );
             console.log(state.architectureList);
             console.log("Da chui vao voi action: ", action);
@@ -376,7 +377,7 @@ const sketchSlice = createSlice({
             state.loading = false;
             if (typeof action.payload === "string") {
                 notification.open({
-                    message: "Lỗi",
+                    message: "Thêm sản phẩm không thành công",
                     description: "Sản phẩm đã có trong giỏ",
                     onClick: () => {
                         console.log("Notification Clicked!");
@@ -392,13 +393,13 @@ const sketchSlice = createSlice({
                     },
                 });
             }
-            // state.sketchsInCart = action.payload;
+            // state.lstSketchsInCart = action.payload;
         },
         addSketchToCartFail(state, action: PayloadAction<any>) {
             state.loading = false;
         },
 
-        //Get quantity in cart
+        //Lấy số lượng sản phẩm trong giỏ
         getSketchQuantityInCartRequest(state) {
             state.loading = true;
         },
@@ -411,14 +412,14 @@ const sketchSlice = createSlice({
             state.loading = false;
         },
 
-        //Get quantity in cart
+        //Lấy tất cả sản phẩm trong giỏ
         getAllSketchInCartRequest(state) {
             state.loading = true;
         },
         getAllSketchInCartSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
             console.log(action.payload);
-            state.sketchsInCart = action.payload;
+            state.lstSketchsInCart = action.payload;
         },
         getAllSketchInCartFail(state, action: PayloadAction<any>) {
             state.loading = false;
@@ -596,12 +597,12 @@ const getDetailSketchPageContent$: RootEpic = (action$) =>
 const getDetailSketch$: RootEpic = (action$) =>
     action$.pipe(
         filter(getDetailSketchRequest.match),
-        switchMap((re) => {
+        concatMap((re) => {
             // IdentityApi.login(re.payload) ?
             console.log(re);
 
             return SketchsApi.getSketchById(re.payload).pipe(
-                mergeMap((res: any) => {
+                concatMap((res: any) => {
                     console.log(res);
 
                     return [
@@ -805,8 +806,11 @@ const addSketchToCart$: RootEpic = (action$) =>
     action$.pipe(
         filter(addSketchToCartRequest.match),
         switchMap((re) => {
-            // IdentityApi.login(re.payload) ?
             console.log(re);
+            const req = {
+                productId: re.payload.productId,
+                additionalProp1: {}
+            }
             return SketchsApi.addSketchToCart(re.payload).pipe(
                 mergeMap((res: any) => {
                     return [sketchSlice.actions.addSketchToCartSuccess(res)];

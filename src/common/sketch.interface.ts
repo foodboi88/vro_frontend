@@ -61,3 +61,11 @@ export interface IDetailSketch {
     typeOfArchitectures: IArchitecture[];
     star: number | null;
 }
+export interface ISketchInCart {
+    title: string;
+    price: number;
+    collectionId: string;
+    createdAt: Date;
+    updatedAt: Date;
+    id: string;
+}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./styles.cart.scss";
-import { IDetailSketch } from "../../common/sketch.interface";
+import { IDetailSketch, ISketchInCart } from "../../common/sketch.interface";
 import IconDetail1 from "../../images/detail/icon-detail-1.png";
 import IconDetail2 from "../../images/detail/icon-detail-2.png";
 import IconDetail3 from "../../images/detail/icon-detail-3.png";
@@ -17,28 +17,12 @@ import {
     CaretDownOutlined,
 } from "@ant-design/icons";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
+import SketchsApi from "../../api/sketchs/sketchs.api";
 
 interface DataType {
     key: React.Key;
     sketch: IDetailSketch;
 }
-const infoUser = [
-    {
-        key: "1",
-        label: "Họ và tên",
-        value: "Nguyễn Văn A",
-    },
-    {
-        key: "2",
-        label: "Email",
-        value: "Ngocbpt248328@gmail.com",
-    },
-    {
-        key: "3",
-        label: "Số điện thoại",
-        value: "0969 999 999",
-    },
-];
 const infoCart = [
     {
         key: "1",
@@ -54,9 +38,28 @@ const infoCart = [
 const { Option } = Select;
 
 const Cart = () => {
-    const { sketchsInCart } = useSelectorRoot((state) => state.sketch);
+    const { lstSketchsInCart, sketchsQuantityInCart } = useSelectorRoot((state) => state.sketch);
+    const { tokenLogin, user } = useSelectorRoot((state) => state.login);
+
     const dispatch = useDispatchRoot();
 
+    const infoUser = [
+        {
+            key: "1",
+            label: "Họ và tên",
+            value: `${user.name}`,
+        },
+        {
+            key: "2",
+            label: "Email",
+            value: `${user.email}`,
+        },
+        {
+            key: "3",
+            label: "Số điện thoại",
+            value: `${user.phone}`,
+        },
+    ];
     const dataSketch = [
         {
             key: "1",
@@ -179,33 +182,34 @@ const Cart = () => {
     const columns = [
         Table.SELECTION_COLUMN,
         {
-            title: `Tất cả (${dataSketch.length} sản phẩm)`,
-            dataIndex: "sketch",
-            key: "sketch",
-            render: (sketch: IDetailSketch) => (
+            title: `Tất cả (${sketchsQuantityInCart} sản phẩm)`,
+            dataIndex: "title",
+            key: "title",
+            render: (title: any) => (
                 <div className="sketch-cart-info">
                     <div className="sketch-cart-info-img">
-                        <img src={sketch.images[0].filePath} alt="" />
+                        {/* <img src={sketch && sketch.images[0].filePath} alt="" /> */}
+                        <img src={CartImage1} alt="" />
                     </div>
                     <div className="sketch-cart-content">
                         <div className="sketch-cart-content-title">
-                            {sketch.info.title}
+                            {/* {sketch && sketch.info.title} */}
+                            {title && title}
                         </div>
-                        <div className="sketch-cart-content-info">
+                        {/* <div className="sketch-cart-content-info">
                             <div className="content">
                                 <img src={IconDetail4} alt="" />
                                 <div className="text">
-                                    {/* Dung lượng file: {info.fileSize} MB */}
-                                    Dung lượng file: {sketch.info.fileSize} MB
+                                    Dung lượng file: {sketch && sketch.info.fileSize} MB
                                 </div>
                             </div>
                             <div className="content">
                                 <img src={IconDetail2} alt="" />
                                 <div className="text">
                                     Phong cách:
-                                    {sketch.designStyles.map((style, index) =>
+                                    {sketch && sketch.designStyles.map((style, index) =>
                                         index ===
-                                        sketch.designStyles.length - 1 ? (
+                                            sketch.designStyles.length - 1 ? (
                                             <span key={index}>
                                                 {" "}
                                                 {style.name}
@@ -222,19 +226,15 @@ const Cart = () => {
                             <div className="content">
                                 <img src={IconDetail5} alt="" />
                                 <div className="text">
-                                    {/* Kích thước: {info.width} x {info.height} cm */}
-                                    Kích thước: Rộng {sketch.info.size?.width},
-                                    Dài {sketch.info.size?.height}, DT{" "}
-                                    {sketch.info.size?.area}
                                 </div>
                             </div>
                             <div className="content">
                                 <img src={IconDetail3} alt="" />
                                 <div className="text">
                                     Công cụ:
-                                    {sketch.designTools.map((tool, index) =>
+                                    {sketch && sketch.designTools.map((tool, index) =>
                                         index ===
-                                        sketch.designTools.length - 1 ? (
+                                            sketch.designTools.length - 1 ? (
                                             <span key={index}>
                                                 {" "}
                                                 {tool.name}
@@ -252,10 +252,10 @@ const Cart = () => {
                                 <img src={IconDetail6} alt="" />
                                 <div className="text">
                                     Hạng mục:{" "}
-                                    {sketch.typeOfArchitectures.map(
+                                    {sketch && sketch.typeOfArchitectures.map(
                                         (type, index) =>
                                             index ===
-                                            sketch.typeOfArchitectures.length -
+                                                sketch.typeOfArchitectures.length -
                                                 1 ? (
                                                 <span key={index}>
                                                     {" "}
@@ -270,7 +270,7 @@ const Cart = () => {
                                     )}
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             ),
@@ -282,36 +282,61 @@ const Cart = () => {
                     <DeleteOutlined /> Xóa tất cả
                 </div>
             ),
-            render: (record: any) => {
+            dataIndex: "price",
+            render: (price: any) => {
                 return (
-                    <div className="sketch-cart-action">
-                        <div
-                            className={
-                                record.sketch.info.newPrice === "MIỄN PHÍ"
-                                    ? "sketch-cart-action-new-price free"
-                                    : "sketch-cart-action-new-price"
-                            }
-                        >
-                            {record.sketch.info.newPrice}
+                    <>
+                        <div className="sketch-cart-action">
+                            <div
+                                className={
+                                    price === "MIỄN PHÍ"
+                                        ? "sketch-cart-action-new-price free"
+                                        : "sketch-cart-action-new-price"
+                                }
+                            >
+                                {price}
+                            </div>
+                            <div
+                                className="sketch-cart-action-delete"
+                            // onClick={() => {
+                            //     onDeleteStudent(record);
+                            // }}
+                            >
+                                <DeleteOutlined />
+                                Xóa
+                            </div>
                         </div>
-                        <div className="sketch-cart-action-old-price">
-                            {record.sketch.info.oldPrice}
-                        </div>
-                        <div
-                            className="sketch-cart-action-delete"
-                            onClick={() => {
-                                onDeleteStudent(record);
-                            }}
-                        >
-                            <DeleteOutlined />
-                            Xóa
-                        </div>
-                    </div>
+                    </>
                 );
             },
         },
     ];
-    const [tmpData, setTmpData] = useState<any>(dataSketch);
+
+    useEffect(() => {
+        if (lstSketchsInCart) {
+            console.log(lstSketchsInCart);
+            setTmpData(lstSketchsInCart)
+            // handleSetLstCart(lstSketchsInCart);
+        }
+    }, [lstSketchsInCart]);
+
+    // const handleSetLstCart = async (lstSketchCart: ISketchInCart[]) => {
+    //     let tmp: IDetailSketch[] = []
+    //     for (let index = 0; index < lstSketchCart.length; index++) {
+    //         const element = lstSketchCart[index];
+    //         await SketchsApi.getValSketchById(element.id).then((res: any) => {
+    //             if (res.data.data) {
+    //                 tmp.push(res.data.data);
+    //             }
+    //         })
+    //     }
+    //     if (tmp && tmp.length > 0) {
+    //         console.log(tmp);
+    //         setTmpData(tmp);
+    //         return;
+    //     }
+    // }
+    const [tmpData, setTmpData] = useState<any>([]);
     const rowSelection = {
         onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
             console.log(

@@ -97,6 +97,7 @@ const loginSlice = createSlice({
         ) {
             Utils.setLocalStorage("userName", action.payload.user.name);
             Utils.setLocalStorage("userMail", action.payload.user.email);
+            Utils.setLocalStorage("userPhone", action.payload.user.phone);
             state.loading = false;
             state.isSuccess = true;
             state.user = action.payload.user;

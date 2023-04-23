@@ -13,6 +13,7 @@ import {
     ICurrentSearchValue,
     IReqGetLatestSketchs,
 } from "../../common/sketch.interface";
+import axios from 'axios';
 
 export default class SketchsApi {
     static apiURL = API_URL;
@@ -27,6 +28,15 @@ export default class SketchsApi {
         );
     }
 
+    static getValSketchById(sketchId: string) {
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.GET_DETAIL_SKETCH}?id=${sketchId}`;
+        var config = {
+            method: 'get',
+            url: api,
+            headers: {}
+        };
+        return axios(config);
+    }
     static getLatestSketchs(params: IReqGetLatestSketchs): Observable<any> {
         console.log(params);
         const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.GET_LATEST_SKETCH}?size=${params.size}&offset=${params.offset}`;
@@ -104,11 +114,10 @@ export default class SketchsApi {
         );
     }
 
-    static addSketchToCart(sketchId: string): Observable<any> {
+    // Thêm bản vẽ vào giỏ hàng
+    static addSketchToCart(body: any): Observable<any> {
         const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.ADD_SKETCH_TO_CART}`;
-        return HttpClient.post(api, {
-            productId: sketchId,
-        }).pipe(
+        return HttpClient.post(api, body).pipe(
             map(
                 (res) => (res as any) || null,
                 catchError((error) => new Observable())
@@ -116,6 +125,7 @@ export default class SketchsApi {
         );
     }
 
+    // Lấy số lượng bản vẽ trong giỏ hàng
     static getSketchQuantityInCart(): Observable<any> {
         const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.GET_SKETCH_QUANTITY_IN_CART}`;
         return HttpClient.get(api).pipe(
@@ -126,6 +136,7 @@ export default class SketchsApi {
         );
     }
 
+    // Lấy tất cả bản vẽ trong giỏ hàng
     static getAllSketchInCart(): Observable<any> {
         const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.GET_ALL_SKETCH_IN_CART}`;
         return HttpClient.get(api).pipe(
