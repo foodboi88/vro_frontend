@@ -367,6 +367,8 @@ const sketchSlice = createSlice({
         getProductFilesByIdFail(state, action: PayloadAction<any>) {
             state.loading = false;
         },
+
+        //Cart
         addSketchToCartRequest(state, action: PayloadAction<any>) {
             state.loading = true;
         },
@@ -393,6 +395,32 @@ const sketchSlice = createSlice({
             // state.sketchsInCart = action.payload;
         },
         addSketchToCartFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+        },
+
+        //Get quantity in cart
+        getSketchQuantityInCartRequest(state) {
+            state.loading = true;
+        },
+        getSketchQuantityInCartSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload);
+            state.sketchsQuantityInCart = action.payload.quantityProduct;
+        },
+        getSketchQuantityInCartFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+        },
+
+        //Get quantity in cart
+        getAllSketchInCartRequest(state) {
+            state.loading = true;
+        },
+        getAllSketchInCartSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload);
+            state.sketchsInCart = action.payload;
+        },
+        getAllSketchInCartFail(state, action: PayloadAction<any>) {
             state.loading = false;
         },
     },
@@ -788,6 +816,40 @@ const addSketchToCart$: RootEpic = (action$) =>
         })
     );
 
+//Get all sketch in cart
+const getAllSketchInCart$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getAllSketchInCartRequest.match),
+        switchMap((re) => {
+            // IdentityApi.login(re.payload) ?
+            console.log(re);
+            return SketchsApi.getAllSketchInCart().pipe(
+                mergeMap((res: any) => {
+                    return [sketchSlice.actions.getAllSketchInCartSuccess(res)];
+                }),
+                catchError((err) => [])
+            );
+        })
+    );
+
+//Get sketch quantity in cart
+const getSketchQuantityInCart$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getSketchQuantityInCartRequest.match),
+        switchMap((re) => {
+            // IdentityApi.login(re.payload) ?
+            console.log(re);
+            return SketchsApi.getSketchQuantityInCart().pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getSketchQuantityInCartSuccess(res),
+                    ];
+                }),
+                catchError((err) => [])
+            );
+        })
+    );
+
 export const SketchEpics = [
     // uploadSketch$,
     getHomeListSketch$,
@@ -808,6 +870,8 @@ export const SketchEpics = [
     getRatesBySketchId$,
     getProductFilesById$,
     addSketchToCart$,
+    getSketchQuantityInCart$,
+    getAllSketchInCart$,
 ];
 export const {
     getLatestSketchRequest,
@@ -828,5 +892,7 @@ export const {
     getRatesBySketchIdRequest,
     getProductFilesByIdRequest,
     addSketchToCartRequest,
+    getSketchQuantityInCartRequest,
+    getAllSketchInCartRequest,
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;

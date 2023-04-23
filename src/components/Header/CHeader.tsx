@@ -33,7 +33,11 @@ import Logo from "../../images/header/logo.png";
 import Login from "../../pages/login/Login";
 import Register from "../../pages/login/Register";
 import HeaderIcon from "../../images/header/header-icon.png";
-import { advancedSearchingRequest } from "../../redux/controller";
+import {
+    advancedSearchingRequest,
+    getAllSketchInCartRequest,
+    getSketchQuantityInCartRequest,
+} from "../../redux/controller";
 import { ICurrentSearchValue } from "../../common/sketch.interface";
 
 interface MyProps {
@@ -72,6 +76,10 @@ export const CHeader = (props: MyProps) => {
     //         setUserName(username ? username : '');
     //     }
     // });
+
+    useEffect(() => {
+        dispatch(getSketchQuantityInCartRequest());
+    }, []);
 
     // Kiểm tra xem đường dẫn đang là gì để set thuộc tính đã click cho header
     useEffect(() => {
@@ -163,6 +171,7 @@ export const CHeader = (props: MyProps) => {
         setIsLogin(val);
     };
     const handleClickCart = () => {
+        dispatch(getAllSketchInCartRequest());
         navigate("/cart");
     };
     useEffect(() => {

@@ -115,4 +115,24 @@ export default class SketchsApi {
             )
         );
     }
+
+    static getSketchQuantityInCart(): Observable<any> {
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.GET_SKETCH_QUANTITY_IN_CART}`;
+        return HttpClient.get(api).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
+
+    static getAllSketchInCart(): Observable<any> {
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.GET_ALL_SKETCH_IN_CART}`;
+        return HttpClient.get(api).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
 }

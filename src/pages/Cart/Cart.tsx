@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import './styles.cart.scss'
-import { IDetailSketch } from '../../common/sketch.interface';
+import React, { useEffect, useState } from "react";
+import "./styles.cart.scss";
+import { IDetailSketch } from "../../common/sketch.interface";
 import IconDetail1 from "../../images/detail/icon-detail-1.png";
 import IconDetail2 from "../../images/detail/icon-detail-2.png";
 import IconDetail3 from "../../images/detail/icon-detail-3.png";
@@ -10,8 +10,13 @@ import IconDetail6 from "../../images/detail/icon-detail-6.png";
 import CartImage1 from "../../images/cart/cart-image-1.png";
 import CartImage2 from "../../images/cart/cart-image-2.png";
 import CartImage3 from "../../images/cart/cart-image-3.png";
-import { Button, Col, Modal, Row, Select, Table } from 'antd';
-import { EditOutlined, DeleteOutlined, CaretDownOutlined } from "@ant-design/icons";
+import { Button, Col, Modal, Row, Select, Table } from "antd";
+import {
+    EditOutlined,
+    DeleteOutlined,
+    CaretDownOutlined,
+} from "@ant-design/icons";
+import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
 
 interface DataType {
     key: React.Key;
@@ -19,39 +24,42 @@ interface DataType {
 }
 const infoUser = [
     {
-        key: '1',
-        label: 'Họ và tên',
-        value: 'Nguyễn Văn A',
+        key: "1",
+        label: "Họ và tên",
+        value: "Nguyễn Văn A",
     },
     {
-        key: '2',
-        label: 'Email',
-        value: 'Ngocbpt248328@gmail.com'
+        key: "2",
+        label: "Email",
+        value: "Ngocbpt248328@gmail.com",
     },
     {
-        key: '3',
-        label: 'Số điện thoại',
-        value: '0969 999 999'
-    }
-]
+        key: "3",
+        label: "Số điện thoại",
+        value: "0969 999 999",
+    },
+];
 const infoCart = [
     {
-        key: '1',
-        label: 'Tạm tính (0 sản phẩm)',
-        value: '3.000.000VNĐ',
+        key: "1",
+        label: "Tạm tính (0 sản phẩm)",
+        value: "3.000.000VNĐ",
     },
     {
-        key: '2',
-        label: 'Thuế VAT (8%)',
-        value: '240.000VNĐ',
+        key: "2",
+        label: "Thuế VAT (8%)",
+        value: "240.000VNĐ",
     },
-]
+];
 const { Option } = Select;
 
 const Cart = () => {
+    const { sketchsInCart } = useSelectorRoot((state) => state.sketch);
+    const dispatch = useDispatchRoot();
+
     const dataSketch = [
         {
-            key: '1',
+            key: "1",
             sketch: {
                 images: [
                     {
@@ -59,7 +67,7 @@ const Cart = () => {
                     },
                 ],
                 info: {
-                    title: 'Thiết kế nhà gác lửng hiện đại',
+                    title: "Thiết kế nhà gác lửng hiện đại",
                     fileSize: 68,
                     size: {
                         width: "4m",
@@ -68,31 +76,29 @@ const Cart = () => {
                     },
                     newPrice: "2.500.000VNĐ",
                     oldPrice: "3.000.000VNĐ",
-
                 },
                 designStyles: [
                     {
-                        name: 'Hiện đại',
+                        name: "Hiện đại",
                     },
-
                 ],
                 designTools: [
                     {
-                        name: 'File Revit',
+                        name: "File Revit",
                     },
                 ],
                 typeOfArchitectures: [
                     {
-                        name: 'Kiến trúc',
+                        name: "Kiến trúc",
                     },
                     {
-                        name: 'Phối cảnh',
+                        name: "Phối cảnh",
                     },
                 ],
-            }
+            },
         },
         {
-            key: '2',
+            key: "2",
             sketch: {
                 images: [
                     {
@@ -100,7 +106,7 @@ const Cart = () => {
                     },
                 ],
                 info: {
-                    title: 'Thiết kế nhà gác lửng hiện đại',
+                    title: "Thiết kế nhà gác lửng hiện đại",
                     fileSize: 68,
                     size: {
                         width: "4m",
@@ -109,31 +115,29 @@ const Cart = () => {
                     },
                     newPrice: "MIỄN PHÍ",
                     oldPrice: "599.000VNĐ",
-
                 },
                 designStyles: [
                     {
-                        name: 'Hiện đại',
+                        name: "Hiện đại",
                     },
-
                 ],
                 designTools: [
                     {
-                        name: 'File Revit',
+                        name: "File Revit",
                     },
                 ],
                 typeOfArchitectures: [
                     {
-                        name: 'Kiến trúc',
+                        name: "Kiến trúc",
                     },
                     {
-                        name: 'Phối cảnh',
+                        name: "Phối cảnh",
                     },
                 ],
-            }
+            },
         },
         {
-            key: '3',
+            key: "3",
             sketch: {
                 images: [
                     {
@@ -141,7 +145,7 @@ const Cart = () => {
                     },
                 ],
                 info: {
-                    title: 'Thiết kế nhà gác lửng hiện đại',
+                    title: "Thiết kế nhà gác lửng hiện đại",
                     fileSize: 68,
                     size: {
                         width: "4m",
@@ -153,39 +157,40 @@ const Cart = () => {
                 },
                 designStyles: [
                     {
-                        name: 'Hiện đại',
+                        name: "Hiện đại",
                     },
-
                 ],
                 designTools: [
                     {
-                        name: 'File Revit',
+                        name: "File Revit",
                     },
                 ],
                 typeOfArchitectures: [
                     {
-                        name: 'Kiến trúc',
+                        name: "Kiến trúc",
                     },
                     {
-                        name: 'Phối cảnh',
+                        name: "Phối cảnh",
                     },
                 ],
-            }
+            },
         },
     ];
     const columns = [
         Table.SELECTION_COLUMN,
         {
             title: `Tất cả (${dataSketch.length} sản phẩm)`,
-            dataIndex: 'sketch',
-            key: 'sketch',
-            render: (sketch: IDetailSketch) =>
-                <div className='sketch-cart-info'>
-                    <div className='sketch-cart-info-img'>
+            dataIndex: "sketch",
+            key: "sketch",
+            render: (sketch: IDetailSketch) => (
+                <div className="sketch-cart-info">
+                    <div className="sketch-cart-info-img">
                         <img src={sketch.images[0].filePath} alt="" />
                     </div>
-                    <div className='sketch-cart-content'>
-                        <div className="sketch-cart-content-title">{sketch.info.title}</div>
+                    <div className="sketch-cart-content">
+                        <div className="sketch-cart-content-title">
+                            {sketch.info.title}
+                        </div>
                         <div className="sketch-cart-content-info">
                             <div className="content">
                                 <img src={IconDetail4} alt="" />
@@ -200,7 +205,7 @@ const Cart = () => {
                                     Phong cách:
                                     {sketch.designStyles.map((style, index) =>
                                         index ===
-                                            sketch.designStyles.length - 1 ? (
+                                        sketch.designStyles.length - 1 ? (
                                             <span key={index}>
                                                 {" "}
                                                 {style.name}
@@ -218,7 +223,9 @@ const Cart = () => {
                                 <img src={IconDetail5} alt="" />
                                 <div className="text">
                                     {/* Kích thước: {info.width} x {info.height} cm */}
-                                    Kích thước: Rộng {sketch.info.size?.width}, Dài {sketch.info.size?.height}, DT {sketch.info.size?.area}
+                                    Kích thước: Rộng {sketch.info.size?.width},
+                                    Dài {sketch.info.size?.height}, DT{" "}
+                                    {sketch.info.size?.area}
                                 </div>
                             </div>
                             <div className="content">
@@ -227,7 +234,7 @@ const Cart = () => {
                                     Công cụ:
                                     {sketch.designTools.map((tool, index) =>
                                         index ===
-                                            sketch.designTools.length - 1 ? (
+                                        sketch.designTools.length - 1 ? (
                                             <span key={index}>
                                                 {" "}
                                                 {tool.name}
@@ -248,7 +255,7 @@ const Cart = () => {
                                     {sketch.typeOfArchitectures.map(
                                         (type, index) =>
                                             index ===
-                                                sketch.typeOfArchitectures.length -
+                                            sketch.typeOfArchitectures.length -
                                                 1 ? (
                                                 <span key={index}>
                                                     {" "}
@@ -265,25 +272,37 @@ const Cart = () => {
                             </div>
                         </div>
                     </div>
-                </div>,
+                </div>
+            ),
         },
         {
             key: "5",
-            title: (<div className='sketch-cart-action-title'><DeleteOutlined /> Xóa tất cả</div>),
+            title: (
+                <div className="sketch-cart-action-title">
+                    <DeleteOutlined /> Xóa tất cả
+                </div>
+            ),
             render: (record: any) => {
                 return (
-                    <div className='sketch-cart-action'>
-                        <div className={record.sketch.info.newPrice === 'MIỄN PHÍ' ? 'sketch-cart-action-new-price free' : 'sketch-cart-action-new-price'}>
+                    <div className="sketch-cart-action">
+                        <div
+                            className={
+                                record.sketch.info.newPrice === "MIỄN PHÍ"
+                                    ? "sketch-cart-action-new-price free"
+                                    : "sketch-cart-action-new-price"
+                            }
+                        >
                             {record.sketch.info.newPrice}
                         </div>
-                        <div className='sketch-cart-action-old-price'>
+                        <div className="sketch-cart-action-old-price">
                             {record.sketch.info.oldPrice}
                         </div>
                         <div
                             className="sketch-cart-action-delete"
                             onClick={() => {
                                 onDeleteStudent(record);
-                            }}>
+                            }}
+                        >
                             <DeleteOutlined />
                             Xóa
                         </div>
@@ -295,7 +314,11 @@ const Cart = () => {
     const [tmpData, setTmpData] = useState<any>(dataSketch);
     const rowSelection = {
         onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
-            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+            console.log(
+                `selectedRowKeys: ${selectedRowKeys}`,
+                "selectedRows: ",
+                selectedRows
+            );
         },
     };
     const onDeleteStudent = (record: any) => {
@@ -305,20 +328,20 @@ const Cart = () => {
             okType: "danger",
             onOk: () => {
                 setTmpData((pre: any) => {
-                    return pre.filter((item: { key: any; }) => item.key !== record.id);
+                    return pre.filter(
+                        (item: { key: any }) => item.key !== record.id
+                    );
                 });
             },
         });
     };
     return (
-        <div className='main-cart'>
-            <div className="title">
-                Giỏ hàng
-            </div>
+        <div className="main-cart">
+            <div className="title">Giỏ hàng</div>
             <div className="content-cart">
                 <div className="left-content-cart">
                     <Table
-                        className='table-source'
+                        className="table-source"
                         columns={columns}
                         rowSelection={{ ...rowSelection }}
                         dataSource={tmpData}
@@ -327,69 +350,82 @@ const Cart = () => {
                 </div>
                 <div className="right-content-cart">
                     <div className="right-content-cart-info-user">
-                        <div className='title'>
+                        <div className="title">
                             <div className="title-text">
                                 Thông tin khách hàng
                             </div>
-                            <div className='title-edit'>
+                            <div className="title-edit">
                                 <EditOutlined />
                                 Chỉnh sửa
                             </div>
                         </div>
-                        {infoUser && infoUser.map((item, index) => (
-                            <div className='info-user'>
-                                <div className='label-info-user'>{item.label}</div>
-                                <div className='value-info-user'>{item.value}</div>
-                            </div>
-                        ))}
+                        {infoUser &&
+                            infoUser.map((item, index) => (
+                                <div className="info-user">
+                                    <div className="label-info-user">
+                                        {item.label}
+                                    </div>
+                                    <div className="value-info-user">
+                                        {item.value}
+                                    </div>
+                                </div>
+                            ))}
                     </div>
 
                     <div className="right-content-cart-info-cart">
-                        <div className='title'>
+                        <div className="title">
                             <div className="title-text">
                                 Thông tin khách hàng
                             </div>
-                            <div className='title-edit'>
+                            <div className="title-edit">
                                 <EditOutlined />
                                 Chỉnh sửa
                             </div>
                         </div>
-                        {infoCart && infoCart.map((item, index) => (
-                            <div className='info-cart'>
-                                <div className='label-info-user'>{item.label}</div>
-                                <div className='value-info-user'>{item.value}</div>
-                            </div>
-                        ))}
-                        <div className='discount'>
+                        {infoCart &&
+                            infoCart.map((item, index) => (
+                                <div className="info-cart">
+                                    <div className="label-info-user">
+                                        {item.label}
+                                    </div>
+                                    <div className="value-info-user">
+                                        {item.value}
+                                    </div>
+                                </div>
+                            ))}
+                        <div className="discount">
                             <Select
-                                className='select-discount'
+                                className="select-discount"
                                 suffixIcon={<CaretDownOutlined />}
                                 placeholder="Chọn mã giảm giá"
                             >
-                                <Option value='1'>Giảm 10% thành viên mới</Option>
-                                <Option value='2'>Mã giảm 5% tối đa 50.000VNĐ</Option>
-                                <Option value='3'>Mã giảm 3% tối đa 50.000VNĐ</Option>
+                                <Option value="1">
+                                    Giảm 10% thành viên mới
+                                </Option>
+                                <Option value="2">
+                                    Mã giảm 5% tối đa 50.000VNĐ
+                                </Option>
+                                <Option value="3">
+                                    Mã giảm 3% tối đa 50.000VNĐ
+                                </Option>
                             </Select>
 
                             <Button>Áp dụng</Button>
                         </div>
 
-                        <div className='total-price'>
-                            <div className='total-price-title'>
-                                Tổng tiền
-                            </div>
-                            <div className='total-price-value'>
+                        <div className="total-price">
+                            <div className="total-price-title">Tổng tiền</div>
+                            <div className="total-price-value">
                                 2.940.000 VNĐ
                             </div>
                         </div>
                     </div>
 
-                    <Button className='to-payment'>Đi tới thanh toán</Button>
+                    <Button className="to-payment">Đi tới thanh toán</Button>
                 </div>
-
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Cart
+export default Cart;
