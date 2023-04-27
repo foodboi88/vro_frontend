@@ -19,4 +19,5 @@ export enum API_URL {
     ADD_SKETCH_TO_CART = "Carts/add-product-to-cart", // Thêm bản vẽ vào giỏ hàng
     GET_SKETCH_QUANTITY_IN_CART = "Carts/get-quantity-product-my-cart",
     GET_ALL_SKETCH_IN_CART = "Carts/get-product-in-my-cart",
+    PAYMENT = "VNPays/create-payment-url-payment-cart",
 }

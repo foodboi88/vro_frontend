@@ -2,7 +2,14 @@
 /* eslint-disable no-debugger */
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { CheckboxOptionType, notification } from "antd";
-import { catchError, concatMap, filter, map, mergeMap, switchMap } from "rxjs/operators";
+import {
+    catchError,
+    concatMap,
+    filter,
+    map,
+    mergeMap,
+    switchMap,
+} from "rxjs/operators";
 // import IdentityApi from "../../api/identity.api";
 import { RootEpic } from "../../common/define-type";
 import Utils from "../../common/utils";
@@ -25,6 +32,8 @@ import ImageSketchApi from "../../api/image-sketch/image-sketch.api";
 import { IRates } from "../../common/rates.interface";
 import RatesApi from "../../api/rates/rates.api";
 import { IInFoSketch } from "../../common/sketch.interface";
+import PaymentApi from "../../api/payment/payment.api";
+import { IPaymentRequest } from "../../common/payment.interface";
 
 type MessageLogin = {
     content: string;
@@ -61,6 +70,7 @@ interface SketchState {
     checkProductsFile: boolean;
     lstSketchsInCart: ISketchInCart[];
     sketchsQuantityInCart: number;
+    vnpayLink: string;
 }
 
 const initState: SketchState = {
@@ -95,6 +105,7 @@ const initState: SketchState = {
     checkProductsFile: false,
     lstSketchsInCart: [],
     sketchsQuantityInCart: 0,
+    vnpayLink: "",
 };
 
 const sketchSlice = createSlice({
@@ -174,10 +185,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data);
             state.toolList = action.payload.data.map(
                 (item: ITool) =>
-                ({
-                    label: item.name,
-                    value: item.id,
-                } as CheckboxOptionType)
+                    ({
+                        label: item.name,
+                        value: item.id,
+                    } as CheckboxOptionType)
             );
             console.log(state.toolList);
             console.log("Da chui vao voi action: ", action);
@@ -193,10 +204,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data);
             state.styleList = action.payload.data.map(
                 (item: ITool) =>
-                ({
-                    label: item.name,
-                    value: item.id,
-                } as CheckboxOptionType)
+                    ({
+                        label: item.name,
+                        value: item.id,
+                    } as CheckboxOptionType)
             );
             console.log(state.toolList);
             console.log("Da chui vao voi action: ", action);
@@ -212,10 +223,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data);
             state.architectureList = action.payload.data.map(
                 (item: ITool) =>
-                ({
-                    label: item.name,
-                    value: item.id,
-                } as CheckboxOptionType)
+                    ({
+                        label: item.name,
+                        value: item.id,
+                    } as CheckboxOptionType)
             );
             console.log(state.architectureList);
             console.log("Da chui vao voi action: ", action);
@@ -422,6 +433,22 @@ const sketchSlice = createSlice({
             state.lstSketchsInCart = action.payload;
         },
         getAllSketchInCartFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+        },
+
+        //Thanh toán
+        purchaseWithVNPayRequest(
+            state,
+            action: PayloadAction<IPaymentRequest>
+        ) {
+            state.loading = true;
+        },
+        purchaseWithVNPaySuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload);
+            state.vnpayLink = action.payload;
+        },
+        purchaseWithVNPayFail(state, action: PayloadAction<any>) {
             state.loading = false;
         },
     },
@@ -809,8 +836,8 @@ const addSketchToCart$: RootEpic = (action$) =>
             console.log(re);
             const req = {
                 productId: re.payload.productId,
-                additionalProp1: {}
-            }
+                additionalProp1: {},
+            };
             return SketchsApi.addSketchToCart(re.payload).pipe(
                 mergeMap((res: any) => {
                     return [sketchSlice.actions.addSketchToCartSuccess(res)];
@@ -854,6 +881,24 @@ const getSketchQuantityInCart$: RootEpic = (action$) =>
         })
     );
 
+//chuyen san man thanh toan VNPay
+const purchaseWithVNPay$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(purchaseWithVNPayRequest.match),
+        switchMap((re) => {
+            // IdentityApi.login(re.payload) ?
+            console.log(re);
+            return PaymentApi.purchaseWithVNPay(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [sketchSlice.actions.purchaseWithVNPaySuccess(res)];
+                }),
+                catchError((err) => [
+                    sketchSlice.actions.purchaseWithVNPayFail(err),
+                ])
+            );
+        })
+    );
+
 export const SketchEpics = [
     // uploadSketch$,
     getHomeListSketch$,
@@ -876,6 +921,7 @@ export const SketchEpics = [
     addSketchToCart$,
     getSketchQuantityInCart$,
     getAllSketchInCart$,
+    purchaseWithVNPay$,
 ];
 export const {
     getLatestSketchRequest,
@@ -898,5 +944,6 @@ export const {
     addSketchToCartRequest,
     getSketchQuantityInCartRequest,
     getAllSketchInCartRequest,
+    purchaseWithVNPayRequest,
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;

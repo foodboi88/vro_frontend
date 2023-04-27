@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import "./styles.cart.scss";
 import { IDetailSketch, ISketchInCart } from "../../common/sketch.interface";
 import IconDetail1 from "../../images/detail/icon-detail-1.png";
@@ -10,7 +11,18 @@ import IconDetail6 from "../../images/detail/icon-detail-6.png";
 import CartImage1 from "../../images/cart/cart-image-1.png";
 import CartImage2 from "../../images/cart/cart-image-2.png";
 import CartImage3 from "../../images/cart/cart-image-3.png";
-import { Button, Col, Modal, Row, Select, Table } from "antd";
+import {
+    Button,
+    Col,
+    Input,
+    Modal,
+    Radio,
+    Row,
+    Select,
+    Space,
+    Table,
+    notification,
+} from "antd";
 import {
     EditOutlined,
     DeleteOutlined,
@@ -18,6 +30,8 @@ import {
 } from "@ant-design/icons";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
 import SketchsApi from "../../api/sketchs/sketchs.api";
+import { purchaseWithVNPayRequest } from "../../redux/controller";
+import { IPaymentRequest } from "../../common/payment.interface";
 
 interface DataType {
     key: React.Key;
@@ -35,29 +49,50 @@ const infoCart = [
         value: "240.000VNĐ",
     },
 ];
+
+const paymentMethodList = [
+    {
+        label: "Thanh toán bằng Internet Banking / Ví điện tử VNPAY",
+        value: "VNPAYQR",
+    },
+    {
+        label: "Thanh toán bằng thẻ ATM - Nội địa",
+        value: "VNBANK",
+    },
+    {
+        label: "Thanh toán bằng thẻ quốc tế Visa, MasterCard, JCB",
+        value: "INTCARD",
+    },
+];
 const { Option } = Select;
 
 const Cart = () => {
-    const { lstSketchsInCart, sketchsQuantityInCart } = useSelectorRoot((state) => state.sketch);
+    const { lstSketchsInCart, sketchsQuantityInCart, vnpayLink } =
+        useSelectorRoot((state) => state.sketch);
     const { tokenLogin, user } = useSelectorRoot((state) => state.login);
 
     const dispatch = useDispatchRoot();
+
+    const [voucherCode, setVoucherCode] = useState("");
+    const [paymentMethod, setPaymentMethod] = useState("");
 
     const infoUser = [
         {
             key: "1",
             label: "Họ và tên",
-            value: `${user.name}`,
+            value: "Do Trung Hieu",
+
+            // value: `${user.name}`,
         },
         {
             key: "2",
             label: "Email",
-            value: `${user.email}`,
+            value: "test@gmail.com",
         },
         {
             key: "3",
             label: "Số điện thoại",
-            value: `${user.phone}`,
+            value: "0965267JQK",
         },
     ];
     const dataSketch = [
@@ -298,9 +333,9 @@ const Cart = () => {
                             </div>
                             <div
                                 className="sketch-cart-action-delete"
-                            // onClick={() => {
-                            //     onDeleteStudent(record);
-                            // }}
+                                // onClick={() => {
+                                //     onDeleteStudent(record);
+                                // }}
                             >
                                 <DeleteOutlined />
                                 Xóa
@@ -315,10 +350,16 @@ const Cart = () => {
     useEffect(() => {
         if (lstSketchsInCart) {
             console.log(lstSketchsInCart);
-            setTmpData(lstSketchsInCart)
+            setTmpData(lstSketchsInCart);
             // handleSetLstCart(lstSketchsInCart);
         }
     }, [lstSketchsInCart]);
+
+    useEffect(() => {
+        if (lstSketchsInCart.length > 0 && vnpayLink) {
+            window.location.replace(`${vnpayLink}`);
+        }
+    }, [vnpayLink]);
 
     // const handleSetLstCart = async (lstSketchCart: ISketchInCart[]) => {
     //     let tmp: IDetailSketch[] = []
@@ -360,6 +401,33 @@ const Cart = () => {
             },
         });
     };
+
+    const handleChangePaymentMethod = (e: any) => {
+        setPaymentMethod(e.target.value);
+    };
+
+    const paymentHandle = () => {
+        if (!paymentMethod) {
+            notification.open({
+                message: "Vui lòng chọn phương thức thanh toán",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+                style: {
+                    marginTop: 50,
+                    paddingTop: 40,
+                },
+            });
+        } else {
+            const bodyrequest: IPaymentRequest = {
+                bankCodeIn: paymentMethod,
+                voucher: voucherCode,
+                additionalProp1: {},
+            };
+            dispatch(purchaseWithVNPayRequest(bodyrequest));
+        }
+    };
+
     return (
         <div className="main-cart">
             <div className="title">Giỏ hàng</div>
@@ -400,7 +468,7 @@ const Cart = () => {
                     <div className="right-content-cart-info-cart">
                         <div className="title">
                             <div className="title-text">
-                                Thông tin khách hàng
+                                Thông tin thanh toán
                             </div>
                             <div className="title-edit">
                                 <EditOutlined />
@@ -437,6 +505,15 @@ const Cart = () => {
 
                             <Button>Áp dụng</Button>
                         </div>
+                        <Radio.Group onChange={handleChangePaymentMethod}>
+                            <Space direction="vertical">
+                                {paymentMethodList.map((item) => (
+                                    <Radio value={item.value}>
+                                        {item.label}
+                                    </Radio>
+                                ))}
+                            </Space>
+                        </Radio.Group>
 
                         <div className="total-price">
                             <div className="total-price-title">Tổng tiền</div>
@@ -446,7 +523,9 @@ const Cart = () => {
                         </div>
                     </div>
 
-                    <Button className="to-payment">Đi tới thanh toán</Button>
+                    <Button className="to-payment" onClick={paymentHandle}>
+                        Đi tới thanh toán
+                    </Button>
                 </div>
             </div>
         </div>
