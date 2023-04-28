@@ -1,7 +1,4 @@
-import {
-    ArrowLeftOutlined,
-    ArrowRightOutlined
-} from "@ant-design/icons";
+import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { Breadcrumb, Button, Col, Rate, Row } from "antd";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -24,7 +21,12 @@ import DrawHomeImage1 from "../../images/homepage/home_img_1.png";
 import DrawHomeImage2 from "../../images/homepage/home_img_2.png";
 import DrawHomeImage3 from "../../images/homepage/home_img_3.png";
 import DrawHomeImage4 from "../../images/homepage/home_img_4.png";
-import { addSketchToCartRequest, getDetailSketchPageContentRequest, getProductFilesByIdRequest, getRatesBySketchIdRequest, } from "../../redux/controller";
+import {
+    addSketchToCartRequest,
+    getDetailSketchPageContentRequest,
+    getProductFilesByIdRequest,
+    getRatesBySketchIdRequest,
+} from "../../redux/controller";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
 
 interface CardData {
@@ -73,8 +75,13 @@ const featuredLst: CardData[] = [
 
 const DetailSketch = () => {
     const navigate = useNavigate();
-    const { detailSketch, commentList, ratesLst, productsFile } =
-        useSelectorRoot((state) => state.sketch); // Lấy ra dữ liệu detail sketch và danh sách comment từ redux
+    const {
+        detailSketch,
+        commentList,
+        ratesLst,
+        productsFile,
+        authorIntroduction,
+    } = useSelectorRoot((state) => state.sketch); // Lấy ra dữ liệu detail sketch và danh sách comment từ redux
     const dispatch = useDispatchRoot();
     const { sketchId } = useParams(); // Lấy ra id của sketch từ url
 
@@ -87,7 +94,9 @@ const DetailSketch = () => {
     const [designTools, setDesignTools] = useState<ITool[]>([]);
     const [images, setImages] = useState<IImagesSketch[]>([]);
     const [info, setInfo] = useState<IInFoSketch>();
-    const [typeOfArchitectures, setTypeOfArchitectures] = useState<IArchitecture[]>([]);
+    const [typeOfArchitectures, setTypeOfArchitectures] = useState<
+        IArchitecture[]
+    >([]);
     const [windowSize, setWindowSize] = useState([
         window.innerWidth,
         window.innerHeight,
@@ -180,9 +189,12 @@ const DetailSketch = () => {
     const handleAddToCart = (sketchId: string) => {
         const req = {
             productId: sketchId,
-            "additionalProp1": {}
-        }
+            additionalProp1: {},
+        };
         dispatch(addSketchToCartRequest(req));
+    };
+    const handleRoutingToAuthorPage = () => {
+        navigate(`/author-page/${detailSketch?.info.userId}`);
     };
 
     return (
@@ -259,7 +271,7 @@ const DetailSketch = () => {
                                             Phong cách:
                                             {designStyles.map((style, index) =>
                                                 index ===
-                                                    designStyles.length - 1 ? (
+                                                designStyles.length - 1 ? (
                                                     <span key={index}>
                                                         {" "}
                                                         {style.name}
@@ -279,7 +291,7 @@ const DetailSketch = () => {
                                             Công cụ:
                                             {designTools.map((tool, index) =>
                                                 index ===
-                                                    designTools.length - 1 ? (
+                                                designTools.length - 1 ? (
                                                     <span key={index}>
                                                         {" "}
                                                         {tool.name}
@@ -314,7 +326,7 @@ const DetailSketch = () => {
                                             {typeOfArchitectures.map(
                                                 (type, index) =>
                                                     index ===
-                                                        typeOfArchitectures.length -
+                                                    typeOfArchitectures.length -
                                                         1 ? (
                                                         <span key={index}>
                                                             {" "}
@@ -369,7 +381,18 @@ const DetailSketch = () => {
                         )}
                 </div>
             </div>
-            <CAuthorIntroduction />
+            {authorIntroduction && (
+                <div onClick={handleRoutingToAuthorPage}>
+                    <CAuthorIntroduction
+                        createdAt={authorIntroduction?.createdAt}
+                        address={authorIntroduction.address}
+                        name={authorIntroduction.name}
+                        phone={authorIntroduction.phone}
+                        totalProduct={authorIntroduction.totalProduct}
+                        totalRating={authorIntroduction.totalRating}
+                    />
+                </div>
+            )}
             {/* <div className="comment">
                 <CComment />
             </div> */}

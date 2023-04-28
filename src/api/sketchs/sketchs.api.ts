@@ -13,7 +13,7 @@ import {
     ICurrentSearchValue,
     IReqGetLatestSketchs,
 } from "../../common/sketch.interface";
-import axios from 'axios';
+import axios from "axios";
 
 export default class SketchsApi {
     static apiURL = API_URL;
@@ -31,9 +31,9 @@ export default class SketchsApi {
     static getValSketchById(sketchId: string) {
         const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.GET_DETAIL_SKETCH}?id=${sketchId}`;
         var config = {
-            method: 'get',
+            method: "get",
             url: api,
-            headers: {}
+            headers: {},
         };
         return axios(config);
     }
@@ -89,8 +89,18 @@ export default class SketchsApi {
         );
     }
 
-    static getAuthorBySketchId(sketchId: string): Observable<any> {
-        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.ADVANCED_SEARCHING}?name=${sketchId}`;
+    static getAuthorById(authorId: string): Observable<any> {
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.GET_AUTHOR_BY_ID}/${authorId}`;
+        return HttpClient.get(api).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
+
+    static getSketchListByAuthorId(authorId: string): Observable<any> {
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.GET_SKETCH_LIST_BY_AUTHOR_ID}/${authorId}`;
         return HttpClient.get(api).pipe(
             map(
                 (res) => (res as any) || null,
