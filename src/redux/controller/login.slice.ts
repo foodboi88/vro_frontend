@@ -72,6 +72,8 @@ const loginSlice = createSlice({
         },
         loginFail(state, action: any) {
             console.log(action);
+            state.loading = false;
+
             notification.open({
                 message: "Đăng nhập không thành công",
                 description: "Hãy kiểm tra lại thông tin đăng nhập.",
@@ -347,36 +349,44 @@ const register$: RootEpic = (action$) =>
             );
         })
     );
-const getUserInfo$: RootEpic = (action$) => action$.pipe(
-    filter(getUserInfoRequest.match),
-    switchMap((re) => {
-        console.log(re);
-        return IdentityApi.getUserInfo(re.payload).pipe(
-            mergeMap((res: any) => {
-                console.log(res);
-                const token = res.data.accessToken;
-                const user = {
-                    email: res.data.email,
-                    name: res.data.name,
-                    phone: res.data.phone,
-                    address: res.data.address,
-                    dob: res.data.dob,
-                    gender: res.data.gender,
-                    createdAt: res.data.createdAt,
-                    updatedAt: res.data.updatedAt,
-                };
-                console.log(user);
-                return [
-                    loginSlice.actions.getUserInfoSuccess({ user, token: token }),
-                ];
-            }),
-            catchError(err =>
-                [loginSlice.actions.getUserInfoFail(err)]
-            )
-        )
-    })
-)
-export const LoginEpics = [login$, clearMessage$, logOut$, register$, getUserInfo$];
+const getUserInfo$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getUserInfoRequest.match),
+        switchMap((re) => {
+            console.log(re);
+            return IdentityApi.getUserInfo(re.payload).pipe(
+                mergeMap((res: any) => {
+                    console.log(res);
+                    const token = res.data.accessToken;
+                    const user = {
+                        email: res.data.email,
+                        name: res.data.name,
+                        phone: res.data.phone,
+                        address: res.data.address,
+                        dob: res.data.dob,
+                        gender: res.data.gender,
+                        createdAt: res.data.createdAt,
+                        updatedAt: res.data.updatedAt,
+                    };
+                    console.log(user);
+                    return [
+                        loginSlice.actions.getUserInfoSuccess({
+                            user,
+                            token: token,
+                        }),
+                    ];
+                }),
+                catchError((err) => [loginSlice.actions.getUserInfoFail(err)])
+            );
+        })
+    );
+export const LoginEpics = [
+    login$,
+    clearMessage$,
+    logOut$,
+    register$,
+    getUserInfo$,
+];
 export const {
     getUserInfoRequest,
     loginRequest,

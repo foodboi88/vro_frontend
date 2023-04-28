@@ -439,6 +439,19 @@ const sketchSlice = createSlice({
             state.loading = false;
         },
 
+        //Xoa san pham trong gio
+        deleteSketchInCartRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+        deleteSketchInCartSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload);
+            state.lstSketchsInCart = action.payload;
+        },
+        deleteSketchInCartFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+        },
+
         //Thanh toán
         purchaseWithVNPayRequest(
             state,
@@ -968,6 +981,24 @@ const purchaseWithVNPay$: RootEpic = (action$) =>
         })
     );
 
+//chuyen san man thanh toan VNPay
+const deleteSketchInCart$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(deleteSketchInCartRequest.match),
+        switchMap((re) => {
+            // IdentityApi.login(re.payload) ?
+            console.log(re);
+            return SketchsApi.deleteSketchInCart(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [sketchSlice.actions.getAllSketchInCartRequest()];
+                }),
+                catchError((err) => [
+                    sketchSlice.actions.deleteSketchInCartFail(err),
+                ])
+            );
+        })
+    );
+
 export const SketchEpics = [
     // uploadSketch$,
     getHomeListSketch$,
@@ -994,6 +1025,7 @@ export const SketchEpics = [
     getAuthorIntroductionById$,
     getRatesBySketchId$,
     getSketchListByAuthorId$,
+    deleteSketchInCart$,
 ];
 export const {
     getLatestSketchRequest,
@@ -1019,5 +1051,6 @@ export const {
     purchaseWithVNPayRequest,
     getAuthorIntroductionByIdRequest,
     getSketchListByAuthorIdRequest,
+    deleteSketchInCartRequest,
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;

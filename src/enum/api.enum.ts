@@ -22,4 +22,5 @@ export enum API_URL {
     PAYMENT = "VNPays/create-payment-url-payment-cart",
     GET_AUTHOR_BY_ID = "shop/profile",
     GET_SKETCH_LIST_BY_AUTHOR_ID = "shop/products",
+    DELETE_SKETCH_IN_CART = "Carts/delete-one-product",
 }

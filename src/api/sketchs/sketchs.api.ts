@@ -156,4 +156,15 @@ export default class SketchsApi {
             )
         );
     }
+
+    // Xóa sản phẩm trong giỏ
+    static deleteSketchInCart(sketchId: string): Observable<any> {
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.DELETE_SKETCH_IN_CART}/${sketchId}`;
+        return HttpClient.delete(api).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
 }
