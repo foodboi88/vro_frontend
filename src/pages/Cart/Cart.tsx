@@ -69,7 +69,7 @@ const { Option } = Select;
 const Cart = () => {
     const { lstSketchsInCart, sketchsQuantityInCart, vnpayLink } =
         useSelectorRoot((state) => state.sketch);
-    const { tokenLogin, user } = useSelectorRoot((state) => state.login);
+    const { tokenLogin, userName, userMail, userPhone } = useSelectorRoot((state) => state.login);
 
     const dispatch = useDispatchRoot();
 
@@ -80,19 +80,21 @@ const Cart = () => {
         {
             key: "1",
             label: "Họ và tên",
-            value: "Do Trung Hieu",
+            // value: "Do Trung Hieu",
 
-            // value: `${user.name}`,
+            value: `${userName}`,
         },
         {
             key: "2",
             label: "Email",
-            value: "test@gmail.com",
+            value: `${userMail}`,
+            // value: "test@gmail.com",
         },
         {
             key: "3",
             label: "Số điện thoại",
-            value: "0965267JQK",
+            value: `${userPhone}`,
+            // value: "0965267JQK",
         },
     ];
     const dataSketch = [
@@ -333,9 +335,9 @@ const Cart = () => {
                             </div>
                             <div
                                 className="sketch-cart-action-delete"
-                                // onClick={() => {
-                                //     onDeleteStudent(record);
-                                // }}
+                            // onClick={() => {
+                            //     onDeleteStudent(record);
+                            // }}
                             >
                                 <DeleteOutlined />
                                 Xóa
@@ -360,6 +362,10 @@ const Cart = () => {
             window.location.replace(`${vnpayLink}`);
         }
     }, [vnpayLink]);
+
+    useEffect(() => {
+        // window.location.reload();
+    }, []);
 
     // const handleSetLstCart = async (lstSketchCart: ISketchInCart[]) => {
     //     let tmp: IDetailSketch[] = []
@@ -433,13 +439,15 @@ const Cart = () => {
             <div className="title">Giỏ hàng</div>
             <div className="content-cart">
                 <div className="left-content-cart">
-                    <Table
-                        className="table-source"
-                        columns={columns}
-                        rowSelection={{ ...rowSelection }}
-                        dataSource={tmpData}
-                        pagination={false}
-                    />
+                    {
+                        <Table
+                            className="table-source"
+                            columns={columns}
+                            rowSelection={{ ...rowSelection }}
+                            dataSource={tmpData}
+                            pagination={false}
+                        />
+                    }
                 </div>
                 <div className="right-content-cart">
                     <div className="right-content-cart-info-user">
@@ -454,7 +462,7 @@ const Cart = () => {
                         </div>
                         {infoUser &&
                             infoUser.map((item, index) => (
-                                <div className="info-user">
+                                <div key={index} className="info-user">
                                     <div className="label-info-user">
                                         {item.label}
                                     </div>
