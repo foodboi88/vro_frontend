@@ -20,7 +20,7 @@ type MessageForgot = {
 interface LoginState {
     loading: boolean;
     isSuccess: boolean;
-    user: any | undefined;
+    // user: any | undefined;
     message: MessageLogin | undefined;
     messageForgot: MessageForgot | undefined;
     departmentId: number;
@@ -29,12 +29,18 @@ interface LoginState {
     tokenLogin: string | undefined;
     isExistEmail: boolean;
     registerSuccess: boolean;
+    userName: string | undefined;
+    userMail: string | undefined;
+    userPhone: string | undefined;
 }
 
 const initState: LoginState = {
     loading: false,
     isSuccess: true,
-    user: undefined,
+    // user: Utils.getValueLocalStorage(""),
+    userName: Utils.getValueLocalStorage("userName"),
+    userMail: Utils.getValueLocalStorage("userMail"),
+    userPhone: Utils.getValueLocalStorage("userPhone"),
     departmentId: 1,
     message: undefined,
     messageForgot: undefined,
@@ -102,7 +108,7 @@ const loginSlice = createSlice({
             Utils.setLocalStorage("userPhone", action.payload.user.phone);
             state.loading = false;
             state.isSuccess = true;
-            state.user = action.payload.user;
+            // state.user = action.payload.user;
             console.log("---get user info success---");
         },
         getUserInfoFail(state, action: any) {
@@ -227,7 +233,7 @@ const loginSlice = createSlice({
         clearAllRequest(state) {
             state.loading = true;
             state.statusCode = undefined;
-            state.user = undefined;
+            // state.user = undefined;
         },
 
         registerRequest(state, action: PayloadAction<any>) {

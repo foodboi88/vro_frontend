@@ -48,7 +48,7 @@ interface MyProps {
 export const CHeader = (props: MyProps) => {
     const [visible, setVisible] = useState(false); // Biến thể hiện nút thu gọn menu có đang mở hay không
     const [current, setCurrent] = useState<string>("1"); // Biến thể hiện giá trị cho nút hiện tại
-    const { tokenLogin, user } = useSelectorRoot((state) => state.login);
+    const { tokenLogin, userName } = useSelectorRoot((state) => state.login);
     const { sketchsQuantityInCart } = useSelectorRoot((state) => state.sketch);
 
     // const [userName, setUserName] = useState<string>(user?.name ? user.name : '')
@@ -264,7 +264,7 @@ export const CHeader = (props: MyProps) => {
                             <div className="user-info-content">
                                 <Avatar className="avatar" src={UserIcon} />
                                 <div className="name-and-balance">
-                                    <div className="name">{user?.name}</div>
+                                    <div className="name">{userName}</div>
                                     {/* <div className="balance">
                                         Số dư: {"1.500.000Đ"}
                                     </div> */}
