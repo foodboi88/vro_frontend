@@ -172,6 +172,10 @@
                     text-align: center;
                     color: #858585;
                 }
+
+                .add-to-card.hide {
+                    display: none !important;
+                }
             }
         }
     }

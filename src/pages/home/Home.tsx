@@ -207,6 +207,10 @@ const Home = () => {
     const handleClickCard = (sketchId: string) => {
         console.log("sketchId", sketchId);
         navigate(`/detail-sketch/${sketchId}`);
+        // setTimeout(() => {
+        //     window.location.reload();
+        // }, 500);
+
     };
 
     return (

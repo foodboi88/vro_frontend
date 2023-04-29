@@ -72,6 +72,8 @@ interface SketchState {
     sketchsQuantityInCart: number;
     vnpayLink: string;
     authorIntroduction: IAuthor | undefined;
+    checkPayment: boolean;
+    checkInCart: boolean;
 }
 
 const initState: SketchState = {
@@ -108,6 +110,8 @@ const initState: SketchState = {
     sketchsQuantityInCart: 0,
     vnpayLink: "",
     authorIntroduction: undefined,
+    checkPayment: false,
+    checkInCart: false,
 };
 
 const sketchSlice = createSlice({
@@ -187,10 +191,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data);
             state.toolList = action.payload.data.map(
                 (item: ITool) =>
-                    ({
-                        label: item.name,
-                        value: item.id,
-                    } as CheckboxOptionType)
+                ({
+                    label: item.name,
+                    value: item.id,
+                } as CheckboxOptionType)
             );
             console.log(state.toolList);
             console.log("Da chui vao voi action: ", action);
@@ -206,10 +210,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data);
             state.styleList = action.payload.data.map(
                 (item: ITool) =>
-                    ({
-                        label: item.name,
-                        value: item.id,
-                    } as CheckboxOptionType)
+                ({
+                    label: item.name,
+                    value: item.id,
+                } as CheckboxOptionType)
             );
             console.log(state.toolList);
             console.log("Da chui vao voi action: ", action);
@@ -225,10 +229,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data);
             state.architectureList = action.payload.data.map(
                 (item: ITool) =>
-                    ({
-                        label: item.name,
-                        value: item.id,
-                    } as CheckboxOptionType)
+                ({
+                    label: item.name,
+                    value: item.id,
+                } as CheckboxOptionType)
             );
             console.log(state.architectureList);
             console.log("Da chui vao voi action: ", action);
@@ -377,7 +381,16 @@ const sketchSlice = createSlice({
         getProductFilesByIdSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
             console.log(action.payload);
-            state.productsFile = action.payload[0].filePath;
+            if (typeof action.payload === "string")
+                state.productsFile = '';
+            else {
+                console.log(action.payload);
+
+                if (action.payload) {
+                    if (action.payload[0])
+                        state.productsFile = action.payload[0].filePath;
+                }
+            }
         },
         getProductFilesByIdFail(state, action: PayloadAction<any>) {
             state.loading = false;
@@ -433,7 +446,10 @@ const sketchSlice = createSlice({
         getAllSketchInCartSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
             console.log(action.payload);
-            state.lstSketchsInCart = action.payload;
+            if (typeof action.payload === "string")
+                state.lstSketchsInCart = [];
+            else
+                state.lstSketchsInCart = action.payload;
         },
         getAllSketchInCartFail(state, action: PayloadAction<any>) {
             state.loading = false;
@@ -451,7 +467,7 @@ const sketchSlice = createSlice({
             console.log(action.payload);
             state.vnpayLink = action.payload;
         },
-        purchaseWithVNPayFail(state, action: PayloadAction<any>) {},
+        purchaseWithVNPayFail(state, action: PayloadAction<any>) { },
 
         // Get Author intro
         getAuthorIntroductionByIdRequest(state, action: PayloadAction<string>) {

@@ -23,6 +23,7 @@ import DrawHomeImage3 from "../../images/homepage/home_img_3.png";
 import DrawHomeImage4 from "../../images/homepage/home_img_4.png";
 import {
     addSketchToCartRequest,
+    getAllSketchInCartRequest,
     getDetailSketchPageContentRequest,
     getProductFilesByIdRequest,
     getRatesBySketchIdRequest,
@@ -81,6 +82,9 @@ const DetailSketch = () => {
         ratesLst,
         productsFile,
         authorIntroduction,
+        lstSketchsInCart,
+        checkPayment,
+        checkInCart,
     } = useSelectorRoot((state) => state.sketch); // Lấy ra dữ liệu detail sketch và danh sách comment từ redux
     const dispatch = useDispatchRoot();
     const { sketchId } = useParams(); // Lấy ra id của sketch từ url
@@ -97,6 +101,7 @@ const DetailSketch = () => {
     const [typeOfArchitectures, setTypeOfArchitectures] = useState<
         IArchitecture[]
     >([]);
+    const [isShowAddToCart, setIsShowAddToCart] = useState<boolean>(true);
     const [windowSize, setWindowSize] = useState([
         window.innerWidth,
         window.innerHeight,
@@ -146,13 +151,23 @@ const DetailSketch = () => {
                     token: token,
                 };
                 dispatch(getProductFilesByIdRequest(req));
+                dispatch(getAllSketchInCartRequest());
             }
         }
     }, []);
 
     useEffect(() => {
+        if (lstSketchsInCart && lstSketchsInCart.length > 0) {
+            const checkSketchInCart = lstSketchsInCart.find(sketch => sketch.id === sketchId);
+            console.log(checkSketchInCart);
+            checkSketchInCart && setIsShowAddToCart(false);
+        }
+    }, [lstSketchsInCart]);
+
+    useEffect(() => {
         if (productsFile) {
             console.log(productsFile);
+            setIsShowAddToCart(false)
         }
     }, [productsFile]);
 
@@ -177,6 +192,10 @@ const DetailSketch = () => {
             console.log("comment list: " + commentList);
         }
     }, [commentList]);
+
+    useEffect(() => {
+        console.log(isShowAddToCart);
+    }, [isShowAddToCart])
 
     const handleNextCard = () => {
         setCurrentIndex(currentIndex + 1);
@@ -271,7 +290,7 @@ const DetailSketch = () => {
                                             Phong cách:
                                             {designStyles.map((style, index) =>
                                                 index ===
-                                                designStyles.length - 1 ? (
+                                                    designStyles.length - 1 ? (
                                                     <span key={index}>
                                                         {" "}
                                                         {style.name}
@@ -291,7 +310,7 @@ const DetailSketch = () => {
                                             Công cụ:
                                             {designTools.map((tool, index) =>
                                                 index ===
-                                                designTools.length - 1 ? (
+                                                    designTools.length - 1 ? (
                                                     <span key={index}>
                                                         {" "}
                                                         {tool.name}
@@ -326,7 +345,7 @@ const DetailSketch = () => {
                                             {typeOfArchitectures.map(
                                                 (type, index) =>
                                                     index ===
-                                                    typeOfArchitectures.length -
+                                                        typeOfArchitectures.length -
                                                         1 ? (
                                                         <span key={index}>
                                                             {" "}
