@@ -102,6 +102,7 @@ const DetailSketch = () => {
         IArchitecture[]
     >([]);
     const [isShowAddToCart, setIsShowAddToCart] = useState<boolean>(true);
+    const [isShowDownload, setIsShowDownload] = useState<boolean>(false);
     const [windowSize, setWindowSize] = useState([
         window.innerWidth,
         window.innerHeight,
@@ -142,37 +143,38 @@ const DetailSketch = () => {
         if (sketchId) {
             dispatch(getDetailSketchPageContentRequest(sketchId));
             dispatch(getRatesBySketchIdRequest(sketchId));
-            let token = localStorage.getItem("token");
-            if (token) {
-                token = token.slice(1);
-                token = token.slice(0, token.length - 1);
-                const req = {
-                    sketchId: sketchId,
-                    token: token,
-                };
-                dispatch(getProductFilesByIdRequest(req));
-                dispatch(getAllSketchInCartRequest());
-            }
         }
-    }, []);
+    }, [sketchId]);
 
     useEffect(() => {
-        if (lstSketchsInCart && lstSketchsInCart.length > 0) {
-            const checkSketchInCart = lstSketchsInCart.find(sketch => sketch.id === sketchId);
-            console.log(checkSketchInCart);
-            checkSketchInCart && setIsShowAddToCart(false);
+        if (sketchId) {
+            console.log(sketchId);
+            dispatch(getProductFilesByIdRequest(sketchId));
         }
-    }, [lstSketchsInCart]);
+    }, [sketchId]);
+
+    // useEffect(() => {
+    //     if (lstSketchsInCart && lstSketchsInCart.length > 0) {
+    //         const checkSketchInCart = lstSketchsInCart.find(sketch => sketch.id === sketchId);
+    //         // console.log(checkSketchInCart);
+    //         checkSketchInCart && setIsShowAddToCart(false);
+    //     }
+    // }, [lstSketchsInCart]);
 
     useEffect(() => {
+        console.log(productsFile);
         if (productsFile) {
-            console.log(productsFile);
             setIsShowAddToCart(false)
+            setIsShowDownload(true);
+        }
+        else {
+            setIsShowAddToCart(true)
+            setIsShowDownload(false);
         }
     }, [productsFile]);
 
     useEffect(() => {
-        console.log(ratesLst);
+        // console.log(ratesLst);
     }, [ratesLst]);
 
     // Kiểm tra xem có chi tiết bản vẽ hay không
@@ -183,18 +185,18 @@ const DetailSketch = () => {
             setImages(detailSketch.images);
             setInfo(detailSketch.info);
             setTypeOfArchitectures(detailSketch.typeOfArchitectures);
-            console.log(detailSketch);
+            // console.log(detailSketch);
         }
     }, [detailSketch]);
 
     useEffect(() => {
         if (commentList) {
-            console.log("comment list: " + commentList);
+            // console.log("comment list: " + commentList);
         }
     }, [commentList]);
 
     useEffect(() => {
-        console.log(isShowAddToCart);
+        // console.log(isShowAddToCart);
     }, [isShowAddToCart])
 
     const handleNextCard = () => {
@@ -368,33 +370,37 @@ const DetailSketch = () => {
                                     </div>
                                 </div>
                                 <div className="action">
-                                    <motion.div
-                                        whileHover={{ scale: 1.1 }}
-                                        whileTap={{ scale: 0.95 }}
-                                    >
-                                        <Button
-                                            className="add-to-card"
-                                            onClick={() =>
-                                                handleAddToCart(info.id)
-                                            }
+                                    {isShowAddToCart &&
+                                        <motion.div
+                                            whileHover={{ scale: 1.1 }}
+                                            whileTap={{ scale: 0.95 }}
                                         >
-                                            Thêm vào giỏ hàng
-                                        </Button>
-                                    </motion.div>
-                                    <motion.div
-                                        whileHover={{ scale: 1.1 }}
-                                        whileTap={{ scale: 0.95 }}
-                                    >
-                                        <Button className="download-now">
-                                            {productsFile ? (
-                                                <a href={productsFile} download>
-                                                    Tải xuống ngay
-                                                </a>
-                                            ) : (
-                                                <a>Tải xuống ngay</a>
-                                            )}
-                                        </Button>
-                                    </motion.div>
+                                            <Button
+                                                className="add-to-card"
+                                                onClick={() =>
+                                                    handleAddToCart(info.id)
+                                                }
+                                            >
+                                                Thêm vào giỏ hàng
+                                            </Button>
+                                        </motion.div>
+                                    }
+                                    {isShowDownload &&
+                                        <motion.div
+                                            whileHover={{ scale: 1.1 }}
+                                            whileTap={{ scale: 0.95 }}
+                                        >
+                                            <Button className="download-now">
+                                                {productsFile ? (
+                                                    <a href={productsFile} download>
+                                                        Tải xuống ngay
+                                                    </a>
+                                                ) : (
+                                                    <a>Tải xuống ngay</a>
+                                                )}
+                                            </Button>
+                                        </motion.div>
+                                    }
                                 </div>
                             </>
                         )}

@@ -109,14 +109,9 @@ export default class SketchsApi {
         );
     }
 
-    static getProductFilesById(
-        sketchId: string,
-        token: string
-    ): Observable<any> {
+    static getProductFilesById(sketchId: string,): Observable<any> {
         const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.GET_PRODUCT_FILE_BY_ID}?id=${sketchId}`;
-        return HttpClient.get(api, {
-            headers: { Authorization: `Bearer ${token}` },
-        }).pipe(
+        return HttpClient.get(api).pipe(
             map(
                 (res) => (res as any) || null,
                 catchError((error) => new Observable())

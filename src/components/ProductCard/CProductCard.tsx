@@ -22,15 +22,11 @@ interface props {
 const CProductCard = (props: props) => {
     const navigate = useNavigate();
 
-    const handleNavigate = () => {
-        navigate("/detail-sketch");
-    };
     return (
         <Card
             className="card"
             hoverable
             cover={<img className="image-card" alt="example" src={props.imageUrl} />}
-            onClick={handleNavigate}
         >
             <div className="title-and-price">
                 <Meta

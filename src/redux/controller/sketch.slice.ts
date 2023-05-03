@@ -372,23 +372,25 @@ const sketchSlice = createSlice({
             state.loading = false;
         },
 
-        getProductFilesByIdRequest(
-            state,
-            action: PayloadAction<IReqProductsFiles>
-        ) {
+        getProductFilesByIdRequest(state, action: PayloadAction<string>) {
             state.loading = true;
         },
         getProductFilesByIdSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
-            console.log(action.payload);
-            if (typeof action.payload === "string")
+            state.productsFile = ''
+            if (typeof action.payload === "string") {
+                console.log(action.payload);
                 state.productsFile = '';
+            }
             else {
                 console.log(action.payload);
 
                 if (action.payload) {
                     if (action.payload[0])
                         state.productsFile = action.payload[0].filePath;
+                }
+                else {
+                    state.productsFile = 'string';
                 }
             }
         },
@@ -403,13 +405,25 @@ const sketchSlice = createSlice({
         addSketchToCartSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
             if (typeof action.payload === "string") {
-                notification.open({
-                    message: "Thêm sản phẩm không thành công",
-                    description: "Sản phẩm đã có trong giỏ",
-                    onClick: () => {
-                        console.log("Notification Clicked!");
-                    },
-                });
+                if (action.payload === "Products already in the cart !") {
+                    notification.open({
+                        message: "Thêm sản phẩm không thành công",
+                        description: "Sản phẩm đã có trong giỏ",
+                        onClick: () => {
+                            console.log("Notification Clicked!");
+                        },
+                    });
+
+                }
+                else {
+                    notification.open({
+                        message: "Thêm sản phẩm không thành công",
+                        description: "Sản phẩm đã được mua",
+                        onClick: () => {
+                            console.log("Notification Clicked!");
+                        },
+                    });
+                }
             } else {
                 state.sketchsQuantityInCart = action.payload.Quantity;
                 notification.open({
@@ -884,14 +898,12 @@ const getProductFilesById$: RootEpic = (action$) =>
         filter(getProductFilesByIdRequest.match),
         switchMap((re) => {
             // IdentityApi.login(re.payload) ?
-            console.log(re);
-            return SketchsApi.getProductFilesById(
-                re.payload.sketchId,
-                re.payload.token
-            ).pipe(
-                mergeMap((res: any) => {
+            return SketchsApi.getProductFilesById(re.payload).pipe(
+                switchMap((res: any) => {
+                    console.log(res);
                     return [
                         sketchSlice.actions.getProductFilesByIdSuccess(res),
+
                     ];
                 }),
                 catchError((err) => [])

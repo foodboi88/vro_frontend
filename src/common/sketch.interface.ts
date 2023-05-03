@@ -6,7 +6,6 @@ export interface IReqGetLatestSketchs {
 }
 export interface IReqProductsFiles {
     sketchId: string;
-    token: string;
 }
 export interface ISketch {
     title: string;
