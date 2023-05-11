@@ -1,4 +1,4 @@
-import { Checkbox, Col, Form, Row, Select } from "antd";
+import { Checkbox, Col, Form, Radio, Row, Select } from "antd";
 import { Option } from "antd/lib/mentions";
 import "./styles.filter.scss";
 import React, { useEffect, useState } from "react";
@@ -40,7 +40,7 @@ const stylesTools = [
 
 interface DATA_TRANFER {
     target: string;
-    value: string[];
+    value: string;
 }
 
 const CFilter = (props: props) => {
@@ -67,20 +67,21 @@ const CFilter = (props: props) => {
     const handleSearch = (param: DATA_TRANFER) => {
         console.log(param);
         const bodyrequest = {
-            tool: param.target === "tool" ? param.value : selectedTool,
+            // tool: param.target === "tool" ? param.value : selectedTool,
             architecture:
-                param.target === "architecture"
-                    ? param.value
-                    : selectedArchitecture,
-            style: param.target === "style" ? param.value : selectedStyle,
+                // param.target === "architecture"
+                    // ? 
+                    param.value,
+                    // : selectedArchitecture,
+            // style: param.target === "style" ? param.value : selectedStyle,
             name: currentSearchValue.name, // Lay ra gia tri text luu trong redux
         };
 
-        if (param.target === "tool") setSelectedTool(param.value);
-        if (param.target === "architecture")
-            setSelectedArchitecture(param.value);
-        if (param.target === "style") setSelectedStyle(param.value);
-        console.log(bodyrequest);
+        // if (param.target === "tool") setSelectedTool(param.value);
+        // if (param.target === "architecture")
+        //     setSelectedArchitecture(param.value);
+        // if (param.target === "style") setSelectedStyle(param.value);
+        // console.log(bodyrequest);
 
         dispatch(advancedSearchingRequest(bodyrequest));
     };
@@ -93,7 +94,7 @@ const CFilter = (props: props) => {
             transition={{ duration: 0.5 }}
         >
             <Form form={form}>
-                <Form.Item className="form-item" name="tool">
+                {/* <Form.Item className="form-item" name="tool">
                     <div className="title">
                         <div className="icon">
                             <ToolOutlined />
@@ -109,7 +110,7 @@ const CFilter = (props: props) => {
                         }
                         options={toolList}
                     />
-                </Form.Item>
+                </Form.Item> */}
                 <Form.Item className="form-item" name="architecture">
                     <div className="title">
                         <div className="icon">
@@ -117,17 +118,17 @@ const CFilter = (props: props) => {
                         </div>
                         <div className="text">Kiến trúc</div>
                     </div>
-                    <Checkbox.Group
+                    <Radio.Group
                         onChange={(event) =>
                             handleSearch({
                                 target: "architecture",
-                                value: event as string[],
+                                value: event.target.value,
                             })
                         }
                         options={architectureList}
                     />
                 </Form.Item>
-                <Form.Item className="form-item" name="style">
+                {/* <Form.Item className="form-item" name="style">
                     <div className="title">
                         <div className="icon">
                             <FormatPainterOutlined />
@@ -143,7 +144,7 @@ const CFilter = (props: props) => {
                         }
                         options={styleList}
                     />
-                </Form.Item>
+                </Form.Item> */}
             </Form>
         </motion.div>
     );

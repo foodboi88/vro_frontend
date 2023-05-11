@@ -19,6 +19,7 @@ import { forkJoin } from "rxjs";
 import {
     ICurrentSearchValue,
     IDetailSketch,
+    IFilteredSketch,
     IReqGetLatestSketchs,
     IReqProductsFiles,
     ISketch,
@@ -61,7 +62,7 @@ interface SketchState {
     mostViewedSketchList: ISketch[];
     detailSketch?: IDetailSketch;
     commentList?: any[];
-    filteredSketchs?: ISketch[];
+    filteredSketchs?: IFilteredSketch[];
     filteredAuthors?: IUser[];
     currentSearchValue: ICurrentSearchValue;
     checkWhetherSketchUploaded: number; // Là số chẵn thì chắc chắn file đó đã đc up cả ảnh + file + content thành công
@@ -97,10 +98,10 @@ const initState: SketchState = {
     filteredSketchs: [],
     filteredAuthors: [],
     currentSearchValue: {
-        architecture: [],
-        style: [],
+        architecture: '',
+        style: '',
         name: "",
-        tool: [],
+        tool: '',
     },
     checkWhetherSketchUploaded: 0,
     ratesLst: undefined,
@@ -288,22 +289,22 @@ const sketchSlice = createSlice({
                 architecture: action.payload.architecture
                     ? action.payload.architecture
                     : state.currentSearchValue.architecture,
-                style: action.payload.style
-                    ? action.payload.style
-                    : state.currentSearchValue.style,
+                // style: action.payload.style
+                //     ? action.payload.style
+                //     : state.currentSearchValue.style,
                 name: action.payload.name
                     ? action.payload.name
                     : state.currentSearchValue.name,
-                tool: action.payload.tool
-                    ? action.payload.tool
-                    : state.currentSearchValue.tool,
+                // tool: action.payload.tool
+                //     ? action.payload.tool
+                //     : state.currentSearchValue.tool,
             };
         },
 
         advancedSearchingSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
             state.filteredAuthors = action.payload.data.author;
-            state.filteredSketchs = action.payload.data;
+            state.filteredSketchs = action.payload.data.items;
         },
 
         uploadSketchRequest(state, action: PayloadAction<any>) {
@@ -404,40 +405,25 @@ const sketchSlice = createSlice({
         },
         addSketchToCartSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
-            if (typeof action.payload === "string") {
-                if (action.payload === "Products already in the cart !") {
-                    notification.open({
-                        message: "Thêm sản phẩm không thành công",
-                        description: "Sản phẩm đã có trong giỏ",
-                        onClick: () => {
-                            console.log("Notification Clicked!");
-                        },
-                    });
-
-                }
-                else {
-                    notification.open({
-                        message: "Thêm sản phẩm không thành công",
-                        description: "Sản phẩm đã được mua",
-                        onClick: () => {
-                            console.log("Notification Clicked!");
-                        },
-                    });
-                }
-            } else {
-                state.sketchsQuantityInCart = action.payload.Quantity;
-                notification.open({
-                    message: "Thành công",
-                    description: "Thêm sản phẩm vào giỏ hàng thành công",
-                    onClick: () => {
-                        console.log("Notification Clicked!");
-                    },
-                });
-            }
-            // state.lstSketchsInCart = action.payload;
+            
+            state.sketchsQuantityInCart = action.payload.Quantity;
+            notification.open({
+                message: "Thành công",
+                description: "Thêm sản phẩm vào giỏ hàng thành công",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
         },
         addSketchToCartFail(state, action: PayloadAction<any>) {
             state.loading = false;
+            notification.open({
+                message: "Thêm sản phẩm không thành công",
+                description: "Sản phẩm đã có trong giỏ hàng",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
         },
 
         //Lấy số lượng sản phẩm trong giỏ
@@ -447,7 +433,7 @@ const sketchSlice = createSlice({
         getSketchQuantityInCartSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
             console.log(action.payload);
-            state.sketchsQuantityInCart = action.payload.quantityProduct;
+            state.sketchsQuantityInCart = action.payload.data.quantityProduct;
         },
         getSketchQuantityInCartFail(state, action: PayloadAction<any>) {
             state.loading = false;
@@ -759,14 +745,14 @@ const advancedSearchSketch$: RootEpic = (action$) =>
             // IdentityApi.login(re.payload) ?
             console.log(re);
             const bodyrequest: ICurrentSearchValue = {
-                size: 30,
+                size: 40,
                 offset: 0,
                 name: re.payload.name ? re.payload.name : "",
-                tool: re.payload.tool ? re.payload.tool : [],
+                tool: re.payload.tool ? re.payload.tool : "",
                 architecture: re.payload.architecture
                     ? re.payload.architecture
-                    : [],
-                style: re.payload.style ? re.payload.style : [],
+                    : "",
+                style: re.payload.style ? re.payload.style : "",
             };
 
             return SketchsApi.advancedSearching(bodyrequest).pipe(
@@ -924,7 +910,9 @@ const addSketchToCart$: RootEpic = (action$) =>
             return SketchsApi.addSketchToCart(re.payload).pipe(
                 mergeMap((res: any) => {
                     return [sketchSlice.actions.addSketchToCartSuccess(res)];
-                })
+                }),
+                catchError((err) => [sketchSlice.actions.addSketchToCartFail(err)])
+
             );
         })
     );
