@@ -72,8 +72,11 @@ export const CHeader = (props: MyProps) => {
     // });
 
     useEffect(() => {
-        dispatch(getSketchQuantityInCartRequest());
-    }, []);
+        console.log(isLogin);
+        if (isLogin)
+            dispatch(getSketchQuantityInCartRequest());
+
+    }, [isLogin])
 
     // Kiểm tra xem đường dẫn đang là gì để set thuộc tính đã click cho header
     useEffect(() => {

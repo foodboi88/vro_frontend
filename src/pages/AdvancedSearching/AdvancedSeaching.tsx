@@ -237,7 +237,7 @@ const AdvancedSeaching = () => {
                                     key={card.id}
                                 >
                                     <CProductCard
-                                        imageUrl={card.images[0]}
+                                        imageUrl={card.image}
                                         title={card.title}
                                         view={card.views}
                                         price={card.price}

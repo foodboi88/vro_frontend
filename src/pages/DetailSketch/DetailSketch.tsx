@@ -23,6 +23,7 @@ import DrawHomeImage3 from "../../images/homepage/home_img_3.png";
 import DrawHomeImage4 from "../../images/homepage/home_img_4.png";
 import {
     addSketchToCartRequest,
+    getAllSketchInCartRequest,
     getDetailSketchPageContentRequest,
     getProductFilesByIdRequest,
     getRatesBySketchIdRequest,
@@ -81,6 +82,9 @@ const DetailSketch = () => {
         ratesLst,
         productsFile,
         authorIntroduction,
+        lstSketchsInCart,
+        checkPayment,
+        checkInCart,
     } = useSelectorRoot((state) => state.sketch); // Lấy ra dữ liệu detail sketch và danh sách comment từ redux
     const dispatch = useDispatchRoot();
     const { sketchId } = useParams(); // Lấy ra id của sketch từ url
@@ -97,6 +101,8 @@ const DetailSketch = () => {
     const [typeOfArchitectures, setTypeOfArchitectures] = useState<
         IArchitecture[]
     >([]);
+    const [isShowAddToCart, setIsShowAddToCart] = useState<boolean>(true);
+    const [isShowDownload, setIsShowDownload] = useState<boolean>(false);
     const [windowSize, setWindowSize] = useState([
         window.innerWidth,
         window.innerHeight,
@@ -137,27 +143,38 @@ const DetailSketch = () => {
         if (sketchId) {
             dispatch(getDetailSketchPageContentRequest(sketchId));
             dispatch(getRatesBySketchIdRequest(sketchId));
-            let token = localStorage.getItem("token");
-            if (token) {
-                token = token.slice(1);
-                token = token.slice(0, token.length - 1);
-                const req = {
-                    sketchId: sketchId,
-                    token: token,
-                };
-                dispatch(getProductFilesByIdRequest(req));
-            }
         }
-    }, []);
+    }, [sketchId]);
 
     useEffect(() => {
+        if (sketchId) {
+            console.log(sketchId);
+            dispatch(getProductFilesByIdRequest(sketchId));
+        }
+    }, [sketchId]);
+
+    // useEffect(() => {
+    //     if (lstSketchsInCart && lstSketchsInCart.length > 0) {
+    //         const checkSketchInCart = lstSketchsInCart.find(sketch => sketch.id === sketchId);
+    //         // console.log(checkSketchInCart);
+    //         checkSketchInCart && setIsShowAddToCart(false);
+    //     }
+    // }, [lstSketchsInCart]);
+
+    useEffect(() => {
+        console.log(productsFile);
         if (productsFile) {
-            console.log(productsFile);
+            setIsShowAddToCart(false)
+            setIsShowDownload(true);
+        }
+        else {
+            setIsShowAddToCart(true)
+            setIsShowDownload(false);
         }
     }, [productsFile]);
 
     useEffect(() => {
-        console.log(ratesLst);
+        // console.log(ratesLst);
     }, [ratesLst]);
 
     // Kiểm tra xem có chi tiết bản vẽ hay không
@@ -168,15 +185,19 @@ const DetailSketch = () => {
             setImages(detailSketch.images);
             setInfo(detailSketch.info);
             setTypeOfArchitectures(detailSketch.typeOfArchitectures);
-            console.log(detailSketch);
+            // console.log(detailSketch);
         }
     }, [detailSketch]);
 
     useEffect(() => {
         if (commentList) {
-            console.log("comment list: " + commentList);
+            // console.log("comment list: " + commentList);
         }
     }, [commentList]);
+
+    useEffect(() => {
+        // console.log(isShowAddToCart);
+    }, [isShowAddToCart])
 
     const handleNextCard = () => {
         setCurrentIndex(currentIndex + 1);
@@ -271,7 +292,7 @@ const DetailSketch = () => {
                                             Phong cách:
                                             {designStyles.map((style, index) =>
                                                 index ===
-                                                designStyles.length - 1 ? (
+                                                    designStyles.length - 1 ? (
                                                     <span key={index}>
                                                         {" "}
                                                         {style.name}
@@ -291,7 +312,7 @@ const DetailSketch = () => {
                                             Công cụ:
                                             {designTools.map((tool, index) =>
                                                 index ===
-                                                designTools.length - 1 ? (
+                                                    designTools.length - 1 ? (
                                                     <span key={index}>
                                                         {" "}
                                                         {tool.name}
@@ -326,7 +347,7 @@ const DetailSketch = () => {
                                             {typeOfArchitectures.map(
                                                 (type, index) =>
                                                     index ===
-                                                    typeOfArchitectures.length -
+                                                        typeOfArchitectures.length -
                                                         1 ? (
                                                         <span key={index}>
                                                             {" "}
@@ -349,33 +370,37 @@ const DetailSketch = () => {
                                     </div>
                                 </div>
                                 <div className="action">
-                                    <motion.div
-                                        whileHover={{ scale: 1.1 }}
-                                        whileTap={{ scale: 0.95 }}
-                                    >
-                                        <Button
-                                            className="add-to-card"
-                                            onClick={() =>
-                                                handleAddToCart(info.id)
-                                            }
+                                    {isShowAddToCart &&
+                                        <motion.div
+                                            whileHover={{ scale: 1.1 }}
+                                            whileTap={{ scale: 0.95 }}
                                         >
-                                            Thêm vào giỏ hàng
-                                        </Button>
-                                    </motion.div>
-                                    <motion.div
-                                        whileHover={{ scale: 1.1 }}
-                                        whileTap={{ scale: 0.95 }}
-                                    >
-                                        <Button className="download-now">
-                                            {productsFile ? (
-                                                <a href={productsFile} download>
-                                                    Tải xuống ngay
-                                                </a>
-                                            ) : (
-                                                <a>Tải xuống ngay</a>
-                                            )}
-                                        </Button>
-                                    </motion.div>
+                                            <Button
+                                                className="add-to-card"
+                                                onClick={() =>
+                                                    handleAddToCart(info.id)
+                                                }
+                                            >
+                                                Thêm vào giỏ hàng
+                                            </Button>
+                                        </motion.div>
+                                    }
+                                    {isShowDownload &&
+                                        <motion.div
+                                            whileHover={{ scale: 1.1 }}
+                                            whileTap={{ scale: 0.95 }}
+                                        >
+                                            <Button className="download-now">
+                                                {productsFile ? (
+                                                    <a href={productsFile} download>
+                                                        Tải xuống ngay
+                                                    </a>
+                                                ) : (
+                                                    <a>Tải xuống ngay</a>
+                                                )}
+                                            </Button>
+                                        </motion.div>
+                                    }
                                 </div>
                             </>
                         )}

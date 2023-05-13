@@ -19,6 +19,7 @@ import { forkJoin } from "rxjs";
 import {
     ICurrentSearchValue,
     IDetailSketch,
+    IFilteredSketch,
     IReqGetLatestSketchs,
     IReqProductsFiles,
     ISketch,
@@ -61,7 +62,7 @@ interface SketchState {
     mostViewedSketchList: ISketch[];
     detailSketch?: IDetailSketch;
     commentList?: any[];
-    filteredSketchs?: ISketch[];
+    filteredSketchs?: IFilteredSketch[];
     filteredAuthors?: IUser[];
     currentSearchValue: ICurrentSearchValue;
     checkWhetherSketchUploaded: number; // Là số chẵn thì chắc chắn file đó đã đc up cả ảnh + file + content thành công
@@ -72,6 +73,8 @@ interface SketchState {
     sketchsQuantityInCart: number;
     vnpayLink: string;
     authorIntroduction: IAuthor | undefined;
+    checkPayment: boolean;
+    checkInCart: boolean;
 }
 
 const initState: SketchState = {
@@ -95,10 +98,10 @@ const initState: SketchState = {
     filteredSketchs: [],
     filteredAuthors: [],
     currentSearchValue: {
-        architecture: [],
-        style: [],
+        architecture: '',
+        style: '',
         name: "",
-        tool: [],
+        tool: '',
     },
     checkWhetherSketchUploaded: 0,
     ratesLst: undefined,
@@ -108,6 +111,8 @@ const initState: SketchState = {
     sketchsQuantityInCart: 0,
     vnpayLink: "",
     authorIntroduction: undefined,
+    checkPayment: false,
+    checkInCart: false,
 };
 
 const sketchSlice = createSlice({
@@ -187,10 +192,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data);
             state.toolList = action.payload.data.map(
                 (item: ITool) =>
-                    ({
-                        label: item.name,
-                        value: item.id,
-                    } as CheckboxOptionType)
+                ({
+                    label: item.name,
+                    value: item.id,
+                } as CheckboxOptionType)
             );
             console.log(state.toolList);
             console.log("Da chui vao voi action: ", action);
@@ -206,10 +211,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data);
             state.styleList = action.payload.data.map(
                 (item: ITool) =>
-                    ({
-                        label: item.name,
-                        value: item.id,
-                    } as CheckboxOptionType)
+                ({
+                    label: item.name,
+                    value: item.id,
+                } as CheckboxOptionType)
             );
             console.log(state.toolList);
             console.log("Da chui vao voi action: ", action);
@@ -225,10 +230,10 @@ const sketchSlice = createSlice({
             console.log(action.payload.data);
             state.architectureList = action.payload.data.map(
                 (item: ITool) =>
-                    ({
-                        label: item.name,
-                        value: item.id,
-                    } as CheckboxOptionType)
+                ({
+                    label: item.name,
+                    value: item.id,
+                } as CheckboxOptionType)
             );
             console.log(state.architectureList);
             console.log("Da chui vao voi action: ", action);
@@ -284,22 +289,22 @@ const sketchSlice = createSlice({
                 architecture: action.payload.architecture
                     ? action.payload.architecture
                     : state.currentSearchValue.architecture,
-                style: action.payload.style
-                    ? action.payload.style
-                    : state.currentSearchValue.style,
+                // style: action.payload.style
+                //     ? action.payload.style
+                //     : state.currentSearchValue.style,
                 name: action.payload.name
                     ? action.payload.name
                     : state.currentSearchValue.name,
-                tool: action.payload.tool
-                    ? action.payload.tool
-                    : state.currentSearchValue.tool,
+                // tool: action.payload.tool
+                //     ? action.payload.tool
+                //     : state.currentSearchValue.tool,
             };
         },
 
         advancedSearchingSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
             state.filteredAuthors = action.payload.data.author;
-            state.filteredSketchs = action.payload.data;
+            state.filteredSketchs = action.payload.data.items;
         },
 
         uploadSketchRequest(state, action: PayloadAction<any>) {
@@ -368,16 +373,27 @@ const sketchSlice = createSlice({
             state.loading = false;
         },
 
-        getProductFilesByIdRequest(
-            state,
-            action: PayloadAction<IReqProductsFiles>
-        ) {
+        getProductFilesByIdRequest(state, action: PayloadAction<string>) {
             state.loading = true;
         },
         getProductFilesByIdSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
-            console.log(action.payload);
-            state.productsFile = action.payload[0].filePath;
+            state.productsFile = ''
+            if (typeof action.payload === "string") {
+                console.log(action.payload);
+                state.productsFile = '';
+            }
+            else {
+                console.log(action.payload);
+
+                if (action.payload) {
+                    if (action.payload[0])
+                        state.productsFile = action.payload[0].filePath;
+                }
+                else {
+                    state.productsFile = 'string';
+                }
+            }
         },
         getProductFilesByIdFail(state, action: PayloadAction<any>) {
             state.loading = false;
@@ -389,28 +405,25 @@ const sketchSlice = createSlice({
         },
         addSketchToCartSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
-            if (typeof action.payload === "string") {
-                notification.open({
-                    message: "Thêm sản phẩm không thành công",
-                    description: "Sản phẩm đã có trong giỏ",
-                    onClick: () => {
-                        console.log("Notification Clicked!");
-                    },
-                });
-            } else {
-                state.sketchsQuantityInCart = action.payload.Quantity;
-                notification.open({
-                    message: "Thành công",
-                    description: "Thêm sản phẩm vào giỏ hàng thành công",
-                    onClick: () => {
-                        console.log("Notification Clicked!");
-                    },
-                });
-            }
-            // state.lstSketchsInCart = action.payload;
+            
+            state.sketchsQuantityInCart = action.payload.Quantity;
+            notification.open({
+                message: "Thành công",
+                description: "Thêm sản phẩm vào giỏ hàng thành công",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
         },
         addSketchToCartFail(state, action: PayloadAction<any>) {
             state.loading = false;
+            notification.open({
+                message: "Thêm sản phẩm không thành công",
+                description: "Sản phẩm đã có trong giỏ hàng",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
         },
 
         //Lấy số lượng sản phẩm trong giỏ
@@ -420,7 +433,7 @@ const sketchSlice = createSlice({
         getSketchQuantityInCartSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
             console.log(action.payload);
-            state.sketchsQuantityInCart = action.payload.quantityProduct;
+            state.sketchsQuantityInCart = action.payload.data.quantityProduct;
         },
         getSketchQuantityInCartFail(state, action: PayloadAction<any>) {
             state.loading = false;
@@ -433,7 +446,10 @@ const sketchSlice = createSlice({
         getAllSketchInCartSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
             console.log(action.payload);
-            state.lstSketchsInCart = action.payload;
+            if (typeof action.payload === "string")
+                state.lstSketchsInCart = [];
+            else
+                state.lstSketchsInCart = action.payload;
         },
         getAllSketchInCartFail(state, action: PayloadAction<any>) {
             state.loading = false;
@@ -464,7 +480,7 @@ const sketchSlice = createSlice({
             console.log(action.payload);
             state.vnpayLink = action.payload;
         },
-        purchaseWithVNPayFail(state, action: PayloadAction<any>) {},
+        purchaseWithVNPayFail(state, action: PayloadAction<any>) { },
 
         // Get Author intro
         getAuthorIntroductionByIdRequest(state, action: PayloadAction<string>) {
@@ -742,14 +758,14 @@ const advancedSearchSketch$: RootEpic = (action$) =>
             // IdentityApi.login(re.payload) ?
             console.log(re);
             const bodyrequest: ICurrentSearchValue = {
-                size: 30,
+                size: 40,
                 offset: 0,
                 name: re.payload.name ? re.payload.name : "",
-                tool: re.payload.tool ? re.payload.tool : [],
+                tool: re.payload.tool ? re.payload.tool : "",
                 architecture: re.payload.architecture
                     ? re.payload.architecture
-                    : [],
-                style: re.payload.style ? re.payload.style : [],
+                    : "",
+                style: re.payload.style ? re.payload.style : "",
             };
 
             return SketchsApi.advancedSearching(bodyrequest).pipe(
@@ -881,14 +897,12 @@ const getProductFilesById$: RootEpic = (action$) =>
         filter(getProductFilesByIdRequest.match),
         switchMap((re) => {
             // IdentityApi.login(re.payload) ?
-            console.log(re);
-            return SketchsApi.getProductFilesById(
-                re.payload.sketchId,
-                re.payload.token
-            ).pipe(
-                mergeMap((res: any) => {
+            return SketchsApi.getProductFilesById(re.payload).pipe(
+                switchMap((res: any) => {
+                    console.log(res);
                     return [
                         sketchSlice.actions.getProductFilesByIdSuccess(res),
+
                     ];
                 }),
                 catchError((err) => [])
@@ -909,7 +923,9 @@ const addSketchToCart$: RootEpic = (action$) =>
             return SketchsApi.addSketchToCart(re.payload).pipe(
                 mergeMap((res: any) => {
                     return [sketchSlice.actions.addSketchToCartSuccess(res)];
-                })
+                }),
+                catchError((err) => [sketchSlice.actions.addSketchToCartFail(err)])
+
             );
         })
     );

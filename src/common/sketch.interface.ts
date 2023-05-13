@@ -6,7 +6,6 @@ export interface IReqGetLatestSketchs {
 }
 export interface IReqProductsFiles {
     sketchId: string;
-    token: string;
 }
 export interface ISketch {
     title: string;
@@ -18,11 +17,21 @@ export interface ISketch {
     images: string[];
 }
 
+export interface IFilteredSketch {
+    title: string;
+    price: number;
+    views: number;
+    likes: number;
+    quantityPurchased: number;
+    id: string;
+    image: string;
+}
+
 export interface ICurrentSearchValue {
-    name: string;
-    tool: string[];
-    architecture: string[];
-    style: string[];
+    name?: string;
+    tool?: string;
+    architecture?: string;
+    style?: string;
     size?: number;
     offset?: number;
 }
