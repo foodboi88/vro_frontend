@@ -504,7 +504,7 @@ const sketchSlice = createSlice({
         getSketchListByAuthorIdSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
             console.log(action.payload);
-            state.filteredSketchs = action.payload.data;
+            state.filteredSketchs = action.payload.data.items;
         },
         getSketchListByAuthorIdFail(state, action: PayloadAction<any>) {
             state.loading = false;
