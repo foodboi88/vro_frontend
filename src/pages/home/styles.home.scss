@@ -6,6 +6,16 @@
     user-select: none;
     background: white;
 
+    .ant-carousel {
+        margin: 5em 2em;
+        border-radius: 16px;
+        text-align: center;
+
+        .image {
+            width: 100%;
+        }
+    }
+
     .main-notification {
         margin-top: 5em;
         text-align: center;

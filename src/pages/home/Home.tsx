@@ -36,6 +36,8 @@ import {
     getLatestSketchRequest,
 } from "../../redux/controller";
 import { IReqGetLatestSketchs } from "../../common/sketch.interface";
+import { Carousel } from 'antd';
+
 
 interface CardData {
     id: number;
@@ -168,7 +170,6 @@ const Home = () => {
         if (window.innerWidth > 900) {
             setSpanCol(6);
             setNumberOfCardShow(4);
-            setNumberOfCardNext(4);
         }
         if (window.innerWidth <= 900) {
             setSpanCol(8);
@@ -194,14 +195,22 @@ const Home = () => {
         dispatch(getHomeListSketchRequest());
     }, []);
 
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const [currentIndexMostViewedSketch, setCurrentIndexMostViewedSketch] = useState(0);
+    const [currentIndexLatestSketch, setCurrentIndexLatestSketch] = useState(0);
 
-    const handleNextCard = () => {
-        setCurrentIndex(currentIndex + 1);
+    const handleNextCardMostViewedSketch = () => {
+        setCurrentIndexMostViewedSketch(currentIndexMostViewedSketch + 1);
     };
 
-    const handlePrevCard = () => {
-        setCurrentIndex(currentIndex - 1);
+    const handleNextCardLatestSketch = () => {
+        setCurrentIndexLatestSketch(currentIndexLatestSketch + 1);
+    };
+    const handlePrevCardMostViewedSketch = () => {
+        setCurrentIndexMostViewedSketch(currentIndexMostViewedSketch - 1);
+    };
+
+    const handlePrevCardLatestSketch = () => {
+        setCurrentIndexLatestSketch(currentIndexLatestSketch - 1);
     };
 
     const handleClickCard = (sketchId: string) => {
@@ -220,13 +229,29 @@ const Home = () => {
             animate={{ width: "100%" }}
             exit={{ x: window.innerWidth, transition: { duration: 0.5 } }}
         >
-            <div className="main-notification">
-                <img
-                    className="image"
-                    src={Notification}
-                    alt="main notification"
-                />
-            </div>
+            {/* <div className="main-notification"> */}
+            <Carousel autoplay>
+                <div>
+                    <img
+                        className="image"
+                        src={Notification}
+                        alt="main notification"
+                    />                    </div>
+                <div>
+                    <img
+                        className="image"
+                        src={Notification}
+                        alt="main notification"
+                    />                    </div>
+                <div>
+                    <img
+                        className="image"
+                        src={Notification}
+                        alt="main notification"
+                    />                    </div>
+
+            </Carousel>
+            {/* </div> */}
 
             <div className="tool-of-web">
                 <div className="title">
@@ -234,19 +259,19 @@ const Home = () => {
                     <div className="sub-title">{"Xem thêm"}</div>
                 </div>
                 <div className="lst-tool">
-                    {/* <Col>
+                    <Col>
                         <Button
                             icon={<ArrowLeftOutlined />}
                             className="btn-icon"
-                            onClick={handlePrevCard}
-                            disabled={currentIndex === 0 && true}
+                            onClick={handlePrevCardMostViewedSketch}
+                            disabled={currentIndexMostViewedSketch === 0 && true}
                         />
-                    </Col> */}
+                    </Col>
                     <Row gutter={[16, 16]}>
                         {mostViewedSketchList
                             .slice(
-                                currentIndex,
-                                currentIndex + numberOfCardShow
+                                currentIndexMostViewedSketch,
+                                currentIndexMostViewedSketch + numberOfCardShow
                             )
                             .map((card) => (
                                 <Col
@@ -266,16 +291,16 @@ const Home = () => {
                                 </Col>
                             ))}
                     </Row>
-                    {/* <Col>
+                    <Col>
                         <Button
                             icon={<ArrowRightOutlined />}
                             className="btn-icon"
-                            onClick={handleNextCard}
+                            onClick={handleNextCardMostViewedSketch}
                             disabled={
-                                currentIndex >= numberOfCardNext - 4 && true
+                                currentIndexMostViewedSketch >= mostViewedSketchList.length - numberOfCardShow && true
                             }
                         />
-                    </Col> */}
+                    </Col>
                 </div>
             </div>
             <div className="tool-of-web">
@@ -284,19 +309,19 @@ const Home = () => {
                     <div className="sub-title">{"Xem thêm"}</div>
                 </div>
                 <div className="lst-tool">
-                    {/* <Col>
+                    <Col>
                         <Button
                             icon={<ArrowLeftOutlined />}
                             className="btn-icon"
-                            onClick={handlePrevCard}
-                            disabled={currentIndex === 0 && true}
+                            onClick={handlePrevCardLatestSketch}
+                            disabled={currentIndexLatestSketch === 0 && true}
                         />
-                    </Col> */}
+                    </Col>
                     <Row gutter={[16, 16]}>
                         {latestSketchsList
                             .slice(
-                                currentIndex,
-                                currentIndex + numberOfCardShow
+                                currentIndexLatestSketch,
+                                currentIndexLatestSketch + numberOfCardShow
                             )
                             .map((card) => (
                                 <Col
@@ -316,16 +341,16 @@ const Home = () => {
                                 </Col>
                             ))}
                     </Row>
-                    {/* <Col>
+                    <Col>
                         <Button
                             icon={<ArrowRightOutlined />}
                             className="btn-icon"
-                            onClick={handleNextCard}
+                            onClick={handleNextCardLatestSketch}
                             disabled={
-                                currentIndex >= numberOfCardNext - 4 && true
+                                currentIndexLatestSketch >= latestSketchsList.length - numberOfCardShow && true
                             }
                         />
-                    </Col> */}
+                    </Col>
                 </div>
             </div>
             {/* <div className="tool-of-web">

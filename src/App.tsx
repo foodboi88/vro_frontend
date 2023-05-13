@@ -30,7 +30,7 @@ function App() {
             <CHeader />
             <AnimationRouter />
             {loading && <CLoading />}
-            {/* <CFooter /> */}
+            <CFooter />
         </Layout>
     );
 }

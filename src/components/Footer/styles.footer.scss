@@ -1,125 +1,84 @@
-.footer-main {
-    padding: 50px;
-    display: flex;
+.footer {
     background-color: white;
-    flex-direction: column;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 2em;
+    font-family: 'Lexend Deca';
+    font-style: normal;
 
-    .separation-line {
-        border-top: 1px solid #DFDFDF;
-        margin-top: -25px;
-        margin-bottom: 30px;
-        align-items: center;
+    .row-1 {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 100%;
+        border-bottom: 1px solid #E5E5E5;
+    }
+
+    .row-2 {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-top: 20px;
+        width: 100%;
+    }
+
+
+
+    .column-1 {
+        flex-basis: 25%;
+        flex-grow: 1;
+        margin-right: 2em;
+        display: flex;
+        flex-direction: column;
+
+
+    }
+
+    .column-2,
+    .column-3,
+    .column-4,
+    .column-5 {
+        flex-basis: 15%;
+        flex-grow: 1;
+        margin-right: 2em;
+    }
+
+    .column-5 {
+        flex-basis: 10%;
+    }
+
+    .title-content {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 24px;
+        color: #696969;
     }
 
     .content {
-        display: flex;
-        justify-content: center;
-        text-align: center;
+        font-weight: 300;
+        font-size: 12px;
+        line-height: 24px;
+        color: #696969;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+    }
 
-        .content-left {
-            display: flex;
-            justify-content: center;
-            text-align: center;
-            font-weight: 500;
-            font-size: 14px;
-            line-height: 20px;
-            color: #858585;
-
-            .link-to-page {
-                margin: 20px 50px 20px 0;
-                font-weight: 500;
-                font-size: 14px;
-                line-height: 20px;
-                color: #858585;
-            }
-
-            .link-to-page:last-child {
-                margin-right: 0px;
-            }
-
-            .link-to-page:hover {
-                color: #454545;
-            }
-
-            .text-bold {
-                font-weight: 700;
-                font-size: 14px;
-                line-height: 20px;
-                color: #858585;
-
-            }
-
-            .link-to-social {
-                margin: 0 20px;
-                font-weight: 500;
-                font-size: 14px;
-                line-height: 20px;
-                color: #858585;
-            }
-        }
-
-        .content-right {
-            font-weight: 500;
-            font-size: 14px;
-            line-height: 20px;
-            color: #858585;
-
-        }
+    .content:hover {
+        opacity: .6;
     }
 }
 
-@media (max-width: 1000px) {
-    .footer-main {
-        .content:last-child {
-            .content-left {
-                flex-direction: column;
 
-                .link-to-social {
-                    margin-top: 20px;
-                }
-            }
-        }
+@media (max-width: 768px) {
+    .column-1 {
+        flex-basis: 40%;
     }
 
-}
-
-@media (max-width: 650px) {
-    .footer-main {
-        .content {
-            .content-left {
-                .link-to-page {
-                    margin: 20px 10px 20px 0;
-                }
-
-                .link-to-social {
-                    margin-top: 20px;
-                }
-            }
-        }
-    }
-}
-
-@media (max-width: 500px) {
-    .footer-main {
-        .content {
-            .content-left {
-                font-size: 12px;
-
-                .link-to-page {
-                    margin: 20px 10px 20px 0;
-                    font-size: 12px;
-                }
-
-                .text-bold {
-                    font-size: 12px;
-                }
-
-                .link-to-social {
-                    margin-top: 20px;
-                    font-size: 12px;
-
-                }
-            }
-        }
+    .column-2,
+    .column-3,
+    .column-4,
+    .column-5 {
+        flex-basis: 20%;
     }
 }
