@@ -419,9 +419,9 @@ const sketchSlice = createSlice({
             state.loading = false;
             notification.open({
                 message: "Thêm sản phẩm không thành công",
-                description: "Sản phẩm đã có trong giỏ hàng",
+                description: action.payload.response.message,
                 onClick: () => {
-                    console.log("Notification Clicked!");
+                    console.log(action.payload.message);
                 },
             });
         },
@@ -449,10 +449,12 @@ const sketchSlice = createSlice({
             if (typeof action.payload === "string")
                 state.lstSketchsInCart = [];
             else
-                state.lstSketchsInCart = action.payload;
+                state.lstSketchsInCart = action.payload.data;
         },
         getAllSketchInCartFail(state, action: PayloadAction<any>) {
             state.loading = false;
+            state.lstSketchsInCart = [];
+
         },
 
         //Xoa san pham trong gio
@@ -922,7 +924,10 @@ const addSketchToCart$: RootEpic = (action$) =>
             };
             return SketchsApi.addSketchToCart(re.payload).pipe(
                 mergeMap((res: any) => {
-                    return [sketchSlice.actions.addSketchToCartSuccess(res)];
+                    return [
+                        sketchSlice.actions.addSketchToCartSuccess(res),
+                        sketchSlice.actions.getSketchQuantityInCartRequest()
+                    ];
                 }),
                 catchError((err) => [sketchSlice.actions.addSketchToCartFail(err)])
 
@@ -956,7 +961,9 @@ const getAllSketchInCart$: RootEpic = (action$) =>
                 mergeMap((res: any) => {
                     return [sketchSlice.actions.getAllSketchInCartSuccess(res)];
                 }),
-                catchError((err) => [])
+                catchError((err) => [
+                    sketchSlice.actions.getAllSketchInCartFail(err)
+                ])
             );
         })
     );

@@ -84,6 +84,8 @@ export const CHeader = (props: MyProps) => {
         if (window.location.pathname === "/news") setCurrent("3");
         if (window.location.pathname === "/about_us") setCurrent("4");
         if (window.location.pathname === "/") setCurrent("1");
+        dispatch(getSketchQuantityInCartRequest());
+
     }, []);
 
     // Hiển thị ra nút thu gọn menu
@@ -108,6 +110,7 @@ export const CHeader = (props: MyProps) => {
 
         Utils.removeItemLocalStorage("refresh_token");
         setIsLogin(!isLogin);
+        navigate("/")
         window.location.reload();
     };
     const items: MenuProps["items"] = [

@@ -30,25 +30,14 @@ import {
 } from "@ant-design/icons";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
 import SketchsApi from "../../api/sketchs/sketchs.api";
-import { purchaseWithVNPayRequest } from "../../redux/controller";
+import { deleteSketchInCartRequest, purchaseWithVNPayRequest } from "../../redux/controller";
 import { IPaymentRequest } from "../../common/payment.interface";
 
 interface DataType {
     key: React.Key;
     sketch: IDetailSketch;
 }
-const infoCart = [
-    {
-        key: "1",
-        label: "Tạm tính (0 sản phẩm)",
-        value: "3.000.000VNĐ",
-    },
-    {
-        key: "2",
-        label: "Thuế VAT (8%)",
-        value: "240.000VNĐ",
-    },
-];
+
 
 const paymentMethodList = [
     {
@@ -75,6 +64,9 @@ const Cart = () => {
 
     const [voucherCode, setVoucherCode] = useState("");
     const [paymentMethod, setPaymentMethod] = useState("");
+    const [tmpData, setTmpData] = useState<any>([]);
+    const [totalMoney,setTotalMoney] = useState(0);
+
 
     const infoUser = [
         {
@@ -95,6 +87,19 @@ const Cart = () => {
             label: "Số điện thoại",
             value: `${userPhone}`,
             // value: "0965267JQK",
+        },
+    ];
+
+    let infoCart = [
+        {
+            key: "1",
+            label: "Tạm tính",
+            value: totalMoney,
+        },
+        {
+            key: "2",
+            label: "Thuế VAT (chưa áp dụng)",
+            value: totalMoney*0.08,
         },
     ];
 
@@ -201,25 +206,24 @@ const Cart = () => {
                     <DeleteOutlined /> Xóa tất cả
                 </div>
             ),
-            dataIndex: "price",
-            render: (price: any) => {
+            render: (record: any) => {
                 return (
                     <>
                         <div className="sketch-cart-action">
                             <div
                                 className={
-                                    price === "MIỄN PHÍ"
+                                    record.price === "MIỄN PHÍ"
                                         ? "sketch-cart-action-new-price free"
                                         : "sketch-cart-action-new-price"
                                 }
                             >
-                                {price}
+                                {record.price}
                             </div>
                             <div
                                 className="sketch-cart-action-delete"
-                            // onClick={() => {
-                            //     onDeleteStudent(record);
-                            // }}
+                                onClick={() => {
+                                    onDeleteSketchInCart(record);
+                                }}
                             >
                                 <DeleteOutlined />
                                 Xóa
@@ -231,13 +235,21 @@ const Cart = () => {
         },
     ];
 
-    useEffect(() => {
+    useEffect(() => { // Set list sản phẩm khi dữ liệu trong db thay đổi
         if (lstSketchsInCart) {
             console.log(lstSketchsInCart);
             setTmpData(lstSketchsInCart);
+            // const totalMoney = tmpData.reduce((total: any,item: ISketchInCart) => total + item.price, 0)
+            // setTotalMoney(totalMoney);
             // handleSetLstCart(lstSketchsInCart);
         }
     }, [lstSketchsInCart]);
+
+
+    useEffect(()=>{ // Set lại tổng tiền khi list sản phẩm thay đổi
+        const totalMoney = tmpData.reduce((total: any,item: ISketchInCart) => total + item.price, 0)
+        setTotalMoney(totalMoney);
+    },[tmpData]) 
 
     useEffect(() => {
         if (lstSketchsInCart.length > 0 && vnpayLink) {
@@ -265,7 +277,6 @@ const Cart = () => {
     //         return;
     //     }
     // }
-    const [tmpData, setTmpData] = useState<any>([]);
     const rowSelection = {
         onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
             console.log(
@@ -275,17 +286,19 @@ const Cart = () => {
             );
         },
     };
-    const onDeleteStudent = (record: any) => {
+    const onDeleteSketchInCart = (record: any) => {
+        console.log(record)
         Modal.confirm({
             title: "Bạn có muốn xóa sản phẩm này trong giỏ hàng?",
             okText: "Có",
             okType: "danger",
             onOk: () => {
-                setTmpData((pre: any) => {
-                    return pre.filter(
-                        (item: { key: any }) => item.key !== record.id
-                    );
-                });
+                // setTmpData((pre: any) => {
+                //     return pre.filter(
+                //         (item: { key: any }) => item.key !== record.id
+                //     );
+                // });
+                dispatch(deleteSketchInCartRequest(record.id))
             },
         });
     };
@@ -293,6 +306,10 @@ const Cart = () => {
     const handleChangePaymentMethod = (e: any) => {
         setPaymentMethod(e.target.value);
     };
+
+    const caculateTax = () => {
+        return totalMoney*0.08
+    }
 
     const paymentHandle = () => {
         if (!paymentMethod) {
@@ -321,15 +338,13 @@ const Cart = () => {
             <div className="title">Giỏ hàng</div>
             <div className="content-cart">
                 <div className="left-content-cart">
-                    {
-                        <Table
-                            className="table-source"
-                            columns={columns}
-                            rowSelection={{ ...rowSelection }}
-                            dataSource={tmpData}
-                            pagination={false}
-                        />
-                    }
+                    <Table
+                        className="table-source"
+                        columns={columns}
+                        rowSelection={{ ...rowSelection }}
+                        dataSource={tmpData}
+                        pagination={false}
+                    />
                 </div>
                 <div className="right-content-cart">
                     <div className="right-content-cart-info-user">
@@ -408,7 +423,7 @@ const Cart = () => {
                         <div className="total-price">
                             <div className="total-price-title">Tổng tiền</div>
                             <div className="total-price-value">
-                                2.940.000 VNĐ
+                                {totalMoney} Đ
                             </div>
                         </div>
                     </div>
