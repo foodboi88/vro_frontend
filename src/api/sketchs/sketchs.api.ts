@@ -100,8 +100,8 @@ export default class SketchsApi {
     }
 
     static getSketchListByAuthorId(authorId: string): Observable<any> {
-        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.GET_SKETCH_LIST_BY_AUTHOR_ID}/${authorId}`;
-        return HttpClient.get(api).pipe(
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.GET_SKETCH_LIST_BY_AUTHOR_ID}?shopId=${authorId}&size=40&offset=0`;
+        return HttpClient.get(api).pipe( 
             map(
                 (res) => (res as any) || null,
                 catchError((error) => new Observable())

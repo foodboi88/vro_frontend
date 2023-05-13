@@ -100,7 +100,7 @@ const AuthorPage = () => {
                                 >
                                     <CProductCard
                                         // imageUrl={card.images[0]}
-                                        imageUrl={""}
+                                        imageUrl={card.image}
                                         title={card.title}
                                         view={card.views}
                                         price={card.price}
