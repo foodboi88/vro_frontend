@@ -1013,10 +1013,15 @@ const deleteSketchInCart$: RootEpic = (action$) =>
             console.log(re);
             return SketchsApi.deleteSketchInCart(re.payload).pipe(
                 mergeMap((res: any) => {
-                    return [sketchSlice.actions.getAllSketchInCartRequest()];
+                    return [
+                        sketchSlice.actions.getAllSketchInCartRequest(),
+                        sketchSlice.actions.getSketchQuantityInCartRequest()
+                    ];
                 }),
                 catchError((err) => [
                     sketchSlice.actions.deleteSketchInCartFail(err),
+                    sketchSlice.actions.getSketchQuantityInCartRequest()
+
                 ])
             );
         })
