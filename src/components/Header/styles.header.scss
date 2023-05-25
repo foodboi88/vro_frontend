@@ -7,7 +7,7 @@
     width: 100%;
     background: white;
     z-index: 100;
-    font-family: 'Lexend Deca', sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-style: normal;
     display: flex;
     align-items: center;
@@ -209,7 +209,7 @@
         margin-right: 5px;
 
         .search-input {
-            width: 30em;
+            width: 22em;
             letter-spacing: 0;
             white-space: nowrap;
             border-radius: 20px;
@@ -243,9 +243,17 @@
     }
 }
 
+.ant-drawer-header {
+    padding: 18px 24px;
+}
+
 @media (max-width: 3000px) {
-    .menubtn {
-        display: none;
+    .main-header {
+        .header-right {
+            .menubtn {
+                display: none;
+            }
+        }
     }
 }
 
@@ -257,36 +265,78 @@
             }
         }
 
+        .header-right {
+            .user-infor {
+                .header-button {
+                    display: none;
+                }
+            }
+        }
+
         .menubtn.login {
             display: block;
         }
-
     }
 
-    .post-btn {
+    .post-btn.login {
         display: none;
     }
 
     .header-content-input.draw.login {
         display: flex;
     }
+
+    .ant-drawer-content-wrapper {
+        width: 20em !important;
+
+        .drawer-button {
+            background: #E60200;
+            border-radius: 30px;
+            color: #FFFFFF;
+            border: none;
+            font-weight: 400;
+            font-size: 14px;
+            display: flex;
+            gap: 10px;
+            text-align: center;
+            justify-content: center;
+            margin-bottom: 1em;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .drawer-button:hover {
+            opacity: 0.8;
+        }
+
+
+        .header-content-input.draw.false {
+            display: block;
+        }
+    }
 }
 
 @media (max-width: 900px) {
-
     .main-header {
-        .user-infor {
-            .header-button.login {
+        .header-left {
+            .header-content-input {
                 display: none;
             }
         }
 
-        .menubtn {
-            display: block;
+        .header-right {
+            .user-infor {
+                .header-button {
+                    display: none;
+                }
+            }
+
+            .menubtn {
+                display: block;
+            }
         }
     }
 
-    .post-btn {
+    .post-btn.false {
         display: none;
     }
 
@@ -294,16 +344,13 @@
         display: block;
     }
 
-    .header-content-input.draw {
-        display: none;
-    }
 }
 
 @media (max-width: 700px) {
     .main-header {
-        .header-left {
-            .header-content-input {
-                display: none;
+        .user-infor {
+            .header-button.login {
+                // display: none;
             }
         }
     }
@@ -329,7 +376,7 @@
             .header-logo {
                 .logo-text {
                     img {
-                        width: 20vw;
+                        width: 8em;
                     }
                 }
             }

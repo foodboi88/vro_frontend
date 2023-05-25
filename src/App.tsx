@@ -29,7 +29,7 @@ function App() {
         <Layout>
             <CHeader />
             <AnimationRouter />
-            {loading && <CLoading />}
+            {/* {loading && <CLoading />} */}
             <CFooter />
         </Layout>
     );

@@ -165,6 +165,7 @@ export const CHeader = (props: MyProps) => {
         };
         dispatch(advancedSearchingRequest(bodyrequest));
         navigate("/searching");
+        onClose();
     };
     const handleUpload = () => {
         navigate("/upload-sketch");
@@ -218,8 +219,7 @@ export const CHeader = (props: MyProps) => {
                                 whileTap={{ scale: 0.95 }}
                             >
                                 <Button
-                                    onClick={() => setIsOpenLoginModal(true)}
-                                >
+                                    onClick={() => setIsOpenLoginModal(true)}>
                                     Đăng nhập
                                 </Button>
                             </motion.div>
@@ -238,8 +238,7 @@ export const CHeader = (props: MyProps) => {
                     ) : (
                         <>
                             <motion.div
-                                className={`header-button post ${isLogin && "login"
-                                    }`}
+                                className={`header-button post ${isLogin && "login"}`}
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.95 }}
                             >
@@ -320,22 +319,34 @@ export const CHeader = (props: MyProps) => {
                         <div
                             style={{ display: "flex", flexDirection: "column" }}
                         >
-                            {!isLogin && (
-                                <Button type="text" href="/login">
-                                    Đăng nhập / Đăng ký
+                            {!isLogin
+                                && (
+
+                                    <Button className="drawer-button notlogin"
+                                        onClick={() => {
+                                            setIsOpenLoginModal(true)
+                                            onClose()
+                                        }}>
+                                        Đăng nhập
+                                    </Button>
+                                )}
+                            {!isLogin
+                                && (
+                                    <Button className="drawer-button notlogin"
+                                        onClick={() => {
+                                            setIsOpenRegisterModal(true)
+                                            onClose()
+                                        }}
+                                    >
+                                        Đăng ký
+                                    </Button>
+                                )}
+                            {isLogin && (
+                                <Button className={'drawer-button login'}>
+                                    Đăng bản vẽ
                                 </Button>
                             )}
-                            <Button
-                                className={`post-btn ${isLogin && "login"}`}
-                                type="text"
-                                icon={<img src={HeaderIcon} />}
-                            >
-                                Đăng bản vẽ
-                            </Button>
-                            <div
-                                className={`header-content-input draw ${isLogin && "login"
-                                    }`}
-                            >
+                            <div className={`header-content-input draw ${isLogin && "login"}`}>
                                 <Input
                                     className="search-input"
                                     placeholder="Tìm kiếm bản vẽ"
@@ -349,6 +360,6 @@ export const CHeader = (props: MyProps) => {
             </div>
 
             {/* } */}
-        </div>
+        </div >
     );
 };
