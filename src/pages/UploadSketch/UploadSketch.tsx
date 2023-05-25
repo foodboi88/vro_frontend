@@ -28,6 +28,7 @@ import { CheckboxValueType } from "antd/lib/checkbox/Group";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
 import {
+    getAllFilterCriteriasRequest,
     uploadFileSketchRequest,
     uploadImageSketchRequest,
     uploadSketchRequest,
@@ -105,13 +106,13 @@ const ruleList = [
     "Bản vẽ đã đăng trên VRO Group là thành viên đã đồng ý cho phép các thành viên download và sử dụng",
 ];
 
-const optionsTools = [
-    // Call API chu khong de cung ntn
-    { label: "Autocad", value: "64230e9fedf9dd11e488c23b" },
-    { label: "3D max", value: "64230ef9edf9dd11e488c23e" },
-    { label: "Revit", value: "64230f07edf9dd11e488c240" },
-    { label: "Sketchup", value: "64230f1eedf9dd11e488c242" },
-];
+// const optionsTools = [
+//     // Call API chu khong de cung ntn
+//     { label: "Autocad", value: "64230e9fedf9dd11e488c23b" },
+//     { label: "3D max", value: "64230ef9edf9dd11e488c23e" },
+//     { label: "Revit", value: "64230f07edf9dd11e488c240" },
+//     { label: "Sketchup", value: "64230f1eedf9dd11e488c242" },
+// ];
 const optionsArchitectures = [
     {
         label: "Biệt thự",
@@ -135,20 +136,20 @@ const optionsArchitectures = [
     },
 ];
 
-const optionsStyles = [
-    {
-        label: "Cổ điển",
-        value: "64230f48edf9dd11e488c245",
-    },
-    {
-        label: "Hiện đại",
-        value: "64230fd4edf9dd11e488c247",
-    },
-    {
-        label: "Chưa xác định",
-        value: "64230fdaedf9dd11e488c249",
-    },
-];
+// const optionsStyles = [
+//     {
+//         label: "Cổ điển",
+//         value: "64230f48edf9dd11e488c245",
+//     },
+//     {
+//         label: "Hiện đại",
+//         value: "64230fd4edf9dd11e488c247",
+//     },
+//     {
+//         label: "Chưa xác định",
+//         value: "64230fdaedf9dd11e488c249",
+//     },
+// ];
 const getBase64 = (file: RcFile): Promise<string> =>
     new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -176,8 +177,7 @@ const UploadSketch = () => {
     const [previewImage, setPreviewImage] = useState("");
     const [previewTitle, setPreviewTitle] = useState("");
 
-    const { checkProductsFile } = useSelectorRoot((state) => state.sketch
-    ); // Lst cac ban ve        
+    const { checkProductsFile, toolList, architectureList, styleList } = useSelectorRoot((state) => state.sketch); // Lst cac ban ve        
     const dispatch = useDispatchRoot();
     const navigate = useNavigate();
 
@@ -210,6 +210,10 @@ const UploadSketch = () => {
             window.removeEventListener("resize", handleWindowResize);
         };
     });
+
+    useEffect(()=>{
+        dispatch(getAllFilterCriteriasRequest())
+    },[])
 
     const handleChangeFileLst: UploadProps["onChange"] = ({
         fileList: newFileList,
@@ -280,7 +284,7 @@ const UploadSketch = () => {
             size: "40m*40m",
             price: selectPrice,
             content: note,
-            productDesignStyles: selectStyle,
+            productDesignStyles: "64230fdaedf9dd11e488c249", // Set default value
             productDesignTools: selectTool,
             productTypeOfArchitecture: selectCategory,
         };
@@ -298,6 +302,8 @@ const UploadSketch = () => {
         // dispatch(uploadFileSketchRequest(bodyrequestTest));
         // dispatch(uploadImageSketchRequest(bodyrequestTest));
     };
+
+
     return (
         <div className="main-upload">
             <div className="upload-area">
@@ -358,7 +364,7 @@ const UploadSketch = () => {
                                             />
                                         </div>
                                     </Form.Item>
-                                    <Form.Item>
+                                    {/* <Form.Item>
                                         <div className="title-input">
                                             Từ khóa <strong>*</strong>
                                         </div>
@@ -368,7 +374,7 @@ const UploadSketch = () => {
                                             onChange={handleChangeMultivalueKey}
                                             options={options}
                                         />
-                                    </Form.Item>
+                                    </Form.Item> */}
                                     <div className="image">
                                         <Form.Item
                                             className="thumbnail"
@@ -496,7 +502,7 @@ const UploadSketch = () => {
                                 </div>
                                 <motion.div className="btn-submit-upload">
                                     {selectTitle &&
-                                        selectTag &&
+                                        // selectTag &&
                                         imageUploadLst &&
                                         fileUploadLst &&
                                         selectPrice >= 0 &&
@@ -526,12 +532,12 @@ const UploadSketch = () => {
                                     <div className="description">
                                         Vui lòng nhập các thông tin chung
                                     </div>
-                                    <Form.Item>
+                                    {/* <Form.Item>
                                         <div className="title-input">
                                             Phong cách <strong>*</strong>
                                         </div>
                                         <div className="button-group">
-                                            {optionsStyles.map((item) => (
+                                            {styleList.map((item) => (
                                                 <Button
                                                     className={
                                                         selectStyle ===
@@ -539,17 +545,17 @@ const UploadSketch = () => {
                                                             ? "active"
                                                             : ""
                                                     }
-                                                    onClick={() =>
-                                                        handleClickBtnStyle(
-                                                            item.value
-                                                        )
+                                                    onClick={() => {}
+                                                        // handleClickBtnStyle(
+                                                        //     item.value
+                                                        // )
                                                     }
                                                 >
                                                     {item.label}
                                                 </Button>
                                             ))}
                                         </div>
-                                    </Form.Item>
+                                    </Form.Item> */}
                                     <Form.Item>
                                         <div className="title-input">
                                             Công cụ <strong>*</strong>
@@ -557,7 +563,7 @@ const UploadSketch = () => {
                                         <div className="tool-list">
                                             <Checkbox.Group
                                                 className="lst-tool"
-                                                options={optionsTools}
+                                                options={toolList}
                                                 onChange={(e) =>
                                                     setSelectTool(e)
                                                 }
@@ -571,7 +577,7 @@ const UploadSketch = () => {
                                         <div className="tool-list">
                                             <Checkbox.Group
                                                 className="lst-category"
-                                                options={optionsArchitectures}
+                                                options={architectureList}
                                                 onChange={(e) =>
                                                     setSelectCategory(e)
                                                 }
@@ -608,7 +614,8 @@ const UploadSketch = () => {
                                     >
                                         Quay lại
                                     </Button>
-                                    {selectStyle &&
+                                    {
+                                        // selectStyle &&
                                         selectTool &&
                                         selectCategory &&
                                         isCheckedRules ? (
