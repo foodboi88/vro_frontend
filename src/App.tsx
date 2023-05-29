@@ -13,13 +13,15 @@ import CLoading from "./components/Cloading";
 
 function App() {
     const dispatch = useDispatchRoot();
+    const { tokenLogin, accesstokenExpỉred } = useSelectorRoot((state) => state.login);
+
     const { loading } = useSelectorRoot((state) => state.sketch); // Lấy ra dữ liệu detail sketch và danh sách comment từ redux
 
     useEffect(() => {
         let checkLogin = localStorage.getItem("token")
             ? localStorage.getItem("token")
             : "";
-        if (checkLogin) {
+        if (checkLogin ) {
             checkLogin = checkLogin.slice(1);
             checkLogin = checkLogin.slice(0, checkLogin.length - 1);
             dispatch(getUserInfoRequest(checkLogin));

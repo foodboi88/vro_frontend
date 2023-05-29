@@ -1,5 +1,5 @@
 export enum API_URL {
-    HOST = "http://vroteam.online:6068",
+    HOST = "http://14.248.19.122:6068",
     GET_LATEST_SKETCH = "products/home/latest",
     GET_MOST_VIEWS_SKETCH = "products/home/most-views",
     GET_ALL_TOOLS = "design-tools",
@@ -13,6 +13,7 @@ export enum API_URL {
     UPLOAD_FILES_OF_SKETCH = "product-files",
     LOGIN = "users/login",
     REGISTER = "users/register",
+    REFRESH_TOKEN = "users/refreshtoken",
     GET_USER_INFO = "users/profile",
     GET_RATES_BY_SKETCH_ID = "rates/by-id-product",
     GET_PRODUCT_FILE_BY_ID = "product-files/by-id-product",

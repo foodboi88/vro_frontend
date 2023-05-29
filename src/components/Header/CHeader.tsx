@@ -17,6 +17,7 @@ import {
     Menu,
     MenuProps,
     Badge,
+    notification,
 } from "antd";
 import { useEffect, useState } from "react";
 import "./styles.header.scss";
@@ -48,11 +49,11 @@ interface MyProps {
 export const CHeader = (props: MyProps) => {
     const [visible, setVisible] = useState(false); // Biến thể hiện nút thu gọn menu có đang mở hay không
     const [current, setCurrent] = useState<string>("1"); // Biến thể hiện giá trị cho nút hiện tại
-    const { tokenLogin, userName } = useSelectorRoot((state) => state.login);
+    const { tokenLogin, accesstokenExpỉred } = useSelectorRoot((state) => state.login);
     const { sketchsQuantityInCart } = useSelectorRoot((state) => state.sketch);
 
-    // const [userName, setUserName] = useState<string>(user?.name ? user.name : '')
-    // const [userEmail, setUserEmail] = useState<string>(user?.email ? user.email : '')
+    const [userName, setUserName] = useState<string>("")
+    const [userEmail, setUserEmail] = useState<string>("")
 
     const navigate = useNavigate();
     const [isOpenLoginModal, setIsOpenLoginModal] = useState<boolean>(false); // Biến kiểm tra đang mở modal login hay chưa
@@ -70,23 +71,53 @@ export const CHeader = (props: MyProps) => {
     //         setUserName(username ? username : '');
     //     }
     // });
-
-    useEffect(() => {
-        console.log(isLogin);
-        if (isLogin)
-            dispatch(getSketchQuantityInCartRequest());
-
-    }, [isLogin])
-
-    // Kiểm tra xem đường dẫn đang là gì để set thuộc tính đã click cho header
     useEffect(() => {
         if (window.location.pathname === "/test") setCurrent("2");
         if (window.location.pathname === "/news") setCurrent("3");
         if (window.location.pathname === "/about_us") setCurrent("4");
         if (window.location.pathname === "/") setCurrent("1");
-        dispatch(getSketchQuantityInCartRequest());
-
+        // dispatch(getSketchQuantityInCartRequest());
+        // const usermail = localStorage.getItem('userMail') ? localStorage.getItem('userMail') : '';
+        // const username = localStorage.getItem('userName') ? localStorage.getItem('userName') : '';
+        // setUserEmail(usermail ? usermail : '');
+        // setUserName(username ? username : '');
     }, []);
+
+    // useEffect(() => {
+    //     let checkLogin = localStorage.getItem("token")
+    //         ? localStorage.getItem("token")
+    //         : "";
+    //     if (checkLogin) {
+    //         setIsLogin(true);
+    //     }
+    // }, []);
+
+    useEffect(() => {
+        console.log(isLogin);
+        if (accesstokenExpỉred === false){
+            dispatch(getSketchQuantityInCartRequest());
+            const usermail = localStorage.getItem('userMail') ? localStorage.getItem('userMail') : '';
+            const username = localStorage.getItem('userName') ? localStorage.getItem('userName') : '';
+            setUserEmail(usermail ? usermail : '');
+            setUserName(username ? username : '');
+        }
+        // else{
+        //     notification.open({
+                
+        //         message: "Hết phiên đăng nhập",
+        //         description: "Vui lòng đăng nhập lại!" ,
+        //         onClick: () => {
+        //             console.log("Vui lòng đăng nhập lại!");
+        //         },
+        //         style: {
+        //             marginTop: 50,
+        //             paddingTop: 40,
+        //         },
+        //     });
+        // }
+    }, [accesstokenExpỉred])
+
+    // Kiểm tra xem đường dẫn đang là gì để set thuộc tính đã click cho header
 
     // Hiển thị ra nút thu gọn menu
     const showDrawer = () => {
@@ -176,14 +207,7 @@ export const CHeader = (props: MyProps) => {
         dispatch(getAllSketchInCartRequest());
         navigate("/cart");
     };
-    useEffect(() => {
-        let checkLogin = localStorage.getItem("token")
-            ? localStorage.getItem("token")
-            : "";
-        if (checkLogin) {
-            setIsLogin(true);
-        }
-    }, []);
+    
     return (
         <div className="main-header">
             <div className="header-left">
@@ -210,7 +234,7 @@ export const CHeader = (props: MyProps) => {
             {/* {tokenLogin && */}
             <div className="header-right">
                 <div className="user-infor">
-                    {!isLogin ? (
+                    {accesstokenExpỉred === true ? (
                         <>
                             <motion.div
                                 className="header-button login"

@@ -92,9 +92,9 @@ const Login = (props: MyProps) => {
         dispatch(loginRequest(bodyrequest));
         props.toggleLoginModal();
         props.checkIsLogin(true);
-        setTimeout(() => {
-            window.location.reload();
-        }, 1000);
+        // setTimeout(() => {
+        //     window.location.reload();
+        // }, 1000);
     };
     return (
         <>
