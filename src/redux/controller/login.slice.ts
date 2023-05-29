@@ -32,6 +32,7 @@ interface LoginState {
     userName: string | undefined;
     userMail: string | undefined;
     userPhone: string | undefined;
+    accesstokenExpỉred: boolean;
 }
 
 const initState: LoginState = {
@@ -49,6 +50,7 @@ const initState: LoginState = {
     tokenLogin: Utils.getValueLocalStorage("token"),
     isExistEmail: true,
     registerSuccess: false,
+    accesstokenExpỉred: true,
 };
 
 const loginSlice = createSlice({
@@ -62,9 +64,11 @@ const loginSlice = createSlice({
         loginSuccess(state, action: PayloadAction<any>) {
             Utils.setLocalStorage("token", action.payload.accessToken);
             Utils.setLocalStorage("refresh_token", action.payload.refreshToken);
+            
             state.tokenLogin = action.payload.accessToken;
             state.loading = false;
             state.isSuccess = true;
+            state.accesstokenExpỉred = false;
             notification.open({
                 message: "Đăng nhập thành công",
                 onClick: () => {
@@ -79,6 +83,7 @@ const loginSlice = createSlice({
         loginFail(state, action: any) {
             console.log(action);
             state.loading = false;
+            state.accesstokenExpỉred = true;
 
             notification.open({
                 message: "Đăng nhập không thành công",
@@ -108,23 +113,31 @@ const loginSlice = createSlice({
             Utils.setLocalStorage("userPhone", action.payload.user.phone);
             state.loading = false;
             state.isSuccess = true;
+            state.accesstokenExpỉred = false;
             // state.user = action.payload.user;
             console.log("---get user info success---");
         },
         getUserInfoFail(state, action: any) {
             // state.user = action.payload
             console.log(action);
-            notification.open({
-                message: "Lấy thông tin thành viên không thành công",
-                description: "Hãy kiểm tra lại thông tin đăng nhập.",
-                onClick: () => {
-                    console.log("Notification Clicked!");
-                },
-                style: {
-                    paddingTop: 40,
-                },
-            });
+            // notification.open({
+            //     message: "Lấy thông tin thành viên không thành công",
+            //     description: "Hãy kiểm tra lại thông tin đăng nhập.",
+            //     onClick: () => {
+            //         console.log("Notification Clicked!");
+            //     },
+            //     style: {
+            //         paddingTop: 40,
+            //     },
+            // });
+            Utils.removeItemLocalStorage("userName");
+            Utils.removeItemLocalStorage("userMail");
+            Utils.removeItemLocalStorage("userPhone");
             state.message = action.payload.message;
+            state.accesstokenExpỉred = true;
+            state.loading = false;
+
+
         },
 
         checkEmailRequest: (state, action: PayloadAction<string>) => {
@@ -133,6 +146,8 @@ const loginSlice = createSlice({
         },
         checkEmailSuccess: (state, action: PayloadAction<any>) => {
             console.log(action.payload);
+            state.loading = false;
+
             state.isExistEmail = action.payload.exist;
             if (action.payload.exist) {
                 notification.open({
@@ -147,13 +162,17 @@ const loginSlice = createSlice({
             }
         },
         checkEmailFailed(state, action: PayloadAction<boolean>) {
-            state.loading = action.payload;
+            // state.loading = action.payload;
+            state.loading = false;
+
         },
         checkActiveAccountRequest: (state, action: PayloadAction<any>) => {
             state.loading = true;
         },
         checkActiveAccountSuccess: (state, action: PayloadAction<any>) => {
             console.log(action.payload);
+            state.loading = false;
+
             if (action.payload.statusCode === "OK") {
                 notification.open({
                     message: action.payload.data,
@@ -193,7 +212,9 @@ const loginSlice = createSlice({
             }
         },
         checkActiveAccountFailed(state, action: PayloadAction<boolean>) {
-            state.loading = action.payload;
+            // state.loading = action.payload;
+            state.loading = false;
+
         },
         forgotRequest(state, action: PayloadAction<string>) {
             state.loading = true;
@@ -244,6 +265,7 @@ const loginSlice = createSlice({
 
         registerSuccess(state, action: PayloadAction<any>) {
             console.log(action);
+            state.loading = false;
 
             notification.open({
                 message: "Đăng ký tài khoản thành công",
@@ -279,7 +301,7 @@ const loginSlice = createSlice({
 const login$: RootEpic = (action$) =>
     action$.pipe(
         filter(loginRequest.match),
-        switchMap((re) => {
+        mergeMap((re) => {
             // IdentityApi.login(re.payload) ?
             console.log(re);
             const body: any = {

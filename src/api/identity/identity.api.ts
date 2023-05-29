@@ -43,4 +43,14 @@ export default class IdentityApi {
             )
         );
     }
+
+    static handleRefreshToken(bodyrequest: any): Observable<any> {
+        const api = `${IdentityApi.apiURL.HOST}/${this.apiURL.REFRESH_TOKEN}`;
+        return HttpClient.post(api, bodyrequest).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
 }

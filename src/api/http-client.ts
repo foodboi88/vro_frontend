@@ -59,12 +59,12 @@ export async function handleRefreshTokenWithOrgId(organizationId?: string) {
     const refresh_token = Utils.getValueLocalStorage("refresh_token");
     const body = Utils.parseUrl({
         refresh_token: refresh_token,
-        client_id: "PKM",
-        grant_type: "refresh_token",
-        scope: "offline_access API",
-        orgId: organizationId ?? "",
+        // client_id: "PKM",
+        // grant_type: "refresh_token",
+        // scope: "offline_access API",
+        // orgId: organizationId ?? "",
     });
-    await IdentityApi.login(body)
+    await IdentityApi.handleRefreshToken(body)
         .toPromise()
         .then((res) => {
             if (res?.access_token) {

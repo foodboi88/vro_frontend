@@ -1,5 +1,5 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
-import { Breadcrumb, Button, Col, Rate, Row } from "antd";
+import { Breadcrumb, Button, Col, Rate, Row, notification } from "antd";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Carousel } from "react-responsive-carousel";
@@ -86,6 +86,8 @@ const DetailSketch = () => {
         checkPayment,
         checkInCart,
     } = useSelectorRoot((state) => state.sketch); // Lấy ra dữ liệu detail sketch và danh sách comment từ redux
+    const { tokenLogin, accesstokenExpỉred } = useSelectorRoot((state) => state.login);
+
     const dispatch = useDispatchRoot();
     const { sketchId } = useParams(); // Lấy ra id của sketch từ url
 
@@ -208,11 +210,27 @@ const DetailSketch = () => {
     };
 
     const handleAddToCart = (sketchId: string) => {
-        const req = {
-            productId: sketchId,
-            additionalProp1: {},
-        };
-        dispatch(addSketchToCartRequest(req));
+        if(accesstokenExpỉred === false){
+
+            const req = {
+                productId: sketchId,
+                additionalProp1: {},
+            };
+            dispatch(addSketchToCartRequest(req));
+        }else{
+            notification.open({
+                message: "Bạn chưa đăng nhập",
+                description: "Vui lòng đăng nhập để thêm sản phẩm vào giỏ!",
+
+                onClick: () => {
+                    console.log("Vui lòng đăng nhập để thêm sản phẩm vào giỏ!");
+                },
+                style: {
+                    marginTop: 50,
+                    paddingTop: 40,
+                },
+            });
+        }
     };
     const handleRoutingToAuthorPage = () => {
         navigate(`/author-page/${detailSketch?.info.userId}`);
