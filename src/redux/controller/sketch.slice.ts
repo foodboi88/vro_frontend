@@ -60,6 +60,10 @@ interface SketchState {
     styleList: CheckboxOptionType[];
     latestSketchsList: ISketch[];
     mostViewedSketchList: ISketch[];
+    villaSketchList: ISketch[];
+    streetHouseSketchList: ISketch[];
+    factorySketchList: ISketch[];
+    interiorSketchList: ISketch[];
     detailSketch?: IDetailSketch;
     commentList?: any[];
     filteredSketchs?: IFilteredSketch[];
@@ -93,6 +97,10 @@ const initState: SketchState = {
     styleList: [],
     latestSketchsList: [],
     mostViewedSketchList: [],
+    villaSketchList: [],
+    factorySketchList: [],
+    streetHouseSketchList: [],
+    interiorSketchList: [],
     detailSketch: undefined,
     commentList: [],
     filteredSketchs: [],
@@ -113,6 +121,7 @@ const initState: SketchState = {
     authorIntroduction: undefined,
     checkPayment: false,
     checkInCart: false,
+
 };
 
 const sketchSlice = createSlice({
@@ -135,6 +144,40 @@ const sketchSlice = createSlice({
         getLatestSketchRequest(state, action: PayloadAction<any>) {
             state.loading = true;
             console.log("Da chui vao voi action: ", action);
+        },
+
+        getAllVillaSketchRequest(state){
+
+        },
+
+        getAllVillaSketchSuccess(state, action: PayloadAction<any>){
+            state.villaSketchList = action.payload.data[0].items
+        },
+
+        getAllStreetHouseSketchRequest(state){
+
+        },
+
+        getAllStreetHouseSketchSuccess(state, action: PayloadAction<any>){
+            state.streetHouseSketchList = action.payload.data[0].items
+
+        },
+
+        getAllFactorySketchRequest(state){
+
+        },
+
+        getAllFactorySketchSuccess(state, action: PayloadAction<any>){
+            state.factorySketchList = action.payload.data[0].items
+
+        },
+
+        getAllInteriorSketchRequest(state){
+
+        },
+
+        getAllInteriorSketchSuccess(state, action: PayloadAction<any>){
+            state.interiorSketchList = action.payload.data[0].items
         },
 
         getLatestSketchSuccess(state, action: PayloadAction<any>) {
@@ -525,7 +568,91 @@ const getHomeListSketch$: RootEpic = (action$) =>
             return [
                 sketchSlice.actions.getLatestSketchRequest(bodyrequest),
                 sketchSlice.actions.getMostViewdSketchsRequest(bodyrequest),
+                sketchSlice.actions.getAllVillaSketchRequest(),
+                sketchSlice.actions.getAllStreetHouseSketchRequest(),
+                sketchSlice.actions.getAllFactorySketchRequest(),
+                sketchSlice.actions.getAllInteriorSketchRequest(),
+                
             ];
+        })
+    );
+
+const getAllVillaSketch$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getAllVillaSketchRequest.match),
+        switchMap((re) => {
+            // IdentityApi.login(re.payload) ?
+            console.log(re);
+
+            const typeId = "64231026edf9dd11e488c250"
+
+            return SketchsApi.getSketchsByTypeOfArchitecture(typeId).pipe(
+                mergeMap((res: any) => {
+                    console.log(res);
+
+                    return [sketchSlice.actions.getAllVillaSketchSuccess(res)];
+                }),
+                catchError((err) => [])
+            );
+        })
+    );
+
+const getAllStreetHouseSketch$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getAllStreetHouseSketchRequest.match),
+        switchMap((re) => {
+            // IdentityApi.login(re.payload) ?
+            console.log(re);
+
+            const typeId = "64231030edf9dd11e488c252"
+
+            return SketchsApi.getSketchsByTypeOfArchitecture(typeId).pipe(
+                mergeMap((res: any) => {
+                    console.log(res);
+
+                    return [sketchSlice.actions.getAllStreetHouseSketchSuccess(res)];
+                }),
+                catchError((err) => [])
+            );
+        })
+    );
+
+const getAllFactorySketch$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getAllFactorySketchRequest.match),
+        switchMap((re) => {
+            console.log(re);
+
+            const typeId = "642ce3895de07140c4f4cd61"
+
+            return SketchsApi.getSketchsByTypeOfArchitecture(typeId).pipe(
+                mergeMap((res: any) => {
+                    console.log(res);
+
+                    return [sketchSlice.actions.getAllFactorySketchSuccess(res)];
+                }),
+                catchError((err) => [])
+            );
+        })
+    );
+
+const getAllInteriorSketch$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getAllInteriorSketchRequest.match),
+        switchMap((re) => {
+            // IdentityApi.login(re.payload) ?
+            console.log(re);
+
+            const typeId = "642ce3965de07140c4f4cd62"
+
+            return SketchsApi.getSketchsByTypeOfArchitecture(typeId).pipe(
+                mergeMap((res: any) => {
+                    console.log(res);
+
+                    return [sketchSlice.actions.getAllInteriorSketchSuccess(res)];
+                }),
+                catchError((err) => [])
+            );
         })
     );
 
@@ -1054,6 +1181,10 @@ export const SketchEpics = [
     getRatesBySketchId$,
     getSketchListByAuthorId$,
     deleteSketchInCart$,
+    getAllVillaSketch$,
+    getAllFactorySketch$,
+    getAllStreetHouseSketch$,
+    getAllInteriorSketch$
 ];
 export const {
     getLatestSketchRequest,
@@ -1080,5 +1211,13 @@ export const {
     getAuthorIntroductionByIdRequest,
     getSketchListByAuthorIdRequest,
     deleteSketchInCartRequest,
+    getAllVillaSketchRequest,
+    getAllStreetHouseSketchRequest,
+    getAllFactorySketchRequest,
+    getAllInteriorSketchRequest
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;
+
+
+
+

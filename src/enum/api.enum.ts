@@ -1,7 +1,8 @@
 export enum API_URL {
-    HOST = "http://14.248.19.122:6068",
+    HOST = "http://vroteam.online:6068",
     GET_LATEST_SKETCH = "products/home/latest",
     GET_MOST_VIEWS_SKETCH = "products/home/most-views",
+    GET_SKETCHS_BY_ARCHITECTURE = "products/by-type-of-architecture",
     GET_ALL_TOOLS = "design-tools",
     GET_ALL_ARCHITECTURE = "type-of-architectures",
     GET_ALL_STYLE = "design-styles",

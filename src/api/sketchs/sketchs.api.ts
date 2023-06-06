@@ -58,6 +58,17 @@ export default class SketchsApi {
         );
     }
 
+    static getSketchsByTypeOfArchitecture(typeId: string): Observable<any> {
+        const pageSize = 10;
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.GET_SKETCHS_BY_ARCHITECTURE}?typeOfArchitectureId=${typeId}&size=${pageSize}&offset=${0}`;
+        return HttpClient.get(api).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
+
     //Tim kiem nang cao
     static advancedSearching(body: ICurrentSearchValue): Observable<any> {
         const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.ADVANCED_SEARCHING}?size=${body.size}&offset=${body.offset}${body.name? "&name=" + body.name: ''}${body.architecture? "&typeOfArchitectureId=" + body.architecture: ''}`;
