@@ -11,6 +11,7 @@ import { EyeOutlined } from "@ant-design/icons";
 import BietThu from "../../images/homepage/bietthu1.png";
 import { useNavigate } from "react-router-dom";
 import "./styles.productcard.scss";
+import Utils from "../../common/utils";
 interface props {
     imageUrl?: string;
     title: string;
@@ -47,7 +48,7 @@ const CProductCard = (props: props) => {
             {props.price === 0 ? (
                 <div className="home-card-price free">Miễn Phí</div>
             ) : (
-                <div className="home-card-price">{props.price}</div>
+                <div className="home-card-price">{Utils.formatMoney(props.price)}</div>
             )}
         </Card>
     );

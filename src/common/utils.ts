@@ -329,6 +329,12 @@ class Utils {
     static genRandomNumber = (max: number) => {
         return Math.floor(Math.random() * max);
     };
+
+    static formatMoney(value: any){
+        value = value + "";
+        value = value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+        return value;
+    }
 }
 
 export default Utils;

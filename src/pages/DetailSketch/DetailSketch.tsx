@@ -29,6 +29,8 @@ import {
     getRatesBySketchIdRequest,
 } from "../../redux/controller";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
+import Utils from "../../common/utils";
+import CComment from "../../components/Comment/CComment";
 
 interface CardData {
     id: number;
@@ -85,6 +87,7 @@ const DetailSketch = () => {
         lstSketchsInCart,
         checkPayment,
         checkInCart,
+        latestSketchsList,
     } = useSelectorRoot((state) => state.sketch); // Lấy ra dữ liệu detail sketch và danh sách comment từ redux
     const { tokenLogin, accesstokenExpỉred } = useSelectorRoot((state) => state.login);
 
@@ -109,6 +112,9 @@ const DetailSketch = () => {
         window.innerWidth,
         window.innerHeight,
     ]);
+
+    const [currentIndexLatestSketch, setCurrentIndexLatestSketch] = useState(0);
+
 
     useEffect(() => {
         const handleWindowResize = () => {
@@ -236,6 +242,23 @@ const DetailSketch = () => {
         navigate(`/author-page/${detailSketch?.info.userId}`);
     };
 
+    // Handle pagination latest sketch
+    const handleNextCardLatestSketch = () => {
+        setCurrentIndexLatestSketch(currentIndexLatestSketch + 1);
+    };
+    const handlePrevCardLatestSketch = () => {
+        setCurrentIndexLatestSketch(currentIndexLatestSketch - 1);
+    };
+
+    const handleClickCard = (sketchId: string) => {
+        console.log("sketchId", sketchId);
+        navigate(`/detail-sketch/${sketchId}`);
+        // setTimeout(() => {
+        //     window.location.reload();
+        // }, 500);
+
+    };
+
     return (
         <div className="main-detail">
             <div className="breadcrumb">
@@ -276,7 +299,7 @@ const DetailSketch = () => {
                                     </div>
                                 ) : (
                                     <div className="price">
-                                        {info.price} VNĐ
+                                        {Utils.formatMoney(info.price)} VNĐ
                                     </div>
                                 )}
                                 <div className="rate">
@@ -436,9 +459,9 @@ const DetailSketch = () => {
                     />
                 </div>
             )}
-            {/* <div className="comment">
+            <div className="comment">
                 <CComment />
-            </div> */}
+            </div>
             <div className="similar-sketch">
                 <div className="title">
                     <div>Bản vẽ tương tự</div>
@@ -449,24 +472,30 @@ const DetailSketch = () => {
                         <Button
                             icon={<ArrowLeftOutlined />}
                             className="btn-icon"
-                            onClick={handlePrevCard}
-                            disabled={currentIndex === 0 && true}
+                            onClick={handlePrevCardLatestSketch}
+                            disabled={currentIndexLatestSketch === 0 && true}
                         />
                     </Col>
                     <Row gutter={[16, 16]}>
-                        {featuredLst
+                        {latestSketchsList
                             .slice(
-                                currentIndex,
-                                currentIndex + numberOfCardShow
+                                currentIndexLatestSketch,
+                                currentIndexLatestSketch + numberOfCardShow
                             )
                             .map((card) => (
-                                <Col span={spanCol} key={card.id}>
+                                <Col
+                                    onClick={() => {
+                                        handleClickCard(card.id);
+                                    }}
+                                    span={spanCol}
+                                    key={card.id}
+                                >
                                     <CProductCard
-                                        imageUrl={card.imageUrl}
+                                        imageUrl={card.images[0]}
                                         title={card.title}
-                                        view={card.view}
+                                        view={card.views}
                                         price={card.price}
-                                        type={card.type}
+                                    // type={card.type}
                                     />
                                 </Col>
                             ))}
@@ -475,9 +504,9 @@ const DetailSketch = () => {
                         <Button
                             icon={<ArrowRightOutlined />}
                             className="btn-icon"
-                            onClick={handleNextCard}
+                            onClick={handleNextCardLatestSketch}
                             disabled={
-                                currentIndex >= numberOfCardNext - 4 && true
+                                currentIndexLatestSketch >= latestSketchsList.length - numberOfCardShow && true
                             }
                         />
                     </Col>

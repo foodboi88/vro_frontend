@@ -37,6 +37,7 @@ import {
 } from "../../redux/controller";
 import { IReqGetLatestSketchs } from "../../common/sketch.interface";
 import { Carousel } from 'antd';
+import CDeclare from "../../components/Declare/CDeclare";
 
 
 interface CardData {
@@ -156,6 +157,13 @@ const Home = () => {
     const [numberOfCardShow, setNumberOfCardShow] = useState<number>(10);
     const [numberOfCardNext, setNumberOfCardNext] = useState<number>(10);
 
+    const [currentIndexMostViewedSketch, setCurrentIndexMostViewedSketch] = useState(0);
+    const [currentIndexLatestSketch, setCurrentIndexLatestSketch] = useState(0);
+    const [currentIndexVillaSketch, setCurrentIndexVillaSketch] = useState(0);
+    const [currentIndexStreetHouseSketch, setCurrentIndexStreetHouseSketch] = useState(0);
+    const [currentIndexFactorySketch, setCurrentIndexFactorySketch] = useState(0);
+    const [currentIndexInteriorSketch, setCurrentIndexInteriorSketch] = useState(0);
+
     const [windowSize, setWindowSize] = useState([
         window.innerWidth,
         window.innerHeight,
@@ -195,23 +203,56 @@ const Home = () => {
         dispatch(getHomeListSketchRequest());
     }, []);
 
-    const [currentIndexMostViewedSketch, setCurrentIndexMostViewedSketch] = useState(0);
-    const [currentIndexLatestSketch, setCurrentIndexLatestSketch] = useState(0);
 
+
+    // Handle pagination most view sketch
     const handleNextCardMostViewedSketch = () => {
         setCurrentIndexMostViewedSketch(currentIndexMostViewedSketch + 1);
-    };
-
-    const handleNextCardLatestSketch = () => {
-        setCurrentIndexLatestSketch(currentIndexLatestSketch + 1);
     };
     const handlePrevCardMostViewedSketch = () => {
         setCurrentIndexMostViewedSketch(currentIndexMostViewedSketch - 1);
     };
-
+    
+    // Handle pagination latest sketch
+    const handleNextCardLatestSketch = () => {
+        setCurrentIndexLatestSketch(currentIndexLatestSketch + 1);
+    };
     const handlePrevCardLatestSketch = () => {
         setCurrentIndexLatestSketch(currentIndexLatestSketch - 1);
     };
+
+    // Handle pagination villa sketch
+    const handleNextCardVillaSketch = () => {
+        setCurrentIndexVillaSketch(currentIndexVillaSketch + 1);
+    };
+    const handlePrevCardVillaSketch = () => {
+        setCurrentIndexVillaSketch(currentIndexVillaSketch - 1);
+    };
+
+    // Handle pagination latest sketch
+    const handleNextCardStreetHouseSketch = () => {
+        setCurrentIndexStreetHouseSketch(currentIndexStreetHouseSketch + 1);
+    };
+    const handlePrevCardStreetHouseSketch = () => {
+        setCurrentIndexStreetHouseSketch(currentIndexStreetHouseSketch - 1);
+    };
+
+    // Handle pagination factory sketch
+    const handleNextCardFactorySketch = () => {
+        setCurrentIndexFactorySketch(currentIndexFactorySketch + 1);
+    };
+    const handlePrevCardFactorySketch = () => {
+        setCurrentIndexFactorySketch(currentIndexFactorySketch - 1);
+    };
+
+    // Handle pagination interior sketch
+    const handleNextCardInteriorSketch = () => {
+        setCurrentIndexInteriorSketch(currentIndexInteriorSketch + 1);
+    };
+    const handlePrevCardInteriorSketch = () => {
+        setCurrentIndexInteriorSketch(currentIndexInteriorSketch - 1);
+    };
+
 
     const handleClickCard = (sketchId: string) => {
         console.log("sketchId", sketchId);
@@ -303,6 +344,9 @@ const Home = () => {
                     </Col>
                 </div>
             </div>
+            <CDeclare
+                content="Chỉnh sửa thiết kế theo yêu cầu"
+            />
             <div className="tool-of-web">
                 <div className="title">
                     <div>Bài vẽ mới hôm nay</div>
@@ -353,6 +397,9 @@ const Home = () => {
                     </Col>
                 </div>
             </div>
+            <CDeclare
+                content="Luôn cập nhật xu hướng mới nhất"
+            />
             <div className="tool-of-web">
                 <div className="title">
                     <div>Bản vẽ biệt thự</div>
@@ -363,15 +410,15 @@ const Home = () => {
                         <Button
                             icon={<ArrowLeftOutlined />}
                             className="btn-icon"
-                            onClick={handlePrevCardLatestSketch}
-                            disabled={currentIndexLatestSketch === 0 && true}
+                            onClick={handlePrevCardVillaSketch}
+                            disabled={currentIndexVillaSketch === 0 && true}
                         />
                     </Col>
                     <Row gutter={[16, 16]}>
                         {villaSketchList
                             .slice(
-                                currentIndexLatestSketch,
-                                currentIndexLatestSketch + numberOfCardShow
+                                currentIndexVillaSketch,
+                                currentIndexVillaSketch + numberOfCardShow
                             )
                             .map((card: any) => (
                                 <Col
@@ -395,14 +442,17 @@ const Home = () => {
                         <Button
                             icon={<ArrowRightOutlined />}
                             className="btn-icon"
-                            onClick={handleNextCardLatestSketch}
+                            onClick={handleNextCardVillaSketch}
                             disabled={
-                                currentIndexLatestSketch >= latestSketchsList.length - numberOfCardShow && true
+                                currentIndexVillaSketch >= villaSketchList.length - numberOfCardShow && true
                             }
                         />
                     </Col>
                 </div>
             </div>
+            <CDeclare
+                content="Chỉnh sửa thiết kế theo yêu cầu"
+            />
             <div className="tool-of-web">
                 <div className="title">
                     <div>Bài vẽ nhà phố</div>
@@ -413,15 +463,15 @@ const Home = () => {
                         <Button
                             icon={<ArrowLeftOutlined />}
                             className="btn-icon"
-                            onClick={handlePrevCardLatestSketch}
-                            disabled={currentIndexLatestSketch === 0 && true}
+                            onClick={handlePrevCardStreetHouseSketch}
+                            disabled={currentIndexStreetHouseSketch === 0 && true}
                         />
                     </Col>
                     <Row gutter={[16, 16]}>
                         {streetHouseSketchList
                             .slice(
-                                currentIndexLatestSketch,
-                                currentIndexLatestSketch + numberOfCardShow
+                                currentIndexStreetHouseSketch,
+                                currentIndexStreetHouseSketch + numberOfCardShow
                             )
                             .map((card: any) => (
                                 <Col
@@ -445,14 +495,17 @@ const Home = () => {
                         <Button
                             icon={<ArrowRightOutlined />}
                             className="btn-icon"
-                            onClick={handleNextCardLatestSketch}
+                            onClick={handleNextCardStreetHouseSketch}
                             disabled={
-                                currentIndexLatestSketch >= latestSketchsList.length - numberOfCardShow && true
+                                currentIndexStreetHouseSketch >= streetHouseSketchList.length - numberOfCardShow && true
                             }
                         />
                     </Col>
                 </div>
             </div>
+            <CDeclare
+                content="Chỉnh sửa thiết kế theo yêu cầu"
+            />
             <div className="tool-of-web">
                 <div className="title">
                     <div>Bài vẽ nhà xưởng</div>
@@ -463,15 +516,15 @@ const Home = () => {
                         <Button
                             icon={<ArrowLeftOutlined />}
                             className="btn-icon"
-                            onClick={handlePrevCardLatestSketch}
-                            disabled={currentIndexLatestSketch === 0 && true}
+                            onClick={handlePrevCardFactorySketch}
+                            disabled={currentIndexFactorySketch === 0 && true}
                         />
                     </Col>
                     <Row gutter={[16, 16]}>
                         {factorySketchList
                             .slice(
-                                currentIndexLatestSketch,
-                                currentIndexLatestSketch + numberOfCardShow
+                                currentIndexFactorySketch,
+                                currentIndexFactorySketch + numberOfCardShow
                             )
                             .map((card: any) => (
                                 <Col
@@ -495,14 +548,17 @@ const Home = () => {
                         <Button
                             icon={<ArrowRightOutlined />}
                             className="btn-icon"
-                            onClick={handleNextCardLatestSketch}
+                            onClick={handleNextCardFactorySketch}
                             disabled={
-                                currentIndexLatestSketch >= latestSketchsList.length - numberOfCardShow && true
+                                currentIndexFactorySketch >= factorySketchList.length - numberOfCardShow && true
                             }
                         />
                     </Col>
                 </div>
             </div>
+            <CDeclare
+                content="Chỉnh sửa thiết kế theo yêu cầu"
+            />
             <div className="tool-of-web">
                 <div className="title">
                     <div>Bài vẽ nội thất</div>
@@ -513,15 +569,15 @@ const Home = () => {
                         <Button
                             icon={<ArrowLeftOutlined />}
                             className="btn-icon"
-                            onClick={handlePrevCardLatestSketch}
-                            disabled={currentIndexLatestSketch === 0 && true}
+                            onClick={handlePrevCardInteriorSketch}
+                            disabled={currentIndexInteriorSketch === 0 && true}
                         />
                     </Col>
                     <Row gutter={[16, 16]}>
                         {interiorSketchList
                             .slice(
-                                currentIndexLatestSketch,
-                                currentIndexLatestSketch + numberOfCardShow
+                                currentIndexInteriorSketch,
+                                currentIndexInteriorSketch + numberOfCardShow
                             )
                             .map((card: any) => (
                                 <Col
@@ -545,9 +601,9 @@ const Home = () => {
                         <Button
                             icon={<ArrowRightOutlined />}
                             className="btn-icon"
-                            onClick={handleNextCardLatestSketch}
+                            onClick={handleNextCardInteriorSketch}
                             disabled={
-                                currentIndexLatestSketch >= latestSketchsList.length - numberOfCardShow && true
+                                currentIndexInteriorSketch >= interiorSketchList.length - numberOfCardShow && true
                             }
                         />
                     </Col>
