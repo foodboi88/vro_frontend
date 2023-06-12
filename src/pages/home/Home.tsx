@@ -175,23 +175,23 @@ const Home = () => {
         };
 
         window.addEventListener("resize", handleWindowResize);
-        if (window.innerWidth > 900) {
+        if (window.innerWidth > 1000) {
             setSpanCol(6);
             setNumberOfCardShow(4);
         }
-        if (window.innerWidth <= 900) {
+        if (window.innerWidth <= 1000) {
             setSpanCol(8);
             setNumberOfCardShow(3);
             setNumberOfCardNext(5);
         }
-        if (window.innerWidth <= 700) {
+        if (window.innerWidth <= 800) {
             setSpanCol(12);
             setNumberOfCardShow(2);
             setNumberOfCardNext(6);
         }
-        if (window.innerWidth <= 500) {
+        if (window.innerWidth <= 600) {
             setSpanCol(24);
-            setNumberOfCardShow(1);
+            setNumberOfCardShow(100);
             setNumberOfCardNext(7);
         }
         return () => {
@@ -203,8 +203,6 @@ const Home = () => {
         dispatch(getHomeListSketchRequest());
     }, []);
 
-
-
     // Handle pagination most view sketch
     const handleNextCardMostViewedSketch = () => {
         setCurrentIndexMostViewedSketch(currentIndexMostViewedSketch + 1);
@@ -212,7 +210,7 @@ const Home = () => {
     const handlePrevCardMostViewedSketch = () => {
         setCurrentIndexMostViewedSketch(currentIndexMostViewedSketch - 1);
     };
-    
+
     // Handle pagination latest sketch
     const handleNextCardLatestSketch = () => {
         setCurrentIndexLatestSketch(currentIndexLatestSketch + 1);
@@ -277,19 +275,22 @@ const Home = () => {
                         className="image"
                         src={Notification}
                         alt="main notification"
-                    />                    </div>
+                    />
+                </div>
                 <div>
                     <img
                         className="image"
                         src={Notification}
                         alt="main notification"
-                    />                    </div>
+                    />
+                </div>
                 <div>
                     <img
                         className="image"
                         src={Notification}
                         alt="main notification"
-                    />                    </div>
+                    />
+                </div>
 
             </Carousel>
             {/* </div> */}

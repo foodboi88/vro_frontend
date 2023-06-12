@@ -83,18 +83,18 @@ export const CHeader = (props: MyProps) => {
         // setUserName(username ? username : '');
     }, []);
 
-    // useEffect(() => {
-    //     let checkLogin = localStorage.getItem("token")
-    //         ? localStorage.getItem("token")
-    //         : "";
-    //     if (checkLogin) {
-    //         setIsLogin(true);
-    //     }
-    // }, []);
+    useEffect(() => {
+        let checkLogin = localStorage.getItem("token")
+            ? localStorage.getItem("token")
+            : "";
+        if (checkLogin) {
+            setIsLogin(true);
+        }
+    }, []);
 
     useEffect(() => {
         console.log(isLogin);
-        if (accesstokenExpỉred === false){
+        if (accesstokenExpỉred === false) {
             dispatch(getSketchQuantityInCartRequest());
             const usermail = localStorage.getItem('userMail') ? localStorage.getItem('userMail') : '';
             const username = localStorage.getItem('userName') ? localStorage.getItem('userName') : '';
@@ -103,7 +103,7 @@ export const CHeader = (props: MyProps) => {
         }
         // else{
         //     notification.open({
-                
+
         //         message: "Hết phiên đăng nhập",
         //         description: "Vui lòng đăng nhập lại!" ,
         //         onClick: () => {
@@ -208,7 +208,7 @@ export const CHeader = (props: MyProps) => {
         dispatch(getAllSketchInCartRequest());
         navigate("/cart");
     };
-    
+
     return (
         <div className="main-header">
             <div className="header-left">
