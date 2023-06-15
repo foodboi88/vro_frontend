@@ -32,50 +32,6 @@ import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
 import Utils from "../../common/utils";
 import CComment from "../../components/Comment/CComment";
 
-interface CardData {
-    id: number;
-    title: string;
-    type: string;
-    price: number;
-    view: number;
-    imageUrl: string;
-}
-
-const featuredLst: CardData[] = [
-    {
-        id: 1,
-        title: "Bản vẽ biệt thự 2 tầng",
-        type: "File Sketchup",
-        price: 0,
-        view: 96,
-        imageUrl: DrawHomeImage1,
-    },
-    {
-        id: 2,
-        title: "Bản vẽ biệt thự 4 tầng",
-        type: "File 3D Max",
-        price: 0,
-        view: 105,
-        imageUrl: DrawHomeImage2,
-    },
-    {
-        id: 3,
-        title: "Bản vẽ biệt thự 3 tầng",
-        type: "File Sketchup",
-        price: 0,
-        view: 365,
-        imageUrl: DrawHomeImage3,
-    },
-    {
-        id: 4,
-        title: "Thiết kế nhà gác lửng hiện đại",
-        type: "File Auto Cad",
-        price: 0,
-        view: 25,
-        imageUrl: DrawHomeImage4,
-    },
-];
-
 const DetailSketch = () => {
     const navigate = useNavigate();
     const {
@@ -151,15 +107,17 @@ const DetailSketch = () => {
         if (sketchId) {
             dispatch(getDetailSketchPageContentRequest(sketchId));
             dispatch(getRatesBySketchIdRequest(sketchId));
+            dispatch(getProductFilesByIdRequest(sketchId));
+
         }
     }, [sketchId]);
 
-    useEffect(() => {
-        if (sketchId) {
-            console.log(sketchId);
-            dispatch(getProductFilesByIdRequest(sketchId));
-        }
-    }, [sketchId]);
+    // useEffect(() => {
+    //     if (sketchId) {
+    //         console.log(sketchId);
+    //         dispatch(getProductFilesByIdRequest(sketchId));
+    //     }
+    // }, [sketchId]);
 
     // useEffect(() => {
     //     if (lstSketchsInCart && lstSketchsInCart.length > 0) {
