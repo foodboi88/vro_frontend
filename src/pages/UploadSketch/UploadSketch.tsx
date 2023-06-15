@@ -9,6 +9,7 @@ import {
     SelectProps,
     Steps,
     Upload,
+    Radio
 } from "antd";
 import VirtualList from "rc-virtual-list";
 import React, { useEffect, useState } from "react";
@@ -34,6 +35,7 @@ import {
     uploadSketchRequest,
 } from "../../redux/controller";
 import { useNavigate } from "react-router-dom";
+import { RadioChangeEventTarget } from "antd/lib/radio";
 
 const options: SelectProps["options"] = [];
 
@@ -169,7 +171,7 @@ const UploadSketch = () => {
     const [note, setNote] = useState(""); // Biến lưu giá trị ghi chú bản vẽ
     const [selectStyle, setSelectStyle] = useState(""); // Biến lưu giá trị kiểu bản vẽ
     const [selectTool, setSelectTool] = useState<CheckboxValueType[]>([]); // Biến lưu giá trị công cụ vẽ bản vẽ
-    const [selectCategory, setSelectCategory] = useState<CheckboxValueType[]>(
+    const [selectCategory, setSelectCategory] = useState<RadioChangeEventTarget[]>(
         []
     ); // Biến lưu giá trị danh mục bản vẽ
     const [isCheckedRules, setIsCheckedRules] = useState(false); // Biến lưu giá trị quy tắc bản vẽ
@@ -575,11 +577,16 @@ const UploadSketch = () => {
                                             Kiến trúc <strong>*</strong>
                                         </div>
                                         <div className="tool-list">
-                                            <Checkbox.Group
+                                            <Radio.Group
                                                 className="lst-category"
                                                 options={architectureList}
                                                 onChange={(e) =>
-                                                    setSelectCategory(e)
+                                                    
+                                                    {
+                                                        const selectValue =[e.target]
+                                                        setSelectCategory(selectValue)
+
+                                                    }
                                                 }
                                             />
                                         </div>
