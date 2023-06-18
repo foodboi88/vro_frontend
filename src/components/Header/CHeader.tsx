@@ -40,6 +40,10 @@ import {
     getSketchQuantityInCartRequest,
 } from "../../redux/controller";
 import { ICurrentSearchValue } from "../../common/sketch.interface";
+import { GoLocation } from "react-icons/go";
+import { FaPhoneVolume } from "react-icons/fa";
+import { BsQuestionCircle } from "react-icons/bs";
+import { AiOutlineFileAdd } from "react-icons/ai";
 
 interface MyProps {
     // setIsLogout: React.Dispatch<React.SetStateAction<boolean>>
@@ -210,180 +214,219 @@ export const CHeader = (props: MyProps) => {
     };
 
     return (
-        <div className="main-header">
-            <div className="header-left">
-                <div className="header-logo">
-                    <Link to={"/"} className="logo-text">
-                        <img src={Logo} />
-                    </Link>
+        <div className="header">
+            <div className="main-header">
+                <div className="header-left">
+                    <div className="header-logo">
+                        <Link to={"/"} className="logo-text">
+                            <img src={Logo} />
+                            <div className="text-logo">Vro Group</div>
+
+                        </Link>
+                    </div>
+
+                    <div className={`header-content-input ${isLogin && "login"}`}>
+                        <Input
+                            className="search-input"
+                            placeholder="Tìm kiếm bản vẽ"
+                            onPressEnter={handleSearching}
+                        />
+                        <img src={SearchIcon} className="icon-search"></img>
+                        {/* <SearchOutlined className='icon-search' /> */}
+                    </div>
                 </div>
+                {/* {!tokenLogin && */}
 
-                <div className={`header-content-input ${isLogin && "login"}`}>
-                    <Input
-                        className="search-input"
-                        placeholder="Tìm kiếm bản vẽ"
-                        onPressEnter={handleSearching}
-                    />
-                    <img src={SearchIcon} className="icon-search"></img>
-                    {/* <SearchOutlined className='icon-search' /> */}
-                </div>
-            </div>
-            {/* {!tokenLogin && */}
+                {/* } */}
 
-            {/* } */}
-
-            {/* {tokenLogin && */}
-            <div className="header-right">
-                <div className="user-infor">
-                    {accesstokenExpỉred === true ? (
-                        <>
-                            <motion.div
-                                className="header-button login"
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                <Button
-                                    onClick={() => setIsOpenLoginModal(true)}>
-                                    Đăng nhập
-                                </Button>
-                            </motion.div>
-                            <motion.div
-                                className="header-button login"
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                <Button
-                                    onClick={() => setIsOpenRegisterModal(true)}
+                {/* {tokenLogin && */}
+                <div className="header-right">
+                    <div className="user-infor">
+                        {accesstokenExpỉred === true ? (
+                            <>
+                                <motion.div
+                                    className="header-button login"
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.95 }}
                                 >
-                                    Đăng ký
-                                </Button>
-                            </motion.div>
-                        </>
-                    ) : (
-                        <>
-                            <motion.div
-                                className={`header-button post ${isLogin && "login"}`}
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                <Button
-                                    className="btn-upload-sketch"
-                                    onClick={handleUpload}
-                                    icon={<img src={HeaderIcon} />}
-                                >
-                                    Đăng bản vẽ
-                                </Button>
-                            </motion.div>
-                            <div className="icon-group">
-                                <Badge count={10} size="default">
-                                    <BellOutlined />
-                                </Badge>
-                                <Badge count={10} size="default">
-                                    <MessageOutlined />
-                                </Badge>
-                                <Badge
-                                    count={sketchsQuantityInCart}
-                                    size="default"
-                                >
-                                    <ShoppingCartOutlined
-                                        onClick={handleClickCart}
-                                    />
-                                </Badge>
-                            </div>
-                            <div className="user-info-content">
-                                <Avatar className="avatar" src={UserIcon} />
-                                <div className="name-and-balance">
-                                    <div className="name">{userName}</div>
-                                    {/* <div className="balance">
-                                        Số dư: {"1.500.000Đ"}
-                                    </div> */}
-                                </div>
-                                <Dropdown
-                                    className="drop-down"
-                                    menu={{ items }}
-                                    placement="bottomLeft"
-                                    arrow
-                                >
-                                    <DownOutlined />
-                                </Dropdown>
-                            </div>
-                        </>
-                    )}
-                    <Login
-                        checkIsLogin={checkIsLogin}
-                        isOpenModal={isOpenLoginModal}
-                        toggleLoginModal={toggleLoginModal}
-                        toggleRegisterModal={toggleRegisterModal}
-                    />
-                    <Register
-                        isOpenModal={isOpenRegisterModal}
-                        toggleLoginModal={toggleLoginModal}
-                        toggleRegisterModal={toggleRegisterModal}
-                    />
-                </div>
-                <>
-                    <Button
-                        className={`menubtn + ${isLogin ? "login" : ""}`}
-                        shape="circle"
-                        icon={<MenuOutlined />}
-                        onClick={showDrawer}
-                    ></Button>
-                    <Drawer
-                        title={
-                            <div className="header-logo">
-                                <Link to={"/"} className="logo-text">
-                                    Vro Group
-                                </Link>
-                            </div>
-                        }
-                        placement="right"
-                        onClose={onClose}
-                        visible={visible}
-                    >
-                        <div
-                            style={{ display: "flex", flexDirection: "column" }}
-                        >
-                            {!isLogin
-                                && (
-
-                                    <Button className="drawer-button notlogin"
-                                        onClick={() => {
-                                            setIsOpenLoginModal(true)
-                                            onClose()
-                                        }}>
+                                    <Button
+                                        onClick={() => setIsOpenLoginModal(true)}>
                                         Đăng nhập
                                     </Button>
-                                )}
-                            {!isLogin
-                                && (
-                                    <Button className="drawer-button notlogin"
-                                        onClick={() => {
-                                            setIsOpenRegisterModal(true)
-                                            onClose()
-                                        }}
+                                </motion.div>
+                                <motion.div
+                                    className="header-button login"
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.95 }}
+                                >
+                                    <Button
+                                        onClick={() => setIsOpenRegisterModal(true)}
                                     >
                                         Đăng ký
                                     </Button>
-                                )}
-                            {isLogin && (
-                                <Button className={'drawer-button login'}>
-                                    Đăng bản vẽ
-                                </Button>
-                            )}
-                            <div className={`header-content-input draw ${isLogin && "login"}`}>
-                                <Input
-                                    className="search-input"
-                                    placeholder="Tìm kiếm bản vẽ"
-                                    onPressEnter={handleSearching}
-                                />
-                                {/* <SearchOutlined className='icon-search' /> */}
-                            </div>
-                        </div>
-                    </Drawer>
-                </>
-            </div>
+                                </motion.div>
+                            </>
+                        ) : (
+                            <>
+                                <motion.div
+                                    className={`header-button post ${isLogin && "login"}`}
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.95 }}
+                                >
+                                    <Button
+                                        className="btn-upload-sketch"
+                                        onClick={handleUpload}
+                                        icon={<AiOutlineFileAdd />}
+                                    >
+                                        Đăng bản vẽ
+                                    </Button>
+                                </motion.div>
+                                <div className="icon-group">
+                                    <Badge count={10} size="default">
+                                        <BellOutlined />
+                                    </Badge>
+                                    <Badge count={10} size="default">
+                                        <MessageOutlined />
+                                    </Badge>
+                                    <Badge
+                                        count={sketchsQuantityInCart}
+                                        size="default"
+                                    >
+                                        <ShoppingCartOutlined
+                                            onClick={handleClickCart}
+                                        />
+                                    </Badge>
+                                </div>
+                                <div className="user-info-content">
+                                    <Avatar className="avatar" src={UserIcon} />
+                                    <div className="name-and-balance">
+                                        <div className="name">{userName}</div>
+                                        {/* <div className="balance">
+                                        Số dư: {"1.500.000Đ"}
+                                    </div> */}
+                                    </div>
+                                    <Dropdown
+                                        className="drop-down"
+                                        menu={{ items }}
+                                        placement="bottomLeft"
+                                        arrow
+                                    >
+                                        <DownOutlined />
+                                    </Dropdown>
+                                </div>
+                            </>
+                        )}
+                        <Login
+                            checkIsLogin={checkIsLogin}
+                            isOpenModal={isOpenLoginModal}
+                            toggleLoginModal={toggleLoginModal}
+                            toggleRegisterModal={toggleRegisterModal}
+                        />
+                        <Register
+                            isOpenModal={isOpenRegisterModal}
+                            toggleLoginModal={toggleLoginModal}
+                            toggleRegisterModal={toggleRegisterModal}
+                        />
+                    </div>
+                    <>
+                        <Button
+                            className={`menubtn + ${isLogin ? "login" : ""}`}
+                            shape="circle"
+                            icon={<MenuOutlined />}
+                            onClick={showDrawer}
+                        ></Button>
+                        <Drawer
+                            title={
+                                <div className="header-logo">
+                                    <Link to={"/"} className="logo-text">
+                                        Vro Group
+                                    </Link>
+                                </div>
+                            }
+                            placement="right"
+                            onClose={onClose}
+                            visible={visible}
+                        >
+                            <div
+                                style={{ display: "flex", flexDirection: "column" }}
+                            >
+                                {!isLogin
+                                    && (
 
-            {/* } */}
-        </div >
+                                        <Button className="drawer-button notlogin"
+                                            onClick={() => {
+                                                setIsOpenLoginModal(true)
+                                                onClose()
+                                            }}>
+                                            Đăng nhập
+                                        </Button>
+                                    )}
+                                {!isLogin
+                                    && (
+                                        <Button className="drawer-button notlogin"
+                                            onClick={() => {
+                                                setIsOpenRegisterModal(true)
+                                                onClose()
+                                            }}
+                                        >
+                                            Đăng ký
+                                        </Button>
+                                    )}
+                                {isLogin && (
+                                    <Button className={'drawer-button login'}>
+                                        Đăng bản vẽ
+                                    </Button>
+                                )}
+                                <div className={`header-content-input draw ${isLogin && "login"}`}>
+                                    <Input
+                                        className="search-input"
+                                        placeholder="Tìm kiếm bản vẽ"
+                                        onPressEnter={handleSearching}
+                                    />
+                                    {/* <SearchOutlined className='icon-search' /> */}
+                                </div>
+                            </div>
+                        </Drawer>
+                    </>
+                </div>
+
+                {/* } */}
+            </div >
+            <div className="header-action">
+                <div className="header-action-content">
+                    <div className="header-action-item">
+                        <GoLocation className="header-aciton-item-icon" />
+                        <div className="header-action-item-text">Mộ Lao, Hà Đông, Hà Nội</div>
+                    </div>
+                    <div className="header-action-type">
+                        <div className="header-action-item">
+                            Thư viện bản vẽ
+                        </div>
+                        <div className="header-action-item">
+                            Hội kiến trúc sư
+                        </div>
+                        <div className="header-action-item">
+                            Đăng ký bán bản vẽ
+                        </div>
+                        <div className="header-action-item">
+                            Bản vẽ chất lượng
+                        </div>
+                        <div className="header-action-item">
+                            Blog
+                        </div>
+                    </div>
+                </div>
+                <div className="header-action-content">
+                    <div className="header-action-item">
+                        <FaPhoneVolume />
+                        <div className="header-action-item-text">Hotline: 19008198</div>
+                    </div>
+                    <div className="header-action-item">
+                        <BsQuestionCircle />
+                        <div className="header-action-item-text">Trung tâm hỗ trợ VRO</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 };
