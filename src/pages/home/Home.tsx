@@ -32,12 +32,14 @@ import DrawHomeImage15 from "../../images/homepage/home_img_15.png";
 import DrawHomeImage16 from "../../images/homepage/home_img_16.png";
 import CProductCard from "../../components/ProductCard/CProductCard";
 import {
+    getAllFilterCriteriasRequest,
     getHomeListSketchRequest,
     getLatestSketchRequest,
 } from "../../redux/controller";
 import { IReqGetLatestSketchs } from "../../common/sketch.interface";
 import { Carousel } from 'antd';
 import CDeclare from "../../components/Declare/CDeclare";
+import Slider from "../../components/Slider/Slider";
 
 
 interface CardData {
@@ -294,6 +296,7 @@ const Home = () => {
 
             </Carousel>
             {/* </div> */}
+            {/* <Slider /> */}
 
             <div className="tool-of-web">
                 <div className="title">
