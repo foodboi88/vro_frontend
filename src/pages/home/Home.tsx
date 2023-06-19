@@ -3,6 +3,7 @@ import {
     ArrowLeftOutlined,
     ArrowRightOutlined,
     EyeOutlined,
+    RightOutlined,
 } from "@ant-design/icons";
 import { Button, Card, Col, Row } from "antd";
 import Meta from "antd/lib/card/Meta";
@@ -31,13 +32,31 @@ import DrawHomeImage14 from "../../images/homepage/home_img_14.png";
 import DrawHomeImage15 from "../../images/homepage/home_img_15.png";
 import DrawHomeImage16 from "../../images/homepage/home_img_16.png";
 import CProductCard from "../../components/ProductCard/CProductCard";
+import CarouselImage from '../../images/homepage/carousel.png';
+import Adsvertisement1 from '../../images/homepage/adsvertisement1.png';
+import Adsvertisement2 from '../../images/homepage/adsvertisement2.png';
+import CategoryIcon from '../../images/homepage/category_icon.png';
+import Cate1 from '../../images/homepage/cate1.png'
+import Cate2 from '../../images/homepage/cate2.png'
+import Cate3 from '../../images/homepage/cate3.png'
+import Cate4 from '../../images/homepage/cate4.png'
+import Cate5 from '../../images/homepage/cate5.png'
+import Cate6 from '../../images/homepage/cate6.png'
+import Cate7 from '../../images/homepage/cate7.png'
+import Cate8 from '../../images/homepage/cate8.png'
+import Cate9 from '../../images/homepage/cate9.png'
+
+
 import {
+    advancedSearchingRequest,
+    getAllFilterCriteriasRequest,
     getHomeListSketchRequest,
     getLatestSketchRequest,
 } from "../../redux/controller";
-import { IReqGetLatestSketchs } from "../../common/sketch.interface";
+import { ICurrentSearchValue, IReqGetLatestSketchs } from "../../common/sketch.interface";
 import { Carousel } from 'antd';
 import CDeclare from "../../components/Declare/CDeclare";
+
 
 
 interface CardData {
@@ -143,6 +162,61 @@ const hoverVariants = {
         scale: 0.8,
     },
 };
+
+const categoryList =[
+    {
+        id: "64231026edf9dd11e488c250",
+        content: 'Bản vẽ biệt thự',
+        link: '',
+        icon: Cate1
+    },
+    {
+        id: "64231030edf9dd11e488c252",
+        content: 'Bản vẽ nhà phố',
+        link: '',
+        icon: Cate2,
+
+    },
+    {
+        id:"642ce3895de07140c4f4cd61",
+        content: 'Bản vẽ nhà xưởng',
+        link: '',
+        icon: Cate3,
+
+    },
+    {
+        id: "642ce3965de07140c4f4cd62",
+        content: 'Bản vẽ nội thất',
+        link: '',
+        icon: Cate4,
+
+
+    },
+    {
+        id: "642ce3a35de07140c4f4cd63",
+        content: 'Bản vẽ ngoại thất',
+        link: '',
+        icon: Cate5,
+
+    },
+    
+    {
+        id: "7",
+        content: 'Bản vẽ nhà thờ',
+        link: '',
+        icon: Cate7,
+
+    },
+    {
+        id:" 8",
+        content: 'Bản vẽ cửa hàng',
+        link: '',
+        icon: Cate8,
+
+    },
+    
+    
+]
 
 // Phần trang chủ của trang web
 const Home = () => {
@@ -263,6 +337,17 @@ const Home = () => {
 
     };
 
+    const onClickCategory = (architectureId: string) => {
+        const bodyrequest: ICurrentSearchValue = {
+            name: '',
+            architecture: architectureId,
+            tool: '',
+            style:'',
+        };
+        dispatch(advancedSearchingRequest(bodyrequest))
+        navigate("/searching");
+    }
+
     return (
         <motion.div
             className="main-home"
@@ -271,27 +356,73 @@ const Home = () => {
             exit={{ x: window.innerWidth, transition: { duration: 0.5 } }}
         >
             {/* <div className="main-notification"> */}
-            <Carousel autoplay>
-                <div>
-                    <img
-                        className="image"
-                        src={Notification}
-                        alt="main notification"
-                    />                    </div>
-                <div>
-                    <img
-                        className="image"
-                        src={Notification}
-                        alt="main notification"
-                    />                    </div>
-                <div>
-                    <img
-                        className="image"
-                        src={Notification}
-                        alt="main notification"
-                    />                    </div>
+            <div className='header-homepage'>
+                <div className='category-list'>
+                    <div className="category-title">
+                        <img className="category-icon" src={CategoryIcon}/>
+                        <div className="text">TẤT CẢ DANH MỤC SẢN PHẨM</div>
+                    </div>
+                    <div className="divider">
 
-            </Carousel>
+                    </div>
+                    {
+                        categoryList.map(item => {
+                            return (
+                                <div className="category-item" onClick={()=>onClickCategory(item.id)}>
+                                    <div className="cate-content">
+
+                                        <img className="cate-image" src={item.icon}/>
+                                        <div className="cate-item-text">
+                                            {item.content}
+                                        </div>
+                                    </div>
+                                    <div className="arrow-icon">
+                                        <RightOutlined />
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
+                    <div>
+
+                    </div>
+                </div>
+                <div className="carousel">
+                    <Carousel autoplay>
+                        <div>
+                            <img
+                                className="image"
+                                src={CarouselImage}
+                                alt="main notification"
+                            />
+                        </div>
+                        <div>
+                            <img
+                                className="image"
+                                src={CarouselImage}
+                                alt="main notification"
+                            />
+                        </div>
+                        <div>
+                            <img
+                                className="image"
+                                src={CarouselImage}
+                                alt="main notification"
+                            />
+                        </div>
+
+                    </Carousel>
+                </div>
+                <div className="advertisement">
+                    <div >
+                        <img className="ad-image" src={Adsvertisement1}/>
+                    </div>
+                    <div >
+                        <img className="ad-image" src={Adsvertisement2}/>
+                    </div>
+                </div>
+            </div>
+            
             {/* </div> */}
 
             <div className="tool-of-web">
@@ -344,9 +475,9 @@ const Home = () => {
                     </Col>
                 </div>
             </div>
-            <CDeclare
+            {/* <CDeclare
                 content="Chỉnh sửa thiết kế theo yêu cầu"
-            />
+            /> */}
             <div className="tool-of-web">
                 <div className="title">
                     <div>Bài vẽ mới hôm nay</div>
@@ -397,9 +528,9 @@ const Home = () => {
                     </Col>
                 </div>
             </div>
-            <CDeclare
+            {/* <CDeclare
                 content="Luôn cập nhật xu hướng mới nhất"
-            />
+            /> */}
             <div className="tool-of-web">
                 <div className="title">
                     <div>Bản vẽ biệt thự</div>
@@ -450,9 +581,9 @@ const Home = () => {
                     </Col>
                 </div>
             </div>
-            <CDeclare
+            {/* <CDeclare
                 content="Chỉnh sửa thiết kế theo yêu cầu"
-            />
+            /> */}
             <div className="tool-of-web">
                 <div className="title">
                     <div>Bài vẽ nhà phố</div>
@@ -503,9 +634,9 @@ const Home = () => {
                     </Col>
                 </div>
             </div>
-            <CDeclare
+            {/* <CDeclare
                 content="Chỉnh sửa thiết kế theo yêu cầu"
-            />
+            /> */}
             <div className="tool-of-web">
                 <div className="title">
                     <div>Bài vẽ nhà xưởng</div>
@@ -556,9 +687,9 @@ const Home = () => {
                     </Col>
                 </div>
             </div>
-            <CDeclare
+            {/* <CDeclare
                 content="Chỉnh sửa thiết kế theo yêu cầu"
-            />
+            /> */}
             <div className="tool-of-web">
                 <div className="title">
                     <div>Bài vẽ nội thất</div>
