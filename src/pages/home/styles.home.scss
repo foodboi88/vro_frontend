@@ -6,15 +6,83 @@
     user-select: none;
     background: #f6f6f6;
 
-    .ant-carousel {
-        margin: 5em 2em;
-        border-radius: 16px;
-        text-align: center;
+    .header-homepage{
+        display: flex;
+        padding-top: 40px;
+        padding-left: 58px;
+        padding-right: 30px;
+        padding-bottom: -10px;
 
-        .image {
-            width: 100%;
+        margin-bottom: 30px;
+        margin-top: 128px;
+        background: #FFFFFF;
+        border-radius: 16px;
+        margin-left: 105px;
+        margin-right: 105px;
+        
+        .category-list{
+            margin-top: 11px;
+            .category-title{
+                display: flex;
+                 
+                .category-icon{
+
+                }
+                .text{
+                    font-size: 15px;
+                    font-weight: 550;
+                    margin-left: 5px;
+                }
+            }
+            .divider{
+                border-bottom: 5px solid #DFDFDF;
+                margin-top: 5px;
+                margin-bottom: 5px;
+            }
+            .category-item{
+                margin-top: 10px;
+                cursor: pointer;
+                display: flex;
+                justify-content: space-between;
+                .cate-content{
+                    display: flex;
+                    font-size: 12px;
+                    .cate-image{
+                        margin-right: 10px;
+                        width: 25px
+
+                    }
+                    .cate-item-text{
+                        margin-top: 3px;
+                    }
+                }
+                .arrow-icon{
+                    margin-top:-4px;
+                }
+            }
+        }
+        .carousel{
+
+            width: 683px;
+            margin-top: -59px;
+            .ant-carousel {
+                margin: 5em 2em;
+                border-radius: 16px;
+                text-align: center;
+                .image {
+                    width: 100%;
+                }
+            }
+        }
+        .advertisement{
+            
+            .ad-image{
+                width: 243px;
+                margin: 10px;
+            }
         }
     }
+
 
     .main-notification {
         margin-top: 5em;
