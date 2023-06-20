@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import "./App.scss";
 // import CMainRouter from './components/CMainRouter';
-import { Layout } from "antd";
+import { Layout, Spin } from "antd";
 import { useLocation } from "react-router-dom";
 import AnimationRouter from "./components/AnimationRouter";
 import CFooter from "./components/Footer/CFooter";
@@ -21,19 +21,23 @@ function App() {
         let checkLogin = localStorage.getItem("token")
             ? localStorage.getItem("token")
             : "";
-        if (checkLogin ) {
+        if (checkLogin) {
             checkLogin = checkLogin.slice(1);
             checkLogin = checkLogin.slice(0, checkLogin.length - 1);
             dispatch(getUserInfoRequest(checkLogin));
         }
     }, []);
     return (
-        <Layout>
-            <CHeader />
-            <AnimationRouter />
-            {/* {loading && <CLoading />} */}
-            <CFooter />
-        </Layout>
+        <Spin spinning={loading} delay={500} tip="Đang lấy dữ liệu..." size="large">
+            <Layout>
+                <CHeader />
+                <AnimationRouter />
+                {/* {loading && <CLoading />} */}
+                {/* <CLoading /> */}
+
+                <CFooter />
+            </Layout>
+        </Spin>
     );
 }
 

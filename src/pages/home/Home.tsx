@@ -164,7 +164,7 @@ const hoverVariants = {
     },
 };
 
-const categoryList =[
+const categoryList = [
     {
         id: "64231026edf9dd11e488c250",
         content: 'Bản vẽ biệt thự',
@@ -179,7 +179,7 @@ const categoryList =[
 
     },
     {
-        id:"642ce3895de07140c4f4cd61",
+        id: "642ce3895de07140c4f4cd61",
         content: 'Bản vẽ nhà xưởng',
         link: '',
         icon: Cate3,
@@ -200,7 +200,7 @@ const categoryList =[
         icon: Cate5,
 
     },
-    
+
     {
         id: "7",
         content: 'Bản vẽ nhà thờ',
@@ -209,14 +209,14 @@ const categoryList =[
 
     },
     {
-        id:" 8",
+        id: " 8",
         content: 'Bản vẽ cửa hàng',
         link: '',
         icon: Cate8,
 
     },
-    
-    
+
+
 ]
 
 // Phần trang chủ của trang web
@@ -341,7 +341,7 @@ const Home = () => {
             name: '',
             architecture: architectureId,
             tool: '',
-            style:'',
+            style: '',
         };
         dispatch(advancedSearchingRequest(bodyrequest))
         navigate("/searching");
@@ -358,19 +358,18 @@ const Home = () => {
             <div className='header-homepage'>
                 <div className='category-list'>
                     <div className="category-title">
-                        <img className="category-icon" src={CategoryIcon}/>
+                        <img className="category-icon" src={CategoryIcon} />
                         <div className="text">TẤT CẢ DANH MỤC SẢN PHẨM</div>
                     </div>
                     <div className="divider">
-
                     </div>
                     {
                         categoryList.map(item => {
                             return (
-                                <div className="category-item" onClick={()=>onClickCategory(item.id)}>
+                                <div className="category-item" onClick={() => onClickCategory(item.id)}>
                                     <div className="cate-content">
 
-                                        <img className="cate-image" src={item.icon}/>
+                                        <img className="cate-image" src={item.icon} />
                                         <div className="cate-item-text">
                                             {item.content}
                                         </div>
@@ -386,42 +385,40 @@ const Home = () => {
 
                     </div>
                 </div>
-                <div className="carousel">
-                    <Carousel autoplay>
-                        <div>
-                            <img
-                                className="image"
-                                src={CarouselImage}
-                                alt="main notification"
-                            />
-                        </div>
-                        <div>
-                            <img
-                                className="image"
-                                src={CarouselImage}
-                                alt="main notification"
-                            />
-                        </div>
-                        <div>
-                            <img
-                                className="image"
-                                src={CarouselImage}
-                                alt="main notification"
-                            />
-                        </div>
+                <div className="category-content">
+                    <div className="carousel">
+                        <Carousel autoplay>
+                            <div>
+                                <img
+                                    className="image"
+                                    src={CarouselImage}
+                                    alt="main notification"
+                                />
+                            </div>
+                            <div>
+                                <img
+                                    className="image"
+                                    src={CarouselImage}
+                                    alt="main notification"
+                                />
+                            </div>
+                            <div>
+                                <img
+                                    className="image"
+                                    src={CarouselImage}
+                                    alt="main notification"
+                                />
+                            </div>
 
-                    </Carousel>
-                </div>
-                <div className="advertisement">
-                    <div >
-                        <img className="ad-image" src={Adsvertisement1}/>
+                        </Carousel>
                     </div>
-                    <div >
-                        <img className="ad-image" src={Adsvertisement2}/>
+                    <div className="advertisement">
+                        <img className="ad-image" src={Adsvertisement1} alt="" />
+                        <img className="ad-image" src={Adsvertisement2} alt="" />
                     </div>
                 </div>
             </div>
-            
+
             {/* </div> */}
             {/* <Slider /> */}
 
