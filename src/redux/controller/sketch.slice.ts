@@ -64,6 +64,7 @@ interface SketchState {
     streetHouseSketchList: ISketch[];
     factorySketchList: ISketch[];
     interiorSketchList: ISketch[];
+    freeSketchList: ISketch[];
     detailSketch?: IDetailSketch;
     commentList?: any[];
     filteredSketchs?: IFilteredSketch[];
@@ -104,6 +105,7 @@ const initState: SketchState = {
     detailSketch: undefined,
     commentList: [],
     filteredSketchs: [],
+    freeSketchList: [],
     filteredAuthors: [],
     currentSearchValue: {
         architecture: '',
@@ -141,10 +143,7 @@ const sketchSlice = createSlice({
             console.log("Da chui vao voi action: ", action);
         },
 
-        getLatestSketchRequest(state, action: PayloadAction<any>) {
-            state.loading = true;
-            console.log("Da chui vao voi action: ", action);
-        },
+       
 
         getAllVillaSketchRequest(state){
 
@@ -180,6 +179,11 @@ const sketchSlice = createSlice({
             state.interiorSketchList = action.payload.data[0].items
         },
 
+        getLatestSketchRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+            console.log("Da chui vao voi action: ", action);
+        },
+
         getLatestSketchSuccess(state, action: PayloadAction<any>) {
             console.log(action);
             state.latestSketchsList = action.payload.data;
@@ -210,7 +214,45 @@ const sketchSlice = createSlice({
                 },
             });
             state.loading = false;
-            state.registerSuccess = false;
+            // state.registerSuccess = false;
+        },
+
+        getFreeSketchRequest(state) {
+            state.loading = true;
+            // console.log("Da chui vao voi action: ", action);
+        },
+
+        getFreeSketchSuccess(state, action: PayloadAction<any>) {
+            console.log(action);
+            state.freeSketchList = action.payload.data;
+            // notification.open({
+            //     message: "Load success",
+            //     // description:
+            //     //     action.payload.response.message,
+            //     onClick: () => {
+            //         console.log("Notification Clicked!");
+            //     },
+            // });
+
+            // state.user = action.payload.user
+            state.isSuccess = true;
+            state.loading = false;
+
+            // state.registerSuccess = true;
+        },
+
+        getFreeSketchFail(state, action: PayloadAction<any>) {
+            console.log(action);
+            notification.open({
+                message: "Load fail",
+                // description:
+                //     action.payload.response.message,
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+            state.loading = false;
+            // state.registerSuccess = false;
         },
 
         getMostViewdSketchsRequest(state, action: PayloadAction<any>) {
@@ -568,10 +610,11 @@ const getHomeListSketch$: RootEpic = (action$) =>
             return [
                 sketchSlice.actions.getLatestSketchRequest(bodyrequest),
                 sketchSlice.actions.getMostViewdSketchsRequest(bodyrequest),
-                sketchSlice.actions.getAllVillaSketchRequest(),
-                sketchSlice.actions.getAllStreetHouseSketchRequest(),
-                sketchSlice.actions.getAllFactorySketchRequest(),
-                sketchSlice.actions.getAllInteriorSketchRequest(),
+                // sketchSlice.actions.getAllVillaSketchRequest(),
+                // sketchSlice.actions.getAllStreetHouseSketchRequest(),
+                // sketchSlice.actions.getAllFactorySketchRequest(),
+                // sketchSlice.actions.getAllInteriorSketchRequest(),
+                sketchSlice.actions.getFreeSketchRequest(),
                 
             ];
         })
@@ -673,6 +716,29 @@ const getLatestSketchs$: RootEpic = (action$) =>
             );
         })
     );
+
+const getFreeSketch$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getFreeSketchRequest.match),
+        switchMap((re) => {
+            // IdentityApi.login(re.payload) ?
+            // console.log(re);
+
+            const type = 'free';
+
+            return SketchsApi.getSketchsByType(type).pipe(
+                mergeMap((res: any) => {
+                    console.log(res);
+
+                    return [sketchSlice.actions.getFreeSketchSuccess(res)];
+                }),
+                catchError((err) => [
+                    sketchSlice.actions.getFreeSketchFail(err)
+                ])
+            );
+        })
+    );
+   
 
 const getMostViewdSketchs$: RootEpic = (action$) =>
     action$.pipe(
@@ -1157,6 +1223,7 @@ const deleteSketchInCart$: RootEpic = (action$) =>
 export const SketchEpics = [
     // uploadSketch$,
     getHomeListSketch$,
+    getFreeSketch$,
     getLatestSketchs$,
     getMostViewdSketchs$,
     // getMostDownloadedSketchs$,
@@ -1188,6 +1255,7 @@ export const SketchEpics = [
 ];
 export const {
     getLatestSketchRequest,
+    getFreeSketchRequest,
     getHomeListSketchRequest,
     getMostViewdSketchsRequest,
     getAllToolsRequest,

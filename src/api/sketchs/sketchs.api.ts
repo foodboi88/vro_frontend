@@ -69,6 +69,17 @@ export default class SketchsApi {
         );
     }
 
+    static getSketchsByType(type: string): Observable<any> {
+        const pageSize = 15;
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.GET_SKETCH_BY_TYPE}?size=${pageSize}&offset=0&type=${type}`;
+        return HttpClient.get(api).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
+
     //Tim kiem nang cao
     static advancedSearching(body: ICurrentSearchValue): Observable<any> {
         const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.ADVANCED_SEARCHING}?size=${body.size}&offset=${body.offset}${body.name? "&name=" + body.name: ''}${body.architecture? "&typeOfArchitectureId=" + body.architecture: ''}`;
