@@ -45,6 +45,7 @@ import Cate6 from '../../images/homepage/cate6.png'
 import Cate7 from '../../images/homepage/cate7.png'
 import Cate8 from '../../images/homepage/cate8.png'
 import Cate9 from '../../images/homepage/cate9.png'
+import Declare1 from '../../images/homepage/declare2.jpg'
 
 
 import {
@@ -483,6 +484,7 @@ const Home = () => {
             </div>
             <CDeclare
                 content="Chỉnh sửa thiết kế theo yêu cầu"
+                imageUrl={Declare1}
             />
             <div className="tool-of-web">
                 <div className="title">
@@ -536,6 +538,8 @@ const Home = () => {
             </div>
             <CDeclare
                 content="Bản vẽ miễn phí cho bạn"
+                imageUrl={Declare1}
+
             />
             <div className="tool-of-web">
                 <div className="title">

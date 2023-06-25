@@ -224,7 +224,7 @@ const sketchSlice = createSlice({
 
         getFreeSketchSuccess(state, action: PayloadAction<any>) {
             console.log(action);
-            state.freeSketchList = action.payload.data;
+            state.freeSketchList = action.payload.data.items;
             // notification.open({
             //     message: "Load success",
             //     // description:
@@ -724,7 +724,7 @@ const getFreeSketch$: RootEpic = (action$) =>
             // IdentityApi.login(re.payload) ?
             // console.log(re);
 
-            const type = 'free';
+            const type = 'freeProduct';
 
             return SketchsApi.getSketchsByType(type).pipe(
                 mergeMap((res: any) => {
