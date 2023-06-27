@@ -2,6 +2,7 @@
     padding: 5em 3em;
     font-family: Arial, Helvetica, sans-serif;
     font-style: normal;
+    padding-top: 7em;
 
     .breadcrumb {
         margin: 0px;
@@ -186,31 +187,47 @@
     }
 
     .similar-sketch {
+        margin: 3em auto;
+        width: clamp(1100px, 80vw, 1300px);
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        padding-bottom: -8px;
         border-radius: 30px;
 
         .title {
             margin-top: 50px;
             font-weight: 700;
-            font-size: clamp(.8em, 4vw, 1.5em);
+            font-size: 25px;
             text-align: center;
             color: #1E1E1E;
             display: flex;
             justify-content: space-between;
-            text-align: center;
             width: 100%;
             margin-bottom: 1em;
             align-items: center;
 
             .sub-title {
-                font-weight: 500;
-                font-size: clamp(.4em, 4vw, .6em);
-                line-height: 24px;
-                color: #858585;
+                font-weight: 400;
+                font-size: 14px;
+                transition: 0.3s ease-in-out all;
             }
+
+            .sub-title:hover {
+                cursor: pointer;
+                scale: 1.3;
+            }
+        }
+
+        .subtitle {
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 24px;
+            text-align: center;
+            color: #858585;
+            padding: 0px 150px;
+            margin-bottom: 20px;
         }
 
         .lst-tool {
@@ -222,6 +239,545 @@
 
             .btn-icon {
                 border-radius: 50%;
+            }
+        }
+    }
+}
+
+@media (max-width: 1920px) {
+    .main-detail {
+        .breadcrumb {
+            .ant-breadcrumb {
+
+                .ant-breadcrumb-link {}
+
+                .current-link {}
+            }
+        }
+
+        .detail-sketch {
+            .image-carousel {
+                .carousel {
+                    .thumbs.animated {}
+
+                    .thumb {}
+
+                    .thumb:hover {}
+                }
+
+                .slide {}
+
+                .slide:hover {}
+
+                .carousel-slider {
+                    .control-arrow {}
+                }
+
+                .control-dots {}
+
+                .carousel-status {}
+            }
+
+            .content {
+                .title {}
+
+                .price {}
+
+                .rate {
+                    .ant-rate-star.ant-rate-star-half.ant-rate-star-active {
+                        .ant-rate-star-second {}
+                    }
+
+                    .ant-rate-star.ant-rate-star-zero {
+                        .ant-rate-star-first {}
+
+                        .ant-rate-star-second {}
+                    }
+                }
+
+                .property {
+                    .content {}
+                }
+
+                .description {
+                    .des-title {}
+
+                    .des-text {}
+                }
+
+                .action {
+                    .download-now {}
+
+                    .add-to-card {}
+
+                    .add-to-card.hide {}
+                }
+            }
+        }
+
+        .comment {}
+
+        .similar-sketch {
+            width: 1650px;
+            margin-top: -3em;
+
+            .title {
+
+                .sub-title {}
+
+                .sub-title:hover {}
+            }
+
+            .subtitle {}
+
+            .lst-tool {
+                .ant-row {
+
+                    .ant-col {
+
+                        .ant-card {
+                            width: 375px;
+                        }
+                    }
+                }
+
+                .btn-icon {}
+            }
+        }
+    }
+}
+
+@media (max-width: 1720px) {
+    .main-detail {
+        .breadcrumb {
+            .ant-breadcrumb {
+
+                .ant-breadcrumb-link {}
+
+                .current-link {}
+            }
+        }
+
+        .detail-sketch {
+            .image-carousel {
+                .carousel {
+                    .thumbs.animated {}
+
+                    .thumb {}
+
+                    .thumb:hover {}
+                }
+
+                .slide {}
+
+                .slide:hover {}
+
+                .carousel-slider {
+                    .control-arrow {}
+                }
+
+                .control-dots {}
+
+                .carousel-status {}
+            }
+
+            .content {
+                .title {}
+
+                .price {}
+
+                .rate {
+                    .ant-rate-star.ant-rate-star-half.ant-rate-star-active {
+                        .ant-rate-star-second {}
+                    }
+
+                    .ant-rate-star.ant-rate-star-zero {
+                        .ant-rate-star-first {}
+
+                        .ant-rate-star-second {}
+                    }
+                }
+
+                .property {
+                    .content {}
+                }
+
+                .description {
+                    .des-title {}
+
+                    .des-text {}
+                }
+
+                .action {
+                    .download-now {}
+
+                    .add-to-card {}
+
+                    .add-to-card.hide {}
+                }
+            }
+        }
+
+        .comment {}
+
+        .similar-sketch {
+            width: 1400px;
+            margin-top: -3em;
+
+            .title {
+
+                .sub-title {}
+
+                .sub-title:hover {}
+            }
+
+            .subtitle {}
+
+            .lst-tool {
+                .ant-row {
+
+                    .ant-col {
+
+                        .ant-card {
+                            width: 315px;
+                        }
+                    }
+                }
+
+                .btn-icon {}
+            }
+        }
+    }
+}
+
+@media (max-width: 1440px) {
+    .main-detail {
+        .breadcrumb {
+            .ant-breadcrumb {
+
+                .ant-breadcrumb-link {}
+
+                .current-link {}
+            }
+        }
+
+        .detail-sketch {
+            .image-carousel {
+                .carousel {
+                    .thumbs.animated {}
+
+                    .thumb {}
+
+                    .thumb:hover {}
+                }
+
+                .slide {}
+
+                .slide:hover {}
+
+                .carousel-slider {
+                    .control-arrow {}
+                }
+
+                .control-dots {}
+
+                .carousel-status {}
+            }
+
+            .content {
+                .title {}
+
+                .price {}
+
+                .rate {
+                    .ant-rate-star.ant-rate-star-half.ant-rate-star-active {
+                        .ant-rate-star-second {}
+                    }
+
+                    .ant-rate-star.ant-rate-star-zero {
+                        .ant-rate-star-first {}
+
+                        .ant-rate-star-second {}
+                    }
+                }
+
+                .property {
+                    .content {}
+                }
+
+                .description {
+                    .des-title {}
+
+                    .des-text {}
+                }
+
+                .action {
+                    .download-now {}
+
+                    .add-to-card {}
+
+                    .add-to-card.hide {}
+                }
+            }
+        }
+
+        .comment {}
+
+        .similar-sketch {
+            width: 1200px;
+            margin-top: -3em;
+
+            .title {
+
+                .sub-title {}
+
+                .sub-title:hover {}
+            }
+
+            .subtitle {}
+
+            .lst-tool {
+                .ant-row {
+
+                    .ant-col {
+
+                        .ant-card {
+                            width: 265px;
+                        }
+                    }
+                }
+
+                .btn-icon {}
+            }
+        }
+    }
+}
+
+@media (max-width: 1280px) {
+    .main-detail {
+        .breadcrumb {
+            .ant-breadcrumb {
+
+                .ant-breadcrumb-link {}
+
+                .current-link {}
+            }
+        }
+
+        .detail-sketch {
+            .image-carousel {
+                .carousel {
+                    .thumbs.animated {}
+
+                    .thumb {}
+
+                    .thumb:hover {}
+                }
+
+                .slide {}
+
+                .slide:hover {}
+
+                .carousel-slider {
+                    .control-arrow {}
+                }
+
+                .control-dots {}
+
+                .carousel-status {}
+            }
+
+            .content {
+                .title {}
+
+                .price {}
+
+                .rate {
+                    .ant-rate-star.ant-rate-star-half.ant-rate-star-active {
+                        .ant-rate-star-second {}
+                    }
+
+                    .ant-rate-star.ant-rate-star-zero {
+                        .ant-rate-star-first {}
+
+                        .ant-rate-star-second {}
+                    }
+                }
+
+                .property {
+                    .content {}
+                }
+
+                .description {
+                    .des-title {}
+
+                    .des-text {}
+                }
+
+                .action {
+                    .download-now {}
+
+                    .add-to-card {}
+
+                    .add-to-card.hide {}
+                }
+            }
+        }
+
+        .comment {}
+
+        .similar-sketch {
+            width: 950px;
+            margin-top: -3em;
+
+            .title {
+
+                .sub-title {}
+
+                .sub-title:hover {}
+            }
+
+            .subtitle {
+                padding: 0px 50px;
+            }
+
+            .lst-tool {
+                .ant-row {
+
+                    .ant-col {
+
+                        .ant-card {
+                            width: 200px;
+                        }
+                    }
+                }
+
+                .tool {
+                    width: calc(261.33px - 50px);
+                    height: calc(280px - 50px);
+
+                    .tool-title {
+                        font-size: 18px;
+                        padding-top: 50px;
+                    }
+                }
+
+                .btn-icon {}
+            }
+        }
+    }
+}
+
+@media (max-width: 1000px) {
+    .main-detail {
+        .breadcrumb {
+            .ant-breadcrumb {
+
+                .ant-breadcrumb-link {}
+
+                .current-link {}
+            }
+        }
+
+        .detail-sketch {
+            .image-carousel {
+                .carousel {
+                    .thumbs.animated {}
+
+                    .thumb {}
+
+                    .thumb:hover {}
+                }
+
+                .slide {}
+
+                .slide:hover {}
+
+                .carousel-slider {
+                    .control-arrow {}
+                }
+
+                .control-dots {}
+
+                .carousel-status {}
+            }
+
+            .content {
+                .title {}
+
+                .price {}
+
+                .rate {
+                    .ant-rate-star.ant-rate-star-half.ant-rate-star-active {
+                        .ant-rate-star-second {}
+                    }
+
+                    .ant-rate-star.ant-rate-star-zero {
+                        .ant-rate-star-first {}
+
+                        .ant-rate-star-second {}
+                    }
+                }
+
+                .property {
+                    .content {}
+                }
+
+                .description {
+                    .des-title {}
+
+                    .des-text {}
+                }
+
+                .action {
+                    .download-now {}
+
+                    .add-to-card {}
+
+                    .add-to-card.hide {}
+                }
+            }
+        }
+
+        .comment {}
+
+        .similar-sketch {
+            width: 750px;
+            margin-top: -3em;
+
+            .title {
+
+                .sub-title {}
+
+                .sub-title:hover {}
+            }
+
+            .subtitle {
+                padding: 0px 50px;
+            }
+
+            .lst-tool {
+                .ant-row {
+
+                    .ant-col {
+
+                        .ant-card {
+                            width: 210px;
+                        }
+                    }
+                }
+
+                .tool {
+                    width: calc(261.33px - 50px);
+                    height: calc(280px - 50px);
+
+                    .tool-title {
+                        font-size: 18px;
+                        padding-top: 50px;
+                    }
+                }
+
+                .btn-icon {}
             }
         }
     }
@@ -308,39 +864,129 @@
 
         .comment {}
 
-        .similar-sketch {
-            .title {
-                .sub-title {}
+
+    }
+}
+
+@media (max-width: 800px) {
+    .main-detail {
+        .breadcrumb {
+            .ant-breadcrumb {
+
+                .ant-breadcrumb-link {}
+
+                .current-link {}
+            }
+        }
+
+        .detail-sketch {
+            .image-carousel {
+                .carousel {
+                    .thumbs.animated {}
+
+                    .thumb {}
+
+                    .thumb:hover {}
+                }
+
+                .slide {}
+
+                .slide:hover {}
+
+                .carousel-slider {
+                    .control-arrow {}
+                }
+
+                .control-dots {}
+
+                .carousel-status {}
             }
 
-            .subtitle {}
+            .content {
+                .title {}
+
+                .price {}
+
+                .rate {
+                    .ant-rate-star.ant-rate-star-half.ant-rate-star-active {
+                        .ant-rate-star-second {}
+                    }
+
+                    .ant-rate-star.ant-rate-star-zero {
+                        .ant-rate-star-first {}
+
+                        .ant-rate-star-second {}
+                    }
+                }
+
+                .property {
+                    .content {}
+                }
+
+                .description {
+                    .des-title {}
+
+                    .des-text {}
+                }
+
+                .action {
+                    .download-now {}
+
+                    .add-to-card {}
+
+                    .add-to-card.hide {}
+                }
+            }
+        }
+
+        .comment {}
+
+        .similar-sketch {
+            width: 550px;
+            margin-top: -3em;
+
+            .title {
+
+                .sub-title {}
+
+                .sub-title:hover {}
+            }
+
+            .subtitle {
+                padding: 0px 50px;
+            }
 
             .lst-tool {
-                .ant-card-body {
-                    .title-and-price {
-                        .ant-card-meta-title {}
+                .ant-row {
 
-                        .home-card-title {
-                            .h-c-t-title {
-                                font-size: clamp(0.5em, 2vw, 1.1em);
-                            }
+                    .ant-col {
 
-                            .h-c-t-view-point {
-                                font-size: clamp(0.5em, 1.5vw, 1.1em);
-                            }
+                        .ant-card {
+                            width: 220px;
                         }
                     }
-
-                    .home-card-description {
-                        font-size: clamp(0.5em, 1.5vw, 1.1em);
-                    }
-
-                    .home-card-price {
-                        font-size: clamp(0.5em, 1.5vw, 1.1em);
-                    }
-
-                    .home-card-price.free {}
                 }
+
+                .tool {
+                    width: calc(269.33px - 100px);
+                    height: calc(280px - 100px);
+
+                    .tool-title {
+                        font-size: 14px;
+                        padding-top: 20px;
+                    }
+
+                    .tool-subtitle {
+                        font-size: 12px;
+                        padding: 0px 10px;
+                    }
+
+                    .btn-tool {
+                        font-size: 10px;
+                    }
+                }
+
+                .btn-icon {}
             }
         }
     }
@@ -426,38 +1072,68 @@
         .comment {}
 
         .similar-sketch {
+            width: 100%;
+            margin: 1em 0;
+            padding: 0 1em;
+
             .title {
-                .sub-title {}
+                font-size: .8em;
+
+                .sub-title {
+                    font-size: .8em;
+                }
             }
 
-            .subtitle {}
+            .subtitle {
+                padding: 0px 50px;
+            }
 
             .lst-tool {
-                .ant-card-body {
-                    .title-and-price {
-                        .ant-card-meta-title {}
+                justify-content: start;
 
-                        .home-card-title {
-                            .h-c-t-title {
-                                font-size: clamp(0.8em, 3vw, 1em);
-                            }
+                .btn-icon {
+                    display: none;
+                }
 
-                            .h-c-t-view-point {
-                                font-size: clamp(.6em, 2vw, 1.1em);
-                            }
+                .ant-row {
+                    display: flex;
+                    flex-flow: row;
+                    overflow: auto;
+
+                    .ant-col {
+                        padding: 0 !important;
+
+                        .ant-card {
+                            width: 80%;
                         }
                     }
 
-                    .home-card-description {
-                        font-size: clamp(.6em, 2vw, 1.1em);
+                    .ant-col-24 {
+                        flex: 0 0 80%
                     }
-
-                    .home-card-price {
-                        font-size: clamp(.6em, 2vw, 1.1em);
-                    }
-
-                    .home-card-price.free {}
                 }
+
+                .ant-row::-webkit-scrollbar {
+                    display: none;
+
+                }
+
+                .tool {
+                    .tool-title {
+                        font-size: 12px;
+                    }
+
+                    .tool-subtitle {
+                        font-size: 10px;
+                        margin-bottom: 5px;
+                    }
+
+                    .btn-tool {
+                        font-size: 8px;
+                    }
+                }
+
+                .btn-icon {}
             }
         }
     }
@@ -551,38 +1227,70 @@
         .comment {}
 
         .similar-sketch {
+            width: 100%;
+            margin: 1em 0;
+            padding: 0;
+
             .title {
-                .sub-title {}
+                font-size: 1em;
+                margin-top: 1em;
+
+                .sub-title {
+                    font-size: .8em;
+                }
             }
 
-            .subtitle {}
+            .subtitle {
+                padding: 0px 50px;
+            }
 
             .lst-tool {
-                .ant-card-body {
-                    .title-and-price {
-                        .ant-card-meta-title {}
+                justify-content: start;
+                gap: 0;
 
-                        .home-card-title {
-                            .h-c-t-title {
-                                font-size: clamp(.8em, 4vw, 2em);
-                            }
+                .btn-icon {
+                    display: none;
+                }
 
-                            .h-c-t-view-point {
-                                font-size: clamp(.6em, 4vw, 2em);
-                            }
+                .ant-row {
+                    display: flex;
+                    flex-flow: row;
+                    overflow: auto;
+
+                    .ant-col {
+                        padding: 0 !important;
+
+                        .ant-card {
+                            width: 80%;
                         }
                     }
 
-                    .home-card-description {
-                        font-size: clamp(.6em, 4vw, 2em);
+                    .ant-col-24 {
+                        flex: 0 0 55%
                     }
-
-                    .home-card-price {
-                        font-size: clamp(.6em, 4vw, 2em);
-                    }
-
-                    .home-card-price.free {}
                 }
+
+                .ant-row::-webkit-scrollbar {
+                    display: none;
+
+                }
+
+                .tool {
+                    .tool-title {
+                        font-size: 12px;
+                    }
+
+                    .tool-subtitle {
+                        font-size: 10px;
+                        margin-bottom: 5px;
+                    }
+
+                    .btn-tool {
+                        font-size: 8px;
+                    }
+                }
+
+                .btn-icon {}
             }
         }
     }

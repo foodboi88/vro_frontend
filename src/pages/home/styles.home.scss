@@ -1063,7 +1063,7 @@
             padding: .8em 1em;
             background: none;
             border-radius: 16px;
-            margin: 6em 3em 1em 3em;
+            margin: 6em 3em 0 3em;
 
             .category-list {
                 margin-top: 0em;
@@ -1132,7 +1132,8 @@
                 align-items: center;
 
                 .carousel {
-                    width: 15em;
+                    width: 20em;
+                    margin: 0;
                     // margin-top: -90px;
 
                     .ant-carousel {
@@ -1168,7 +1169,8 @@
             padding: 0 1em;
 
             .title {
-                font-size: .8em;
+                font-size: 1em;
+                margin-top: 1em;
 
                 .sub-title {
                     font-size: .8em;
@@ -1200,7 +1202,7 @@
                     }
 
                     .ant-col-24 {
-                        flex: 0 0 80%
+                        flex: 0 0 55%
                     }
                 }
 

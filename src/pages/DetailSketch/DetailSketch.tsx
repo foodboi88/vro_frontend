@@ -78,24 +78,23 @@ const DetailSketch = () => {
         };
 
         window.addEventListener("resize", handleWindowResize);
-        if (window.innerWidth > 900) {
+        if (window.innerWidth > 1000) {
             setSpanCol(6);
             setNumberOfCardShow(4);
-            setNumberOfCardNext(4);
         }
-        if (window.innerWidth <= 900) {
+        if (window.innerWidth <= 1000) {
             setSpanCol(8);
             setNumberOfCardShow(3);
             setNumberOfCardNext(5);
         }
-        if (window.innerWidth <= 600) {
+        if (window.innerWidth <= 800) {
             setSpanCol(12);
             setNumberOfCardShow(2);
             setNumberOfCardNext(6);
         }
-        if (window.innerWidth <= 400) {
+        if (window.innerWidth <= 600) {
             setSpanCol(24);
-            setNumberOfCardShow(1);
+            setNumberOfCardShow(100);
             setNumberOfCardNext(7);
         }
         return () => {
@@ -174,14 +173,14 @@ const DetailSketch = () => {
     };
 
     const handleAddToCart = (sketchId: string) => {
-        if(accesstokenExpỉred === false){
+        if (accesstokenExpỉred === false) {
 
             const req = {
                 productId: sketchId,
                 additionalProp1: {},
             };
             dispatch(addSketchToCartRequest(req));
-        }else{
+        } else {
             notification.open({
                 message: "Bạn chưa đăng nhập",
                 description: "Vui lòng đăng nhập để thêm sản phẩm vào giỏ!",

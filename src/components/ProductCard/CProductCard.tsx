@@ -12,6 +12,7 @@ import BietThu from "../../images/homepage/bietthu1.png";
 import { useNavigate } from "react-router-dom";
 import "./styles.productcard.scss";
 import Utils from "../../common/utils";
+import ImageNotFound from "../../images/Image_not_available.png";
 interface props {
     imageUrl?: string;
     title: string;
@@ -27,7 +28,7 @@ const CProductCard = (props: props) => {
         <Card
             className="card"
             hoverable
-            cover={<img className="image-card" alt="example" src={props.imageUrl} />}
+            cover={<img className="image-card" alt="example" src={props.imageUrl ? props.imageUrl : ImageNotFound} />}
         >
             <div className="title-and-price">
                 <Meta

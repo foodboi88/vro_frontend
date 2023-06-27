@@ -600,9 +600,12 @@
             opacity: 0.8;
         }
 
-
         .header-content-input.draw.false {
             display: block;
+        }
+
+        .drawer-button.login {
+            display: none;
         }
     }
 }
@@ -697,22 +700,24 @@
 }
 
 @media (max-width: 900px) {
-    .main-header {
-        .header-left {
-            .header-content-input {
-                display: none;
-            }
-        }
-
-        .header-right {
-            .user-infor {
-                .header-button {
+    .header {
+        .main-header {
+            .header-left {
+                .header-content-input {
                     display: none;
                 }
             }
 
-            .menubtn {
-                display: block;
+            .header-right {
+                .user-infor {
+                    .header-button {
+                        display: none;
+                    }
+                }
+
+                .menubtn {
+                    display: block;
+                }
             }
         }
     }
@@ -723,6 +728,37 @@
 
     .post-btn.login {
         display: block;
+    }
+
+    .ant-drawer-content-wrapper {
+        width: 20em !important;
+
+        .drawer-button {
+            background: #E60200;
+            border-radius: 30px;
+            color: #FFFFFF;
+            border: none;
+            font-weight: 400;
+            font-size: 14px;
+            display: flex;
+            gap: 10px;
+            text-align: center;
+            justify-content: center;
+            margin-bottom: 1em;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .drawer-button:hover {
+            opacity: 0.8;
+        }
+
+        .header-content-input.draw.false {
+            display: block;
+        }
+
+        .drawer-button.login {
+            display: block;
+        }
     }
 
 }
@@ -836,7 +872,7 @@
         margin: 0;
 
         .search-input {
-            width: 300px;
+            width: 100%;
             justify-content: center;
         }
     }
