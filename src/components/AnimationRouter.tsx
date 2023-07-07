@@ -8,6 +8,7 @@ import DetailSketch from "../pages/DetailSketch/DetailSketch";
 import UploadSketch from "../pages/UploadSketch/UploadSketch";
 import Cart from "../pages/Cart/Cart";
 import AuthorPage from "../pages/AuthorPage/AuthorPage";
+import PrivateRoutes from "./PrivateRoutes";
 
 // Dùng để set animation cho các router với nhau
 const AnimationRouter = () => {
@@ -15,6 +16,10 @@ const AnimationRouter = () => {
     return (
         <AnimatePresence>
             <Routes location={location} key={location.pathname}>
+                <Route element={<PrivateRoutes />}>
+                    <Route path="/upload-sketch" element={<UploadSketch />}></Route>
+                </Route>
+
                 <Route path="/" element={<Home />}></Route>
                 <Route path="/searching" element={<AdvancedSeaching />}></Route>
                 <Route
@@ -25,7 +30,6 @@ const AnimationRouter = () => {
                     path="/author-page/:authorId"
                     element={<AuthorPage />}
                 ></Route>
-                <Route path="/upload-sketch" element={<UploadSketch />}></Route>
                 <Route path="/cart" element={<Cart />}></Route>
             </Routes>
         </AnimatePresence>

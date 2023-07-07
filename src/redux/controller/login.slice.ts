@@ -33,6 +33,7 @@ interface LoginState {
     userMail: string | undefined;
     userPhone: string | undefined;
     accesstokenExpỉred: boolean;
+    userRole: string;
 }
 
 const initState: LoginState = {
@@ -51,6 +52,7 @@ const initState: LoginState = {
     isExistEmail: true,
     registerSuccess: false,
     accesstokenExpỉred: true,
+    userRole: 'user',
 };
 
 const loginSlice = createSlice({

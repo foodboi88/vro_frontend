@@ -105,20 +105,7 @@ export const CHeader = (props: MyProps) => {
             setUserEmail(usermail ? usermail : '');
             setUserName(username ? username : '');
         }
-        // else{
-        //     notification.open({
-
-        //         message: "Hết phiên đăng nhập",
-        //         description: "Vui lòng đăng nhập lại!" ,
-        //         onClick: () => {
-        //             console.log("Vui lòng đăng nhập lại!");
-        //         },
-        //         style: {
-        //             marginTop: 50,
-        //             paddingTop: 40,
-        //         },
-        //     });
-        // }
+       
     }, [accesstokenExpỉred])
 
     // Kiểm tra xem đường dẫn đang là gì để set thuộc tính đã click cho header
@@ -181,7 +168,7 @@ export const CHeader = (props: MyProps) => {
 
     // Hàm chuyển đổi trạng thái đóng mở modal login
     const toggleLoginModal = () => {
-        setIsOpenLoginModal(!isOpenLoginModal);
+        setIsOpenLoginModal(false);
         setIsOpenRegisterModal(false);
     };
     // Hàm chuyển đổi trạng thái đóng mở modal registration
@@ -268,7 +255,7 @@ export const CHeader = (props: MyProps) => {
                             </>
                         ) : (
                             <>
-                                <motion.div
+                                {/* <motion.div
                                     className={`header-button post ${isLogin && "login"}`}
                                     whileHover={{ scale: 1.1 }}
                                     whileTap={{ scale: 0.95 }}
@@ -280,7 +267,7 @@ export const CHeader = (props: MyProps) => {
                                     >
                                         Đăng bản vẽ
                                     </Button>
-                                </motion.div>
+                                </motion.div> */}
                                 <div className="icon-group">
                                     <Badge count={10} size="default">
                                         <BellOutlined />
