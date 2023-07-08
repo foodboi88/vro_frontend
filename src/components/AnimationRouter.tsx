@@ -8,7 +8,8 @@ import DetailSketch from "../pages/DetailSketch/DetailSketch";
 import UploadSketch from "../pages/UploadSketch/UploadSketch";
 import Cart from "../pages/Cart/Cart";
 import AuthorPage from "../pages/AuthorPage/AuthorPage";
-import PrivateRoutes from "./PrivateRoutes";
+import PrivateSellerRoutes from "./PrivateSellerRoutes";
+import PrivateBuyerRoutes from "./PrivateBuyerRoutes";
 
 // Dùng để set animation cho các router với nhau
 const AnimationRouter = () => {
@@ -18,12 +19,21 @@ const AnimationRouter = () => {
             <Routes location={location} key={location.pathname}>
 
                 {/* Trang kỹ sư - công ty */}
-                <Route element={<PrivateRoutes />}>
-                    <Route path="/upload-sketch" element={<UploadSketch />}></Route>
+                <Route element={<PrivateSellerRoutes />}>
+                    <Route path="/seller" >
+                        <Route path="/seller/upload-sketch" element={<UploadSketch />}></Route>
+
+                    </Route>
                 </Route>
 
                 
                 {/* Trang người mua */}
+                <Route element={<PrivateBuyerRoutes />}>
+                    <Route path="/buyer" >
+                        <Route path="/buyer/registration-seller"></Route>
+
+                    </Route>
+                </Route>
                 <Route path="/" element={<Home />}></Route>
                 <Route path="/searching" element={<AdvancedSeaching />}></Route>
                 <Route

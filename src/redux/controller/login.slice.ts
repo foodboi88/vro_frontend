@@ -52,7 +52,7 @@ const initState: LoginState = {
     isExistEmail: true,
     registerSuccess: false,
     accesstokenExpỉred: true,
-    userRole: 'user',
+    userRole: 'buyer',
 };
 
 const loginSlice = createSlice({
