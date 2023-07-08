@@ -71,35 +71,128 @@
         .profile-content-right {
             width: 30vw;
 
-            .ant-form {
-                .ant-form-item {
-                    .ant-row {
-                        .ant-col {
-                            color: #4E4E4E;
-                            font-size: 16px;
-                            font-weight: 400;
-                        }
 
-                        .button-submit {
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            gap: .5em;
-                            border-radius: 10px;
-                            border: 1px solid #CF0201;
-                            background-color: #CF0201;
-                            color: white;
-                            transition: all .3s ease-in-out;
-                        }
+        }
 
-                        .button-submit:hover {
-                            scale: 1.1;
-                        }
-                    }
-                }
 
+    }
+
+    .profile-content.become-seller {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        width: 80%;
+
+        .profile-content-title {
+            color: #4E4E4E;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .profile-content-option {
+            display: flex;
+            align-items: center;
+
+            .ant-radio-group {
+                display: flex;
+                align-items: center;
+                gap: 1em;
+            }
+
+            .profile-content-option-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
 
             }
+
+
+        }
+
+        .button-submit {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: .5em;
+            border-radius: 10px;
+            border: 1px solid #CF0201;
+            background-color: #CF0201;
+            color: white;
+            transition: all .3s ease-in-out;
+        }
+
+
+
+        .button-submit:hover {
+            scale: 1.1;
+        }
+    }
+
+    .form-individuals {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 80%;
+        gap: 0em;
+
+        .profile-content-title {
+            color: #4E4E4E;
+            font-size: 1.25em;
+            font-weight: 700;
+        }
+
+        .profile-content-sub-title {
+            color: #858585;
+            font-size: .8em;
+            font-weight: 400;
+        }
+
+        .form-individuals-content {
+            width: 50vw;
+
+            .button-groud {
+                display: flex;
+                justify-content: center;
+                gap: 1em;
+            }
+        }
+    }
+}
+
+.ant-form {
+    .ant-form-item {
+        .ant-row {
+            .ant-col {
+                color: #4E4E4E;
+                font-size: 16px;
+                font-weight: 400;
+            }
+
+            .button-submit {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: .5em;
+                border-radius: 10px;
+                border: 1px solid #CF0201;
+                background-color: #CF0201;
+                color: white;
+                transition: all .3s ease-in-out;
+            }
+
+            .button-submit:hover {
+                scale: 1.1;
+            }
+        }
+    }
+
+    .flex-col {
+        display: flex;
+        gap: 1em;
+
+        .ant-form-item {
+            width: 100%;
         }
     }
 }
@@ -143,3 +236,36 @@
 }
 
 .ant-input::-webkit-input-placeholder {}
+
+.ant-picker {
+    width: 100%;
+    background: var(--background-input-color);
+    border-radius: 10px;
+    padding-left: 20px;
+}
+
+.ant-picker:hover {
+    border: 1.5px solid var(--border-color);
+}
+
+.ant-picker.ant-picker-focused {
+    border-color: var(--border-color);
+    box-shadow: 0 0 0 1px var(--border-color);
+    caret-color: var(--border-color);
+}
+
+.button-back {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5em;
+    border-radius: 10px;
+    background-color: white;
+    transition: all .3s ease-in-out;
+}
+
+.button-back:hover {
+    border: 1px solid #CF0201;
+    scale: 1.1;
+    color: #CF0201;
+}
