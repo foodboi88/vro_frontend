@@ -115,6 +115,9 @@ const loginSlice = createSlice({
             Utils.setLocalStorage("userName", action.payload.user.name);
             Utils.setLocalStorage("userMail", action.payload.user.email);
             Utils.setLocalStorage("userPhone", action.payload.user.phone);
+            state.userName = action.payload.user.name;
+            state.userMail = action.payload.user.email;
+            state.userPhone = action.payload.user.phone;
             state.loading = false;
             state.isSuccess = true;
             state.accesstokenExpỉred = false;
@@ -322,6 +325,7 @@ const login$: RootEpic = (action$) =>
 
                     return [
                         loginSlice.actions.loginSuccess(res.data),
+                        loginSlice.actions.getUserInfoRequest(res.data.accessToken),
                         loginSlice.actions.setLoading(false),
                         loginSlice.actions.setStatusCode(res.statusCode),
                     ];

@@ -110,6 +110,7 @@ export const CHeader = (props: MyProps) => {
         Utils.removeItemLocalStorage("userMail");
         Utils.removeItemLocalStorage("userName");
         Utils.removeItemLocalStorage("userPhone");
+        Utils.removeItemLocalStorage("role");
 
         Utils.removeItemLocalStorage("refresh_token");
         setIsLogin(!isLogin);

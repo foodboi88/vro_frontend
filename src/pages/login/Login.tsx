@@ -20,17 +20,17 @@ const Login = (props: MyProps) => {
     const [userEmailLogin, setUserEmailLogin] = useState<string>("");
     const [userPassLogin, setUserPassLogin] = useState<string>("");
     const [checkLoginBtn, setCheckLoginBtn] = useState<boolean>(true);
-    const { tokenLogin  } = useSelectorRoot((state) => state.login);
+    const { accesstokenExpỉred  } = useSelectorRoot((state) => state.login);
 
 
     const dispatch = useDispatchRoot();
 
     useEffect(()=>{
-        if(tokenLogin){
+        if(!accesstokenExpỉred){
             props.toggleLoginModal();
             props.checkIsLogin(true);
         }
-    },[tokenLogin])
+    },[accesstokenExpỉred])
 
     const handleInputEmailLoginChange = (event: { target: { value: any } }) => {
         setUserEmailLogin(event.target.value);
