@@ -2,6 +2,7 @@ import { Outlet, Navigate, useNavigate } from 'react-router-dom'
 import { useSelectorRoot } from '../redux/store';
 import { useEffect } from 'react';
 import { notification } from 'antd';
+import { ROLE } from '../enum/role.enum';
 
 type Props = {
     children?: React.ReactNode
@@ -15,7 +16,7 @@ const PrivateSellerRoutes = ({children}: Props) => {
 
 
     useEffect(()=>{
-        if(userRole !== 'seller'){
+        if(userRole !== ROLE.SELLER){
             notification.open({
                 message: "Bạn phải đăng ký làm người bán hàng trước tiên",
                 onClick: () => {
@@ -31,7 +32,7 @@ const PrivateSellerRoutes = ({children}: Props) => {
     },[userRole])
 
     return(
-        (userRole === 'seller') ? <Outlet/> : <Navigate to="/"/>
+        (userRole === ROLE.SELLER) ? <Outlet/> : <Navigate to="/"/>
     )
 }
 

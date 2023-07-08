@@ -53,11 +53,9 @@ interface MyProps {
 export const CHeader = (props: MyProps) => {
     const [visible, setVisible] = useState(false); // Biến thể hiện nút thu gọn menu có đang mở hay không
     const [current, setCurrent] = useState<string>("1"); // Biến thể hiện giá trị cho nút hiện tại
-    const { tokenLogin, accesstokenExpỉred } = useSelectorRoot((state) => state.login);
+    const { tokenLogin, accesstokenExpỉred, userName } = useSelectorRoot((state) => state.login);
     const { sketchsQuantityInCart } = useSelectorRoot((state) => state.sketch);
 
-    const [userName, setUserName] = useState<string>("")
-    const [userEmail, setUserEmail] = useState<string>("")
 
     const navigate = useNavigate();
     const [isOpenLoginModal, setIsOpenLoginModal] = useState<boolean>(false); // Biến kiểm tra đang mở modal login hay chưa
@@ -67,24 +65,11 @@ export const CHeader = (props: MyProps) => {
     const { currentSearchValue } = useSelectorRoot((state) => state.sketch);
     const dispatch = useDispatchRoot();
 
-    // useEffect(() => {
-    //     if (tokenLogin) {
-    //         const usermail = localStorage.getItem('userMail') ? localStorage.getItem('userMail') : '';
-    //         const username = localStorage.getItem('userName') ? localStorage.getItem('userName') : '';
-    //         setUserEmail(usermail ? usermail : '');
-    //         setUserName(username ? username : '');
-    //     }
-    // });
     useEffect(() => {
         if (window.location.pathname === "/test") setCurrent("2");
         if (window.location.pathname === "/news") setCurrent("3");
         if (window.location.pathname === "/about_us") setCurrent("4");
         if (window.location.pathname === "/") setCurrent("1");
-        // dispatch(getSketchQuantityInCartRequest());
-        // const usermail = localStorage.getItem('userMail') ? localStorage.getItem('userMail') : '';
-        // const username = localStorage.getItem('userName') ? localStorage.getItem('userName') : '';
-        // setUserEmail(usermail ? usermail : '');
-        // setUserName(username ? username : '');
     }, []);
 
     useEffect(() => {
@@ -100,10 +85,6 @@ export const CHeader = (props: MyProps) => {
         console.log(isLogin);
         if (accesstokenExpỉred === false) {
             dispatch(getSketchQuantityInCartRequest());
-            const usermail = localStorage.getItem('userMail') ? localStorage.getItem('userMail') : '';
-            const username = localStorage.getItem('userName') ? localStorage.getItem('userName') : '';
-            setUserEmail(usermail ? usermail : '');
-            setUserName(username ? username : '');
         }
        
     }, [accesstokenExpỉred])

@@ -34,6 +34,7 @@ const AnimationRouter = () => {
 
                     </Route>
                 </Route>
+                
                 <Route path="/" element={<Home />}></Route>
                 <Route path="/searching" element={<AdvancedSeaching />}></Route>
                 <Route

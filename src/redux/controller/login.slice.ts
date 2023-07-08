@@ -52,7 +52,7 @@ const initState: LoginState = {
     isExistEmail: true,
     registerSuccess: false,
     accesstokenExpỉred: true,
-    userRole: 'buyer',
+    userRole: Utils.getValueLocalStorage("role") ? Utils.getValueLocalStorage("role") : 'user',
 };
 
 const loginSlice = createSlice({
@@ -66,11 +66,13 @@ const loginSlice = createSlice({
         loginSuccess(state, action: PayloadAction<any>) {
             Utils.setLocalStorage("token", action.payload.accessToken);
             Utils.setLocalStorage("refresh_token", action.payload.refreshToken);
+            Utils.setLocalStorage("role", action.payload.role);
             
             state.tokenLogin = action.payload.accessToken;
             state.loading = false;
             state.isSuccess = true;
             state.accesstokenExpỉred = false;
+            state.userRole = action.payload.role
             notification.open({
                 message: "Đăng nhập thành công",
                 onClick: () => {
