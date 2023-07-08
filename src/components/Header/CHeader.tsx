@@ -86,7 +86,7 @@ export const CHeader = (props: MyProps) => {
         if (accesstokenExpỉred === false) {
             dispatch(getSketchQuantityInCartRequest());
         }
-       
+
     }, [accesstokenExpỉred])
 
     // Kiểm tra xem đường dẫn đang là gì để set thuộc tính đã click cho header
@@ -266,7 +266,7 @@ export const CHeader = (props: MyProps) => {
                                         />
                                     </Badge>
                                 </div>
-                                <div className="user-info-content">
+                                <div className="user-info-content" onClick={() => navigate('/buyer/profile')}>
                                     <Avatar className="avatar" src={UserIcon} />
                                     <div className="name-and-balance">
                                         <div className="name">{userName}</div>
