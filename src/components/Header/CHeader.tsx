@@ -44,6 +44,7 @@ import { GoLocation } from "react-icons/go";
 import { FaPhoneVolume } from "react-icons/fa";
 import { BsQuestionCircle } from "react-icons/bs";
 import { AiOutlineFileAdd } from "react-icons/ai";
+import { ROLE } from "../../enum/role.enum";
 
 interface MyProps {
     // setIsLogout: React.Dispatch<React.SetStateAction<boolean>>
@@ -64,7 +65,7 @@ export const CHeader = (props: MyProps) => {
     const [isLogin, setIsLogin] = useState<boolean>(false);
     const { currentSearchValue } = useSelectorRoot((state) => state.sketch);
     const dispatch = useDispatchRoot();
-
+    const { userRole } = useSelectorRoot((state) => state.login); // Biến kiểm tra xem user có phải là admin hay không
     useEffect(() => {
         if (window.location.pathname === "/test") setCurrent("2");
         if (window.location.pathname === "/news") setCurrent("3");
@@ -182,6 +183,11 @@ export const CHeader = (props: MyProps) => {
         navigate("/cart");
     };
 
+    // Hàm xử lý khi click vào avatar
+    const onClickAvatar = () => {
+        userRole === ROLE.BUYER ? navigate('/buyer/profile') : navigate('/seller/profile')
+    }
+
     return (
         <div className="header">
             <div className="main-header">
@@ -266,7 +272,7 @@ export const CHeader = (props: MyProps) => {
                                         />
                                     </Badge>
                                 </div>
-                                <div className="user-info-content" onClick={() => navigate('/buyer/profile')}>
+                                <div className="user-info-content" onClick={() => onClickAvatar()}>
                                     <Avatar className="avatar" src={UserIcon} />
                                     <div className="name-and-balance">
                                         <div className="name">{userName}</div>
