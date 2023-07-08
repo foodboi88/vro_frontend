@@ -203,27 +203,12 @@ const AdvancedSeaching = () => {
             <CFilter />
             <div className="filtered-items">
                 <div className="author-introduction">
-                    <div className="searched-author-title">
-                        <div className="text-title">
-                            <UserOutlined /> Tác giả liên quan đến{" "}
-                            <strong>{'"Bản vẽ biệt thự 2 tầng"'}</strong>{" "}
-                        </div>
-
-                        <motion.div
-                            whileHover={{ scale: 1.3 }}
-                            whileTap={{ scale: 0.95 }}
-                        >
-                            <div className="text-title results">
-                                Thêm kết quả
-                            </div>
-                        </motion.div>
-                    </div>
-                    {/* <CAuthorIntroduction /> */}
+                    
                 </div>
                 <div className="sketch-list">
                     <div className="searched-sketch-title">
                         <SearchOutlined /> Bản vẽ liên quan tới{" "}
-                        <strong>{'"Bản vẽ biệt thự 2 tầng"'}</strong>
+                        <strong>{currentSearchValue.name}</strong>
                     </div>
                     <CArrangeBar />
                     <Row className="detail-list" gutter={[16, 24]}>

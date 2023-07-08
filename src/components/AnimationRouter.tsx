@@ -16,10 +16,14 @@ const AnimationRouter = () => {
     return (
         <AnimatePresence>
             <Routes location={location} key={location.pathname}>
+
+                {/* Trang kỹ sư - công ty */}
                 <Route element={<PrivateRoutes />}>
                     <Route path="/upload-sketch" element={<UploadSketch />}></Route>
                 </Route>
 
+                
+                {/* Trang người mua */}
                 <Route path="/" element={<Home />}></Route>
                 <Route path="/searching" element={<AdvancedSeaching />}></Route>
                 <Route
