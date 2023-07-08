@@ -10,6 +10,7 @@ import Cart from "../pages/Cart/Cart";
 import AuthorPage from "../pages/AuthorPage/AuthorPage";
 import PrivateSellerRoutes from "./PrivateSellerRoutes";
 import PrivateBuyerRoutes from "./PrivateBuyerRoutes";
+import Profile from "../pages/Profile/Profile";
 
 // Dùng để set animation cho các router với nhau
 const AnimationRouter = () => {
@@ -26,12 +27,12 @@ const AnimationRouter = () => {
                     </Route>
                 </Route>
 
-                
+
                 {/* Trang người mua */}
                 <Route element={<PrivateBuyerRoutes />}>
                     <Route path="/buyer" >
                         <Route path="/buyer/registration-seller"></Route>
-
+                        <Route path="/buyer/profile" element={<Profile />}></Route>
                     </Route>
                 </Route>
                 <Route path="/" element={<Home />}></Route>

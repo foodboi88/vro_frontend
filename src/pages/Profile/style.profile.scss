@@ -1,0 +1,145 @@
+.main-profile {
+    font-family: 'Lexend Deca';
+    font-style: normal;
+    margin: 3em;
+    background-color: white;
+    margin-top: 8em;
+    padding: 2em;
+    display: flex;
+    gap: 3em;
+    border-radius: 10px;
+
+    .profile-navbar {
+        display: flex;
+        flex-direction: column;
+        gap: .5em;
+        width: 20%;
+        border-right: 1px solid #DFDFDF;
+        padding-right: 3em;
+
+        .profile-navbar-item {
+            display: flex;
+            align-items: center;
+            gap: .5em;
+            padding: .5em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all .3s ease-in-out;
+        }
+
+        .profile-navbar-item.active {
+            background-color: #CF0201;
+            color: white;
+
+            .profile-navbar-item-text {
+                color: white;
+                transition: all .3s ease-in-out;
+            }
+        }
+    }
+
+    .profile-content {
+        display: flex;
+        gap: 5em;
+
+        .profile-content-left {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+
+            .profile-content-button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: .5em;
+                border-radius: 10px;
+                border: 1px solid #CF0201;
+                background-color: #CF0201;
+                color: white;
+                transition: all .3s ease-in-out;
+
+                span {
+                    color: white;
+                }
+            }
+
+            .profile-content-button:hover {
+                scale: 1.1;
+            }
+        }
+
+        .profile-content-right {
+            width: 30vw;
+
+            .ant-form {
+                .ant-form-item {
+                    .ant-row {
+                        .ant-col {
+                            color: #4E4E4E;
+                            font-size: 16px;
+                            font-weight: 400;
+                        }
+
+                        .button-submit {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            gap: .5em;
+                            border-radius: 10px;
+                            border: 1px solid #CF0201;
+                            background-color: #CF0201;
+                            color: white;
+                            transition: all .3s ease-in-out;
+                        }
+
+                        .button-submit:hover {
+                            scale: 1.1;
+                        }
+                    }
+                }
+
+
+            }
+        }
+    }
+}
+
+.ant-input {
+    background: var(--background-input-color);
+    border-radius: 10px;
+    padding-left: 20px;
+}
+
+.ant-input::placeholder {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    color: var(--border-color);
+}
+
+.ant-input:hover,
+.ant-input-affix-wrapper.ant-input-password.form-input:hover {
+    border: 1.5px solid var(--border-color);
+}
+
+.ant-input:focus,
+.ant-input-affix-wrapper.ant-input-password.form-input:focus {
+    border-color: var(--border-color);
+    box-shadow: 0 0 0 1px var(--border-color);
+    caret-color: var(--border-color);
+}
+
+.ant-input-affix-wrapper.ant-input-password.form-input {
+    background: var(--background-input-color);
+    border-radius: 1em;
+}
+
+.ant-input-affix-wrapper-focused {
+    border: var(--border-color);
+    box-shadow: 0 0 0 1px var(--border-color);
+    caret-color: var(--border-color);
+}
+
+.ant-input::-webkit-input-placeholder {}
