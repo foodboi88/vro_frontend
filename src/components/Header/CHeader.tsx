@@ -185,7 +185,8 @@ export const CHeader = (props: MyProps) => {
 
     // Hàm xử lý khi click vào avatar
     const onClickAvatar = () => {
-        userRole === ROLE.BUYER ? navigate('/buyer/profile') : navigate('/seller/profile')
+        userRole === ROLE.BUYER ? navigate('/buyer/profile') : navigate('/seller')
+        
     }
 
     return (
