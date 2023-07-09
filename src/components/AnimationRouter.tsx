@@ -5,13 +5,16 @@ import Login from "../pages/login/Login";
 import AdvancedSeaching from "../pages/AdvancedSearching/AdvancedSeaching";
 import { AnimatePresence } from "framer-motion";
 import DetailSketch from "../pages/DetailSketch/DetailSketch";
-import UploadSketch from "../pages/UploadSketch/UploadSketch";
+import UploadSketch from "../pages/seller/UploadSketch/UploadSketch";
 import Cart from "../pages/Cart/Cart";
 import AuthorPage from "../pages/AuthorPage/AuthorPage";
 import PrivateSellerRoutes from "./PrivateSellerRoutes";
 import PrivateBuyerRoutes from "./PrivateBuyerRoutes";
 import Profile from "../pages/Profile/Profile";
 import PurchaseSuccessfully from "../pages/purchased-successfully/purchased-successfully";
+import SellerLayout from "../layouts/seller/seller-layout";
+import SellerWithdraw from "../pages/seller/seller-withdraw/seller-withdraw";
+import SellerGeneral from "../pages/seller/seller-general/seller-general";
 
 // Dùng để set animation cho các router với nhau
 const AnimationRouter = () => {
@@ -22,9 +25,10 @@ const AnimationRouter = () => {
 
                 {/* Trang kỹ sư - công ty */}
                 <Route element={<PrivateSellerRoutes />}>
-                    <Route path="/seller" >
+                    <Route path="/seller" element={<SellerLayout/>}>
+                        <Route path="/seller" element={<SellerGeneral />}></Route>
                         <Route path="/seller/upload-sketch" element={<UploadSketch />}></Route>
-
+                        <Route path="/seller/withdraw" element={<SellerWithdraw/>}></Route>
                     </Route>
                 </Route>
 

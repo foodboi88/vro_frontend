@@ -35,6 +35,7 @@ import RatesApi from "../../api/rates/rates.api";
 import { IInFoSketch } from "../../common/sketch.interface";
 import PaymentApi from "../../api/payment/payment.api";
 import { IPaymentRequest } from "../../common/payment.interface";
+import UserApi from "../../api/user/user.api";
 
 type MessageLogin = {
     content: string;
@@ -80,6 +81,9 @@ interface SketchState {
     authorIntroduction: IAuthor | undefined;
     checkPayment: boolean;
     checkInCart: boolean;
+    withdrawRequestList: any[];
+    totalWithdrawRequestRecord: number;
+
 }
 
 const initState: SketchState = {
@@ -123,7 +127,8 @@ const initState: SketchState = {
     authorIntroduction: undefined,
     checkPayment: false,
     checkInCart: false,
-
+    withdrawRequestList: [],
+    totalWithdrawRequestRecord: 0
 };
 
 const sketchSlice = createSlice({
@@ -592,6 +597,56 @@ const sketchSlice = createSlice({
             state.filteredSketchs = action.payload.data.items;
         },
         getSketchListByAuthorIdFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+        },
+
+        // get list withdraw request 
+        getWithdrawRequests(state, action: PayloadAction<any>) {
+            state.loading = true;
+            // console.log("da chui vao",state.loading)
+        },
+        getWithdrawRequestsSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload)
+            state.withdrawRequestList = action.payload.items
+            state.totalWithdrawRequestRecord = action.payload.total
+
+        },
+        getWithdrawRequestsFail(state, action: PayloadAction<any>) {
+            console.log(action);
+            state.loading = false;
+            notification.open({
+                message: action.payload.response.message,
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+                style: {
+                    marginTop: 50,
+                    paddingTop: 40,
+                },
+            });
+
+        },
+
+        
+        //Approve withdraw request
+        createWithdrawRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+        createWithdrawRequestSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            notification.open({
+                message: 'Chấp thuận yêu cầu thành công',
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+                style: {
+                    marginTop: 50,
+                    paddingTop: 40,
+                },
+            });
+        },
+        createWithdrawRequestFail(state, action: any) {
             state.loading = false;
         },
     },
@@ -1220,6 +1275,46 @@ const deleteSketchInCart$: RootEpic = (action$) =>
         })
     );
 
+
+
+const getWithdrawRequests$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getWithdrawRequests.match),
+        mergeMap((re) => {
+            console.log(re);
+
+
+            return UserApi.getAllWithdrawRequests(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getWithdrawRequestsSuccess(res.data),
+
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.getWithdrawRequestsFail(err)])
+            )
+        })
+    );
+
+const createWithdrawRequest$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(createWithdrawRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+
+            return UserApi.approveWithdrawRequest(re.payload).pipe(
+                mergeMap((res: any) => {
+                    console.log(re.payload)
+                    return [
+                        sketchSlice.actions.createWithdrawRequestSuccess(res.data),
+                        sketchSlice.actions.getWithdrawRequests(re.payload.currentSearchValue)
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.createWithdrawRequestFail(err)])
+            );
+        })
+    );
+
 export const SketchEpics = [
     // uploadSketch$,
     getHomeListSketch$,
@@ -1251,7 +1346,9 @@ export const SketchEpics = [
     getAllVillaSketch$,
     getAllFactorySketch$,
     getAllStreetHouseSketch$,
-    getAllInteriorSketch$
+    getAllInteriorSketch$,
+    getWithdrawRequests$,
+    createWithdrawRequest$
 ];
 export const {
     getLatestSketchRequest,
@@ -1282,7 +1379,9 @@ export const {
     getAllVillaSketchRequest,
     getAllStreetHouseSketchRequest,
     getAllFactorySketchRequest,
-    getAllInteriorSketchRequest
+    getAllInteriorSketchRequest,
+    getWithdrawRequests,
+    createWithdrawRequest
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;
 
