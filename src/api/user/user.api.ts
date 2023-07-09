@@ -19,7 +19,7 @@ export default class UserApi {
         );
     }
 
-    static approveWithdrawRequest(body: any): Observable<any> {
+    static createWithdrawRequest(body: any): Observable<any> {
         const api = `${UserApi.apiURL.HOST}/${this.apiURL.CREATE_WITHDRAW_REQUEST}`;
         return HttpClient.post(api,body).pipe(
             map(

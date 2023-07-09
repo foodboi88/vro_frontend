@@ -19,5 +19,8 @@
 }
 
 .ant-modal-content{
-    width: 571px !important
+    width: 571px !important;
+    .ant-modal-title{
+        font-size: 20px !important;
+    }
 }

@@ -1,4 +1,4 @@
-import { Space, Modal, Button } from 'antd';
+import { Space, Modal, Button, Input } from 'antd';
 import { ColumnType } from 'antd/lib/table';
 import { motion } from 'framer-motion';
 import React, { useState } from 'react'
@@ -7,7 +7,7 @@ import CTable from '../../../components/CTable/CTable';
 import { useSelectorRoot, useDispatchRoot } from '../../../redux/store';
 import { IGetWithdrawRequest } from '../../../common/user.interface';
 import { QUERY_PARAM } from '../../../constants/get-api.constants';
-import { getWithdrawRequests } from '../../../redux/controller';
+import { createWithdrawRequest, getWithdrawRequests } from '../../../redux/controller';
 import './seller-withdraw.styles.scss'
 
 const SellerWithdraw = () => {
@@ -19,12 +19,10 @@ const SellerWithdraw = () => {
   const [textSearch, setTextSearch] = useState('');
   const [beginDate, setBeginDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [openModalApprove, setOpenModalApprove] = useState(false);
-  const [bankId, setBankId] = useState('');
-  const [accountNo, setAccountNo] = useState('');
-  const [amount,setAmount] = useState(0);
-  const [receiverName, setReceiverName] = useState('');
-  const [withdrawId,setWithdrawId] = useState('');
+  const [withdrawAmount, setWithdrawAmount] = useState('');
+  const [openModalCreate, setOpenModalCreate] = useState(false);
+  const [openModalDelete, setOpenModalDelete] = useState(false);
+
   const [currentSearchValue, setCurrentSearchValue] = useState<IGetWithdrawRequest>(
     {
       size: QUERY_PARAM.size,
@@ -142,7 +140,7 @@ const SellerWithdraw = () => {
         key: 'action',
         render: (_, record) => (
           <Space size="middle">
-            <a onClick={(event) => handleOpenApprove(record)}>Chấp nhận</a>
+            <a onClick={(event) => handleOpenDelete(record)}>Xóa</a>
           </Space>
         ),
       },
@@ -164,27 +162,21 @@ const SellerWithdraw = () => {
 
   const dispatch = useDispatchRoot()
 
-  const handleOpenApprove = (record: any) => {
-    setOpenModalApprove(true);
-    setBankId(record.bankName);
-    setAccountNo(record.bankAccountNumber);
-    setAmount(record.amount);
-    setReceiverName(record.name);
-    setWithdrawId(record.id)
-    
+  const handleOpenDelete = (record: any) => {
+    setOpenModalDelete(true);
   }
 
-  // const handleApprove = () => {
+  const handleCreate = () => {
     
-  //   const bodyrequest = {
-  //     id: withdrawId,
-  //     status: "PENDING",
-  //   processedComment: "string",
-  //   processedAmount: 0,
-  //     currentSearchValue: currentSearchValue
-  //   }
-  //   dispatch(approveWithdrawRequest(bodyrequest));
-  // }
+    const bodyrequest = {
+      
+        amount: withdrawAmount,
+        additionalProp1: {},
+      currentSearchValue: currentSearchValue
+    }
+    dispatch(createWithdrawRequest(bodyrequest));
+    setOpenModalCreate(false);
+  }
 
   const onChangeInput = (event: any) => {
     setTextSearch(event.target.value);
@@ -225,23 +217,47 @@ const SellerWithdraw = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}>
-      {/* {
-        bankId && receiverName && accountNo && amount && 
+      {
+        openModalCreate &&
         <div className='approve-request-modal'>
             <Modal
-                open={openModalApprove}
-                onOk={handleApprove}
-                okText={'Đã chuyển tiền'}
+                open={openModalCreate}
+                onOk={handleCreate}
+                okText={'Xác nhận'}
+                title={"Nhập lượng tiền muốn rút"}
                 cancelText={'Hủy'}
                 closable={true}
-                onCancel={()=>setOpenModalApprove(false)}
+                onCancel={()=>setOpenModalCreate(false)}
             >
-                <img src={`https://img.vietqr.io/image/${bankId}-${accountNo}-compact2.png?amount=${amount}&addInfo=thanh%toan%tien&accountName=${receiverName}`}/>
+              <Input onChange={(event)=>{
+                setWithdrawAmount(event.target.value)
+              }}/>
             </Modal>
         </div>
-      } */}
+      }
+      {
+        openModalDelete &&
+        <div className='approve-request-modal'>
+            <Modal
+                open={openModalDelete}
+                // onOk={handleDele}
+                okText={'Xác nhận'}
+                cancelText={'Hủy'}
+                closable={true}
+                onCancel={()=>setOpenModalCreate(false)}
+            >
+              <span>Bạn có chắc chắn muốn xóa yêu cầu này không?</span>
+            </Modal>
+        </div>
+      }
       <div className='create-request'>
-        <Button>
+        <Button
+          onClick={
+            () => {
+              setOpenModalCreate(true)
+            }
+          }
+        >
           Tạo yêu cầu rút tiền
         </Button>
       </div>

@@ -636,7 +636,7 @@ const sketchSlice = createSlice({
         createWithdrawRequestSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
             notification.open({
-                message: 'Chấp thuận yêu cầu thành công',
+                message: 'Tạo yêu cầu thành công',
                 onClick: () => {
                     console.log("Notification Clicked!");
                 },
@@ -1302,7 +1302,12 @@ const createWithdrawRequest$: RootEpic = (action$) =>
         mergeMap((re) => {
             console.log(re);
 
-            return UserApi.approveWithdrawRequest(re.payload).pipe(
+            const bodyrequest = {
+                amount: re.payload.amount,
+                additionalProp1: re.payload.additionalProp1
+            }
+
+            return UserApi.createWithdrawRequest(bodyrequest).pipe(
                 mergeMap((res: any) => {
                     console.log(re.payload)
                     return [
