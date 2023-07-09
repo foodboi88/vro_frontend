@@ -28,4 +28,7 @@ export enum API_URL {
     DELETE_SKETCH_IN_CART = "Carts/delete-one-product",
     GET_BUSINESS = "https://api.vietqr.io/v2/business",
     SELLER_REGISTER = "sellers/register",
+    WITHDRAW_REQUEST = "withdrawal-requests/seller",
+    CREATE_WITHDRAW_REQUEST = "withdrawal-requests",
+
 }

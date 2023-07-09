@@ -26,13 +26,13 @@ import SearchIcon from "../../images/Search_Icon.png";
 import "./styles.uploadsketch.scss";
 import { CheckboxValueType } from "antd/lib/checkbox/Group";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
-import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
+import { useDispatchRoot, useSelectorRoot } from "../../../redux/store";
 import {
     getAllFilterCriteriasRequest,
     uploadFileSketchRequest,
     uploadImageSketchRequest,
     uploadSketchRequest,
-} from "../../redux/controller";
+} from "../../../redux/controller";
 import { useNavigate } from "react-router-dom";
 
 const options: SelectProps["options"] = [];

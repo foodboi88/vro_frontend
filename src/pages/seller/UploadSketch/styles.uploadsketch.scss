@@ -1,5 +1,4 @@
 .main-upload {
-    padding-top: 7em;
     display: flex;
     justify-content: center;
     font-family: Arial, Helvetica, sans-serif;
@@ -8,17 +7,11 @@
 
     .upload-area {
         background: white;
-        width: 900px;
-        margin: 0px 2em;
-        margin-bottom: 3em;
-        border-radius: 1em;
-        padding: 2em;
-        padding-bottom: 0px;
+        width: 860px;
+
 
         .upload-step {
-            // display: grid;
-            // grid-template-columns: repeat(3, 1fr);
-            // grid-template-rows: 1fr;
+ 
             width: 50%;
             margin: 0px auto;
 

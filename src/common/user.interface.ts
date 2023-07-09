@@ -12,3 +12,14 @@ export interface IAuthor {
     totalProduct?: number;
     createdAt: string;
 }
+
+export interface IGetWithdrawRequest{
+    size: number;
+    offset: number;
+    search?: string;
+    startTime?: string;
+    endTime?: string;
+    status?: string
+    sortBy?: string
+    sortOrder?: string
+}
