@@ -35,7 +35,7 @@ import RatesApi from "../../api/rates/rates.api";
 import { IInFoSketch } from "../../common/sketch.interface";
 import PaymentApi from "../../api/payment/payment.api";
 import { IPaymentRequest } from "../../common/payment.interface";
-import { IBusiness } from "../../common/profile.interface";
+import { IBusiness, IReqFormArchitect } from "../../common/profile.interface";
 import ProfileAPI from "../../api/profile/profile.api";
 
 type MessageLogin = {
@@ -83,6 +83,7 @@ interface SketchState {
     checkPayment: boolean;
     checkInCart: boolean;
     businessProfile: IBusiness | undefined;
+    sellerRegister: any | undefined;
 }
 
 const initState: SketchState = {
@@ -128,6 +129,7 @@ const initState: SketchState = {
     checkInCart: false,
 
     businessProfile: undefined,
+    sellerRegister: undefined,
 
 };
 
@@ -614,6 +616,33 @@ const sketchSlice = createSlice({
         getBusinessByTaxCodeFail(state, action: PayloadAction<any>) {
             state.loading = false;
         },
+
+        // Seller Register
+        sellerRegisterRequest(state, action: PayloadAction<IReqFormArchitect>) {
+            state.loading = true;
+        },
+
+        sellerRegisterSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload);
+            notification.open({
+                message: "Đăng ký người bán thành công",
+                description: "Vui long đợi cho admin chấp nhận",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+        },
+
+        sellerRegisterFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            notification.open({
+                message: "Đăng ký không thành công",
+                onClick: () => {
+                    console.log(action.payload.message);
+                },
+            });
+        }
 
     },
 });
@@ -1259,6 +1288,23 @@ const getBusinessByTaxCode$: RootEpic = (action$) =>
         })
     );
 
+const sellerRegister$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(sellerRegisterRequest.match),
+        switchMap((re) => {
+            console.log(re);
+            return ProfileAPI.sellerRegister(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.sellerRegisterSuccess(res),
+                    ];
+                }),
+                catchError((err) => [
+                    sketchSlice.actions.sellerRegisterFail(err),
+                ])
+            );
+        })
+    );
 
 export const SketchEpics = [
     // uploadSketch$,
@@ -1293,6 +1339,7 @@ export const SketchEpics = [
     getAllStreetHouseSketch$,
     getAllInteriorSketch$,
     getBusinessByTaxCode$,
+    sellerRegister$,
 ];
 export const {
     getLatestSketchRequest,
@@ -1325,6 +1372,7 @@ export const {
     getAllFactorySketchRequest,
     getAllInteriorSketchRequest,
     getBusinessByTaxCodeRequest,
+    sellerRegisterRequest,
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;
 

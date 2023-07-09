@@ -27,4 +27,5 @@ export enum API_URL {
     GET_SKETCH_LIST_BY_AUTHOR_ID = "shop/get-all-products-by-shop-id",
     DELETE_SKETCH_IN_CART = "Carts/delete-one-product",
     GET_BUSINESS = "https://api.vietqr.io/v2/business",
+    SELLER_REGISTER = "sellers/register",
 }

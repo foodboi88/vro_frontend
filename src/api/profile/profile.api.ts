@@ -13,6 +13,7 @@ import {
     ICurrentSearchValue,
     IReqGetLatestSketchs,
 } from "../../common/sketch.interface";
+import { IReqFormArchitect } from "../../common/profile.interface";
 
 export default class ProfileAPI {
     static apiURL = API_URL;
@@ -25,6 +26,17 @@ export default class ProfileAPI {
                 catchError((error) => new Observable())
             )
         );
+    }
+
+    static sellerRegister(data: IReqFormArchitect): Observable<any> {
+        const api = `${ProfileAPI.apiURL.HOST}/${this.apiURL.SELLER_REGISTER}`;
+        return HttpClient.post(api, data).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+
     }
 
 
