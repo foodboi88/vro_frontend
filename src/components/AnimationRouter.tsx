@@ -11,6 +11,7 @@ import AuthorPage from "../pages/AuthorPage/AuthorPage";
 import PrivateSellerRoutes from "./PrivateSellerRoutes";
 import PrivateBuyerRoutes from "./PrivateBuyerRoutes";
 import Profile from "../pages/Profile/Profile";
+import PurchaseSuccessfully from "../pages/purchased-successfully/purchased-successfully";
 
 // Dùng để set animation cho các router với nhau
 const AnimationRouter = () => {
@@ -36,6 +37,7 @@ const AnimationRouter = () => {
                     </Route>
                 </Route>
                 
+                {/* Public route */}
                 <Route path="/" element={<Home />}></Route>
                 <Route path="/searching" element={<AdvancedSeaching />}></Route>
                 <Route
@@ -47,6 +49,9 @@ const AnimationRouter = () => {
                     element={<AuthorPage />}
                 ></Route>
                 <Route path="/cart" element={<Cart />}></Route>
+                <Route path="/purchased-successfully" element={<PurchaseSuccessfully />}></Route>
+
+
             </Routes>
         </AnimatePresence>
     );
