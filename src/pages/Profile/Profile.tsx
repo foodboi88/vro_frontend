@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './style.profile.scss'
 import { BiGridAlt } from 'react-icons/bi'
 import { BsFillPersonFill, BsShop } from 'react-icons/bs'
@@ -12,6 +12,8 @@ import UserIcon from '../../images/user-image.png'
 import BecomeSellerImage1 from '../../images/become-seller-image1.png'
 import BecomeSellerImage2 from '../../images/become-seller-image2.png'
 import TextArea from 'antd/lib/input/TextArea'
+import { useDispatchRoot, useSelectorRoot } from '../../redux/store'
+import { getBusinessByTaxCodeRequest } from '../../redux/controller'
 const Profile = () => {
     const navigate = useNavigate();
     const [active, setActive] = useState<number>(1)
@@ -19,15 +21,38 @@ const Profile = () => {
     const [formIndividuals] = Form.useForm();
     const [formCompany] = Form.useForm();
 
+    const { businessProfile } = useSelectorRoot((state) => state.sketch); // Lst cac ban ve        
+    const dispatch = useDispatchRoot();
+
+
+    useEffect(() => {
+        console.log(formIndividuals.getFieldsValue());
+
+    }, [formIndividuals])
+
+    useEffect(() => {
+        if (businessProfile) {
+            formIndividuals.setFieldsValue({
+                address: businessProfile.address,
+            });
+        }
+    }, [businessProfile])
 
     const [valueRadio, setValueRadio] = useState<number>(1)
     const [page, setPage] = useState<number>(1)
     const onFinish = (values: any) => {
+        console.log(values);
+
     };
 
     const handleChangeValueRadio = (e: any) => {
         console.log(e.target.value);
         setValueRadio(e.target.value)
+    }
+
+    const handleChangeTaxCode = (e: any) => {
+        console.log(e.target.value);
+        dispatch(getBusinessByTaxCodeRequest(e.target.value))
     }
 
     return (
@@ -137,7 +162,14 @@ const Profile = () => {
                             </div>
                         </Radio.Group>
                     </div>
-                    <Button className='button-submit' type="primary" htmlType="submit" onClick={() => setPage(2)}>Tiếp tục</Button>
+                    <Button className='button-submit' type="primary" htmlType="submit"
+                        onClick={() => {
+                            document.body.scrollTo({
+                                top: 0,
+                                behavior: "smooth"
+                            });
+                            setPage(2)
+                        }}>Tiếp tục</Button>
                 </div>
             }
             {(active === 3 && page === 2 && valueRadio === 1) &&
@@ -186,7 +218,7 @@ const Profile = () => {
                             name="taxCode"
                             rules={[{ required: true, message: 'Vui lòng nhập mã số thuế' }]}
                         >
-                            <Input placeholder='Nhập mã số thuế' />
+                            <Input placeholder='Nhập mã số thuế' onBlur={handleChangeTaxCode} />
                         </Form.Item>
                         <Form.Item
                             label="Địa chỉ"
@@ -249,7 +281,13 @@ const Profile = () => {
 
                         <Form.Item >
                             <div className='button-groud'>
-                                <Button className='button-back' onClick={() => setPage(1)}>Quay lại</Button>
+                                <Button className='button-back' onClick={() => {
+                                    document.body.scrollTo({
+                                        top: 0,
+                                        behavior: "smooth"
+                                    });
+                                    setPage(1)
+                                }}>Quay lại</Button>
                                 <Button className='button-submit' type="primary" htmlType="submit">Gửi thông tin</Button>
                             </div>
                         </Form.Item>
@@ -372,7 +410,13 @@ const Profile = () => {
 
                         <Form.Item >
                             <div className='button-groud'>
-                                <Button className='button-back' onClick={() => setPage(1)}>Quay lại</Button>
+                                <Button className='button-back' onClick={() => {
+                                    document.body.scrollTo({
+                                        top: 0,
+                                        behavior: "smooth"
+                                    });
+                                    setPage(1)
+                                }}>Quay lại</Button>
                                 <Button className='button-submit' type="primary" htmlType="submit">Gửi thông tin</Button>
                             </div>
                         </Form.Item>
