@@ -92,6 +92,9 @@ interface SketchState {
     billList: IBill[];
     totalBillRecord: number;
     detailBill: any | undefined
+    sketchsOfArchitect: ISketch[];
+    totalSketchRecords: number;
+    sketchStatistic: any | undefined
 }
 
 const initState: SketchState = {
@@ -146,8 +149,11 @@ const initState: SketchState = {
     hotProducts: [],
     billList: [],
     totalBillRecord: 0,
-    detailBill: undefined
+    detailBill: undefined,
 
+    sketchsOfArchitect: [],
+    totalSketchRecords: 0,
+    sketchStatistic: undefined
 };
 
 const sketchSlice = createSlice({
@@ -822,6 +828,61 @@ const sketchSlice = createSlice({
                 },
             });
 
+        },
+
+        // get list sketch by architecture request 
+        getSketchByArchitectRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+            // console.log("da chui vao",state.loading)
+        },
+        getSketchByArchitectSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload)
+            state.sketchsOfArchitect = action.payload.items
+            state.totalSketchRecords = action.payload.total
+
+        },
+        getSketchByArchitectFail(state, action: PayloadAction<any>) {
+            console.log(action);
+            state.loading = false;
+            notification.open({
+                message: action.payload.response.message === "Not found" ? "Không tìm thấy bản vẽ nào" : action.payload.response.message,
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+                style: {
+                    marginTop: 50,
+                    paddingTop: 40,
+                },
+            });
+
+        },
+
+        deleteSketchRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        deleteSketchSuccess(state , action: PayloadAction<any>){
+            state.loading = false;
+            notification.open({
+                message: "Thành công",
+                description: "Xóa bản vẽ thành công",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+            
+        },
+
+        deleteSketchFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            notification.open({
+                    message: "Thất bại",
+                    description: "Xóa bản vẽ không thành công",
+                    onClick: () => {
+                        console.log("Notification Clicked!");
+                    },
+                });
         },
     },
 });
@@ -1562,6 +1623,47 @@ const getOverviewStatistic$: RootEpic = (action$) =>
                     ];
                 }),
                 catchError((err) => [sketchSlice.actions.getOverviewStatisticFail(err)])
+            )
+            }))
+    
+const getSketchOfArchitect$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getSketchByArchitectRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+
+            
+            return SketchsApi.getAllSketchByArchitect(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getSketchByArchitectSuccess(res.data),
+
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.getSketchByArchitectFail(err)])
+            )
+        })
+    );
+
+const deleteSketch$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(deleteSketchRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+
+            const bodyrequest = {
+                productId: re.payload.productId
+            }
+
+            return SketchsApi.deleteSketchOfArchitect(bodyrequest).pipe(
+                mergeMap((res: any) => {
+                    console.log(re.payload)
+                    return [
+                        sketchSlice.actions.deleteSketchSuccess(res.data),
+                        sketchSlice.actions.getSketchByArchitectRequest(re.payload.currentSearchValue)
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.createWithdrawRequestFail(err)])
             );
         })
     );
@@ -1664,7 +1766,9 @@ export const SketchEpics = [
     getOverviewStatistic$,
     getHotProduct$,
     getBillList$,
-    getDetailBill$
+    getDetailBill$,
+    getSketchOfArchitect$,
+    deleteSketch$
 ];
 export const {
     getLatestSketchRequest,
@@ -1707,6 +1811,8 @@ export const {
 
     getBillListRequests,
     getDetailBillRequests,
+    getSketchByArchitectRequest,
+    deleteSketchRequest
 
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;

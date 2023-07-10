@@ -12,6 +12,9 @@ const SellerLayout = () => {
 
   useEffect(() => {
     if (window.location.pathname === "/seller") setActive(1);
+    if (window.location.pathname === "/seller/management-sketch") setActive(2);
+    if (window.location.pathname === "/seller/order") setActive(3);
+
     if (window.location.pathname === "/seller/upload-sketch") setActive(6);
     if (window.location.pathname === "/seller/withdraw") setActive(7);
   }, []);
@@ -28,7 +31,10 @@ const SellerLayout = () => {
             <BiGridAlt className='profile-navbar-item-icon' />
             <span className='profile-navbar-item-text'>Tổng quan</span>
           </div>
-          <div className={'profile-navbar-item' + (active === 2 ? ' active' : '')} onClick={() => setActive(2)}>
+          <div className={'profile-navbar-item' + (active === 2 ? ' active' : '')} onClick={() => {
+              setActive(2)
+              navigate("/seller/management-sketch")
+            }}>
             <AiOutlineSetting className='profile-navbar-item-icon' />
             <span className='profile-navbar-item-text'>Quản lý sản phẩm</span>
           </div>

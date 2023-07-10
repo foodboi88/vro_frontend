@@ -16,6 +16,7 @@ import SellerLayout from "../layouts/seller/seller-layout";
 import SellerWithdraw from "../pages/seller/seller-withdraw/seller-withdraw";
 import SellerGeneral from "../pages/seller/seller-general/seller-general";
 import SellerBill from "../pages/seller/seller-bill/seller-bill";
+import SellerSketchs from "../pages/seller/seller-sketchs/seller-sketchs";
 
 // Dùng để set animation cho các router với nhau
 const AnimationRouter = () => {
@@ -31,6 +32,9 @@ const AnimationRouter = () => {
                         <Route path="/seller/upload-sketch" element={<UploadSketch />}></Route>
                         <Route path="/seller/withdraw" element={<SellerWithdraw />}></Route>
                         <Route path="/seller/order" element={<SellerBill />}></Route>
+                        <Route path="/seller/withdraw" element={<SellerWithdraw/>}></Route>
+                        <Route path="/seller/management-sketch" element={<SellerSketchs/>}></Route>
+
                     </Route>
                 </Route>
 

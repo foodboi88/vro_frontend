@@ -35,4 +35,6 @@ export enum API_URL {
     GET_HOT_PRODUCTS = "architect/overview-top-hot-product",
     GET_BILL = "architect/get-all-order-by-seller",
     GET_BILL_DETAIL = "architect/order",
+    SKETCH_MANAGEMENT = "architect/product-management",
+    DELETE_PRODUCT = "products/delete-product-by-id",
 }
