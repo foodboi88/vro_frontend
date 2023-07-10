@@ -30,5 +30,7 @@ export enum API_URL {
     SELLER_REGISTER = "sellers/register",
     WITHDRAW_REQUEST = "withdrawal-requests/seller",
     CREATE_WITHDRAW_REQUEST = "withdrawal-requests",
-    VNPAY_RETURN = "VNPays/vnpay_return"
+    VNPAY_RETURN = "VNPays/vnpay_return",
+    SKETCH_MANAGEMENT = "architect/product-management",
+    DELETE_PRODUCT = "products/delete-product-by-id",
 }
