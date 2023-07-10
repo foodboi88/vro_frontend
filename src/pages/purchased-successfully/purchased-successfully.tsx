@@ -11,23 +11,6 @@ const PurchaseSuccessfully = () => {
     const searchParams = new URLSearchParams(document.location.search)
 
     useEffect(()=>{
-        console.log(searchParams.get('vnp_Amount'))
-        console.log(searchParams.get('vnp_BankCode'))
-        console.log(searchParams.get('vnp_BankTranNo'))
-        console.log(searchParams.get('vnp_CardType'))
-        console.log(searchParams.get('vnp_OrderInfo'))
-        console.log(searchParams.get('vnp_PayDate'))
-        console.log(searchParams.get('vnp_ResponseCode'))
-        console.log(searchParams.get('vnp_TmnCode'))
-        console.log(searchParams.get('vnp_TransactionNo'))
-        console.log(searchParams.get('vnp_TransactionStatus'))
-        console.log(searchParams.get('vnp_TxnRef'))
-        console.log(searchParams.get('vnp_SecureHash'))
-        
-    },[])
-
-
-    const handleConfirmPurchased = () => {
         const bodyrequest = {
             vnp_Amount: searchParams.get('vnp_Amount'),
             vnp_BankCode: searchParams.get('vnp_BankCode'),
@@ -44,6 +27,12 @@ const PurchaseSuccessfully = () => {
         }
         
         dispatch(confirmPurchasedRequest(bodyrequest))
+        
+    },[])
+
+
+    const handleConfirmPurchased = () => {
+       
         navigate('/')
     }
 
@@ -55,14 +44,14 @@ const PurchaseSuccessfully = () => {
         <div className='content-area'>
 				<div className='container'>
 
-					<div className='title'>Vui lòng xác nhận để hoàn tất thanh toán</div>
+					<div className='title'>Đã thanh toán thành công</div>
 					<div className='button'>
                         <Button
                             onClick={()=>{
                                 handleConfirmPurchased()
                             }}
                         >
-                            Xác nhận
+                            Quay lại trang chủ
                         </Button>
                     </div>
 				</div>

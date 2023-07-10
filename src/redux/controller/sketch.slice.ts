@@ -517,7 +517,7 @@ const sketchSlice = createSlice({
             state.loading = false;
             notification.open({
                 message: "Thêm sản phẩm không thành công",
-                description: action.payload.response.message,
+                description: action.payload.response.message === 'Products-already-in-the-cart' ? 'Sản phẩm đã có trong giỏ' : 'Network error',
                 onClick: () => {
                     console.log(action.payload.message);
                 },
@@ -707,18 +707,25 @@ const sketchSlice = createSlice({
 
         confirmPurchasedSuccess(state , action: PayloadAction<any>){
             state.loading = false;
-            notification.open({
-                message: "Thành công",
-                description: "Thanh toán bản vẽ thành công",
-                onClick: () => {
-                    console.log("Notification Clicked!");
-                },
-            });
+            // notification.open({
+            //     message: "Thành công",
+            //     description: "Thanh toán bản vẽ thành công",
+            //     onClick: () => {
+            //         console.log("Notification Clicked!");
+            //     },
+            // });
             
         },
 
         confirmPurchasedFail(state, action: PayloadAction<any>) {
             state.loading = false;
+            notification.open({
+                    message: "Thất bại",
+                    description: "Thanh toán bản vẽ không thành công",
+                    onClick: () => {
+                        console.log("Notification Clicked!");
+                    },
+                });
         },
     },
 });
