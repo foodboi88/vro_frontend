@@ -33,4 +33,6 @@ export enum API_URL {
     VNPAY_RETURN = "VNPays/vnpay_return",
     GET_OVERVIEW_STATISTIC = "architect/overview-statistic",
     GET_HOT_PRODUCTS = "architect/overview-top-hot-product",
+    GET_BILL = "architect/get-all-order-by-seller",
+    GET_BILL_DETAIL = "architect/order",
 }

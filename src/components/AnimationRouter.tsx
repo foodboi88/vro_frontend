@@ -15,6 +15,7 @@ import PurchaseSuccessfully from "../pages/purchased-successfully/purchased-succ
 import SellerLayout from "../layouts/seller/seller-layout";
 import SellerWithdraw from "../pages/seller/seller-withdraw/seller-withdraw";
 import SellerGeneral from "../pages/seller/seller-general/seller-general";
+import SellerBill from "../pages/seller/seller-bill/seller-bill";
 
 // Dùng để set animation cho các router với nhau
 const AnimationRouter = () => {
@@ -25,10 +26,11 @@ const AnimationRouter = () => {
 
                 {/* Trang kỹ sư - công ty */}
                 <Route element={<PrivateSellerRoutes />}>
-                    <Route path="/seller" element={<SellerLayout/>}>
+                    <Route path="/seller" element={<SellerLayout />}>
                         <Route path="/seller" element={<SellerGeneral />}></Route>
                         <Route path="/seller/upload-sketch" element={<UploadSketch />}></Route>
-                        <Route path="/seller/withdraw" element={<SellerWithdraw/>}></Route>
+                        <Route path="/seller/withdraw" element={<SellerWithdraw />}></Route>
+                        <Route path="/seller/order" element={<SellerBill />}></Route>
                     </Route>
                 </Route>
 
@@ -40,7 +42,7 @@ const AnimationRouter = () => {
                         <Route path="/buyer/profile" element={<Profile />}></Route>
                     </Route>
                 </Route>
-                
+
                 {/* Public route */}
                 <Route path="/" element={<Home />}></Route>
                 <Route path="/searching" element={<AdvancedSeaching />}></Route>

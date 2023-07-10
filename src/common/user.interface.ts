@@ -40,3 +40,22 @@ export interface IHotProducts {
     image: string;
     revenue: number;
 }
+
+export interface IBill {
+    total: number,
+    createdAt: string,
+    orderId: string,
+    status: boolean,
+    id: string,
+    userName: string
+}
+export interface IGetUsersRequest {
+    size: number;
+    offset: number;
+    search?: string;
+    startTime?: string;
+    endTime?: string;
+    status?: string
+    sortBy?: string
+    sortOrder?: string
+}

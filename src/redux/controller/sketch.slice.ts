@@ -28,7 +28,7 @@ import {
 import { ITool } from "../../common/tool.interface";
 import FilterCriteriasApi from "../../api/filter-criterias/filter-criterias.api";
 import CommentsApi from "../../api/comment/comment.api";
-import { IAuthor, IHotProducts, IOverViewStatistic, IUser } from "../../common/user.interface";
+import { IAuthor, IBill, IHotProducts, IOverViewStatistic, IUser } from "../../common/user.interface";
 import ImageSketchApi from "../../api/image-sketch/image-sketch.api";
 import { IRates } from "../../common/rates.interface";
 import RatesApi from "../../api/rates/rates.api";
@@ -89,6 +89,9 @@ interface SketchState {
     totalWithdrawRequestRecord: number;
     overViewStatistic: IOverViewStatistic | undefined;
     hotProducts: IHotProducts[];
+    billList: IBill[];
+    totalBillRecord: number;
+    detailBill: any | undefined
 }
 
 const initState: SketchState = {
@@ -141,6 +144,10 @@ const initState: SketchState = {
 
     overViewStatistic: undefined,
     hotProducts: [],
+    billList: [],
+    totalBillRecord: 0,
+    detailBill: undefined
+
 };
 
 const sketchSlice = createSlice({
@@ -760,7 +767,62 @@ const sketchSlice = createSlice({
 
         getHotProductFail(state, action: PayloadAction<any>) {
             state.loading = false;
-        }
+        },
+
+        // get list bill
+        getBillListRequests(state, action: PayloadAction<any>) {
+            state.loading = true;
+            // console.log("da chui vao",state.loading)
+        },
+        getBillListSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload)
+            state.billList = action.payload.items
+            state.totalBillRecord = action.payload.total
+
+        },
+        getBillListFail(state, action: PayloadAction<any>) {
+            console.log(action);
+            state.loading = false;
+            notification.open({
+                message: action.payload.response.message,
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+                style: {
+                    marginTop: 50,
+                    paddingTop: 40,
+                },
+            });
+
+        },
+
+        // get detail bill
+        getDetailBillRequests(state, action: PayloadAction<any>) {
+            state.loading = true;
+            // console.log("da chui vao",state.loading)
+        },
+        getDetailBillSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload)
+            state.detailBill = action.payload
+
+        },
+        getDetailBillFail(state, action: PayloadAction<any>) {
+            console.log(action);
+            state.loading = false;
+            notification.open({
+                message: action.payload.response.message,
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+                style: {
+                    marginTop: 50,
+                    paddingTop: 40,
+                },
+            });
+
+        },
     },
 });
 
@@ -1524,7 +1586,43 @@ const getHotProduct$: RootEpic = (action$) =>
         })
     );
 
+const getBillList$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getBillListRequests.match),
+        mergeMap((re) => {
+            console.log(re);
 
+
+            return UserApi.getBillList(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getBillListSuccess(res.data),
+
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.getBillListFail(err)])
+            )
+        })
+    );
+
+const getDetailBill$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getDetailBillRequests.match),
+        mergeMap((re) => {
+            console.log(re);
+
+
+            return UserApi.getDetailBill(re.payload.id).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getDetailBillSuccess(res.data),
+
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.getDetailBillFail(err)])
+            )
+        })
+    );
 export const SketchEpics = [
     // uploadSketch$,
     getHomeListSketch$,
@@ -1565,6 +1663,8 @@ export const SketchEpics = [
 
     getOverviewStatistic$,
     getHotProduct$,
+    getBillList$,
+    getDetailBill$
 ];
 export const {
     getLatestSketchRequest,
@@ -1604,6 +1704,10 @@ export const {
 
     getOverviewStatisticRequest,
     getHotProductRequest,
+
+    getBillListRequests,
+    getDetailBillRequests,
+
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;
 
