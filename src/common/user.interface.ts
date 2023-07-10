@@ -13,7 +13,7 @@ export interface IAuthor {
     createdAt: string;
 }
 
-export interface IGetWithdrawRequest{
+export interface IGetWithdrawRequest {
     size: number;
     offset: number;
     search?: string;
@@ -22,4 +22,21 @@ export interface IGetWithdrawRequest{
     status?: string
     sortBy?: string
     sortOrder?: string
+}
+
+export interface IOverViewStatistic {
+    totalRevenue: number;
+    totalProduct: number;
+    totalOrder: number;
+
+}
+
+export interface IHotProducts {
+    title: string;
+    price: number;
+    quantityPurchased: number;
+    userId: string;
+    id: string;
+    image: string;
+    revenue: number;
 }

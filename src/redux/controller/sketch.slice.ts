@@ -28,7 +28,7 @@ import {
 import { ITool } from "../../common/tool.interface";
 import FilterCriteriasApi from "../../api/filter-criterias/filter-criterias.api";
 import CommentsApi from "../../api/comment/comment.api";
-import { IAuthor, IUser } from "../../common/user.interface";
+import { IAuthor, IHotProducts, IOverViewStatistic, IUser } from "../../common/user.interface";
 import ImageSketchApi from "../../api/image-sketch/image-sketch.api";
 import { IRates } from "../../common/rates.interface";
 import RatesApi from "../../api/rates/rates.api";
@@ -87,7 +87,8 @@ interface SketchState {
     sellerRegister: any | undefined;
     withdrawRequestList: any[];
     totalWithdrawRequestRecord: number;
-
+    overViewStatistic: IOverViewStatistic | undefined;
+    hotProducts: IHotProducts[];
 }
 
 const initState: SketchState = {
@@ -136,7 +137,10 @@ const initState: SketchState = {
     sellerRegister: undefined,
 
     withdrawRequestList: [],
-    totalWithdrawRequestRecord: 0
+    totalWithdrawRequestRecord: 0,
+
+    overViewStatistic: undefined,
+    hotProducts: [],
 };
 
 const sketchSlice = createSlice({
@@ -678,7 +682,7 @@ const sketchSlice = createSlice({
 
         },
 
-        
+
         //Approve withdraw request
         createWithdrawRequest(state, action: PayloadAction<any>) {
             state.loading = true;
@@ -705,7 +709,7 @@ const sketchSlice = createSlice({
             state.loading = true;
         },
 
-        confirmPurchasedSuccess(state , action: PayloadAction<any>){
+        confirmPurchasedSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
             // notification.open({
             //     message: "Thành công",
@@ -714,19 +718,49 @@ const sketchSlice = createSlice({
             //         console.log("Notification Clicked!");
             //     },
             // });
-            
+
         },
 
         confirmPurchasedFail(state, action: PayloadAction<any>) {
             state.loading = false;
             notification.open({
-                    message: "Thất bại",
-                    description: "Thanh toán bản vẽ không thành công",
-                    onClick: () => {
-                        console.log("Notification Clicked!");
-                    },
-                });
+                message: "Thất bại",
+                description: "Thanh toán bản vẽ không thành công",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
         },
+
+        // Get overview statistic
+        getOverviewStatisticRequest(state) {
+            state.loading = true;
+        },
+
+        getOverviewStatisticSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload);
+            state.overViewStatistic = action.payload;
+        },
+
+        getOverviewStatisticFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+        },
+
+        // Get hot product
+        getHotProductRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        getHotProductSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload);
+            state.hotProducts = action.payload[0].items;
+        },
+
+        getHotProductFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+        }
     },
 });
 
@@ -1388,7 +1422,7 @@ const sellerRegister$: RootEpic = (action$) =>
             )
         })
     );
-        
+
 
 
 const getWithdrawRequests$: RootEpic = (action$) =>
@@ -1452,6 +1486,45 @@ const confirmPurchased$: RootEpic = (action$) =>
         })
     );
 
+const getOverviewStatistic$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getOverviewStatisticRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+
+            return UserApi.getOverViewStatistic().pipe(
+                mergeMap((res: any) => {
+                    console.log(re.payload)
+                    return [
+                        sketchSlice.actions.getOverviewStatisticSuccess(res.data),
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.getOverviewStatisticFail(err)])
+            );
+        })
+    );
+
+const getHotProduct$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getHotProductRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+            const req = {
+                size: re.payload.size,
+                offset: re.payload.offset,
+            }
+            return UserApi.getHotProducts(req).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getHotProductSuccess(res.data),
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.getHotProductFail(err)])
+            );
+        })
+    );
+
+
 export const SketchEpics = [
     // uploadSketch$,
     getHomeListSketch$,
@@ -1488,7 +1561,10 @@ export const SketchEpics = [
     sellerRegister$,
     getWithdrawRequests$,
     createWithdrawRequest$,
-    confirmPurchased$
+    confirmPurchased$,
+
+    getOverviewStatistic$,
+    getHotProduct$,
 ];
 export const {
     getLatestSketchRequest,
@@ -1524,7 +1600,10 @@ export const {
     sellerRegisterRequest,
     getWithdrawRequests,
     createWithdrawRequest,
-    confirmPurchasedRequest
+    confirmPurchasedRequest,
+
+    getOverviewStatisticRequest,
+    getHotProductRequest,
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;
 
