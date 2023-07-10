@@ -699,6 +699,27 @@ const sketchSlice = createSlice({
         createWithdrawRequestFail(state, action: any) {
             state.loading = false;
         },
+
+
+        confirmPurchasedRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        confirmPurchasedSuccess(state , action: PayloadAction<any>){
+            state.loading = false;
+            notification.open({
+                message: "Thành công",
+                description: "Thanh toán bản vẽ thành công",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+            
+        },
+
+        confirmPurchasedFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+        },
     },
 });
 
@@ -1406,6 +1427,24 @@ const createWithdrawRequest$: RootEpic = (action$) =>
         })
     );
 
+const confirmPurchased$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(confirmPurchasedRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+
+            return UserApi.confirmPurchased(re.payload).pipe(
+                mergeMap((res: any) => {
+                    console.log(re.payload)
+                    return [
+                        sketchSlice.actions.confirmPurchasedSuccess(res.data),
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.confirmPurchasedFail(err)])
+            );
+        })
+    );
+
 export const SketchEpics = [
     // uploadSketch$,
     getHomeListSketch$,
@@ -1441,7 +1480,8 @@ export const SketchEpics = [
     getBusinessByTaxCode$,
     sellerRegister$,
     getWithdrawRequests$,
-    createWithdrawRequest$
+    createWithdrawRequest$,
+    confirmPurchased$
 ];
 export const {
     getLatestSketchRequest,
@@ -1476,7 +1516,8 @@ export const {
     getBusinessByTaxCodeRequest,
     sellerRegisterRequest,
     getWithdrawRequests,
-    createWithdrawRequest
+    createWithdrawRequest,
+    confirmPurchasedRequest
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;
 
