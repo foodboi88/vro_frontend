@@ -32,13 +32,12 @@ const SellerLayout = () => {
                 <AiOutlineSetting className='profile-navbar-item-icon' />
                 <span className='profile-navbar-item-text'>Quản lý sản phẩm</span>
             </div>
-            <div className={'profile-navbar-item' + (active === 3 ? ' active' : '')} onClick={() => setActive(3)}>
+            <div className={'profile-navbar-item' + (active === 3 ? ' active' : '')} onClick={() => {
+              setActive(3)
+              navigate('/seller/bill')
+            }}>
                 <BsShop className='profile-navbar-item-icon' />
                 <span className='profile-navbar-item-text'>Quản lý đơn hàng</span>
-            </div>
-            <div className={'profile-navbar-item' + (active === 4 ? ' active' : '')} onClick={() => setActive(4)}>
-                <AiOutlineLock className='profile-navbar-item-icon' />
-                <span className='profile-navbar-item-text'>Quản lý thanh toán</span>
             </div>
             <div className={'profile-navbar-item' + (active === 6 ? ' active' : '')} onClick={() => {
               setActive(6)

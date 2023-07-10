@@ -87,7 +87,8 @@ interface SketchState {
     sellerRegister: any | undefined;
     withdrawRequestList: any[];
     totalWithdrawRequestRecord: number;
-
+    billList: any[];
+    totalBillRecord: number;
 }
 
 const initState: SketchState = {
@@ -136,7 +137,9 @@ const initState: SketchState = {
     sellerRegister: undefined,
 
     withdrawRequestList: [],
-    totalWithdrawRequestRecord: 0
+    totalWithdrawRequestRecord: 0,
+    billList: [],
+    totalBillRecord: 0
 };
 
 const sketchSlice = createSlice({
@@ -698,6 +701,34 @@ const sketchSlice = createSlice({
         },
         createWithdrawRequestFail(state, action: any) {
             state.loading = false;
+        },
+
+        // get list bill
+        getBillListRequests(state, action: PayloadAction<any>) {
+            state.loading = true;
+            // console.log("da chui vao",state.loading)
+        },
+        getBillListSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload)
+            state.billList = action.payload.items
+            state.totalBillRecord = action.payload.total
+
+        },
+        getBillListFail(state, action: PayloadAction<any>) {
+            console.log(action);
+            state.loading = false;
+            notification.open({
+                message: action.payload.response.message,
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+                style: {
+                    marginTop: 50,
+                    paddingTop: 40,
+                },
+            });
+
         },
     },
 });
@@ -1406,6 +1437,27 @@ const createWithdrawRequest$: RootEpic = (action$) =>
         })
     );
 
+    
+
+const getBillList$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getBillListRequests.match),
+        mergeMap((re) => {
+            console.log(re);
+
+
+            return UserApi.getBillList(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getBillListSuccess(res.data),
+
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.getBillListFail(err)])
+            )
+        })
+    );
+
 export const SketchEpics = [
     // uploadSketch$,
     getHomeListSketch$,
@@ -1441,7 +1493,8 @@ export const SketchEpics = [
     getBusinessByTaxCode$,
     sellerRegister$,
     getWithdrawRequests$,
-    createWithdrawRequest$
+    createWithdrawRequest$,
+    getBillList$
 ];
 export const {
     getLatestSketchRequest,
@@ -1476,7 +1529,8 @@ export const {
     getBusinessByTaxCodeRequest,
     sellerRegisterRequest,
     getWithdrawRequests,
-    createWithdrawRequest
+    createWithdrawRequest,
+    getBillListRequests
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;
 
