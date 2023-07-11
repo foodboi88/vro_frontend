@@ -30,6 +30,14 @@ const SellerBill = () => {
         }
     )
 
+    useEffect(()=>{
+        dispatch(
+
+            getBillListRequests(currentSearchValue)
+        )
+        
+      },[])
+
 
 
     const columns: ColumnType<any>[] = [

@@ -1,7 +1,7 @@
 import { Space, Modal, Button, Input } from 'antd';
 import { ColumnType } from 'antd/lib/table';
 import { motion } from 'framer-motion';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Utils from '../../../common/utils';
 import CTable from '../../../components/CTable/CTable';
 import { useSelectorRoot, useDispatchRoot } from '../../../redux/store';
@@ -30,7 +30,9 @@ const SellerWithdraw = () => {
     }
   )
 
-
+    useEffect(()=>{
+      dispatch(getWithdrawRequests(currentSearchValue))
+    },[])
 
   const columns: ColumnType<any>[] = [
     // {
