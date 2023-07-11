@@ -37,4 +37,13 @@ export enum API_URL {
     GET_BILL_DETAIL = "architect/order",
     SKETCH_MANAGEMENT = "architect/product-management",
     DELETE_PRODUCT = "products/delete-product-by-id",
+
+    OVERVIEW_STATISTIC = "Admin/overview-statistic",
+    STATISTIC_SKETCH = "Admin/statistic-products",
+    OVERVIEW_STATISTIC_DAY = "Admin/overview-statistic-day",
+    OVERVIEW_STATISTIC_MONTH = "Admin/overview-statistic-month",
+    OVERVIEW_STATISTIC_QUARTER = "Admin/overview-statistic-quarter",
+    OVERVIEW_STATISTIC_YEAR = "Admin/overview-statistic-year",
+    USER_STATISTIC_DAY = "Admin/get-user-day",
+    SELLER_STATISTIC_DAY = "Admin/get-seller-day",
 }

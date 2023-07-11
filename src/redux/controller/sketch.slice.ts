@@ -38,6 +38,8 @@ import { IPaymentRequest } from "../../common/payment.interface";
 import { IBusiness, IReqFormArchitect } from "../../common/profile.interface";
 import ProfileAPI from "../../api/profile/profile.api";
 import UserApi from "../../api/user/user.api";
+import { IOverViewStatictis, IOverViewStatictisDay, IOverViewStatictisMonth, IOverViewStatictisQuarter, IOverViewStatictisYear, IStatictisSellerDay, IStatictisUserDay } from "../../common/statistic.interface";
+import StatisticAPI from "../../api/statistic/statistic.api";
 
 type MessageLogin = {
     content: string;
@@ -94,7 +96,15 @@ interface SketchState {
     detailBill: any | undefined
     sketchsOfArchitect: ISketch[];
     totalSketchRecords: number;
-    sketchStatistic: any | undefined
+    sketchStatistic: any | undefined;
+    typeViewStatistic: string;
+    overviewStatistic: IOverViewStatictis | undefined;
+    overViewStatisticDay: IOverViewStatictisDay | undefined;
+    overViewStatisticMonth: IOverViewStatictisMonth | undefined;
+    overViewStatisticQuarter: IOverViewStatictisQuarter | undefined;
+    overViewStatisticYear: IOverViewStatictisYear | undefined;
+    overViewStatisticUserDay: IStatictisUserDay | undefined;
+    overViewStatisticSellerDay: IStatictisSellerDay | undefined;
 }
 
 const initState: SketchState = {
@@ -153,7 +163,17 @@ const initState: SketchState = {
 
     sketchsOfArchitect: [],
     totalSketchRecords: 0,
-    sketchStatistic: undefined
+    sketchStatistic: undefined,
+
+    typeViewStatistic: "day",
+    overviewStatistic: undefined,
+    overViewStatisticDay: undefined,
+    overViewStatisticMonth: undefined,
+    overViewStatisticQuarter: undefined,
+    overViewStatisticYear: undefined,
+    overViewStatisticUserDay: undefined,
+    overViewStatisticSellerDay: undefined,
+
 };
 
 const sketchSlice = createSlice({
@@ -862,7 +882,7 @@ const sketchSlice = createSlice({
             state.loading = true;
         },
 
-        deleteSketchSuccess(state , action: PayloadAction<any>){
+        deleteSketchSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
             notification.open({
                 message: "Thành công",
@@ -871,19 +891,164 @@ const sketchSlice = createSlice({
                     console.log("Notification Clicked!");
                 },
             });
-            
+
         },
 
         deleteSketchFail(state, action: PayloadAction<any>) {
             state.loading = false;
             notification.open({
-                    message: "Thất bại",
-                    description: "Xóa bản vẽ không thành công",
+                message: "Thất bại",
+                description: "Xóa bản vẽ không thành công",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+        },
+
+        // Get overview statistic day
+        getOverviewStatisticDayRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        getOverviewStatisticDaySuccess(state, action: PayloadAction<any>) {
+            console.log(action.payload);
+            state.loading = false;
+            state.overViewStatisticDay = action.payload;
+        },
+
+        getOverviewStatisticDayFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            if (action.payload.status === 400 || action.payload.status === 404) {
+                notification.open({
+                    message: action.payload.response.message,
                     onClick: () => {
                         console.log("Notification Clicked!");
                     },
                 });
+            }
         },
+
+        // Get overview statistic month
+        getOverviewStatisticMonthRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        getOverviewStatisticMonthSuccess(state, action: PayloadAction<any>) {
+            console.log(action.payload);
+            state.loading = false;
+            state.overViewStatisticMonth = action.payload;
+        },
+
+        getOverviewStatisticMonthFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            if (action.payload.status === 400 || action.payload.status === 404) {
+                notification.open({
+                    message: action.payload.response.message,
+                    onClick: () => {
+                        console.log("Notification Clicked!");
+                    },
+                });
+            }
+        },
+
+        // Get overview statistic quarter
+        getOverviewStatisticQuarterRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        getOverviewStatisticQuarterSuccess(state, action: PayloadAction<any>) {
+            console.log(action.payload);
+            state.loading = false;
+            state.overViewStatisticQuarter = action.payload;
+        },
+
+        getOverviewStatisticQuarterFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            if (action.payload.status === 400 || action.payload.status === 404) {
+                notification.open({
+                    message: action.payload.response.message,
+                    onClick: () => {
+                        console.log("Notification Clicked!");
+                    },
+                });
+            }
+        },
+
+        // Get overview statistic year
+        getOverviewStatisticYearRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        getOverviewStatisticYearSuccess(state, action: PayloadAction<any>) {
+            console.log(action.payload);
+            state.loading = false;
+            state.overViewStatisticYear = action.payload;
+        },
+
+        getOverviewStatisticYearFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            if (action.payload.status === 400 || action.payload.status === 404) {
+                notification.open({
+                    message: action.payload.response.message,
+                    onClick: () => {
+                        console.log("Notification Clicked!");
+                    },
+                });
+            }
+        },
+
+        // Get overview statistic user day
+        getOverviewStatisticUserDayRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        getOverviewStatisticUserDaySuccess(state, action: PayloadAction<any>) {
+            console.log(action.payload);
+            state.loading = false;
+            state.overViewStatisticUserDay = action.payload[0];
+        },
+
+        getOverviewStatisticUserDayFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            if (action.payload.status === 400 || action.payload.status === 404) {
+                notification.open({
+                    message: action.payload.message,
+                    onClick: () => {
+                        console.log("Notification Clicked!");
+                    },
+                });
+            }
+        },
+
+        // Get overview statistic seller day
+
+        getOverviewStatisticSellerDayRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        getOverviewStatisticSellerDaySuccess(state, action: PayloadAction<any>) {
+            console.log(action.payload);
+            state.loading = false;
+            state.overViewStatisticSellerDay = action.payload[0];
+        },
+
+        getOverviewStatisticSellerDayFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            if (action.payload.status === 400 || action.payload.status === 404) {
+                notification.open({
+                    message: action.payload.message,
+                    onClick: () => {
+                        console.log("Notification Clicked!");
+                    },
+                });
+            }
+        },
+
+
+        setViewStatistic(state, action: PayloadAction<string>) {
+            state.typeViewStatistic = action.payload;
+        },
+
     },
 });
 
@@ -1624,15 +1789,15 @@ const getOverviewStatistic$: RootEpic = (action$) =>
                 }),
                 catchError((err) => [sketchSlice.actions.getOverviewStatisticFail(err)])
             )
-            }))
-    
+        }))
+
 const getSketchOfArchitect$: RootEpic = (action$) =>
     action$.pipe(
         filter(getSketchByArchitectRequest.match),
         mergeMap((re) => {
             console.log(re);
 
-            
+
             return SketchsApi.getAllSketchByArchitect(re.payload).pipe(
                 mergeMap((res: any) => {
                     return [
@@ -1725,6 +1890,107 @@ const getDetailBill$: RootEpic = (action$) =>
             )
         })
     );
+
+const getOverviewStatisticDay$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getOverviewStatisticDayRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+            return StatisticAPI.getOverViewStatisticDay(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getOverviewStatisticDaySuccess(res.data),
+
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.getOverviewStatisticDayFail(err)])
+            )
+        }
+        )
+    );
+
+
+
+const getOverviewStatisticMonth$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getOverviewStatisticMonthRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+            return StatisticAPI.getOverViewStatisticMonth(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getOverviewStatisticMonthSuccess(res.data),
+                    ]
+                }),
+                catchError((err) => [sketchSlice.actions.getOverviewStatisticMonthFail(err)])
+            );
+        })
+    );
+
+const getOverviewStatisticQuarter$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getOverviewStatisticQuarterRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+            return StatisticAPI.getOverViewStatisticQuarter(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getOverviewStatisticQuarterSuccess(res.data),
+                    ]
+                }),
+                catchError((err) => [sketchSlice.actions.getOverviewStatisticQuarterFail(err)])
+            );
+        })
+    );
+
+const getOverviewStatisticYear$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getOverviewStatisticYearRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+            return StatisticAPI.getOverViewStatisticYear(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getOverviewStatisticYearSuccess(res.data),
+                    ]
+                }),
+                catchError((err) => [sketchSlice.actions.getOverviewStatisticYearFail(err)])
+            );
+        })
+    );
+
+const getOverviewStatisticUserDay$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getOverviewStatisticUserDayRequest.match),
+        concatMap((re) => {
+            console.log(re);
+            return StatisticAPI.getUserStatisticDay(re.payload).pipe(
+                concatMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getOverviewStatisticUserDaySuccess(res.data),
+                    ]
+                }),
+                catchError((err) => [sketchSlice.actions.getOverviewStatisticUserDayFail(err)])
+            );
+        })
+    );
+
+const getOverviewStatisticSellerDay$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getOverviewStatisticSellerDayRequest.match),
+        concatMap((re) => {
+            console.log(re);
+            return StatisticAPI.getSellerStatisticDay(re.payload).pipe(
+                concatMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getOverviewStatisticSellerDaySuccess(res.data),
+                    ]
+                }),
+                catchError((err) => [sketchSlice.actions.getOverviewStatisticSellerDayFail(err)])
+            );
+        })
+    );
+
 export const SketchEpics = [
     // uploadSketch$,
     getHomeListSketch$,
@@ -1768,7 +2034,14 @@ export const SketchEpics = [
     getBillList$,
     getDetailBill$,
     getSketchOfArchitect$,
-    deleteSketch$
+    deleteSketch$,
+
+    getOverviewStatisticDay$,
+    getOverviewStatisticMonth$,
+    getOverviewStatisticQuarter$,
+    getOverviewStatisticYear$,
+    getOverviewStatisticUserDay$,
+    getOverviewStatisticSellerDay$,
 ];
 export const {
     getLatestSketchRequest,
@@ -1812,7 +2085,15 @@ export const {
     getBillListRequests,
     getDetailBillRequests,
     getSketchByArchitectRequest,
-    deleteSketchRequest
+    deleteSketchRequest,
+
+    getOverviewStatisticDayRequest,
+    getOverviewStatisticMonthRequest,
+    getOverviewStatisticQuarterRequest,
+    getOverviewStatisticYearRequest,
+    getOverviewStatisticUserDayRequest,
+    getOverviewStatisticSellerDayRequest,
+    setViewStatistic,
 
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;
