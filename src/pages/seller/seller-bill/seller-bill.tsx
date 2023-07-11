@@ -10,6 +10,7 @@ import { getBillListRequests, getDetailBillRequests } from '../../../redux/contr
 import { IGetUsersRequest } from '../../../common/user.interface';
 import Utils from '../../../common/utils';
 import CTable from '../../../components/CTable/CTable';
+import './style.sellerbill.scss'
 const moment = require('moment');
 
 const SellerBill = () => {
@@ -42,14 +43,22 @@ const SellerBill = () => {
 
     const columns: ColumnType<any>[] = [
         {
-            title: 'STT',
-            dataIndex: 'index',
-            key: 'index',
+            title: 'Số thứ tự',
+            render: (_, __, rowIndex) => (
+                <span className='span-table'>{rowIndex + 1}</span>
+            )
         },
         {
             title: 'Tên sản phẩm',
-            dataIndex: 'product',
             key: 'product',
+            render: (_, record) => (
+                <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+                    <img src={record.product.image} alt="" width={50} />
+                    <Tooltip title={record.title}>
+                        <span className='span-title-table' >{record.product.title}</span>
+                    </Tooltip>
+                </div>
+            )
         },
         {
             title: 'Tài khoản mua',
@@ -58,13 +67,21 @@ const SellerBill = () => {
         },
         {
             title: 'Thời gian',
-            dataIndex: 'createdAt',
             key: 'createdAt',
+            render: (_, record) => (
+                <div>
+                    {new Date(record.createdAt).toLocaleDateString('en-GB')}
+                </div>
+            )
         },
         {
             title: 'Giá (VNĐ)',
-            dataIndex: 'price',
             key: 'price',
+            render: (_, record) => (
+                <div>
+                    {Utils.formatMoney(record.price) + ' đ'}
+                </div>
+            )
         },
         {
             title: 'Action',
@@ -128,27 +145,12 @@ const SellerBill = () => {
         dispatch(getBillListRequests(currentSearchValue))
     }
 
+
+
     useEffect(() => {
-        if (billList.length > 0) {
-            const data = billList.map((item: any, index: number) => {
-                const date = moment(item.createdAt).format('DD/MM/YYYY');
-                return {
-                    index: index + 1,
-                    userName: item.userName,
-                    product:
-                        <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-                            <img src={item.product.image} alt="" width={50} />
-                            <Tooltip title={item.title}>
-                                <span className='span-title-table' >{item.product.title}</span>
-                            </Tooltip>
-                        </div>,
-                    createdAt: new Date(date).toLocaleDateString('en-GB'),
-                    price: item.price.toLocaleString().replace(/,/g, '.') + 'đ'
-                }
-            })
-            setDataBillLst(data)
-        }
-    }, [billList])
+        console.log('detailBill', detailBill);
+
+    }, [detailBill])
 
     return (
         <motion.div className='sketch-main'
@@ -156,7 +158,7 @@ const SellerBill = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}>
             {
-                detailBill && openModal &&
+                (detailBill && openModal) &&
                 <Modal
                     open={openModal}
                     onOk={() => setOpenModal(false)}
@@ -169,7 +171,7 @@ const SellerBill = () => {
                     <div>
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <div>Tổng tiền:</div>
-                            <div>{detailBill.total}</div>
+                            <div>{detailBill.price}</div>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <div>Tạo lúc: </div>
@@ -177,12 +179,12 @@ const SellerBill = () => {
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <div>Id đơn hàng:</div>
-                            <div>{detailBill.orderId}</div>
+                            <div>{detailBill.code_Order}</div>
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        {/* <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <div>Hình thức thanh toán:</div>
                             <div>{detailBill.paymentMethods}</div>
-                        </div>
+                        </div> */}
                         <Divider>Thông tin người mua</Divider>
 
                         <div>
@@ -216,7 +218,7 @@ const SellerBill = () => {
                                                 <img style={{ width: "200px" }} src={item.image} />
                                             </div>
                                         </div>
-                                        <div>Người bán:
+                                        {/* <div>Người bán:
                                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                                 <div>Email:</div>
                                                 <div>{item.seller.email}</div>
@@ -233,7 +235,7 @@ const SellerBill = () => {
                                                 <div>Số điện thoại:</div>
                                                 <div>{item.seller.phone}</div>
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 )
                             })}
@@ -250,7 +252,7 @@ const SellerBill = () => {
                     onChangeInput={onChangeInput}
                     onChangeRangePicker={onChangeRangePicker}
                     onSearch={onSearch}
-                    data={dataBillLst}
+                    data={billList}
                     titleOfColumnList={columns}
                     totalRecord={totalBillRecord}
                     onChangePagination={onChangePagination}

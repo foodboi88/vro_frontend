@@ -211,9 +211,9 @@ const UploadSketch = () => {
         };
     });
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getAllFilterCriteriasRequest())
-    },[])
+    }, [])
 
     const handleChangeFileLst: UploadProps["onChange"] = ({
         fileList: newFileList,
@@ -617,21 +617,21 @@ const UploadSketch = () => {
                                     {
                                         // selectStyle &&
                                         selectTool &&
-                                        selectCategory &&
-                                        isCheckedRules ? (
-                                        <Button
-                                            onClick={() => handleUploadSketch()}
-                                        >
-                                            Đăng bài
-                                        </Button>
-                                    ) : (
-                                        <Button
-                                            onClick={() => handleUploadSketch()}
-                                            disabled
-                                        >
-                                            Đăng bài
-                                        </Button>
-                                    )}
+                                            selectCategory &&
+                                            isCheckedRules ? (
+                                            <Button
+                                                onClick={() => handleUploadSketch()}
+                                            >
+                                                Đăng bài
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                onClick={() => handleUploadSketch()}
+                                                disabled
+                                            >
+                                                Đăng bài
+                                            </Button>
+                                        )}
                                 </motion.div>
                             </div>
                         )}
