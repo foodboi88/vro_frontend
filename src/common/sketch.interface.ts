@@ -94,3 +94,8 @@ export interface IStatisticSketch {
     totalProduct: number;
     totalProductNew: number;
 }
+
+export interface ISellerStatisticSketch {
+    totalProduct: number;
+    totalHiddenProduct: number;
+}

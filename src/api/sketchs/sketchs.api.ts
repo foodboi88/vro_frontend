@@ -211,4 +211,17 @@ export default class SketchsApi {
             )
         );
     }
+
+    // Thống kê sản phẩm của KTS
+    static getSketchStatistic(): Observable<any> {
+
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.STATISTIC_PRODUCT}`;
+        return HttpClient.get(api).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
+
 }

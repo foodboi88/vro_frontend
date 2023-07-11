@@ -22,6 +22,7 @@ import {
     IFilteredSketch,
     IReqGetLatestSketchs,
     IReqProductsFiles,
+    ISellerStatisticSketch,
     ISketch,
     ISketchInCart,
 } from "../../common/sketch.interface";
@@ -94,7 +95,7 @@ interface SketchState {
     detailBill: any | undefined
     sketchsOfArchitect: ISketch[];
     totalSketchRecords: number;
-    sketchStatistic: any | undefined
+    sketchStatistic: ISellerStatisticSketch | undefined;
 }
 
 const initState: SketchState = {
@@ -153,7 +154,7 @@ const initState: SketchState = {
 
     sketchsOfArchitect: [],
     totalSketchRecords: 0,
-    sketchStatistic: undefined
+    sketchStatistic: undefined,
 };
 
 const sketchSlice = createSlice({
@@ -883,6 +884,35 @@ const sketchSlice = createSlice({
                         console.log("Notification Clicked!");
                     },
                 });
+        },
+
+        
+
+        // get list sketch by architecture request 
+        getSketchStatisticRequest(state) {
+            state.loading = true;
+            // console.log("da chui vao",state.loading)
+        },
+        getSketchStatisticSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload)
+            state.sketchStatistic = action.payload
+
+        },
+        getSketchStatisticFail(state, action: PayloadAction<any>) {
+            console.log(action);
+            state.loading = false;
+            notification.open({
+                message: action.payload.response.message,
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+                style: {
+                    marginTop: 50,
+                    paddingTop: 40,
+                },
+            });
+
         },
     },
 });
@@ -1725,6 +1755,26 @@ const getDetailBill$: RootEpic = (action$) =>
             )
         })
     );
+
+
+const getSketchStatistic$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getSketchStatisticRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+
+
+            return SketchsApi.getSketchStatistic().pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getSketchStatisticSuccess(res.data),
+
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.getSketchStatisticFail(err)])
+            )
+        })
+    );
 export const SketchEpics = [
     // uploadSketch$,
     getHomeListSketch$,
@@ -1768,7 +1818,8 @@ export const SketchEpics = [
     getBillList$,
     getDetailBill$,
     getSketchOfArchitect$,
-    deleteSketch$
+    deleteSketch$,
+    getSketchStatistic$
 ];
 export const {
     getLatestSketchRequest,
@@ -1812,7 +1863,8 @@ export const {
     getBillListRequests,
     getDetailBillRequests,
     getSketchByArchitectRequest,
-    deleteSketchRequest
+    deleteSketchRequest,
+    getSketchStatisticRequest
 
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;

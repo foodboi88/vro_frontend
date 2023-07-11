@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatchRoot, useSelectorRoot } from '../../../redux/store';
-import { createWithdrawRequest, deleteSketchRequest, getSketchByArchitectRequest } from '../../../redux/controller';
+import { createWithdrawRequest, deleteSketchRequest, getSketchByArchitectRequest, getSketchStatisticRequest } from '../../../redux/controller';
 import { Space, Modal, Input, Button } from 'antd';
 import { ColumnType } from 'antd/lib/table';
 import { motion } from 'framer-motion';
@@ -9,17 +9,22 @@ import Utils from '../../../common/utils';
 import CTable from '../../../components/CTable/CTable';
 import { QUERY_PARAM } from '../../../constants/get-api.constants';
 import { IFilteredSketch, ISketch } from '../../../common/sketch.interface';
+import TotalBox from '../../../components/TotalBox/TotalBox';
+import SketchCancel from '../../../images/seller-product/document-cancel.png'
+import Sketch from '../../../images/seller-product/document-text.png'
+
+import './seller-sketchs.styles.scss'
 
 const SellerSketchs = () => {
     const {
         sketchsOfArchitect,
         totalSketchRecords,
+        sketchStatistic,
       } = useSelectorRoot((state) => state.sketch);
     
       const [textSearch, setTextSearch] = useState('');
       const [beginDate, setBeginDate] = useState('');
       const [endDate, setEndDate] = useState('');
-      const [withdrawAmount, setWithdrawAmount] = useState('');
       const [openModalDelete, setOpenModalDelete] = useState(false);
       const [idSketch, setIdSketch] = useState('');
     
@@ -29,6 +34,17 @@ const SellerSketchs = () => {
           offset: 0
         }
       )
+
+      useEffect(()=>{
+        dispatch(
+
+          getSketchByArchitectRequest(currentSearchValue)
+        )
+        dispatch(
+
+          getSketchStatisticRequest()
+        )
+      },[])
     
     
     
@@ -164,7 +180,7 @@ const SellerSketchs = () => {
       }
     
       return (
-        <motion.div className='withdraw-main'
+        <motion.div className='sketch-main'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}>
@@ -184,10 +200,23 @@ const SellerSketchs = () => {
                 </Modal>
             </div>
           }
-         
+          <div className='statistic-area'>
+            <TotalBox
+              key={1}
+              title={'Tổng số sản phẩm'}
+              number={sketchStatistic?.totalProduct ? sketchStatistic?.totalProduct : 0}
+              icon={Sketch}
+            />
+            <TotalBox
+              key={1}
+              title={'Số sản phẩm bị ẩn'}
+              number={sketchStatistic?.totalHiddenProduct ? sketchStatistic?.totalHiddenProduct : 0}
+              icon={SketchCancel}
+            />
+          </div>
           <div className='table-area'>
             <CTable
-              tableMainTitle='Danh sách bản vẽ '
+              tableMainTitle='Danh sách bản vẽ của bạn'
               allowDateRangeSearch={true}
               allowTextSearch={true}
               onChangeInput={onChangeInput}
