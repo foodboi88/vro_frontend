@@ -10,7 +10,15 @@ const PurchaseSuccessfully = () => {
     const dispatch = useDispatchRoot()
     const searchParams = new URLSearchParams(document.location.search)
 
-    useEffect(()=>{
+    useEffect(() => {
+        document.body.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }, [navigate]);
+
+
+    useEffect(() => {
         const bodyrequest = {
             vnp_Amount: searchParams.get('vnp_Amount'),
             vnp_BankCode: searchParams.get('vnp_BankCode'),
@@ -25,39 +33,39 @@ const PurchaseSuccessfully = () => {
             vnp_TxnRef: searchParams.get('vnp_TxnRef'),
             vnp_SecureHash: searchParams.get('vnp_SecureHash')
         }
-        
+
         dispatch(confirmPurchasedRequest(bodyrequest))
-        
-    },[])
+
+    }, [])
 
 
     const handleConfirmPurchased = () => {
-       
+
         navigate('/')
     }
 
 
-  return (
-    <div
-        className='main-container'
-    >
-        <div className='content-area'>
-				<div className='container'>
+    return (
+        <div
+            className='main-container'
+        >
+            <div className='content-area'>
+                <div className='container'>
 
-					<div className='title'>Đã thanh toán thành công</div>
-					<div className='button'>
+                    <div className='title'>Đã thanh toán thành công</div>
+                    <div className='button'>
                         <Button
-                            onClick={()=>{
+                            onClick={() => {
                                 handleConfirmPurchased()
                             }}
                         >
                             Quay lại trang chủ
                         </Button>
                     </div>
-				</div>
-			</div>
-    </div>
-  )
+                </div>
+            </div>
+        </div>
+    )
 }
 
 export default PurchaseSuccessfully
