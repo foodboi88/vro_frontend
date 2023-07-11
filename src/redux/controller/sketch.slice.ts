@@ -174,7 +174,6 @@ const initState: SketchState = {
     overViewStatisticYear: undefined,
     overViewStatisticUserDay: undefined,
     overViewStatisticSellerDay: undefined,
-,
 };
 
 const sketchSlice = createSlice({
@@ -931,7 +930,7 @@ const sketchSlice = createSlice({
         },
 
         // Get sketch statistic
-        getSketchStatisticRequest(state, action: PayloadAction<any>) {
+        getSketchStatisticRequest(state) {
             state.loading = true;
         },
 
