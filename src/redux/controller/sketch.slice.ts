@@ -166,49 +166,15 @@ const sketchSlice = createSlice({
         },
 
         getHomeListSketchRequest(state) {
-            state.loading = true;
         },
 
         getHomeListSketchSuccess(state, action: PayloadAction<any>) {
-            state.loading = false;
             console.log("Da chui vao voi action: ", action);
         },
 
 
 
-        getAllVillaSketchRequest(state) {
-
-        },
-
-        getAllVillaSketchSuccess(state, action: PayloadAction<any>) {
-            state.villaSketchList = action.payload.data[0].items
-        },
-
-        getAllStreetHouseSketchRequest(state) {
-
-        },
-
-        getAllStreetHouseSketchSuccess(state, action: PayloadAction<any>) {
-            state.streetHouseSketchList = action.payload.data[0].items
-
-        },
-
-        getAllFactorySketchRequest(state) {
-
-        },
-
-        getAllFactorySketchSuccess(state, action: PayloadAction<any>) {
-            state.factorySketchList = action.payload.data[0].items
-
-        },
-
-        getAllInteriorSketchRequest(state) {
-
-        },
-
-        getAllInteriorSketchSuccess(state, action: PayloadAction<any>) {
-            state.interiorSketchList = action.payload.data[0].items
-        },
+        
 
         getLatestSketchRequest(state, action: PayloadAction<any>) {
             state.loading = true;
@@ -298,13 +264,16 @@ const sketchSlice = createSlice({
             console.log("Da chui vao voi action: ", action);
         },
 
+        getMostViewdSketchsFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            
+        },
+
         getAllToolsRequest(state, action: PayloadAction<any>) {
-            state.loading = true;
             console.log("Da chui vao voi action: ", action);
         },
 
         getAllToolsSuccess(state, action: PayloadAction<any>) {
-            state.loading = false;
             console.log(action.payload.data);
             state.toolList = action.payload.data.map(
                 (item: ITool) =>
@@ -316,14 +285,13 @@ const sketchSlice = createSlice({
             console.log(state.toolList);
             console.log("Da chui vao voi action: ", action);
         },
+        
 
         getAllStylesRequest(state, action: PayloadAction<any>) {
-            state.loading = true;
             console.log("Da chui vao voi action: ", action);
         },
 
         getAllStylesSuccess(state, action: PayloadAction<any>) {
-            state.loading = false;
             console.log(action.payload.data);
             state.styleList = action.payload.data.map(
                 (item: ITool) =>
@@ -337,12 +305,10 @@ const sketchSlice = createSlice({
         },
 
         getAllArchitecturesRequest(state, action: PayloadAction<any>) {
-            state.loading = true;
             console.log("Da chui vao voi action: ", action);
         },
 
         getAllArchitecturesSuccess(state, action: PayloadAction<any>) {
-            state.loading = false;
             console.log(action.payload.data);
             state.architectureList = action.payload.data.map(
                 (item: ITool) =>
@@ -356,21 +322,21 @@ const sketchSlice = createSlice({
         },
 
         getAllFilterCriteriasRequest(state) {
-            state.loading = true;
         },
 
         getAllFilterCriteriasSuccess(state) {
-            state.loading = false;
         },
 
         getDetailSketchRequest(state, action: PayloadAction<any>) {
-            state.loading = true;
         },
 
         getDetailSketchSuccess(state, action: PayloadAction<any>) {
-            state.loading = true;
             state.detailSketch = action.payload.data;
             console.log(action.payload.data);
+        },
+
+        getDetailSketchFail(state, action: PayloadAction<any>) {
+           
         },
 
         getCommentBySketchIdRequest(state, action: PayloadAction<any>) {
@@ -393,11 +359,14 @@ const sketchSlice = createSlice({
             state.loading = false;
         },
 
+        getDetailSketchPageContentFail(state) {
+            state.loading = false;
+        },
+
         advancedSearchingRequest(
             state,
             action: PayloadAction<ICurrentSearchValue>
         ) {
-            state.loading = true;
 
             state.currentSearchValue = {
                 // Xu ly de lay duoc ca gia tri cua o input cua header va cac o selectbox cua filter. Neu co
@@ -419,7 +388,11 @@ const sketchSlice = createSlice({
 
         advancedSearchingSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
-            state.filteredAuthors = action.payload.data.author;
+            state.filteredSketchs = action.payload.data.items;
+        },
+
+        advancedSearchingFail(state, action: PayloadAction<any>) {
+            state.loading = false;
             state.filteredSketchs = action.payload.data.items;
         },
 
@@ -455,27 +428,21 @@ const sketchSlice = createSlice({
         },
 
         uploadFileSketchRequest(state, action: PayloadAction<any>) {
-            state.loading = true;
         },
 
         uploadFileSketchSuccess(state) {
-            state.loading = false;
         },
 
         uploadImageSketchRequest(state, action: PayloadAction<any>) {
-            state.loading = true;
         },
 
         uploadImageSketchSuccess(state) {
-            state.loading = false;
         },
 
         uploadContentSketchRequest(state, action: PayloadAction<any>) {
-            state.loading = true;
         },
 
         uploadContentSketchSuccess(state, action: PayloadAction<any>) {
-            state.loading = false;
         },
 
         getRatesBySketchIdRequest(state, action: PayloadAction<any>) {
@@ -598,7 +565,10 @@ const sketchSlice = createSlice({
             console.log(action.payload);
             state.vnpayLink = action.payload;
         },
-        purchaseWithVNPayFail(state, action: PayloadAction<any>) { },
+        purchaseWithVNPayFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+
+         },
 
         // Get Author intro
         getAuthorIntroductionByIdRequest(state, action: PayloadAction<string>) {
@@ -940,84 +910,9 @@ const getHomeListSketch$: RootEpic = (action$) =>
         })
     );
 
-const getAllVillaSketch$: RootEpic = (action$) =>
-    action$.pipe(
-        filter(getAllVillaSketchRequest.match),
-        switchMap((re) => {
-            // IdentityApi.login(re.payload) ?
-            console.log(re);
 
-            const typeId = "64231026edf9dd11e488c250"
 
-            return SketchsApi.getSketchsByTypeOfArchitecture(typeId).pipe(
-                mergeMap((res: any) => {
-                    console.log(res);
 
-                    return [sketchSlice.actions.getAllVillaSketchSuccess(res)];
-                }),
-                catchError((err) => [])
-            );
-        })
-    );
-
-const getAllStreetHouseSketch$: RootEpic = (action$) =>
-    action$.pipe(
-        filter(getAllStreetHouseSketchRequest.match),
-        switchMap((re) => {
-            // IdentityApi.login(re.payload) ?
-            console.log(re);
-
-            const typeId = "64231030edf9dd11e488c252"
-
-            return SketchsApi.getSketchsByTypeOfArchitecture(typeId).pipe(
-                mergeMap((res: any) => {
-                    console.log(res);
-
-                    return [sketchSlice.actions.getAllStreetHouseSketchSuccess(res)];
-                }),
-                catchError((err) => [])
-            );
-        })
-    );
-
-const getAllFactorySketch$: RootEpic = (action$) =>
-    action$.pipe(
-        filter(getAllFactorySketchRequest.match),
-        switchMap((re) => {
-            console.log(re);
-
-            const typeId = "642ce3895de07140c4f4cd61"
-
-            return SketchsApi.getSketchsByTypeOfArchitecture(typeId).pipe(
-                mergeMap((res: any) => {
-                    console.log(res);
-
-                    return [sketchSlice.actions.getAllFactorySketchSuccess(res)];
-                }),
-                catchError((err) => [])
-            );
-        })
-    );
-
-const getAllInteriorSketch$: RootEpic = (action$) =>
-    action$.pipe(
-        filter(getAllInteriorSketchRequest.match),
-        switchMap((re) => {
-            // IdentityApi.login(re.payload) ?
-            console.log(re);
-
-            const typeId = "642ce3965de07140c4f4cd62"
-
-            return SketchsApi.getSketchsByTypeOfArchitecture(typeId).pipe(
-                mergeMap((res: any) => {
-                    console.log(res);
-
-                    return [sketchSlice.actions.getAllInteriorSketchSuccess(res)];
-                }),
-                catchError((err) => [])
-            );
-        })
-    );
 
 const getLatestSketchs$: RootEpic = (action$) =>
     action$.pipe(
@@ -1032,7 +927,9 @@ const getLatestSketchs$: RootEpic = (action$) =>
 
                     return [sketchSlice.actions.getLatestSketchSuccess(res)];
                 }),
-                catchError((err) => [])
+                catchError((err) => [
+                    sketchSlice.actions.getLatestSketchFail(err)
+                ])
             );
         })
     );
@@ -1075,7 +972,9 @@ const getMostViewdSketchs$: RootEpic = (action$) =>
                         sketchSlice.actions.getMostViewdSketchsSuccess(res),
                     ];
                 }),
-                catchError((err) => [])
+                catchError((err) => [
+                    sketchSlice.actions.getMostViewdSketchsFail(err)
+                ])
             );
         })
     );
@@ -1212,7 +1111,9 @@ const getDetailSketch$: RootEpic = (action$) =>
                         sketchSlice.actions.getDetailSketchPageContentSuccess(),
                     ];
                 }),
-                catchError((err) => [])
+                catchError((err) => [
+                    sketchSlice.actions.getDetailSketchPageContentFail(err)
+                ])
             );
         })
     );
@@ -1260,7 +1161,9 @@ const getAuthorIntroductionById$: RootEpic = (action$) =>
                         ),
                     ];
                 }),
-                catchError((err) => [])
+                catchError((err) => [sketchSlice.actions.getAuthorIntroductionByIdFail(
+                    err
+                )])
             );
         })
     );
@@ -1288,7 +1191,9 @@ const advancedSearchSketch$: RootEpic = (action$) =>
                     console.log(res);
                     return [sketchSlice.actions.advancedSearchingSuccess(res)];
                 }),
-                catchError((err) => [])
+                catchError((err) => [
+                    sketchSlice.actions.advancedSearchingFail(err)
+                ])
             );
         })
     );
@@ -1403,7 +1308,10 @@ const getSketchListByAuthorId$: RootEpic = (action$) =>
                         sketchSlice.actions.getSketchListByAuthorIdSuccess(res),
                     ];
                 }),
-                catchError((err) => [])
+                catchError((err) => [
+                    sketchSlice.actions.getSketchListByAuthorIdFail(err),
+
+                ])
             );
         })
     );
@@ -1494,7 +1402,10 @@ const getSketchQuantityInCart$: RootEpic = (action$) =>
                         sketchSlice.actions.getSketchQuantityInCartSuccess(res),
                     ];
                 }),
-                catchError((err) => [])
+                catchError((err) => [
+                    sketchSlice.actions.getSketchQuantityInCartFail(err),
+
+                ])
             );
         })
     );
@@ -1803,10 +1714,7 @@ export const SketchEpics = [
     getRatesBySketchId$,
     getSketchListByAuthorId$,
     deleteSketchInCart$,
-    getAllVillaSketch$,
-    getAllFactorySketch$,
-    getAllStreetHouseSketch$,
-    getAllInteriorSketch$,
+ 
     getBusinessByTaxCode$,
     sellerRegister$,
     getWithdrawRequests$,
@@ -1847,10 +1755,7 @@ export const {
     getAuthorIntroductionByIdRequest,
     getSketchListByAuthorIdRequest,
     deleteSketchInCartRequest,
-    getAllVillaSketchRequest,
-    getAllStreetHouseSketchRequest,
-    getAllFactorySketchRequest,
-    getAllInteriorSketchRequest,
+  
     getBusinessByTaxCodeRequest,
     sellerRegisterRequest,
     getWithdrawRequests,
