@@ -274,7 +274,7 @@ const sketchSlice = createSlice({
 
         getFreeSketchSuccess(state, action: PayloadAction<any>) {
             console.log(action.payload);
-            if (action.payload.data.items.length > 0)
+            if (action.payload.data.items)
                 state.freeSketchList = action.payload.data.items;
             // notification.open({
             //     message: "Load success",
