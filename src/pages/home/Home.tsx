@@ -531,50 +531,52 @@ const Home = () => {
                     <div>Bản vẽ miễn phí</div>
                     <div className="sub-title">{"Xem thêm"}</div>
                 </div>
-                <div className="lst-tool">
-                    <Col>
-                        <Button
-                            icon={<ArrowLeftOutlined />}
-                            className="btn-icon"
-                            onClick={handlePrevCardFreeSketch}
-                            disabled={currentIndexFreeSketch === 0 && true}
-                        />
-                    </Col>
-                    <Row gutter={[16, 16]}>
-                        {freeSketchList
-                            .slice(
-                                currentIndexFreeSketch,
-                                currentIndexFreeSketch + numberOfCardShow
-                            )
-                            .map((card) => (
-                                <Col
-                                    onClick={() => {
-                                        handleClickCard(card.id);
-                                    }}
-                                    span={spanCol}
-                                    key={card.id}
-                                >
-                                    <CProductCard
-                                        imageUrl={card.images[0]}
-                                        title={card.title}
-                                        view={card.views}
-                                        price={card.price}
-                                    // type={card.type}
-                                    />
-                                </Col>
-                            ))}
-                    </Row>
-                    <Col>
-                        <Button
-                            icon={<ArrowRightOutlined />}
-                            className="btn-icon"
-                            onClick={handleNextCardFreeSketch}
-                            disabled={
-                                currentIndexFreeSketch >= freeSketchList.length - numberOfCardShow && true
-                            }
-                        />
-                    </Col>
-                </div>
+                {freeSketchList.length > 0 &&
+                    <div className="lst-tool">
+                        <Col>
+                            <Button
+                                icon={<ArrowLeftOutlined />}
+                                className="btn-icon"
+                                onClick={handlePrevCardFreeSketch}
+                                disabled={currentIndexFreeSketch === 0 && true}
+                            />
+                        </Col>
+                        <Row gutter={[16, 16]}>
+                            {freeSketchList
+                                .slice(
+                                    currentIndexFreeSketch,
+                                    currentIndexFreeSketch + numberOfCardShow
+                                )
+                                .map((card) => (
+                                    <Col
+                                        onClick={() => {
+                                            handleClickCard(card.id);
+                                        }}
+                                        span={spanCol}
+                                        key={card.id}
+                                    >
+                                        <CProductCard
+                                            imageUrl={card.images[0]}
+                                            title={card.title}
+                                            view={card.views}
+                                            price={card.price}
+                                        // type={card.type}
+                                        />
+                                    </Col>
+                                ))}
+                        </Row>
+                        <Col>
+                            <Button
+                                icon={<ArrowRightOutlined />}
+                                className="btn-icon"
+                                onClick={handleNextCardFreeSketch}
+                                disabled={
+                                    currentIndexFreeSketch >= freeSketchList.length - numberOfCardShow && true
+                                }
+                            />
+                        </Col>
+                    </div>
+                }
             </div>
 
         </motion.div>
