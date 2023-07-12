@@ -6,7 +6,12 @@ import TotalBoxUser from '../TotalBox/TotalBoxUser';
 interface StatisticalChartProps {
     data: any
 }
-
+const nameTitleChart = [
+    { name: 'Tổng doanh thu' },
+    // {name: 'Tiền thu từ khách'},
+    // {name: 'Tiền thu từ chủ sở hữu'},
+    // {name: 'Tiền thu từ người bán'},
+]
 const StatisticalChart = (props: StatisticalChartProps) => {
 
     const { typeViewStatistic } = useSelectorRoot((state) => state.sketch); // lấy ra state từ store
@@ -17,26 +22,81 @@ const StatisticalChart = (props: StatisticalChartProps) => {
     const [totalPriceIncomeLst, setTotalPriceIncomeLst] = useState<any[]>([]); // state của component
     const [totalPriceOwnLst, setTotalPriceOwnLst] = useState<any[]>([]); // state của component
     const [totalPriceSellerLst, setTotalPriceSellerLst] = useState<any[]>([]); // state của component
+    const [totalSellLst, setTotalSellLst] = useState<any[]>([]); // state của component
     useEffect(() => {
         if (props.data && props.data.items) {
             console.log(props.data);
             setDataChart(props.data.items)
 
-            const maxTotalPrice = Math.max(...props.data.items.map((item: { totalPrice: any; }) => item.totalPrice));
-            const maxTotalPriceIncome = Math.max(...props.data.items.map((item: { totalPriceIncome: any; }) => item.totalPriceIncome));
-            const maxTotalPriceOwn = Math.max(...props.data.items.map((item: { totalPriceOwn: any; }) => item.totalPriceOwn));
-            const maxTotalPriceSeller = Math.max(...props.data.items.map((item: { totalPriceSeller: any; }) => item.totalPriceSeller));
+            // const maxTotalPrice = Math.max(...props.data.items.map((item: { totalPrice: any; }) => item.totalPrice));
+            // const maxTotalPriceIncome = Math.max(...props.data.items.map((item: { totalPriceIncome: any; }) => item.totalPriceIncome));
+            // const maxTotalPriceOwn = Math.max(...props.data.items.map((item: { totalPriceOwn: any; }) => item.totalPriceOwn));
+            // const maxTotalPriceSeller = Math.max(...props.data.items.map((item: { totalPriceSeller: any; }) => item.totalPriceSeller));
 
-            const max = Math.max(maxTotalPrice, maxTotalPriceIncome, maxTotalPriceOwn, maxTotalPriceSeller);
+            // const max = Math.max(maxTotalPrice, maxTotalPriceIncome, maxTotalPriceOwn, maxTotalPriceSeller);
+            // setMaxValue(max);
+
+            // getValueTotalPrice(props.data.items);
+            // getValueTotalPriceIncome(props.data.items);
+            // getValueTotalPriceOwn(props.data.items);
+            // getValueTotalPriceSeller(props.data.items);
+
+            const maxTotalSell = Math.max(...props.data.items.map((item: { totalSell: any; }) => item.totalSell));
+            const max = Math.max(maxTotalSell);
             setMaxValue(max);
 
-            getValueTotalPrice(props.data.items);
-            getValueTotalPriceIncome(props.data.items);
-            getValueTotalPriceOwn(props.data.items);
-            getValueTotalPriceSeller(props.data.items);
+            getValueTotalSell(props.data.items);
         }
 
     }, [props.data])
+
+    const getValueTotalSell = (items: []) => {
+        const tmpLst: any[] = []
+        if (typeViewStatistic === 'day') {
+            items.map((item: any) => {
+                const time = new Date(item.day).toLocaleDateString('en-GB');
+                const tmp = {
+                    name: 'Tổng danh thu',
+                    x: time,
+                    y: item.totalSell
+                }
+                tmpLst.push(tmp)
+            })
+        }
+        if (typeViewStatistic === 'month') {
+            items.map((item: any) => {
+                const tmp = {
+                    name: 'Tổng danh thu',
+                    x: `${item.month}/${item.year}`,
+                    y: item.totalSell
+                }
+                tmpLst.push(tmp)
+            })
+        }
+        if (typeViewStatistic === 'quarter') {
+            items.map((item: any) => {
+                const tmp = {
+                    name: 'Tổng danh thu',
+                    x: `Quý ${item.quarter}/${item.year}`,
+                    y: item.totalSell
+                }
+                tmpLst.push(tmp)
+            })
+        }
+        if (typeViewStatistic === 'year') {
+            items.map((item: any) => {
+                const tmp = {
+                    name: 'Tổng danh thu',
+                    x: `${item.year}`,
+                    y: item.totalSell
+                }
+                tmpLst.push(tmp)
+            })
+        }
+        setTotalSellLst(tmpLst);
+
+    }
+
 
     const getValueTotalPrice = (items: []) => {
         const tmpLst: any[] = []
@@ -221,11 +281,15 @@ const StatisticalChart = (props: StatisticalChartProps) => {
         }
         setTotalPriceSellerLst(tmpLst);
     }
+
     const divideRangeIntoFourParts = (maxValue: number) => {
+
         const interval = maxValue / 8;
         const divisions = [];
         for (let i = 1; i <= 8; i++) {
-            divisions.push(interval * i);
+            let tmp = Math.round(interval * i);
+
+            divisions.push(tmp);
         }
 
         return divisions;
@@ -237,11 +301,11 @@ const StatisticalChart = (props: StatisticalChartProps) => {
                     {dataChart.length > 0 &&
                         <div className='total-content'>
                             <TotalBoxUser
-                                title='Tổng tiền thu từ khách'
-                                number={props.data.totalPriceSum}
+                                title='Tổng tiền bán'
+                                number={props.data.totalSellSum}
                                 icon=''
                             />
-                            <TotalBoxUser
+                            {/* <TotalBoxUser
                                 title='Tiền trả người bán'
                                 number={props.data.totalPriceSum}
                                 icon=''
@@ -255,7 +319,7 @@ const StatisticalChart = (props: StatisticalChartProps) => {
                                 title='Tiền hoa hồng'
                                 number={props.data.totalPriceSum}
                                 icon=''
-                            />
+                            /> */}
                         </div>
                     }
 
@@ -263,7 +327,9 @@ const StatisticalChart = (props: StatisticalChartProps) => {
                         ariaDesc="Average number of pets"
                         ariaTitle="Line chart example"
                         containerComponent={<ChartVoronoiContainer labels={({ datum }) => `${datum.name}: ${datum.y}`} constrainToVisibleArea />}
-                        legendData={[{ name: 'Tiền thu từ khách' }, { name: 'Tiền trả người bán' }, { name: 'Tiền còn nợ' }, { name: 'Hoa hồng' }]}
+                        legendData={
+                            nameTitleChart
+                        }
                         legendOrientation="vertical"
                         legendPosition="right"
                         height={270}
@@ -276,7 +342,7 @@ const StatisticalChart = (props: StatisticalChartProps) => {
                             right: 200, // Adjusted to accommodate legend
                             top: 50
                         }}
-                        width={800}
+                        width={600}
                         themeColor={ChartThemeColor.multiUnordered}
 
                     >
@@ -284,18 +350,17 @@ const StatisticalChart = (props: StatisticalChartProps) => {
                         <ChartAxis dependentAxis showGrid tickValues={divideRangeIntoFourParts(maxValue)} />
                         <ChartGroup>
                             <ChartLine
-                                data={totalPriceLst}
+                                data={totalSellLst}
                             />
-                            <ChartLine
+                            {/* <ChartLine
                                 data={totalPriceIncomeLst}
-
                             />
                             <ChartLine
                                 data={totalPriceOwnLst}
                             />
                             <ChartLine
                                 data={totalPriceSellerLst}
-                            />
+                            /> */}
                         </ChartGroup>
                     </Chart>
                 </div>
