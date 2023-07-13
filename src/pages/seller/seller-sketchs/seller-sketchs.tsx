@@ -64,11 +64,17 @@ const SellerSketchs = () => {
             title: 'Giá',
             dataIndex: 'price',
             key: 'price',
+            render: (_, record) => (
+                <span style={{ whiteSpace: 'nowrap' }}>{Utils.formatMoney(record.price) + ' đ'}</span>
+            )
         },
         {
             title: 'Tạo lúc',
             dataIndex: 'createdAt',
             key: 'createdAt',
+            render: (_, record) => (
+                <span>{new Date(record.createdAt).toLocaleDateString('en-GB')}</span>
+            )
         },
         {
             title: 'Phong cách',
