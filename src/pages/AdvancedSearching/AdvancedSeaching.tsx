@@ -213,10 +213,7 @@ const AdvancedSeaching = () => {
 
                 </div>
                 <div className="sketch-list">
-                    <div className="searched-sketch-title">
-                        <SearchOutlined /> Bản vẽ liên quan tới{" "}
-                        <strong>{currentSearchValue.name}</strong>
-                    </div>
+                   
                     <CArrangeBar />
                     <Row className="detail-list" gutter={[16, 24]}>
                         {filteredSketchs &&
