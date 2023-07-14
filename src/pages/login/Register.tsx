@@ -197,13 +197,13 @@ const Register = (props: MyProps) => {
                         <Form.Item
                             label="Mật khẩu"
                             name="passwordReq"
-                            rules={[
-                                {
-                                    validator: passwordValidator,
-                                    message:
-                                        "Mật khẩu vừa nhập của bạn không chính xác. Hãy thử lại hoặc chọn “Quên mật khẩu” để đặt lại mật khẩu mới!",
-                                },
-                            ]}
+                            // rules={[
+                            //     {
+                            //         validator: passwordValidator,
+                            //         message:
+                            //             "Mật khẩu vừa nhập của bạn không chính xác. Hãy thử lại hoặc chọn “Quên mật khẩu” để đặt lại mật khẩu mới!",
+                            //     },
+                            // ]}
                         >
                             <Input.Password
                                 className="form-input"
