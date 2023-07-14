@@ -4,6 +4,7 @@ import { getBusinessByTaxCodeRequest, getLstBankRequest, sellerRegisterRequest }
 import { useDispatchRoot, useSelectorRoot } from '../../../redux/store';
 import { useEffect, useState } from 'react';
 import { DeleteOutlined, EditOutlined, FlagOutlined, CaretDownOutlined } from '@ant-design/icons';
+import { Rule } from 'antd/lib/form';
 
 interface Props {
     setPage(e: any): void;
@@ -65,6 +66,88 @@ const FormCompany = (props: Props) => {
         console.log(e.target.value);
         setAccountNumber(e.target.value);
         // dispatch(getBusinessByTaxCodeRequest(e.target.value))
+    }
+
+    const validateVietnameseID = (id: string) => {
+        if (id.length !== 12) {
+            return false;
+        }
+
+        return true;
+    }
+
+    const validateVietnamesePhoneNumber = (phoneNumber: string) => {
+        // Loại bỏ các ký tự không phải số
+        phoneNumber = phoneNumber.replace(/\D/g, '');
+
+        // Kiểm tra độ dài của số điện thoại
+        if (phoneNumber.length !== 10 && phoneNumber.length !== 11) {
+            return false;
+        }
+
+        // Kiểm tra tiền tố của số điện thoại
+        var prefixes = ['03', '05', '07', '08', '09', '01'];
+        var prefix = phoneNumber.slice(0, 2);
+
+        if (!prefixes.includes(prefix)) {
+            return false;
+        }
+
+        // Kiểm tra số điện thoại chỉ chứa chữ số
+        if (isNaN(parseInt(phoneNumber))) {
+            return false;
+        }
+
+        return true;
+    }
+
+    const validateEmail = (email: string) => {
+        // Biểu thức chính quy để kiểm tra định dạng email
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        return emailRegex.test(email);
+    }
+
+    const CCCDValidator = (
+        rule: Rule,
+        value: string,
+        callback: (message?: string) => void
+    ) => {
+        if (!validateVietnameseID(value)) {
+            callback("Vui lòng nhập mật khẩu.");
+        }
+
+        else {
+            callback();
+        }
+    };
+
+    const phoneNumberValidator = (
+        rule: Rule,
+        value: string,
+        callback: (message?: string) => void
+    ) => {
+        if (!validateVietnamesePhoneNumber(value)) {
+            callback("Vui lòng nhập mật khẩu.");
+        }
+
+        else {
+            callback();
+        }
+    }
+
+    const emailValidator = (
+        rule: Rule,
+        value: string,
+        callback: (message?: string) => void
+    ) => {
+        if (!validateEmail(value)) {
+            callback("Vui lòng nhập mật khẩu.");
+        }
+
+        else {
+            callback();
+        }
     }
     return (
         <div className='profile-content form-individuals'>
@@ -133,15 +216,23 @@ const FormCompany = (props: Props) => {
                     <Form.Item
                         label="Email"
                         name="Email"
-                        rules={[{ required: true, message: 'Vui lòng nhập email' }]}
-                    >
+                        rules={[
+                            {
+                                validator: emailValidator,
+                                message: 'Email không hợp lệ'
+                            }
+                        ]}                    >
                         <Input placeholder='Nhập email' />
                     </Form.Item>
                     <Form.Item
                         label="Số điện thoại"
                         name="phoneNumber"
-                        rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]}
-                    >
+                        rules={[
+                            {
+                                validator: phoneNumberValidator,
+                                message: 'Số điện thoại không hợp lệ'
+                            }
+                        ]}                    >
                         <Input placeholder='Nhập số điện thoại' />
                     </Form.Item>
                 </div>
@@ -162,7 +253,7 @@ const FormCompany = (props: Props) => {
                             filterOption={(input, option) =>
                                 (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                             } suffixIcon={<CaretDownOutlined />}
-                            options={lstBank.map((item, index) => ({ label: item.name, value: item.bin }))}
+                            options={lstBank.map((item, index) => ({ label: item.name, value: item.name }))}
 
                         />
                     </Form.Item>

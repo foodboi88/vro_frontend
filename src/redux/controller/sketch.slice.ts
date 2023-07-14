@@ -688,6 +688,7 @@ const sketchSlice = createSlice({
             state.loading = false;
             notification.open({
                 message: "Đăng ký không thành công",
+                description: 'Gửi đơn đăng ký không thành công! Đơn đăng ký của bạn đã tồn tại. Hãy chờ admin phê duyệt',
                 onClick: () => {
                     console.log(action.payload.message);
                 },
