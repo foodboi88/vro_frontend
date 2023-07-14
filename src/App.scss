@@ -1008,3 +1008,8 @@ body {
         color: #FF0039;
     }
 }
+
+.ant-spin-nested-loading>div>.ant-spin {
+    position: fixed;
+    max-height: 100%;
+}

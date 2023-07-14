@@ -11,6 +11,7 @@ export interface IReqFormArchitect {
     identityCardPlace: string,
     vatCode: string,
     bankAccountNumber: string,
+    bankAccountName: string,
     bankName: string,
     bankBranch: string,
     additionalProp1: {}

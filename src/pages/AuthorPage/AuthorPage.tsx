@@ -48,6 +48,12 @@ const AuthorPage = () => {
     ); // Lấy ra dữ liệu detail sketch và danh sách comment từ redux
     const dispatch = useDispatchRoot();
     const { authorId } = useParams();
+    useEffect(() => {
+        document.body.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }, [navigate]);
 
     useEffect(() => {
         if (authorId) {
@@ -104,7 +110,7 @@ const AuthorPage = () => {
                                         title={card.title}
                                         view={card.views}
                                         price={card.price}
-                                        // type={card.}
+                                    // type={card.}
                                     />
                                 </Col>
                             ))}

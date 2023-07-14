@@ -25,6 +25,7 @@ const FormCompany = (props: Props) => {
             identityCardPlace: values.placeOfIssue,
             vatCode: values.taxCode,
             bankAccountNumber: values.accountNumber,
+            bankAccountName: values.accountName,
             bankName: values.bank,
             bankBranch: values.branch,
             additionalProp1: {}
