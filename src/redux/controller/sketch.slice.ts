@@ -36,7 +36,7 @@ import RatesApi from "../../api/rates/rates.api";
 import { IInFoSketch } from "../../common/sketch.interface";
 import PaymentApi from "../../api/payment/payment.api";
 import { IPaymentRequest } from "../../common/payment.interface";
-import { IBusiness, IReqFormArchitect } from "../../common/profile.interface";
+import { IBank, IBusiness, IReqFormArchitect, IReqLookUp } from "../../common/profile.interface";
 import ProfileAPI from "../../api/profile/profile.api";
 import UserApi from "../../api/user/user.api";
 import { IOverViewStatictis, IOverViewStatictisDay, IOverViewStatictisMonth, IOverViewStatictisQuarter, IOverViewStatictisYear, IStatictisSellerDay, IStatictisUserDay } from "../../common/statistic.interface";
@@ -106,6 +106,9 @@ interface SketchState {
     overViewStatisticYear: IOverViewStatictisYear | undefined;
     overViewStatisticUserDay: IStatictisUserDay | undefined;
     overViewStatisticSellerDay: IStatictisSellerDay | undefined;
+
+    lstBank: IBank[];
+    accountBankName: string;
 }
 
 const initState: SketchState = {
@@ -174,6 +177,9 @@ const initState: SketchState = {
     overViewStatisticYear: undefined,
     overViewStatisticUserDay: undefined,
     overViewStatisticSellerDay: undefined,
+
+    lstBank: [],
+    accountBankName: "",
 };
 
 const sketchSlice = createSlice({
@@ -1079,6 +1085,52 @@ const sketchSlice = createSlice({
         setViewStatistic(state, action: PayloadAction<string>) {
             state.typeViewStatistic = action.payload;
         },
+
+        // get bank list
+        getLstBankRequest(state) {
+            state.loading = true;
+        },
+
+        getLstBankSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            state.lstBank = action.payload;
+        },
+
+        getLstBankFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            if (action.payload.status === 400 || action.payload.status === 404) {
+                notification.open({
+                    message: action.payload.response.message,
+                    onClick: () => {
+                        console.log("Notification Clicked!");
+                    },
+                });
+            }
+        },
+
+        // get account bank name
+        getAccountBankNameRequest(state, action: PayloadAction<IReqLookUp>) {
+            state.loading = true;
+        },
+
+        getAccountBankNameSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload);
+            state.accountBankName = action.payload;
+        },
+
+        getAccountBankNameFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            if (action.payload.status === 400 || action.payload.status === 404) {
+                notification.open({
+                    message: action.payload.response.message,
+                    onClick: () => {
+                        console.log("Notification Clicked!");
+                    },
+                });
+            }
+        }
+
 
     },
 });
@@ -2042,6 +2094,37 @@ const getOverviewStatisticSellerDay$: RootEpic = (action$) =>
         })
     );
 
+const getLstBank$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getLstBankRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+            return ProfileAPI.getBanks().pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getLstBankSuccess(res.data),
+                    ]
+                }),
+                catchError((err) => [sketchSlice.actions.getLstBankFail(err)])
+            );
+        })
+    );
+
+const getAccountBankName$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getAccountBankNameRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+            return ProfileAPI.getAccountBankName(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getAccountBankNameSuccess(res.data),
+                    ]
+                }),
+                catchError((err) => [sketchSlice.actions.getAccountBankNameFail(err)])
+            );
+        })
+    );
 export const SketchEpics = [
     // uploadSketch$,
     getHomeListSketch$,
@@ -2094,6 +2177,9 @@ export const SketchEpics = [
     getOverviewStatisticYear$,
     getOverviewStatisticUserDay$,
     getOverviewStatisticSellerDay$,
+
+    getLstBank$,
+    getAccountBankName$,
 ];
 export const {
     getLatestSketchRequest,
@@ -2147,6 +2233,10 @@ export const {
     getOverviewStatisticUserDayRequest,
     getOverviewStatisticSellerDayRequest,
     setViewStatistic,
+
+    getLstBankRequest,
+    getAccountBankNameRequest,
+
 
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;

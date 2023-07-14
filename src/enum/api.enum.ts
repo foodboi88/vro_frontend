@@ -47,5 +47,8 @@ export enum API_URL {
     OVERVIEW_STATISTIC_YEAR = "architect/overview-statistic-year",
     USER_STATISTIC_DAY = "Admin/get-user-day",
     SELLER_STATISTIC_DAY = "Admin/get-seller-day",
+
+    GET_BANKS = "https://api.vietqr.io/v2/banks",
+    GET_ACCOUNT_BANK_NAME = "https://api.vietqr.io/v2/lookup",
 }
 

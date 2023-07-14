@@ -1,8 +1,9 @@
-import { Button, DatePicker, Form, Input } from 'antd';
-import { getBusinessByTaxCodeRequest, sellerRegisterRequest } from '../../../redux/controller';
+import { Button, DatePicker, Form, Input, Select } from 'antd';
+import { getAccountBankNameRequest, getBusinessByTaxCodeRequest, getLstBankRequest, sellerRegisterRequest } from '../../../redux/controller';
 import { useDispatchRoot, useSelectorRoot } from '../../../redux/store';
-import { useEffect } from 'react';
-import { IReqFormArchitect } from '../../../common/profile.interface';
+import { useEffect, useState } from 'react';
+import { IReqFormArchitect, IReqLookUp } from '../../../common/profile.interface';
+import { DeleteOutlined, EditOutlined, FlagOutlined, CaretDownOutlined } from '@ant-design/icons';
 
 interface Props {
     setPage(e: any): void;
@@ -10,12 +11,23 @@ interface Props {
 
 const FormIndividuals = (props: Props) => {
     const dispatch = useDispatchRoot();
-    const { businessProfile } = useSelectorRoot((state) => state.sketch);
+    const { businessProfile, lstBank } = useSelectorRoot((state) => state.sketch);
     const [formIndividuals] = Form.useForm();
+    const [bankName, setBankName] = useState<string>('');
+    const [accountNumber, setAccountNumber] = useState<string>('');
+
+    const { Option } = Select;
+
+    useEffect(() => {
+        dispatch(getLstBankRequest());
+    }, [])
+
+    useEffect(() => {
+        console.log(lstBank);
+    }, [lstBank])
 
     const onFinish = (values: any) => {
         console.log(values);
-
         // format date to 2021-01-01T00:00:00.000Z
         const date = new Date(values.dateOfIssue._d);
 
@@ -46,6 +58,29 @@ const FormIndividuals = (props: Props) => {
             });
         }
     }, [businessProfile])
+
+    const handleChangeBank = (e: any) => {
+        console.log(e);
+        setBankName(e);
+        // dispatch(getBusinessByTaxCodeRequest(e.target.value))
+
+    }
+
+    const handleChangeAccountNumber = (e: any) => {
+        console.log(e.target.value);
+        setAccountNumber(e.target.value);
+        // dispatch(getBusinessByTaxCodeRequest(e.target.value))
+    }
+
+    // useEffect(() => {
+    //     if (bankName && accountNumber) {
+    //         const req: IReqLookUp = {
+    //             bin: bankName,
+    //             accountNumber: accountNumber
+    //         }
+    //         dispatch(getAccountBankNameRequest(req))
+    //     }
+    // }, [bankName, accountNumber])
 
     return (
         <div className='profile-content form-individuals'>
@@ -120,30 +155,29 @@ const FormIndividuals = (props: Props) => {
                     </Form.Item>
                 </div>
                 <div className="flex-col">
-
-                    <Form.Item
-                        label="Số tài khoản"
-                        name="accountNumber"
-                        rules={[{ required: true, message: 'Vui lòng nhập số tài khoản' }]}
-                    >
-                        <Input placeholder='Nhập số tài khoản' />
-                    </Form.Item>
-                    <Form.Item
-                        label="Tên tài khoản"
-                        name="accountName"
-                        rules={[{ required: true, message: 'Vui lòng nhập tên tài khoản' }]}
-                    >
-                        <Input placeholder='Nhập tên tài khoản' />
-                    </Form.Item>
-                </div>
-                <div className="flex-col">
-
                     <Form.Item
                         label="Ngân hàng"
                         name="bank"
                         rules={[{ required: true, message: 'Vui lòng nhập ngân hàng' }]}
                     >
-                        <Input placeholder='Nhập ngân hàng' />
+                        <Select
+                            showSearch
+                            allowClear
+                            style={{ width: '100%' }}
+                            placeholder="Nhập ngân hàng"
+                            onChange={handleChangeBank}
+                            optionFilterProp="children"
+                            filterOption={(input, option) =>
+                                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                            } suffixIcon={<CaretDownOutlined />}
+                            options={lstBank.map((item, index) => ({ label: item.name, value: item.bin }))}
+
+                        />
+                        {/* {lstBank?.map((item, index) => (
+                                <Option key={index} value={item.id}>{item.name}</Option>
+                            ))}
+                        </Select> */}
+                        {/* <Input placeholder='Nhập ngân hàng' /> */}
                     </Form.Item>
                     <Form.Item
                         label="Chi nhánh"
@@ -151,6 +185,24 @@ const FormIndividuals = (props: Props) => {
                         rules={[{ required: true, message: 'Vui lòng nhập chi nhánh' }]}
                     >
                         <Input placeholder='Nhập chi nhánh' />
+                    </Form.Item>
+                </div>
+
+                <div className="flex-col">
+                    <Form.Item
+                        label="Số tài khoản"
+                        name="accountNumber"
+                        rules={[{ required: true, message: 'Vui lòng nhập số tài khoản' }]}
+                    >
+
+                        <Input placeholder='Nhập số tài khoản' onBlur={handleChangeAccountNumber} />
+                    </Form.Item>
+                    <Form.Item
+                        label="Tên tài khoản"
+                        name="accountName"
+                        rules={[{ required: true, message: 'Vui lòng nhập tên tài khoản' }]}
+                    >
+                        <Input placeholder='Nhập tên tài khoản' />
                     </Form.Item>
                 </div>
 

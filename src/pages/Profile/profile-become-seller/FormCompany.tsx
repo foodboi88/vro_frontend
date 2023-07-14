@@ -1,8 +1,9 @@
-import { Button, DatePicker, Form, Input } from 'antd';
+import { Button, DatePicker, Form, Input, Select } from 'antd';
 import { IReqFormArchitect } from '../../../common/profile.interface';
-import { getBusinessByTaxCodeRequest, sellerRegisterRequest } from '../../../redux/controller';
+import { getBusinessByTaxCodeRequest, getLstBankRequest, sellerRegisterRequest } from '../../../redux/controller';
 import { useDispatchRoot, useSelectorRoot } from '../../../redux/store';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { DeleteOutlined, EditOutlined, FlagOutlined, CaretDownOutlined } from '@ant-design/icons';
 
 interface Props {
     setPage(e: any): void;
@@ -12,7 +13,9 @@ const FormCompany = (props: Props) => {
 
     const dispatch = useDispatchRoot();
     const [formCompany] = Form.useForm();
-    const { businessProfile } = useSelectorRoot((state) => state.sketch);
+    const { businessProfile, lstBank } = useSelectorRoot((state) => state.sketch);
+    const [bankName, setBankName] = useState<string>('');
+    const [accountNumber, setAccountNumber] = useState<string>('');
     const onFinish = (values: any) => {
         console.log(values);
         // format date to 2021-01-01T00:00:00.000Z
@@ -44,6 +47,25 @@ const FormCompany = (props: Props) => {
             });
         }
     }, [businessProfile])
+    useEffect(() => {
+        dispatch(getLstBankRequest());
+    }, [])
+
+    useEffect(() => {
+        console.log(lstBank);
+    }, [lstBank])
+    const handleChangeBank = (e: any) => {
+        console.log(e);
+        setBankName(e);
+        // dispatch(getBusinessByTaxCodeRequest(e.target.value))
+
+    }
+
+    const handleChangeAccountNumber = (e: any) => {
+        console.log(e.target.value);
+        setAccountNumber(e.target.value);
+        // dispatch(getBusinessByTaxCodeRequest(e.target.value))
+    }
     return (
         <div className='profile-content form-individuals'>
             <div className='profile-content-title'>Điền thông tin của bạn vào ô dưới đây!</div>
@@ -126,6 +148,35 @@ const FormCompany = (props: Props) => {
                 <div className="flex-col">
 
                     <Form.Item
+                        label="Ngân hàng"
+                        name="bank"
+                        rules={[{ required: true, message: 'Vui lòng nhập ngân hàng' }]}
+                    >
+                        <Select
+                            showSearch
+                            allowClear
+                            style={{ width: '100%' }}
+                            placeholder="Nhập ngân hàng"
+                            onChange={handleChangeBank}
+                            optionFilterProp="children"
+                            filterOption={(input, option) =>
+                                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                            } suffixIcon={<CaretDownOutlined />}
+                            options={lstBank.map((item, index) => ({ label: item.name, value: item.bin }))}
+
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        label="Chi nhánh"
+                        name="branch"
+                        rules={[{ required: true, message: 'Vui lòng nhập chi nhánh' }]}
+                    >
+                        <Input placeholder='Nhập chi nhánh' />
+                    </Form.Item>
+                </div>
+                <div className="flex-col">
+
+                    <Form.Item
                         label="Số tài khoản"
                         name="accountNumber"
                         rules={[{ required: true, message: 'Vui lòng nhập số tài khoản' }]}
@@ -140,23 +191,7 @@ const FormCompany = (props: Props) => {
                         <Input placeholder='Nhập tên tài khoản' />
                     </Form.Item>
                 </div>
-                <div className="flex-col">
 
-                    <Form.Item
-                        label="Ngân hàng"
-                        name="bank"
-                        rules={[{ required: true, message: 'Vui lòng nhập ngân hàng' }]}
-                    >
-                        <Input placeholder='Nhập ngân hàng' />
-                    </Form.Item>
-                    <Form.Item
-                        label="Chi nhánh"
-                        name="branch"
-                        rules={[{ required: true, message: 'Vui lòng nhập chi nhánh' }]}
-                    >
-                        <Input placeholder='Nhập chi nhánh' />
-                    </Form.Item>
-                </div>
 
                 <Form.Item >
                     <div className='button-groud'>
