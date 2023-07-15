@@ -7,6 +7,7 @@ import { Rule } from "antd/lib/form";
 import { motion } from "framer-motion";
 import { useDispatchRoot } from "../../redux/store";
 import { registerRequest } from "../../redux/controller";
+import { CheckboxChangeEvent } from "antd/lib/checkbox";
 interface MyProps {
     isOpenModal: boolean;
     toggleRegisterModal: () => void;
@@ -26,13 +27,15 @@ const Register = (props: MyProps) => {
 
     const [checkReqBtn, setCheckReqBtn] = useState<boolean>(false);
     const dispatch = useDispatchRoot();
+    const [checked, setChecked] = useState<boolean>(false);
 
     useEffect(() => {
         userNameReq &&
             regexPhoneNumber.test(userNumberPhoneReq) &&
             regexEmail.test(userEmailReq) &&
             regexPass.test(userPassReq) &&
-            userConfirmPassReq === userPassReq
+            userConfirmPassReq === userPassReq &&
+            checked
             ? setCheckReqBtn(true)
             : setCheckReqBtn(false);
     }, [
@@ -41,6 +44,7 @@ const Register = (props: MyProps) => {
         userEmailReq,
         userPassReq,
         userConfirmPassReq,
+        checked,
     ]);
 
     const handleInputNameReqChange = (event: { target: { value: any } }) => {
@@ -122,6 +126,11 @@ const Register = (props: MyProps) => {
         checkReqBtn && props.toggleLoginModal();
     };
 
+    const handleChangeCheckBox = (event: CheckboxChangeEvent) => {
+        console.log(`checked = ${event.target.checked}`);
+        setChecked(event.target.checked);
+    }
+
     return (
         <>
             <Modal
@@ -197,13 +206,13 @@ const Register = (props: MyProps) => {
                         <Form.Item
                             label="Mật khẩu"
                             name="passwordReq"
-                            // rules={[
-                            //     {
-                            //         validator: passwordValidator,
-                            //         message:
-                            //             "Mật khẩu vừa nhập của bạn không chính xác. Hãy thử lại hoặc chọn “Quên mật khẩu” để đặt lại mật khẩu mới!",
-                            //     },
-                            // ]}
+                        // rules={[
+                        //     {
+                        //         validator: passwordValidator,
+                        //         message:
+                        //             "Mật khẩu vừa nhập của bạn không chính xác. Hãy thử lại hoặc chọn “Quên mật khẩu” để đặt lại mật khẩu mới!",
+                        //     },
+                        // ]}
                         >
                             <Input.Password
                                 className="form-input"
@@ -268,7 +277,7 @@ const Register = (props: MyProps) => {
                         valuePropName="checked"
                     >
                         <label className="label-login">
-                            <Checkbox className="checkbox-login" />
+                            <Checkbox className="checkbox-login" onChange={handleChangeCheckBox} />
                             <div>
                                 Tôi đồng ý với <strong>Điều khoản</strong>và
                                 <strong>Chính sách bảo mật.</strong>
