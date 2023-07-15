@@ -109,6 +109,9 @@ interface SketchState {
 
     lstBank: IBank[];
     accountBankName: string;
+
+    listPurchasedSketch: any[];
+    totalPurchasedSketch: number;
 }
 
 const initState: SketchState = {
@@ -180,6 +183,8 @@ const initState: SketchState = {
 
     lstBank: [],
     accountBankName: "",
+    listPurchasedSketch: [],
+    totalPurchasedSketch: 0,
 };
 
 const sketchSlice = createSlice({
@@ -1100,9 +1105,30 @@ const sketchSlice = createSlice({
                     },
                 });
             }
+        },
+
+        // get list purchased sketch
+        getPurchasedSketchsRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        getPurchasedSketchsSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload);
+            state.listPurchasedSketch = action.payload.items;
+        },
+
+        getPurchasedSketchsFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            if (action.payload.status === 400 || action.payload.status === 404) {
+                notification.open({
+                    message: action.payload.response.message,
+                    onClick: () => {
+                        console.log("Notification Clicked!");
+                    },
+                });
+            }
         }
-
-
     },
 });
 
@@ -2037,6 +2063,24 @@ const getAccountBankName$: RootEpic = (action$) =>
             );
         })
     );
+
+const getPurchasedSketchs$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getPurchasedSketchsRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+            return SketchsApi.getPurchasedSketchs(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getPurchasedSketchsSuccess(res.data),
+                    ]
+                }),
+                catchError((err) => [sketchSlice.actions.getPurchasedSketchsFail(err)])
+            );
+        })
+    );
+
+
 export const SketchEpics = [
     // uploadSketch$,
     getHomeListSketch$,
@@ -2089,6 +2133,7 @@ export const SketchEpics = [
 
     getLstBank$,
     getAccountBankName$,
+    getPurchasedSketchs$
 ];
 export const {
     getLatestSketchRequest,
@@ -2142,7 +2187,7 @@ export const {
 
     getLstBankRequest,
     getAccountBankNameRequest,
-
+    getPurchasedSketchsRequest,
 
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;

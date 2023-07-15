@@ -19,6 +19,7 @@ import SellerBill from "../pages/seller/seller-bill/seller-bill";
 import SellerSketchs from "../pages/seller/seller-sketchs/seller-sketchs";
 import ProfileResume from "../pages/Profile/profile-resume/ProfileResume";
 import ProfileBecomeSeller from "../pages/Profile/profile-become-seller/ProfileBecomeSeller";
+import PurchasedSketchs from "../pages/purchased-sketchs/purchased-sketchs";
 
 // Dùng để set animation cho các router với nhau
 const AnimationRouter = () => {
@@ -36,7 +37,7 @@ const AnimationRouter = () => {
                         <Route path="/seller/order" element={<SellerBill />}></Route>
                         <Route path="/seller/withdraw" element={<SellerWithdraw />}></Route>
                         <Route path="/seller/management-sketch" element={<SellerSketchs />}></Route>
-
+                        <Route path="/seller/purchased-sketchs" element={<PurchasedSketchs />}></Route>
                     </Route>
                 </Route>
 
@@ -50,6 +51,8 @@ const AnimationRouter = () => {
                     <Route path="/profile" element={<Profile />}>
                         <Route path="/profile/resume" element={<ProfileResume />}></Route>
                         <Route path="/profile/become-seller" element={<ProfileBecomeSeller />}></Route>
+                        <Route path="/profile/purchased-sketchs" element={<PurchasedSketchs />}></Route>
+
                     </Route>
                 </Route>
 

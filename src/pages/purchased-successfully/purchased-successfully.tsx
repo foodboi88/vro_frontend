@@ -2,12 +2,14 @@ import React, { useEffect } from 'react'
 import './purchased-successfully.styles.scss'
 import { Button } from 'antd'
 import { useNavigate } from 'react-router-dom'
-import { useDispatchRoot } from '../../redux/store'
+import { useDispatchRoot, useSelectorRoot } from '../../redux/store'
 import { confirmPurchasedRequest } from '../../redux/controller'
 
 const PurchaseSuccessfully = () => {
     const navigate = useNavigate()
     const dispatch = useDispatchRoot()
+    const { tokenLogin, accesstokenExpỉred, userName, userRole } = useSelectorRoot((state) => state.login);
+
     const searchParams = new URLSearchParams(document.location.search)
 
     useEffect(() => {
@@ -40,8 +42,11 @@ const PurchaseSuccessfully = () => {
 
 
     const handleConfirmPurchased = () => {
+        if(userRole === "user") navigate('/profile/purchased-sketchs')
+        else if(userRole === "seller") 	navigate('/seller/purchased-sketchs')
+        else navigate('/')
 
-        navigate('/')
+
     }
 
 
@@ -59,7 +64,7 @@ const PurchaseSuccessfully = () => {
                                 handleConfirmPurchased()
                             }}
                         >
-                            Quay lại trang chủ
+                            Quay lại trang danh sách sản phẩm đã mua của bạn
                         </Button>
                     </div>
                 </div>

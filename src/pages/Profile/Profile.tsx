@@ -38,13 +38,18 @@ const Profile = () => {
                     <BsShop className='profile-navbar-item-icon' />
                     <span className='profile-navbar-item-text'>Trở thành người bán</span>
                 </div>
+
                 <div className={'profile-navbar-item' + (active === 4 ? ' active' : '')} onClick={() => setActive(4)}>
                     <AiOutlineLock className='profile-navbar-item-icon' />
                     <span className='profile-navbar-item-text'>Thay đổi mật khẩu</span>
                 </div>
-                <div className={'profile-navbar-item' + (active === 5 ? ' active' : '')} onClick={() => setActive(5)}>
-                    <RiBillLine className='profile-navbar-item-icon' />
-                    <span className='profile-navbar-item-text'>Đơn mua</span>
+                <div className={'profile-navbar-item' + (active === 5 ? ' active' : '')} onClick={() => {
+                    setActive(5)
+                    navigate('/profile/purchased-sketchs')
+                }
+                }>
+                    <BsShop className='profile-navbar-item-icon' />
+                    <span className='profile-navbar-item-text'>Sản phẩm đã mua</span>
                 </div>
                 <div className={'profile-navbar-item' + (active === 6 ? ' active' : '')} onClick={() => setActive(6)}>
                     <AiOutlineGift className='profile-navbar-item-icon' />
