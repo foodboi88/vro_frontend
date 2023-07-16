@@ -390,6 +390,9 @@ const UploadSketch = () => {
                                                     "https://localhost:3000/"
                                                 }
                                                 multiple
+                                                onRemove={(file)=>{
+                                                    return true
+                                                }}
                                                 listType="picture-card"
                                                 showUploadList={{
                                                     showRemoveIcon: true,
@@ -447,8 +450,9 @@ const UploadSketch = () => {
                                                 showUploadList={{
                                                     showRemoveIcon: true,
                                                 }}
-                                                accept=".zip, .rar, .png, .jpeg, .jpg"
+                                                accept=".zip, .rar"
                                                 beforeUpload={(file) => {
+                                                    console.log(file)
                                                     let tmplst = fileUploadLst;
                                                     tmplst.push(file);
                                                     setFileUploadList(tmplst);
@@ -464,7 +468,7 @@ const UploadSketch = () => {
                                                 }}
                                             >
                                                 Click hoặc kéo file bản vẽ vào
-                                                đây
+                                                đây (file .zip hoặc .zar)
                                                 <br />
                                             </Upload.Dragger>
                                         </Form.Item>
