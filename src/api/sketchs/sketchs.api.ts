@@ -14,6 +14,7 @@ import {
     IReqGetLatestSketchs,
 } from "../../common/sketch.interface";
 import axios from "axios";
+import Utils from "../../common/utils";
 
 export default class SketchsApi {
     static apiURL = API_URL;
@@ -61,6 +62,17 @@ export default class SketchsApi {
     static getSketchsByTypeOfArchitecture(typeId: string): Observable<any> {
         const pageSize = 10;
         const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.GET_SKETCHS_BY_ARCHITECTURE}?typeOfArchitectureId=${typeId}&size=${pageSize}&offset=${0}`;
+        return HttpClient.get(api).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
+
+    static getSketchsByType(type: string): Observable<any> {
+        const pageSize = 15;
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.GET_SKETCH_BY_TYPE}?size=${pageSize}&offset=0&type=${type}`;
         return HttpClient.get(api).pipe(
             map(
                 (res) => (res as any) || null,
@@ -167,6 +179,57 @@ export default class SketchsApi {
     static deleteSketchInCart(sketchId: string): Observable<any> {
         const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.DELETE_SKETCH_IN_CART}/${sketchId}`;
         return HttpClient.delete(api).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
+
+    // KTS quản lý bản vẽ
+    static getAllSketchByArchitect(bodyrequest: any): Observable<any> {
+        const queryParam = Utils.parseObjectToQueryParameter(bodyrequest);
+
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.SKETCH_MANAGEMENT}${queryParam}`;
+        return HttpClient.get(api).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
+
+    // Xóa sản phẩm của KTS
+    static deleteSketchOfArchitect(bodyrequest: any): Observable<any> {
+        const queryParam = Utils.parseObjectToQueryParameter(bodyrequest);
+
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.DELETE_PRODUCT}${queryParam}`;
+        return HttpClient.delete(api).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
+
+    // Thống kê sản phẩm của KTS
+    static getSketchStatistic(): Observable<any> {
+
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.STATISTIC_PRODUCT}`;
+        return HttpClient.get(api).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
+
+    // get danh sach san pham da mua
+    static getPurchasedSketchs(bodyrequest: any): Observable<any> {
+        const queryParam = Utils.parseObjectToQueryParameter(bodyrequest);
+
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.GET_PURCHASED_SKETCHS}${queryParam}`;
+        return HttpClient.get(api).pipe(
             map(
                 (res) => (res as any) || null,
                 catchError((error) => new Observable())

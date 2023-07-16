@@ -998,3 +998,18 @@ body {
     color: #fff;
     left: 19%;
 }
+
+.ant-spin {
+    .ant-spin-dot-item {
+        background-color: #FF0039;
+    }
+
+    .ant-spin-text {
+        color: #FF0039;
+    }
+}
+
+.ant-spin-nested-loading>div>.ant-spin {
+    position: fixed;
+    max-height: 100%;
+}

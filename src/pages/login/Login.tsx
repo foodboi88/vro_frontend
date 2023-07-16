@@ -20,14 +20,17 @@ const Login = (props: MyProps) => {
     const [userEmailLogin, setUserEmailLogin] = useState<string>("");
     const [userPassLogin, setUserPassLogin] = useState<string>("");
     const [checkLoginBtn, setCheckLoginBtn] = useState<boolean>(true);
+    const { accesstokenExpỉred  } = useSelectorRoot((state) => state.login);
+
 
     const dispatch = useDispatchRoot();
 
-    // useEffect(() => {
-    //     userEmailLogin && regexPass.test(userPassLogin)
-    //         ? setCheckLoginBtn(true)
-    //         : setCheckLoginBtn(false);
-    // }, [userEmailLogin, userPassLogin]);
+    useEffect(()=>{
+        if(!accesstokenExpỉred){
+            props.toggleLoginModal();
+            props.checkIsLogin(true);
+        }
+    },[accesstokenExpỉred])
 
     const handleInputEmailLoginChange = (event: { target: { value: any } }) => {
         setUserEmailLogin(event.target.value);
@@ -73,9 +76,7 @@ const Login = (props: MyProps) => {
         if (!value) {
             callback("Vui lòng nhập mật khẩu.");
         }
-        // } else if (!regexPass.test(value)) {
-        //     callback("Mật khẩu không hợp lệ.");
-        // }
+    
         else {
             callback();
         }
@@ -90,12 +91,11 @@ const Login = (props: MyProps) => {
             remember: true,
         };
         dispatch(loginRequest(bodyrequest));
-        props.toggleLoginModal();
-        props.checkIsLogin(true);
-        // setTimeout(() => {
-        //     window.location.reload();
-        // }, 1000);
+        
+    
     };
+
+
     return (
         <>
             <Modal

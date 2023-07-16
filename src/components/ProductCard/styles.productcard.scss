@@ -169,3 +169,38 @@
         }
     }
 }
+
+@media (max-width: 400px) {
+    .card {
+        .ant-card-cover {
+            .image-card {
+                height: 10em;
+            }
+        }
+
+        .ant-card-body {
+            height: 8em;
+            padding: .5em;
+
+            .title-and-price {
+                .ant-card-meta-title {}
+
+                .home-card-title {
+                    .h-c-t-title {
+                        font-size: .8em;
+                    }
+
+                    .h-c-t-view-point {
+                        font-size: .8em;
+                    }
+                }
+            }
+
+            .home-card-description {}
+
+            .home-card-price {}
+
+            .home-card-price.free {}
+        }
+    }
+}

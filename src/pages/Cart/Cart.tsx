@@ -107,94 +107,19 @@ const Cart = () => {
         Table.SELECTION_COLUMN,
         {
             title: `Tất cả (${sketchsQuantityInCart} sản phẩm)`,
-            dataIndex: "title",
             key: "title",
-            render: (title: any) => (
+            render: (record: any) => (
                 <div className="sketch-cart-info">
                     <div className="sketch-cart-info-img">
                         {/* <img src={sketch && sketch.images[0].filePath} alt="" /> */}
-                        <img src={CartImage1} alt="" />
+                        <img style={{width: "145px"}} src={record.image} alt="" />
                     </div>
                     <div className="sketch-cart-content">
                         <div className="sketch-cart-content-title">
                             {/* {sketch && sketch.info.title} */}
-                            {title && title}
+                            {record.title && record.title}
                         </div>
-                        {/* <div className="sketch-cart-content-info">
-                            <div className="content">
-                                <img src={IconDetail4} alt="" />
-                                <div className="text">
-                                    Dung lượng file: {sketch && sketch.info.fileSize} MB
-                                </div>
-                            </div>
-                            <div className="content">
-                                <img src={IconDetail2} alt="" />
-                                <div className="text">
-                                    Phong cách:
-                                    {sketch && sketch.designStyles.map((style, index) =>
-                                        index ===
-                                            sketch.designStyles.length - 1 ? (
-                                            <span key={index}>
-                                                {" "}
-                                                {style.name}
-                                            </span>
-                                        ) : (
-                                            <span key={index}>
-                                                {" "}
-                                                {style.name},
-                                            </span>
-                                        )
-                                    )}
-                                </div>
-                            </div>
-                            <div className="content">
-                                <img src={IconDetail5} alt="" />
-                                <div className="text">
-                                </div>
-                            </div>
-                            <div className="content">
-                                <img src={IconDetail3} alt="" />
-                                <div className="text">
-                                    Công cụ:
-                                    {sketch && sketch.designTools.map((tool, index) =>
-                                        index ===
-                                            sketch.designTools.length - 1 ? (
-                                            <span key={index}>
-                                                {" "}
-                                                {tool.name}
-                                            </span>
-                                        ) : (
-                                            <span key={index}>
-                                                {" "}
-                                                {tool.name},
-                                            </span>
-                                        )
-                                    )}
-                                </div>
-                            </div>
-                            <div className="content">
-                                <img src={IconDetail6} alt="" />
-                                <div className="text">
-                                    Hạng mục:{" "}
-                                    {sketch && sketch.typeOfArchitectures.map(
-                                        (type, index) =>
-                                            index ===
-                                                sketch.typeOfArchitectures.length -
-                                                1 ? (
-                                                <span key={index}>
-                                                    {" "}
-                                                    {type.name}
-                                                </span>
-                                            ) : (
-                                                <span key={index}>
-                                                    {" "}
-                                                    {type.name},
-                                                </span>
-                                            )
-                                    )}
-                                </div>
-                            </div>
-                        </div> */}
+                        
                     </div>
                 </div>
             ),

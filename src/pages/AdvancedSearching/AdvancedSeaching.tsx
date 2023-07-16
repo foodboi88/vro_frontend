@@ -170,6 +170,13 @@ const AdvancedSeaching = () => {
     } = useSelectorRoot((state) => state.sketch);
 
     useEffect(() => {
+        document.body.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }, [navigate]);
+
+    useEffect(() => {
         const handleWindowResize = () => {
             setWindowSize([window.innerWidth, window.innerHeight]);
         };
@@ -203,28 +210,10 @@ const AdvancedSeaching = () => {
             <CFilter />
             <div className="filtered-items">
                 <div className="author-introduction">
-                    <div className="searched-author-title">
-                        <div className="text-title">
-                            <UserOutlined /> Tác giả liên quan đến{" "}
-                            <strong>{'"Bản vẽ biệt thự 2 tầng"'}</strong>{" "}
-                        </div>
 
-                        <motion.div
-                            whileHover={{ scale: 1.3 }}
-                            whileTap={{ scale: 0.95 }}
-                        >
-                            <div className="text-title results">
-                                Thêm kết quả
-                            </div>
-                        </motion.div>
-                    </div>
-                    {/* <CAuthorIntroduction /> */}
                 </div>
                 <div className="sketch-list">
-                    <div className="searched-sketch-title">
-                        <SearchOutlined /> Bản vẽ liên quan tới{" "}
-                        <strong>{'"Bản vẽ biệt thự 2 tầng"'}</strong>
-                    </div>
+                   
                     <CArrangeBar />
                     <Row className="detail-list" gutter={[16, 24]}>
                         {filteredSketchs &&
@@ -241,7 +230,7 @@ const AdvancedSeaching = () => {
                                         title={card.title}
                                         view={card.views}
                                         price={card.price}
-                                        // type={card.}
+                                    // type={card.}
                                     />
                                 </Col>
                             ))}

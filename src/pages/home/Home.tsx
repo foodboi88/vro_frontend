@@ -2,27 +2,27 @@
 import {
     ArrowLeftOutlined,
     ArrowRightOutlined,
-    EyeOutlined,
+    RightOutlined
 } from "@ant-design/icons";
-import { Button, Card, Col, Row } from "antd";
-import Meta from "antd/lib/card/Meta";
+import { Button, Col, Row } from "antd";
 import { Variants, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import BietThu from "../../images/homepage/bietthu1.png";
-import Notification from "../../images/homepage/notification.png";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
 import "./styles.home.scss";
-
-import DrawHomeImage1 from "../../images/homepage/home_img_1.png";
-import DrawHomeImage2 from "../../images/homepage/home_img_2.png";
-import DrawHomeImage3 from "../../images/homepage/home_img_3.png";
-import DrawHomeImage4 from "../../images/homepage/home_img_4.png";
-import DrawHomeImage5 from "../../images/homepage/home_img_5.png";
-import DrawHomeImage6 from "../../images/homepage/home_img_6.png";
-import DrawHomeImage7 from "../../images/homepage/home_img_7.png";
-import DrawHomeImage8 from "../../images/homepage/home_img_8.png";
-import DrawHomeImage9 from "../../images/homepage/home_img_9.png";
+import CProductCard from "../../components/ProductCard/CProductCard";
+import Adsvertisement1 from '../../images/homepage/adsvertisement1.png';
+import Adsvertisement2 from '../../images/homepage/adsvertisement2.png';
+import CarouselImage from '../../images/homepage/carousel.png';
+import Cate1 from '../../images/homepage/cate1.png';
+import Cate2 from '../../images/homepage/cate2.png';
+import Cate3 from '../../images/homepage/cate3.png';
+import Cate4 from '../../images/homepage/cate4.png';
+import Cate5 from '../../images/homepage/cate5.png';
+import Cate7 from '../../images/homepage/cate7.png';
+import Cate8 from '../../images/homepage/cate8.png';
+import CategoryIcon from '../../images/homepage/category_icon.png';
+import Declare1 from '../../images/homepage/declare2.jpg';
 import DrawHomeImage10 from "../../images/homepage/home_img_10.png";
 import DrawHomeImage11 from "../../images/homepage/home_img_11.png";
 import DrawHomeImage12 from "../../images/homepage/home_img_12.png";
@@ -30,16 +30,14 @@ import DrawHomeImage13 from "../../images/homepage/home_img_13.png";
 import DrawHomeImage14 from "../../images/homepage/home_img_14.png";
 import DrawHomeImage15 from "../../images/homepage/home_img_15.png";
 import DrawHomeImage16 from "../../images/homepage/home_img_16.png";
-import CProductCard from "../../components/ProductCard/CProductCard";
-import {
-    getHomeListSketchRequest,
-    getLatestSketchRequest,
-} from "../../redux/controller";
-import { IReqGetLatestSketchs } from "../../common/sketch.interface";
+import DrawHomeImage9 from "../../images/homepage/home_img_9.png";
 import { Carousel } from 'antd';
+import { ICurrentSearchValue } from "../../common/sketch.interface";
 import CDeclare from "../../components/Declare/CDeclare";
-
-
+import {
+    advancedSearchingRequest,
+    getHomeListSketchRequest
+} from "../../redux/controller";
 interface CardData {
     id: number;
     title: string;
@@ -144,9 +142,64 @@ const hoverVariants = {
     },
 };
 
+const categoryList = [
+    {
+        id: "64231026edf9dd11e488c250",
+        content: 'Bản vẽ biệt thự',
+        link: '',
+        icon: Cate1
+    },
+    {
+        id: "64231030edf9dd11e488c252",
+        content: 'Bản vẽ nhà phố',
+        link: '',
+        icon: Cate2,
+
+    },
+    {
+        id: "642ce3895de07140c4f4cd61",
+        content: 'Bản vẽ nhà xưởng',
+        link: '',
+        icon: Cate3,
+
+    },
+    {
+        id: "642ce3965de07140c4f4cd62",
+        content: 'Bản vẽ nội thất',
+        link: '',
+        icon: Cate4,
+
+
+    },
+    {
+        id: "642ce3a35de07140c4f4cd63",
+        content: 'Bản vẽ ngoại thất',
+        link: '',
+        icon: Cate5,
+
+    },
+
+    {
+        id: "7",
+        content: 'Bản vẽ nhà thờ',
+        link: '',
+        icon: Cate7,
+
+    },
+    {
+        id: " 8",
+        content: 'Bản vẽ cửa hàng',
+        link: '',
+        icon: Cate8,
+
+    },
+
+
+]
+
 // Phần trang chủ của trang web
 const Home = () => {
-    const { latestSketchsList, mostViewedSketchList, villaSketchList, factorySketchList, streetHouseSketchList, interiorSketchList } = useSelectorRoot(
+    const { latestSketchsList, mostViewedSketchList, freeSketchList } = useSelectorRoot(
         (state) => state.sketch
     ); // Lst cac ban ve
 
@@ -163,11 +216,20 @@ const Home = () => {
     const [currentIndexStreetHouseSketch, setCurrentIndexStreetHouseSketch] = useState(0);
     const [currentIndexFactorySketch, setCurrentIndexFactorySketch] = useState(0);
     const [currentIndexInteriorSketch, setCurrentIndexInteriorSketch] = useState(0);
+    const [currentIndexFreeSketch, setCurrentIndexFreeSketch] = useState(0);
 
     const [windowSize, setWindowSize] = useState([
         window.innerWidth,
         window.innerHeight,
     ]);
+
+    useEffect(() => {
+        document.body.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }, [navigate]);
+
 
     useEffect(() => {
         const handleWindowResize = () => {
@@ -201,6 +263,7 @@ const Home = () => {
 
     useEffect(() => {
         dispatch(getHomeListSketchRequest());
+
     }, []);
 
     // Handle pagination most view sketch
@@ -251,6 +314,13 @@ const Home = () => {
         setCurrentIndexInteriorSketch(currentIndexInteriorSketch - 1);
     };
 
+    // Handle pagination interior sketch
+    const handleNextCardFreeSketch = () => {
+        setCurrentIndexFreeSketch(currentIndexFreeSketch + 1);
+    };
+    const handlePrevCardFreeSketch = () => {
+        setCurrentIndexFreeSketch(currentIndexFreeSketch - 1);
+    };
 
     const handleClickCard = (sketchId: string) => {
         console.log("sketchId", sketchId);
@@ -261,6 +331,17 @@ const Home = () => {
 
     };
 
+    const onClickCategory = (architectureId: string) => {
+        const bodyrequest: ICurrentSearchValue = {
+            name: '',
+            architecture: architectureId,
+            tool: '',
+            style: '',
+        };
+        dispatch(advancedSearchingRequest(bodyrequest))
+        navigate("/searching");
+    }
+
     return (
         <motion.div
             className="main-home"
@@ -269,31 +350,72 @@ const Home = () => {
             exit={{ x: window.innerWidth, transition: { duration: 0.5 } }}
         >
             {/* <div className="main-notification"> */}
-            <Carousel autoplay>
-                <div>
-                    <img
-                        className="image"
-                        src={Notification}
-                        alt="main notification"
-                    />
-                </div>
-                <div>
-                    <img
-                        className="image"
-                        src={Notification}
-                        alt="main notification"
-                    />
-                </div>
-                <div>
-                    <img
-                        className="image"
-                        src={Notification}
-                        alt="main notification"
-                    />
-                </div>
+            <div className='header-homepage'>
+                <div className='category-list'>
+                    <div className="category-title">
+                        <img className="category-icon" src={CategoryIcon} />
+                        <div className="text">TẤT CẢ DANH MỤC SẢN PHẨM</div>
+                    </div>
+                    <div className="divider">
+                    </div>
+                    {
+                        categoryList.map(item => {
+                            return (
+                                <div className="category-item" onClick={() => onClickCategory(item.id)}>
+                                    <div className="cate-content">
 
-            </Carousel>
+                                        <img className="cate-image" src={item.icon} />
+                                        <div className="cate-item-text">
+                                            {item.content}
+                                        </div>
+                                    </div>
+                                    <div className="arrow-icon">
+                                        <RightOutlined />
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
+                    <div>
+
+                    </div>
+                </div>
+                <div className="category-content">
+                    <div className="carousel">
+                        <Carousel autoplay>
+                            <div>
+                                <img
+                                    className="image"
+                                    src={CarouselImage}
+                                    alt="main notification"
+                                />
+                            </div>
+                            <div>
+                                <img
+                                    className="image"
+                                    src={CarouselImage}
+                                    alt="main notification"
+                                />
+                            </div>
+                            <div>
+                                <img
+                                    className="image"
+                                    src={CarouselImage}
+                                    alt="main notification"
+                                />
+                            </div>
+
+                        </Carousel>
+                    </div>
+                    <div className="advertisement">
+                        <img className="ad-image" src={Adsvertisement1} alt="" />
+                        <img className="ad-image" src={Adsvertisement2} alt="" />
+                    </div>
+                </div>
+            </div>
+
             {/* </div> */}
+            {/* <Slider /> */}
 
             <div className="tool-of-web">
                 <div className="title">
@@ -347,10 +469,11 @@ const Home = () => {
             </div>
             <CDeclare
                 content="Chỉnh sửa thiết kế theo yêu cầu"
+                imageUrl={Declare1}
             />
             <div className="tool-of-web">
                 <div className="title">
-                    <div>Bài vẽ mới hôm nay</div>
+                    <div>Bản vẽ mới hôm nay</div>
                     <div className="sub-title">{"Xem thêm"}</div>
                 </div>
                 <div className="lst-tool">
@@ -399,305 +522,63 @@ const Home = () => {
                 </div>
             </div>
             <CDeclare
-                content="Luôn cập nhật xu hướng mới nhất"
+                content="Bản vẽ miễn phí cho bạn"
+                imageUrl={Declare1}
+
             />
             <div className="tool-of-web">
                 <div className="title">
-                    <div>Bản vẽ biệt thự</div>
+                    <div>Bản vẽ miễn phí</div>
                     <div className="sub-title">{"Xem thêm"}</div>
                 </div>
-                <div className="lst-tool">
-                    <Col>
-                        <Button
-                            icon={<ArrowLeftOutlined />}
-                            className="btn-icon"
-                            onClick={handlePrevCardVillaSketch}
-                            disabled={currentIndexVillaSketch === 0 && true}
-                        />
-                    </Col>
-                    <Row gutter={[16, 16]}>
-                        {villaSketchList
-                            .slice(
-                                currentIndexVillaSketch,
-                                currentIndexVillaSketch + numberOfCardShow
-                            )
-                            .map((card: any) => (
-                                <Col
-                                    onClick={() => {
-                                        handleClickCard(card.id);
-                                    }}
-                                    span={spanCol}
-                                    key={card.id}
-                                >
-                                    <CProductCard
-                                        imageUrl={card.image}
-                                        title={card.title}
-                                        view={card.views}
-                                        price={card.price}
-                                    // type={card.type}
-                                    />
-                                </Col>
-                            ))}
-                    </Row>
-                    <Col>
-                        <Button
-                            icon={<ArrowRightOutlined />}
-                            className="btn-icon"
-                            onClick={handleNextCardVillaSketch}
-                            disabled={
-                                currentIndexVillaSketch >= villaSketchList.length - numberOfCardShow && true
-                            }
-                        />
-                    </Col>
-                </div>
+                {freeSketchList.length > 0 &&
+                    <div className="lst-tool">
+                        <Col>
+                            <Button
+                                icon={<ArrowLeftOutlined />}
+                                className="btn-icon"
+                                onClick={handlePrevCardFreeSketch}
+                                disabled={currentIndexFreeSketch === 0 && true}
+                            />
+                        </Col>
+                        <Row gutter={[16, 16]}>
+                            {freeSketchList
+                                .slice(
+                                    currentIndexFreeSketch,
+                                    currentIndexFreeSketch + numberOfCardShow
+                                )
+                                .map((card) => (
+                                    <Col
+                                        onClick={() => {
+                                            handleClickCard(card.id);
+                                        }}
+                                        span={spanCol}
+                                        key={card.id}
+                                    >
+                                        <CProductCard
+                                            imageUrl={card.images[0]}
+                                            title={card.title}
+                                            view={card.views}
+                                            price={card.price}
+                                        // type={card.type}
+                                        />
+                                    </Col>
+                                ))}
+                        </Row>
+                        <Col>
+                            <Button
+                                icon={<ArrowRightOutlined />}
+                                className="btn-icon"
+                                onClick={handleNextCardFreeSketch}
+                                disabled={
+                                    currentIndexFreeSketch >= freeSketchList.length - numberOfCardShow && true
+                                }
+                            />
+                        </Col>
+                    </div>
+                }
             </div>
-            <CDeclare
-                content="Chỉnh sửa thiết kế theo yêu cầu"
-            />
-            <div className="tool-of-web">
-                <div className="title">
-                    <div>Bài vẽ nhà phố</div>
-                    <div className="sub-title">{"Xem thêm"}</div>
-                </div>
-                <div className="lst-tool">
-                    <Col>
-                        <Button
-                            icon={<ArrowLeftOutlined />}
-                            className="btn-icon"
-                            onClick={handlePrevCardStreetHouseSketch}
-                            disabled={currentIndexStreetHouseSketch === 0 && true}
-                        />
-                    </Col>
-                    <Row gutter={[16, 16]}>
-                        {streetHouseSketchList
-                            .slice(
-                                currentIndexStreetHouseSketch,
-                                currentIndexStreetHouseSketch + numberOfCardShow
-                            )
-                            .map((card: any) => (
-                                <Col
-                                    onClick={() => {
-                                        handleClickCard(card.id);
-                                    }}
-                                    span={spanCol}
-                                    key={card.id}
-                                >
-                                    <CProductCard
-                                        imageUrl={card.image}
-                                        title={card.title}
-                                        view={card.views}
-                                        price={card.price}
-                                    // type={card.type}
-                                    />
-                                </Col>
-                            ))}
-                    </Row>
-                    <Col>
-                        <Button
-                            icon={<ArrowRightOutlined />}
-                            className="btn-icon"
-                            onClick={handleNextCardStreetHouseSketch}
-                            disabled={
-                                currentIndexStreetHouseSketch >= streetHouseSketchList.length - numberOfCardShow && true
-                            }
-                        />
-                    </Col>
-                </div>
-            </div>
-            <CDeclare
-                content="Chỉnh sửa thiết kế theo yêu cầu"
-            />
-            <div className="tool-of-web">
-                <div className="title">
-                    <div>Bài vẽ nhà xưởng</div>
-                    <div className="sub-title">{"Xem thêm"}</div>
-                </div>
-                <div className="lst-tool">
-                    <Col>
-                        <Button
-                            icon={<ArrowLeftOutlined />}
-                            className="btn-icon"
-                            onClick={handlePrevCardFactorySketch}
-                            disabled={currentIndexFactorySketch === 0 && true}
-                        />
-                    </Col>
-                    <Row gutter={[16, 16]}>
-                        {factorySketchList
-                            .slice(
-                                currentIndexFactorySketch,
-                                currentIndexFactorySketch + numberOfCardShow
-                            )
-                            .map((card: any) => (
-                                <Col
-                                    onClick={() => {
-                                        handleClickCard(card.id);
-                                    }}
-                                    span={spanCol}
-                                    key={card.id}
-                                >
-                                    <CProductCard
-                                        imageUrl={card.image}
-                                        title={card.title}
-                                        view={card.views}
-                                        price={card.price}
-                                    // type={card.type}
-                                    />
-                                </Col>
-                            ))}
-                    </Row>
-                    <Col>
-                        <Button
-                            icon={<ArrowRightOutlined />}
-                            className="btn-icon"
-                            onClick={handleNextCardFactorySketch}
-                            disabled={
-                                currentIndexFactorySketch >= factorySketchList.length - numberOfCardShow && true
-                            }
-                        />
-                    </Col>
-                </div>
-            </div>
-            <CDeclare
-                content="Chỉnh sửa thiết kế theo yêu cầu"
-            />
-            <div className="tool-of-web">
-                <div className="title">
-                    <div>Bài vẽ nội thất</div>
-                    <div className="sub-title">{"Xem thêm"}</div>
-                </div>
-                <div className="lst-tool">
-                    <Col>
-                        <Button
-                            icon={<ArrowLeftOutlined />}
-                            className="btn-icon"
-                            onClick={handlePrevCardInteriorSketch}
-                            disabled={currentIndexInteriorSketch === 0 && true}
-                        />
-                    </Col>
-                    <Row gutter={[16, 16]}>
-                        {interiorSketchList
-                            .slice(
-                                currentIndexInteriorSketch,
-                                currentIndexInteriorSketch + numberOfCardShow
-                            )
-                            .map((card: any) => (
-                                <Col
-                                    onClick={() => {
-                                        handleClickCard(card.id);
-                                    }}
-                                    span={spanCol}
-                                    key={card.id}
-                                >
-                                    <CProductCard
-                                        imageUrl={card.image}
-                                        title={card.title}
-                                        view={card.views}
-                                        price={card.price}
-                                    // type={card.type}
-                                    />
-                                </Col>
-                            ))}
-                    </Row>
-                    <Col>
-                        <Button
-                            icon={<ArrowRightOutlined />}
-                            className="btn-icon"
-                            onClick={handleNextCardInteriorSketch}
-                            disabled={
-                                currentIndexInteriorSketch >= interiorSketchList.length - numberOfCardShow && true
-                            }
-                        />
-                    </Col>
-                </div>
-            </div>
-            {/* <div className="tool-of-web">
-                <div className="title">
-                    <div>Gợi ý cho bạn</div>
-                    <div className="sub-title">{"Xem thêm"}</div>
-                </div>
-                <div className="lst-tool">
-                    <Col>
-                        <Button
-                            icon={<ArrowLeftOutlined />}
-                            className="btn-icon"
-                            onClick={handlePrevCard}
-                            disabled={currentIndex === 0 && true}
-                        />
-                    </Col>
-                    <Row gutter={[16, 16]}>
-                        {suggestLst
-                            .slice(
-                                currentIndex,
-                                currentIndex + numberOfCardShow
-                            )
-                            .map((card) => (
-                                <Col span={spanCol} key={card.id}>
-                                    <CProductCard
-                                        imageUrl={card.imageUrl}
-                                        title={card.title}
-                                        view={card.view}
-                                        price={card.price}
-                                        type={card.type}
-                                    />
-                                </Col>
-                            ))}
-                    </Row>
-                    <Col>
-                        <Button
-                            icon={<ArrowRightOutlined />}
-                            className="btn-icon"
-                            onClick={handleNextCard}
-                            disabled={
-                                currentIndex >= numberOfCardNext - 4 && true
-                            }
-                        />
-                    </Col>
-                </div>
-            </div>
-            <div className="tool-of-web">
-                <div className="title">
-                    <div>Vro Group đề xuất</div>
-                    <div className="sub-title">{"Xem thêm"}</div>
-                </div>
-                <div className="lst-tool">
-                    <Col>
-                        <Button
-                            icon={<ArrowLeftOutlined />}
-                            className="btn-icon"
-                            onClick={handlePrevCard}
-                            disabled={currentIndex === 0 && true}
-                        />
-                    </Col>
-                    <Row gutter={[16, 16]}>
-                        {webSuggestLst
-                            .slice(
-                                currentIndex,
-                                currentIndex + numberOfCardShow
-                            )
-                            .map((card) => (
-                                <Col span={spanCol} key={card.id}>
-                                    <CProductCard
-                                        imageUrl={card.imageUrl}
-                                        title={card.title}
-                                        view={card.view}
-                                        price={card.price}
-                                        type={card.type}
-                                    />
-                                </Col>
-                            ))}
-                    </Row>
-                    <Col>
-                        <Button
-                            icon={<ArrowRightOutlined />}
-                            className="btn-icon"
-                            onClick={handleNextCard}
-                            disabled={
-                                currentIndex >= numberOfCardNext - 4 && true
-                            }
-                        />
-                    </Col>
-                </div>
-            </div> */}
+
         </motion.div>
     );
 };
