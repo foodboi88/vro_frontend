@@ -2,28 +2,27 @@
 import {
     ArrowLeftOutlined,
     ArrowRightOutlined,
-    EyeOutlined,
-    RightOutlined,
+    RightOutlined
 } from "@ant-design/icons";
-import { Button, Card, Col, Row } from "antd";
-import Meta from "antd/lib/card/Meta";
+import { Button, Col, Row } from "antd";
 import { Variants, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import BietThu from "../../images/homepage/bietthu1.png";
-import Notification from "../../images/homepage/notification.png";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
 import "./styles.home.scss";
-
-import DrawHomeImage1 from "../../images/homepage/home_img_1.png";
-import DrawHomeImage2 from "../../images/homepage/home_img_2.png";
-import DrawHomeImage3 from "../../images/homepage/home_img_3.png";
-import DrawHomeImage4 from "../../images/homepage/home_img_4.png";
-import DrawHomeImage5 from "../../images/homepage/home_img_5.png";
-import DrawHomeImage6 from "../../images/homepage/home_img_6.png";
-import DrawHomeImage7 from "../../images/homepage/home_img_7.png";
-import DrawHomeImage8 from "../../images/homepage/home_img_8.png";
-import DrawHomeImage9 from "../../images/homepage/home_img_9.png";
+import CProductCard from "../../components/ProductCard/CProductCard";
+import Adsvertisement1 from '../../images/homepage/adsvertisement1.png';
+import Adsvertisement2 from '../../images/homepage/adsvertisement2.png';
+import CarouselImage from '../../images/homepage/carousel.png';
+import Cate1 from '../../images/homepage/cate1.png';
+import Cate2 from '../../images/homepage/cate2.png';
+import Cate3 from '../../images/homepage/cate3.png';
+import Cate4 from '../../images/homepage/cate4.png';
+import Cate5 from '../../images/homepage/cate5.png';
+import Cate7 from '../../images/homepage/cate7.png';
+import Cate8 from '../../images/homepage/cate8.png';
+import CategoryIcon from '../../images/homepage/category_icon.png';
+import Declare1 from '../../images/homepage/declare2.jpg';
 import DrawHomeImage10 from "../../images/homepage/home_img_10.png";
 import DrawHomeImage11 from "../../images/homepage/home_img_11.png";
 import DrawHomeImage12 from "../../images/homepage/home_img_12.png";
@@ -31,36 +30,14 @@ import DrawHomeImage13 from "../../images/homepage/home_img_13.png";
 import DrawHomeImage14 from "../../images/homepage/home_img_14.png";
 import DrawHomeImage15 from "../../images/homepage/home_img_15.png";
 import DrawHomeImage16 from "../../images/homepage/home_img_16.png";
-import CProductCard from "../../components/ProductCard/CProductCard";
-import CarouselImage from '../../images/homepage/carousel.png';
-import Adsvertisement1 from '../../images/homepage/adsvertisement1.png';
-import Adsvertisement2 from '../../images/homepage/adsvertisement2.png';
-import CategoryIcon from '../../images/homepage/category_icon.png';
-import Cate1 from '../../images/homepage/cate1.png'
-import Cate2 from '../../images/homepage/cate2.png'
-import Cate3 from '../../images/homepage/cate3.png'
-import Cate4 from '../../images/homepage/cate4.png'
-import Cate5 from '../../images/homepage/cate5.png'
-import Cate6 from '../../images/homepage/cate6.png'
-import Cate7 from '../../images/homepage/cate7.png'
-import Cate8 from '../../images/homepage/cate8.png'
-import Cate9 from '../../images/homepage/cate9.png'
-import Declare1 from '../../images/homepage/declare2.jpg'
-
-
+import DrawHomeImage9 from "../../images/homepage/home_img_9.png";
+import { Carousel } from 'antd';
+import { ICurrentSearchValue } from "../../common/sketch.interface";
+import CDeclare from "../../components/Declare/CDeclare";
 import {
     advancedSearchingRequest,
-    getAllFilterCriteriasRequest,
-    getHomeListSketchRequest,
-    getLatestSketchRequest,
+    getHomeListSketchRequest
 } from "../../redux/controller";
-import { ICurrentSearchValue, IReqGetLatestSketchs } from "../../common/sketch.interface";
-import { Carousel } from 'antd';
-import CDeclare from "../../components/Declare/CDeclare";
-import Slider from "../../components/Slider/Slider";
-
-
-
 interface CardData {
     id: number;
     title: string;
@@ -222,7 +199,7 @@ const categoryList = [
 
 // Phần trang chủ của trang web
 const Home = () => {
-    const { latestSketchsList, mostViewedSketchList, freeSketchList} = useSelectorRoot(
+    const { latestSketchsList, mostViewedSketchList, freeSketchList } = useSelectorRoot(
         (state) => state.sketch
     ); // Lst cac ban ve
 
@@ -241,11 +218,18 @@ const Home = () => {
     const [currentIndexInteriorSketch, setCurrentIndexInteriorSketch] = useState(0);
     const [currentIndexFreeSketch, setCurrentIndexFreeSketch] = useState(0);
 
-
     const [windowSize, setWindowSize] = useState([
         window.innerWidth,
         window.innerHeight,
     ]);
+
+    useEffect(() => {
+        document.body.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }, [navigate]);
+
 
     useEffect(() => {
         const handleWindowResize = () => {
@@ -279,6 +263,7 @@ const Home = () => {
 
     useEffect(() => {
         dispatch(getHomeListSketchRequest());
+
     }, []);
 
     // Handle pagination most view sketch
@@ -546,52 +531,54 @@ const Home = () => {
                     <div>Bản vẽ miễn phí</div>
                     <div className="sub-title">{"Xem thêm"}</div>
                 </div>
-                <div className="lst-tool">
-                    <Col>
-                        <Button
-                            icon={<ArrowLeftOutlined />}
-                            className="btn-icon"
-                            onClick={handlePrevCardFreeSketch}
-                            disabled={currentIndexFreeSketch === 0 && true}
-                        />
-                    </Col>
-                    <Row gutter={[16, 16]}>
-                        {freeSketchList
-                            .slice(
-                                currentIndexFreeSketch,
-                                currentIndexFreeSketch + numberOfCardShow
-                            )
-                            .map((card) => (
-                                <Col
-                                    onClick={() => {
-                                        handleClickCard(card.id);
-                                    }}
-                                    span={spanCol}
-                                    key={card.id}
-                                >
-                                    <CProductCard
-                                        imageUrl={card.images[0]}
-                                        title={card.title}
-                                        view={card.views}
-                                        price={card.price}
-                                    // type={card.type}
-                                    />
-                                </Col>
-                            ))}
-                    </Row>
-                    <Col>
-                        <Button
-                            icon={<ArrowRightOutlined />}
-                            className="btn-icon"
-                            onClick={handleNextCardFreeSketch}
-                            disabled={
-                                currentIndexFreeSketch >= freeSketchList.length - numberOfCardShow && true
-                            }
-                        />
-                    </Col>
-                </div>
+                {freeSketchList.length > 0 &&
+                    <div className="lst-tool">
+                        <Col>
+                            <Button
+                                icon={<ArrowLeftOutlined />}
+                                className="btn-icon"
+                                onClick={handlePrevCardFreeSketch}
+                                disabled={currentIndexFreeSketch === 0 && true}
+                            />
+                        </Col>
+                        <Row gutter={[16, 16]}>
+                            {freeSketchList
+                                .slice(
+                                    currentIndexFreeSketch,
+                                    currentIndexFreeSketch + numberOfCardShow
+                                )
+                                .map((card) => (
+                                    <Col
+                                        onClick={() => {
+                                            handleClickCard(card.id);
+                                        }}
+                                        span={spanCol}
+                                        key={card.id}
+                                    >
+                                        <CProductCard
+                                            imageUrl={card.images[0]}
+                                            title={card.title}
+                                            view={card.views}
+                                            price={card.price}
+                                        // type={card.type}
+                                        />
+                                    </Col>
+                                ))}
+                        </Row>
+                        <Col>
+                            <Button
+                                icon={<ArrowRightOutlined />}
+                                className="btn-icon"
+                                onClick={handleNextCardFreeSketch}
+                                disabled={
+                                    currentIndexFreeSketch >= freeSketchList.length - numberOfCardShow && true
+                                }
+                            />
+                        </Col>
+                    </div>
+                }
             </div>
-            
+
         </motion.div>
     );
 };

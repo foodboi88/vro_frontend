@@ -1,0 +1,20 @@
+.main-general {
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+    .total-boxs {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 3em;
+    }
+
+    .general-static {
+        display: flex;
+        justify-content: space-between;
+        gap: 2em;
+    }
+
+}

@@ -6,6 +6,7 @@
     margin-top: 8em;
     padding: 2em;
     display: flex;
+    justify-content: space-between;
     gap: 3em;
     border-radius: 10px;
 
@@ -42,6 +43,7 @@
         display: flex;
         justify-content: center;
         gap: 5em;
+        width: 80%;
 
         .profile-content-left {
             display: flex;

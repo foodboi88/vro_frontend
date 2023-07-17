@@ -13,7 +13,7 @@ import {
     ICurrentSearchValue,
     IReqGetLatestSketchs,
 } from "../../common/sketch.interface";
-import { IReqFormArchitect } from "../../common/profile.interface";
+import { IBank, IReqFormArchitect, IReqLookUp } from "../../common/profile.interface";
 
 export default class ProfileAPI {
     static apiURL = API_URL;
@@ -36,8 +36,25 @@ export default class ProfileAPI {
                 catchError((error) => new Observable())
             )
         );
-
     }
 
+    static getBanks(): Observable<any> {
+        const api = `${this.apiURL.GET_BANKS}`;
+        return HttpClient.get(api).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
 
+    static getAccountBankName(req: IReqLookUp): Observable<any> {
+        const api = `${this.apiURL.GET_ACCOUNT_BANK_NAME}`;
+        return HttpClient.post(api, req).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
 }
