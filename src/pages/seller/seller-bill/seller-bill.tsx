@@ -210,12 +210,17 @@ const SellerBill = () => {
                             {detailBill.products.map((item: any, index: number) => {
                                 return (
                                     <div style={{ marginBottom: '30px' }}>
-                                        <div>Sản phẩm {index + 1}:
+                                        <div><b>Sản phẩm {index+1}:</b>
 
-                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>{item.title}</div>
-                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>{item.price}</div>
+                                            <div style={{display:'flex', justifyContent:'space-between'}}>
+                                                <div>Tiêu đề:</div>
+                                                <div>{item.title}</div>
+                                            </div>
+                                            <div style={{display:'flex', justifyContent:'space-between'}}>
+                                                <div>Giá:</div>
+                                                <div>{item.price}Đ</div></div>
                                             <div>
-                                                <img style={{ width: "200px" }} src={item.image} />
+                                                <img style={{width: "200px"}} src={item.image}/>
                                             </div>
                                         </div>
                                         {/* <div>Người bán:
