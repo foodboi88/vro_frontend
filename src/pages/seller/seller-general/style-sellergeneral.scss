@@ -18,3 +18,36 @@
     }
 
 }
+
+@media (max-width: 1200px) {
+    .main-general {
+
+        .total-boxs {
+            gap: 3em;
+            justify-content: center;
+        }
+
+        .general-static {
+            flex-direction: column;
+            gap: 1em;
+        }
+
+    }
+}
+
+@media (max-width: 1000px) {
+    .main-general {
+        width: 100%;
+
+        .total-boxs {
+            gap: 3em;
+            justify-content: center;
+        }
+
+        .general-static {
+            flex-direction: column;
+            gap: 1em;
+        }
+
+    }
+}

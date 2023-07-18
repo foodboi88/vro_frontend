@@ -844,9 +844,8 @@
         }
 
         .content-cart {
-            display: grid;
-            grid-template-columns: 1fr;
-            grid-template-rows: repeat(2, 1fr);
+            display: flex;
+            flex-direction: column;
 
             .left-content-cart {
                 .ant-table {

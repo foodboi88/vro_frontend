@@ -157,7 +157,7 @@ const Statistical = () => {
     }, [overViewStatisticYear])
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div className='main-div' >
             <div className="main-statistical">
                 <div className="statistical-title">
                     <div className='title-text'>

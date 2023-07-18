@@ -65,7 +65,7 @@ const Cart = () => {
     const [voucherCode, setVoucherCode] = useState("");
     const [paymentMethod, setPaymentMethod] = useState("");
     const [tmpData, setTmpData] = useState<any>([]);
-    const [totalMoney,setTotalMoney] = useState(0);
+    const [totalMoney, setTotalMoney] = useState(0);
 
 
     const infoUser = [
@@ -99,7 +99,7 @@ const Cart = () => {
         {
             key: "2",
             label: "Thuế VAT (chưa áp dụng)",
-            value: totalMoney*0.08,
+            value: totalMoney * 0.08,
         },
     ];
 
@@ -112,14 +112,14 @@ const Cart = () => {
                 <div className="sketch-cart-info">
                     <div className="sketch-cart-info-img">
                         {/* <img src={sketch && sketch.images[0].filePath} alt="" /> */}
-                        <img style={{width: "145px"}} src={record.image} alt="" />
+                        <img style={{ width: "145px" }} src={record.image} alt="" />
                     </div>
                     <div className="sketch-cart-content">
                         <div className="sketch-cart-content-title">
                             {/* {sketch && sketch.info.title} */}
                             {record.title && record.title}
                         </div>
-                        
+
                     </div>
                 </div>
             ),
@@ -142,7 +142,7 @@ const Cart = () => {
                                         : "sketch-cart-action-new-price"
                                 }
                             >
-                                {record.price}
+                                {record.price.toLocaleString().replace(/,/g, '.') + 'đ'}
                             </div>
                             <div
                                 className="sketch-cart-action-delete"
@@ -171,10 +171,10 @@ const Cart = () => {
     }, [lstSketchsInCart]);
 
 
-    useEffect(()=>{ // Set lại tổng tiền khi list sản phẩm thay đổi
-        const totalMoney = tmpData.reduce((total: any,item: ISketchInCart) => total + item.price, 0)
+    useEffect(() => { // Set lại tổng tiền khi list sản phẩm thay đổi
+        const totalMoney = tmpData.reduce((total: any, item: ISketchInCart) => total + item.price, 0)
         setTotalMoney(totalMoney);
-    },[tmpData]) 
+    }, [tmpData])
 
     useEffect(() => {
         if (lstSketchsInCart.length > 0 && vnpayLink) {
@@ -233,7 +233,7 @@ const Cart = () => {
     };
 
     const caculateTax = () => {
-        return totalMoney*0.08
+        return totalMoney * 0.08
     }
 
     const paymentHandle = () => {
@@ -289,7 +289,7 @@ const Cart = () => {
                                         {item.label}
                                     </div>
                                     <div className="value-info-user">
-                                        {item.value}
+                                        {item.value.toLocaleString().replace(/,/g, '.') + 'đ'}
                                     </div>
                                 </div>
                             ))}
@@ -312,7 +312,7 @@ const Cart = () => {
                                         {item.label}
                                     </div>
                                     <div className="value-info-user">
-                                        {item.value}
+                                        {item.value.toLocaleString().replace(/,/g, '.') + 'đ'}
                                     </div>
                                 </div>
                             ))}
@@ -348,7 +348,7 @@ const Cart = () => {
                         <div className="total-price">
                             <div className="total-price-title">Tổng tiền</div>
                             <div className="total-price-value">
-                                {totalMoney} Đ
+                                {totalMoney.toLocaleString().replace(/,/g, '.') + ' đ'}
                             </div>
                         </div>
                     </div>

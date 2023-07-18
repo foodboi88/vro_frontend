@@ -54,3 +54,32 @@
         padding: 0
     }
 }
+
+@media (max-width: 1000px) {
+    .main-static-product {
+        padding: 0;
+
+        .static-product-title {}
+
+        .static-product-content {
+            .table-main {
+                .ant-table-pagination.ant-pagination {}
+
+                .ant-table-thead {
+                    tr {
+                        .ant-table-cell:nth-child(1) {}
+                    }
+                }
+
+                .title-table {}
+
+                .ant-table-tbody>tr>td {}
+
+            }
+
+            .span-title-table {}
+        }
+
+        .ant-spin-container {}
+    }
+}
