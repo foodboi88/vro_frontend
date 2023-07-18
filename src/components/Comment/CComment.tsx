@@ -161,12 +161,12 @@ const CComment = () => {
                         </div>
                 }
             </div>
-            <div className='more-comment'>
+            {/* <div className='more-comment'>
                 <div className='text'>Xem thêm</div>
                 <div className='icon'>
                     <DownOutlined />
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }
