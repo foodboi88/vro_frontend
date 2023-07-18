@@ -36,6 +36,7 @@ import {
 } from "../../../redux/controller";
 import { useNavigate } from "react-router-dom";
 import { RadioChangeEventTarget } from "antd/lib/radio";
+import { TEXT_FIELD, TEXT_INPUT } from "../../../enum/common.enum";
 
 const options: SelectProps["options"] = [];
 
@@ -363,6 +364,7 @@ const UploadSketch = () => {
                                                         e.target.value
                                                     )
                                                 }
+                                                maxLength={TEXT_INPUT.MAX_LENGTH}
                                             />
                                         </div>
                                     </Form.Item>
@@ -487,6 +489,8 @@ const UploadSketch = () => {
                                                 onChange={(e) =>
                                                     setSelectPrice(parseInt(e.target.value))
                                                 }
+                                                maxLength={TEXT_INPUT.MAX_LENGTH}
+
                                             />
                                         </div>
                                     </Form.Item>
@@ -502,6 +506,8 @@ const UploadSketch = () => {
                                                 onChange={(e) =>
                                                     setNote(e.target.value)
                                                 }
+                                                maxLength={TEXT_FIELD.MAX_LENGTH}
+
                                             />
                                         </div>
                                     </Form.Item>
