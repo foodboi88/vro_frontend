@@ -1,21 +1,28 @@
 import { Space, Modal, Button, Input } from 'antd';
 import { ColumnType } from 'antd/lib/table';
 import { motion } from 'framer-motion';
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Utils from '../../../common/utils';
 import CTable from '../../../components/CTable/CTable';
 import { useSelectorRoot, useDispatchRoot } from '../../../redux/store';
 import { IGetWithdrawRequest } from '../../../common/user.interface';
 import { QUERY_PARAM } from '../../../constants/get-api.constants';
-import { createWithdrawRequest, getWithdrawRequests } from '../../../redux/controller';
+import { createWithdrawRequest, getSellerProfileRequest, getWithdrawRequests } from '../../../redux/controller';
+import CoinIcon from '../../../images/coin.png'
+import { AiFillCreditCard } from "react-icons/ai";
+
+
 import './seller-withdraw.styles.scss'
+import TotalBox from '../../../components/TotalBox/TotalBox';
 
 const SellerWithdraw = () => {
   const {
     withdrawRequestList,
     totalWithdrawRequestRecord,
+    sellerInformation
   } = useSelectorRoot((state) => state.sketch);
 
+  const dispatch = useDispatchRoot()
   const [textSearch, setTextSearch] = useState('');
   const [beginDate, setBeginDate] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -30,7 +37,10 @@ const SellerWithdraw = () => {
     }
   )
 
-
+  useEffect(() => {
+    dispatch(getWithdrawRequests(currentSearchValue))
+    dispatch(getSellerProfileRequest())
+  }, [])
 
   const columns: ColumnType<any>[] = [
     // {
@@ -160,7 +170,6 @@ const SellerWithdraw = () => {
   //   },
   // ]
 
-  const dispatch = useDispatchRoot()
 
   const handleOpenDelete = (record: any) => {
     setOpenModalDelete(true);
@@ -251,16 +260,43 @@ const SellerWithdraw = () => {
         </div>
       }
       <div className='create-request'>
-        <Button
+        <div className='infor-cards'>
+          <TotalBox
+            key={1}
+            title={`Tài khoản nhận: ${sellerInformation?.bankName}`}
+            number={`${sellerInformation?.bankAccountNumber ? sellerInformation?.bankAccountNumber : ''}`}
+            icon={CoinIcon}
+          />
+          <TotalBox
+            key={2}
+            title={`Chi nhánh`}
+            number={`${sellerInformation?.bankBranch ? Utils.formatMoney(sellerInformation?.bankBranch) : ''}`}
+            icon={CoinIcon}
+          />
+          <TotalBox
+            key={3}
+            title={`Số dư hiện tại`}
+            number={`${sellerInformation?.currentBalance ? Utils.formatMoney(sellerInformation?.currentBalance) : 0}Đ`}
+            icon={CoinIcon}
+          />
+
+        
+          
+        </div>
+        
+      </div>
+      <Button
           onClick={
             () => {
               setOpenModalCreate(true)
             }
           }
+          style={{
+            marginTop: "30px"
+          }}
         >
           Tạo yêu cầu rút tiền
         </Button>
-      </div>
       <div className='table-area'>
         <CTable
           tableMainTitle='Danh sách yêu cầu rút tiền'

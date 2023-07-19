@@ -28,7 +28,7 @@ import {
 import { ITool } from "../../common/tool.interface";
 import FilterCriteriasApi from "../../api/filter-criterias/filter-criterias.api";
 import CommentsApi from "../../api/comment/comment.api";
-import { IAuthor, IUser } from "../../common/user.interface";
+import { IAuthor, IBill, IHotProducts, IOverViewStatistic, ISellerProfile, IUser } from "../../common/user.interface";
 import ImageSketchApi from "../../api/image-sketch/image-sketch.api";
 import { IRates } from "../../common/rates.interface";
 import RatesApi from "../../api/rates/rates.api";
@@ -84,6 +84,13 @@ interface SketchState {
     withdrawRequestList: any[];
     totalWithdrawRequestRecord: number;
 
+    lstBank: IBank[];
+    accountBankName: string;
+
+    listPurchasedSketch: any[];
+    totalPurchasedSketch: number;
+    sellerInformation: ISellerProfile | undefined
+
 }
 
 const initState: SketchState = {
@@ -128,7 +135,33 @@ const initState: SketchState = {
     checkPayment: false,
     checkInCart: false,
     withdrawRequestList: [],
-    totalWithdrawRequestRecord: 0
+    totalWithdrawRequestRecord: 0,
+
+    overViewStatistic: undefined,
+    hotProducts: [],
+    billList: [],
+    totalBillRecord: 0,
+    detailBill: undefined,
+
+    sketchsOfArchitect: [],
+    totalSketchRecords: 0,
+    sketchStatistic: undefined,
+
+    typeViewStatistic: "day",
+    overviewStatistic: undefined,
+    overViewStatisticDay: undefined,
+    overViewStatisticMonth: undefined,
+    overViewStatisticQuarter: undefined,
+    overViewStatisticYear: undefined,
+    overViewStatisticUserDay: undefined,
+    overViewStatisticSellerDay: undefined,
+
+    lstBank: [],
+    accountBankName: "",
+    listPurchasedSketch: [],
+    totalPurchasedSketch: 0,
+    sellerInformation: undefined,
+
 };
 
 const sketchSlice = createSlice({
@@ -648,6 +681,446 @@ const sketchSlice = createSlice({
         },
         createWithdrawRequestFail(state, action: any) {
             state.loading = false;
+        },
+
+
+        confirmPurchasedRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        confirmPurchasedSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            // notification.open({
+            //     message: "Thành công",
+            //     description: "Thanh toán bản vẽ thành công",
+            //     onClick: () => {
+            //         console.log("Notification Clicked!");
+            //     },
+            // });
+
+        },
+
+        confirmPurchasedFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            notification.open({
+                message: "Thất bại",
+                description: "Thanh toán bản vẽ không thành công",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+        },
+
+        // Get overview statistic
+        getOverviewStatisticRequest(state) {
+            state.loading = true;
+        },
+
+        getOverviewStatisticSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload);
+            state.overViewStatistic = action.payload;
+        },
+
+        getOverviewStatisticFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+        },
+
+        // Get hot product
+        getHotProductRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        getHotProductSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload);
+            state.hotProducts = action.payload[0].items;
+        },
+
+        getHotProductFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+        },
+
+        // get list bill
+        getBillListRequests(state, action: PayloadAction<any>) {
+            state.loading = true;
+            // console.log("da chui vao",state.loading)
+        },
+        getBillListSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload)
+            state.billList = action.payload.items
+            state.totalBillRecord = action.payload.total
+
+        },
+        getBillListFail(state, action: PayloadAction<any>) {
+            console.log(action);
+            state.loading = false;
+            notification.open({
+                message: action.payload.response.message,
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+                style: {
+                    marginTop: 50,
+                    paddingTop: 40,
+                },
+            });
+
+        },
+
+        // get detail bill
+        getDetailBillRequests(state, action: PayloadAction<any>) {
+            state.loading = true;
+            // console.log("da chui vao",state.loading)
+        },
+        getDetailBillSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload)
+            state.detailBill = action.payload
+
+        },
+        getDetailBillFail(state, action: PayloadAction<any>) {
+            console.log(action);
+            state.loading = false;
+            notification.open({
+                message: action.payload.response.message,
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+                style: {
+                    marginTop: 50,
+                    paddingTop: 40,
+                },
+            });
+
+        },
+
+        // get list sketch by architecture request 
+        getSketchByArchitectRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+            // console.log("da chui vao",state.loading)
+        },
+        getSketchByArchitectSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload)
+            state.sketchsOfArchitect = action.payload.items
+            state.totalSketchRecords = action.payload.total
+
+        },
+        getSketchByArchitectFail(state, action: PayloadAction<any>) {
+            console.log(action);
+            state.loading = false;
+            notification.open({
+                message: action.payload.response.message === "Not found" ? "Không tìm thấy bản vẽ nào" : action.payload.response.message,
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+                style: {
+                    marginTop: 50,
+                    paddingTop: 40,
+                },
+            });
+
+        },
+
+        deleteSketchRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        deleteSketchSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            notification.open({
+                message: "Thành công",
+                description: "Xóa bản vẽ thành công",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+
+        },
+
+        deleteSketchFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            notification.open({
+                message: "Thất bại",
+                description: "Xóa bản vẽ không thành công",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+        },
+
+        // Get overview statistic day
+        getOverviewStatisticDayRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        getOverviewStatisticDaySuccess(state, action: PayloadAction<any>) {
+            console.log(action.payload);
+            state.loading = false;
+            state.overViewStatisticDay = action.payload;
+        },
+
+        getOverviewStatisticDayFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            if (action.payload.status === 400 || action.payload.status === 404) {
+                notification.open({
+                    message: action.payload.response.message,
+                    onClick: () => {
+                        console.log("Notification Clicked!");
+                    },
+
+                });
+            }
+        },
+
+        // Get sketch statistic
+        getSketchStatisticRequest(state) {
+            state.loading = true;
+        },
+
+
+        getSketchStatisticSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload)
+            state.sketchStatistic = action.payload
+
+        },
+        getSketchStatisticFail(state, action: PayloadAction<any>) {
+            console.log(action);
+            state.loading = false;
+            notification.open({
+                message: action.payload.response.message,
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+                style: {
+                    marginTop: 50,
+                    paddingTop: 40,
+                },
+            });
+
+        },
+
+
+        // Get overview statistic month
+        getOverviewStatisticMonthRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        getOverviewStatisticMonthSuccess(state, action: PayloadAction<any>) {
+            console.log(action.payload);
+            state.loading = false;
+            state.overViewStatisticMonth = action.payload;
+        },
+
+        getOverviewStatisticMonthFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            if (action.payload.status === 400 || action.payload.status === 404) {
+                notification.open({
+                    message: action.payload.response.message,
+                    onClick: () => {
+                        console.log("Notification Clicked!");
+                    },
+                });
+            }
+        },
+
+        // Get overview statistic quarter
+        getOverviewStatisticQuarterRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        getOverviewStatisticQuarterSuccess(state, action: PayloadAction<any>) {
+            console.log(action.payload);
+            state.loading = false;
+            state.overViewStatisticQuarter = action.payload;
+        },
+
+        getOverviewStatisticQuarterFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            if (action.payload.status === 400 || action.payload.status === 404) {
+                notification.open({
+                    message: action.payload.response.message,
+                    onClick: () => {
+                        console.log("Notification Clicked!");
+                    },
+                });
+            }
+        },
+
+        // Get overview statistic year
+        getOverviewStatisticYearRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        getOverviewStatisticYearSuccess(state, action: PayloadAction<any>) {
+            console.log(action.payload);
+            state.loading = false;
+            state.overViewStatisticYear = action.payload;
+        },
+
+        getOverviewStatisticYearFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            if (action.payload.status === 400 || action.payload.status === 404) {
+                notification.open({
+                    message: action.payload.response.message,
+                    onClick: () => {
+                        console.log("Notification Clicked!");
+                    },
+                });
+            }
+        },
+
+        // Get overview statistic user day
+        getOverviewStatisticUserDayRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        getOverviewStatisticUserDaySuccess(state, action: PayloadAction<any>) {
+            console.log(action.payload);
+            state.loading = false;
+            state.overViewStatisticUserDay = action.payload[0];
+        },
+
+        getOverviewStatisticUserDayFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            if (action.payload.status === 400 || action.payload.status === 404) {
+                notification.open({
+                    message: action.payload.message,
+                    onClick: () => {
+                        console.log("Notification Clicked!");
+                    },
+                });
+            }
+        },
+
+        // Get overview statistic seller day
+
+        getOverviewStatisticSellerDayRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        getOverviewStatisticSellerDaySuccess(state, action: PayloadAction<any>) {
+            console.log(action.payload);
+            state.loading = false;
+            state.overViewStatisticSellerDay = action.payload[0];
+        },
+
+        getOverviewStatisticSellerDayFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            if (action.payload.status === 400 || action.payload.status === 404) {
+                notification.open({
+                    message: action.payload.message,
+                    onClick: () => {
+                        console.log("Notification Clicked!");
+                    },
+                });
+            }
+        },
+
+
+        setViewStatistic(state, action: PayloadAction<string>) {
+            state.typeViewStatistic = action.payload;
+        },
+
+        // get bank list
+        getLstBankRequest(state) {
+            state.loading = true;
+        },
+
+        getLstBankSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            state.lstBank = action.payload;
+        },
+
+        getLstBankFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            if (action.payload.status === 400 || action.payload.status === 404) {
+                notification.open({
+                    message: action.payload.response.message,
+                    onClick: () => {
+                        console.log("Notification Clicked!");
+                    },
+                });
+            }
+        },
+
+        // get account bank name
+        getAccountBankNameRequest(state, action: PayloadAction<IReqLookUp>) {
+            state.loading = true;
+        },
+
+        getAccountBankNameSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload);
+            state.accountBankName = action.payload;
+        },
+
+        getAccountBankNameFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            if (action.payload.status === 400 || action.payload.status === 404) {
+                notification.open({
+                    message: action.payload.response.message,
+                    onClick: () => {
+                        console.log("Notification Clicked!");
+                    },
+                });
+            }
+        },
+
+        // get list purchased sketch
+        getPurchasedSketchsRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        getPurchasedSketchsSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload);
+            state.listPurchasedSketch = action.payload.items;
+        },
+
+        getPurchasedSketchsFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            if (action.payload.status === 400 || action.payload.status === 404) {
+                notification.open({
+                    message: action.payload.response.message,
+                    onClick: () => {
+                        console.log("Notification Clicked!");
+                    },
+                });
+            }
+        },
+
+        getSellerProfileRequest(state) {
+            state.loading = true;
+
+            // console.log("da chui vao",state.loading)
+        },
+        getSellerProfileSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+
+            Utils.setLocalStorage("sellerProfile", action.payload);
+            
+            state.sellerInformation = action.payload
+            
+        },
+        getSellerProfileFail(state, action: any) {
+            
+            state.loading = false;
+
+            notification.open({
+                message: "Lỗi",
+                description: "Không tìm thấy thông tin người kiến trúc sư/ công ty",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+                style: {
+                    paddingTop: 40,
+                },
+            });
+            
         },
     },
 });
@@ -1288,7 +1761,6 @@ const getWithdrawRequests$: RootEpic = (action$) =>
                 mergeMap((res: any) => {
                     return [
                         sketchSlice.actions.getWithdrawRequestsSuccess(res.data),
-
                     ];
                 }),
                 catchError((err) => [sketchSlice.actions.getWithdrawRequestsFail(err)])
@@ -1320,6 +1792,328 @@ const createWithdrawRequest$: RootEpic = (action$) =>
         })
     );
 
+const confirmPurchased$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(confirmPurchasedRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+
+            return UserApi.confirmPurchased(re.payload).pipe(
+                mergeMap((res: any) => {
+                    console.log(re.payload)
+                    return [
+                        sketchSlice.actions.confirmPurchasedSuccess(res.data),
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.confirmPurchasedFail(err)])
+            );
+        })
+    );
+
+const getOverviewStatistic$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getOverviewStatisticRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+
+            return UserApi.getOverViewStatistic().pipe(
+                mergeMap((res: any) => {
+                    console.log(re.payload)
+                    return [
+                        sketchSlice.actions.getOverviewStatisticSuccess(res.data),
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.getOverviewStatisticFail(err)])
+            )
+        }))
+
+const getSketchOfArchitect$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getSketchByArchitectRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+
+
+            return SketchsApi.getAllSketchByArchitect(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getSketchByArchitectSuccess(res.data),
+
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.getSketchByArchitectFail(err)])
+            )
+        })
+    );
+
+const deleteSketch$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(deleteSketchRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+
+            const bodyrequest = {
+                productId: re.payload.productId
+            }
+
+            return SketchsApi.deleteSketchOfArchitect(bodyrequest).pipe(
+                mergeMap((res: any) => {
+                    console.log(re.payload)
+                    return [
+                        sketchSlice.actions.deleteSketchSuccess(res.data),
+                        sketchSlice.actions.getSketchByArchitectRequest(re.payload.currentSearchValue)
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.createWithdrawRequestFail(err)])
+            );
+        })
+    );
+
+const getHotProduct$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getHotProductRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+            const req = {
+                size: re.payload.size,
+                offset: re.payload.offset,
+            }
+            return UserApi.getHotProducts(req).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getHotProductSuccess(res.data),
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.getHotProductFail(err)])
+            );
+        })
+    );
+
+const getBillList$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getBillListRequests.match),
+        mergeMap((re) => {
+            console.log(re);
+
+
+            return UserApi.getBillList(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getBillListSuccess(res.data),
+
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.getBillListFail(err)])
+            )
+        })
+    );
+
+const getDetailBill$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getDetailBillRequests.match),
+        mergeMap((re) => {
+            console.log(re);
+
+
+            return UserApi.getDetailBill(re.payload.id).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getDetailBillSuccess(res.data),
+
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.getDetailBillFail(err)])
+            )
+        })
+    );
+
+
+const getSketchStatistic$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getSketchStatisticRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+
+
+            return SketchsApi.getSketchStatistic().pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getSketchStatisticSuccess(res.data),
+
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.getSketchStatisticFail(err)])
+            )
+        })
+    );
+
+const getOverviewStatisticDay$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getOverviewStatisticDayRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+            return StatisticAPI.getOverViewStatisticDay(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getOverviewStatisticDaySuccess(res.data),
+
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.getOverviewStatisticDayFail(err)])
+            )
+        }
+        )
+    );
+
+
+
+const getOverviewStatisticMonth$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getOverviewStatisticMonthRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+            return StatisticAPI.getOverViewStatisticMonth(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getOverviewStatisticMonthSuccess(res.data),
+                    ]
+                }),
+                catchError((err) => [sketchSlice.actions.getOverviewStatisticMonthFail(err)])
+            );
+        })
+    );
+
+const getOverviewStatisticQuarter$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getOverviewStatisticQuarterRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+            return StatisticAPI.getOverViewStatisticQuarter(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getOverviewStatisticQuarterSuccess(res.data),
+                    ]
+                }),
+                catchError((err) => [sketchSlice.actions.getOverviewStatisticQuarterFail(err)])
+            );
+        })
+    );
+
+const getOverviewStatisticYear$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getOverviewStatisticYearRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+            return StatisticAPI.getOverViewStatisticYear(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getOverviewStatisticYearSuccess(res.data),
+                    ]
+                }),
+                catchError((err) => [sketchSlice.actions.getOverviewStatisticYearFail(err)])
+            );
+        })
+    );
+
+const getOverviewStatisticUserDay$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getOverviewStatisticUserDayRequest.match),
+        concatMap((re) => {
+            console.log(re);
+            return StatisticAPI.getUserStatisticDay(re.payload).pipe(
+                concatMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getOverviewStatisticUserDaySuccess(res.data),
+                    ]
+                }),
+                catchError((err) => [sketchSlice.actions.getOverviewStatisticUserDayFail(err)])
+            );
+        })
+    );
+
+const getOverviewStatisticSellerDay$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getOverviewStatisticSellerDayRequest.match),
+        concatMap((re) => {
+            console.log(re);
+            return StatisticAPI.getSellerStatisticDay(re.payload).pipe(
+                concatMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getOverviewStatisticSellerDaySuccess(res.data),
+                    ]
+                }),
+                catchError((err) => [sketchSlice.actions.getOverviewStatisticSellerDayFail(err)])
+            );
+        })
+    );
+
+const getLstBank$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getLstBankRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+            return ProfileAPI.getBanks().pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getLstBankSuccess(res.data),
+                    ]
+                }),
+                catchError((err) => [sketchSlice.actions.getLstBankFail(err)])
+            );
+        })
+    );
+
+const getAccountBankName$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getAccountBankNameRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+            return ProfileAPI.getAccountBankName(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getAccountBankNameSuccess(res.data),
+                    ]
+                }),
+                catchError((err) => [sketchSlice.actions.getAccountBankNameFail(err)])
+            );
+        })
+    );
+
+const getPurchasedSketchs$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getPurchasedSketchsRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+            return SketchsApi.getPurchasedSketchs(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getPurchasedSketchsSuccess(res.data),
+                    ]
+                }),
+                catchError((err) => [sketchSlice.actions.getPurchasedSketchsFail(err)])
+            );
+        })
+    );
+
+const getSellerProfile$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getSellerProfileRequest.match),
+        mergeMap((re) => {
+            
+
+            return IdentityApi.getSellerInformation().pipe(
+                mergeMap((res: any) => {
+                    console.log(res);
+
+
+                    return [
+                        sketchSlice.actions.getSellerProfileSuccess(res.data)
+                    ]
+                }),
+                catchError((err) => [sketchSlice.actions.getSellerProfileFail(err)])
+            );
+        })
+    );
 export const SketchEpics = [
     // uploadSketch$,
     getHomeListSketch$,
@@ -1353,7 +2147,28 @@ export const SketchEpics = [
     getAllStreetHouseSketch$,
     getAllInteriorSketch$,
     getWithdrawRequests$,
-    createWithdrawRequest$
+    createWithdrawRequest$,
+    confirmPurchased$,
+
+    getOverviewStatistic$,
+    getHotProduct$,
+    getBillList$,
+    getDetailBill$,
+    getSketchOfArchitect$,
+    deleteSketch$,
+    getSketchStatistic$,
+
+    getOverviewStatisticDay$,
+    getOverviewStatisticMonth$,
+    getOverviewStatisticQuarter$,
+    getOverviewStatisticYear$,
+    getOverviewStatisticUserDay$,
+    getOverviewStatisticSellerDay$,
+
+    getLstBank$,
+    getAccountBankName$,
+    getPurchasedSketchs$,
+    getSellerProfile$
 ];
 export const {
     getLatestSketchRequest,
@@ -1386,7 +2201,31 @@ export const {
     getAllFactorySketchRequest,
     getAllInteriorSketchRequest,
     getWithdrawRequests,
-    createWithdrawRequest
+    createWithdrawRequest,
+    confirmPurchasedRequest,
+
+    getOverviewStatisticRequest,
+    getHotProductRequest,
+
+    getBillListRequests,
+    getDetailBillRequests,
+    getSketchByArchitectRequest,
+    deleteSketchRequest,
+    getSketchStatisticRequest,
+
+    getOverviewStatisticDayRequest,
+    getOverviewStatisticMonthRequest,
+    getOverviewStatisticQuarterRequest,
+    getOverviewStatisticYearRequest,
+    getOverviewStatisticUserDayRequest,
+    getOverviewStatisticSellerDayRequest,
+    setViewStatistic,
+
+    getLstBankRequest,
+    getAccountBankNameRequest,
+    getPurchasedSketchsRequest,
+    getSellerProfileRequest
+
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;
 

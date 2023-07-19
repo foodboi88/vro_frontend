@@ -17,6 +17,7 @@ export enum API_URL {
     REGISTER = "users/register",
     REFRESH_TOKEN = "users/refreshtoken",
     GET_USER_INFO = "users/profile",
+    GET_SELLER_INFO = "sellers/profile",
     GET_RATES_BY_SKETCH_ID = "rates/by-id-product",
     GET_PRODUCT_FILE_BY_ID = "product-files/by-id-product",
     ADD_SKETCH_TO_CART = "Carts/add-product-to-cart", // Thêm bản vẽ vào giỏ hàng
