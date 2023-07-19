@@ -296,16 +296,16 @@ const StatisticalChart = (props: StatisticalChartProps) => {
     }
     return (
         <>
-            {(dataChart && dataChart.length > 0 && maxValue > 0) &&
-                <div className='main-statistical-chart'>
-                    {dataChart.length > 0 &&
-                        <div className='total-content'>
-                            <TotalBoxUser
-                                title='Tổng tiền bán'
-                                number={props.data.totalSellSum}
-                                icon=''
-                            />
-                            {/* <TotalBoxUser
+            {/* {(dataChart && dataChart.length > 0 && maxValue > 0) && */}
+            <div className='main-statistical-chart'>
+                {dataChart.length > 0 &&
+                    <div className='total-content'>
+                        <TotalBoxUser
+                            title='Tổng tiền bán'
+                            number={props.data.totalSellSum}
+                            icon=''
+                        />
+                        {/* <TotalBoxUser
                                 title='Tiền trả người bán'
                                 number={props.data.totalPriceSum}
                                 icon=''
@@ -320,39 +320,39 @@ const StatisticalChart = (props: StatisticalChartProps) => {
                                 number={props.data.totalPriceSum}
                                 icon=''
                             /> */}
-                        </div>
+                    </div>
+                }
+
+                <Chart
+                    ariaDesc="Average number of pets"
+                    ariaTitle="Line chart example"
+                    containerComponent={<ChartVoronoiContainer labels={({ datum }) => `${datum.name}: ${datum.y}`} constrainToVisibleArea />}
+                    legendData={
+                        nameTitleChart
                     }
+                    legendOrientation="vertical"
+                    legendPosition="right"
+                    height={270}
+                    maxDomain={{ y: maxValue }}
+                    minDomain={{ y: 0 }}
+                    name="chart1"
+                    padding={{
+                        bottom: 50,
+                        left: 50,
+                        right: 200, // Adjusted to accommodate legend
+                        top: 50
+                    }}
+                    width={600}
+                    themeColor={ChartThemeColor.multiUnordered}
 
-                    <Chart
-                        ariaDesc="Average number of pets"
-                        ariaTitle="Line chart example"
-                        containerComponent={<ChartVoronoiContainer labels={({ datum }) => `${datum.name}: ${datum.y}`} constrainToVisibleArea />}
-                        legendData={
-                            nameTitleChart
-                        }
-                        legendOrientation="vertical"
-                        legendPosition="right"
-                        height={270}
-                        maxDomain={{ y: maxValue }}
-                        minDomain={{ y: 0 }}
-                        name="chart1"
-                        padding={{
-                            bottom: 50,
-                            left: 50,
-                            right: 200, // Adjusted to accommodate legend
-                            top: 50
-                        }}
-                        width={600}
-                        themeColor={ChartThemeColor.multiUnordered}
-
-                    >
-                        <ChartAxis tickValues={divideRangeIntoFourParts(maxValue)} />
-                        <ChartAxis dependentAxis showGrid tickValues={divideRangeIntoFourParts(maxValue)} />
-                        <ChartGroup>
-                            <ChartLine
-                                data={totalSellLst}
-                            />
-                            {/* <ChartLine
+                >
+                    <ChartAxis tickValues={divideRangeIntoFourParts(maxValue)} />
+                    <ChartAxis dependentAxis showGrid tickValues={divideRangeIntoFourParts(maxValue)} />
+                    <ChartGroup>
+                        <ChartLine
+                            data={totalSellLst}
+                        />
+                        {/* <ChartLine
                                 data={totalPriceIncomeLst}
                             />
                             <ChartLine
@@ -361,11 +361,11 @@ const StatisticalChart = (props: StatisticalChartProps) => {
                             <ChartLine
                                 data={totalPriceSellerLst}
                             /> */}
-                        </ChartGroup>
-                    </Chart>
-                </div>
+                    </ChartGroup>
+                </Chart>
+            </div>
 
-            }
+            {/* } */}
         </>
     )
 }

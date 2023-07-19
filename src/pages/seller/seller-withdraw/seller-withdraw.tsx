@@ -251,11 +251,11 @@ const SellerWithdraw = () => {
         <div className='approve-request-modal'>
           <Modal
             open={openModalDelete}
-            // onOk={handleDele}
+            // onOk={() => setOpenModalDelete(false)}
             okText={'Xác nhận'}
             cancelText={'Hủy'}
             closable={true}
-            onCancel={() => setOpenModalCreate(false)}
+            onCancel={() => setOpenModalDelete(false)}
           >
             <span>Bạn có chắc chắn muốn xóa yêu cầu này không?</span>
           </Modal>
