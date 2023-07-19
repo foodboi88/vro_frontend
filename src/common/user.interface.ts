@@ -13,7 +13,7 @@ export interface IAuthor {
     createdAt: string;
 }
 
-export interface IGetWithdrawRequest{
+export interface IGetWithdrawRequest {
     size: number;
     offset: number;
     search?: string;

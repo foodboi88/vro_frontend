@@ -9,6 +9,7 @@ import {
     SelectProps,
     Steps,
     Upload,
+    Radio
 } from "antd";
 import VirtualList from "rc-virtual-list";
 import React, { useEffect, useState } from "react";
@@ -34,6 +35,8 @@ import {
     uploadSketchRequest,
 } from "../../../redux/controller";
 import { useNavigate } from "react-router-dom";
+import { RadioChangeEventTarget } from "antd/lib/radio";
+import { TEXT_FIELD, TEXT_INPUT } from "../../../enum/common.enum";
 
 const options: SelectProps["options"] = [];
 
@@ -169,7 +172,7 @@ const UploadSketch = () => {
     const [note, setNote] = useState(""); // Biến lưu giá trị ghi chú bản vẽ
     const [selectStyle, setSelectStyle] = useState(""); // Biến lưu giá trị kiểu bản vẽ
     const [selectTool, setSelectTool] = useState<CheckboxValueType[]>([]); // Biến lưu giá trị công cụ vẽ bản vẽ
-    const [selectCategory, setSelectCategory] = useState<CheckboxValueType[]>(
+    const [selectCategory, setSelectCategory] = useState<RadioChangeEventTarget[]>(
         []
     ); // Biến lưu giá trị danh mục bản vẽ
     const [isCheckedRules, setIsCheckedRules] = useState(false); // Biến lưu giá trị quy tắc bản vẽ
@@ -211,9 +214,9 @@ const UploadSketch = () => {
         };
     });
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getAllFilterCriteriasRequest())
-    },[])
+    }, [])
 
     const handleChangeFileLst: UploadProps["onChange"] = ({
         fileList: newFileList,
@@ -361,6 +364,7 @@ const UploadSketch = () => {
                                                         e.target.value
                                                     )
                                                 }
+                                                maxLength={TEXT_INPUT.MAX_LENGTH}
                                             />
                                         </div>
                                     </Form.Item>
@@ -388,6 +392,9 @@ const UploadSketch = () => {
                                                     "https://localhost:3000/"
                                                 }
                                                 multiple
+                                                onRemove={(file)=>{
+                                                    return true
+                                                }}
                                                 listType="picture-card"
                                                 showUploadList={{
                                                     showRemoveIcon: true,
@@ -445,8 +452,9 @@ const UploadSketch = () => {
                                                 showUploadList={{
                                                     showRemoveIcon: true,
                                                 }}
-                                                accept=".zip, .rar, .png, .jpeg, .jpg"
+                                                accept=".zip, .rar"
                                                 beforeUpload={(file) => {
+                                                    console.log(file)
                                                     let tmplst = fileUploadLst;
                                                     tmplst.push(file);
                                                     setFileUploadList(tmplst);
@@ -462,7 +470,7 @@ const UploadSketch = () => {
                                                 }}
                                             >
                                                 Click hoặc kéo file bản vẽ vào
-                                                đây
+                                                đây (file .zip hoặc .zar)
                                                 <br />
                                             </Upload.Dragger>
                                         </Form.Item>
@@ -481,6 +489,8 @@ const UploadSketch = () => {
                                                 onChange={(e) =>
                                                     setSelectPrice(parseInt(e.target.value))
                                                 }
+                                                maxLength={TEXT_INPUT.MAX_LENGTH}
+
                                             />
                                         </div>
                                     </Form.Item>
@@ -496,6 +506,8 @@ const UploadSketch = () => {
                                                 onChange={(e) =>
                                                     setNote(e.target.value)
                                                 }
+                                                maxLength={TEXT_FIELD.MAX_LENGTH}
+
                                             />
                                         </div>
                                     </Form.Item>
@@ -575,11 +587,16 @@ const UploadSketch = () => {
                                             Kiến trúc <strong>*</strong>
                                         </div>
                                         <div className="tool-list">
-                                            <Checkbox.Group
+                                            <Radio.Group
                                                 className="lst-category"
                                                 options={architectureList}
                                                 onChange={(e) =>
-                                                    setSelectCategory(e)
+                                                    
+                                                    {
+                                                        const selectValue =[e.target]
+                                                        setSelectCategory(selectValue)
+
+                                                    }
                                                 }
                                             />
                                         </div>
@@ -617,21 +634,21 @@ const UploadSketch = () => {
                                     {
                                         // selectStyle &&
                                         selectTool &&
-                                        selectCategory &&
-                                        isCheckedRules ? (
-                                        <Button
-                                            onClick={() => handleUploadSketch()}
-                                        >
-                                            Đăng bài
-                                        </Button>
-                                    ) : (
-                                        <Button
-                                            onClick={() => handleUploadSketch()}
-                                            disabled
-                                        >
-                                            Đăng bài
-                                        </Button>
-                                    )}
+                                            selectCategory &&
+                                            isCheckedRules ? (
+                                            <Button
+                                                onClick={() => handleUploadSketch()}
+                                            >
+                                                Đăng bài
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                onClick={() => handleUploadSketch()}
+                                                disabled
+                                            >
+                                                Đăng bài
+                                            </Button>
+                                        )}
                                 </motion.div>
                             </div>
                         )}

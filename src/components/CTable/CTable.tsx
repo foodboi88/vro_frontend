@@ -19,6 +19,7 @@ interface CTableProps {
     onChangeRangePicker?: (event: any) => void;
     onSearch?: () => void;
     onChangePagination: (event: any) => void;
+    visiblePagination?: boolean;
 
 }
 
@@ -62,6 +63,7 @@ const CTable = (props: CTableProps) => {
                 </div>
             </div>
             <div className='table'>
+
                 <Table
                     columns={props.titleOfColumnList}
                     dataSource={props.data}

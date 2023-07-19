@@ -78,3 +78,24 @@ export interface ISketchInCart {
     updatedAt: Date;
     id: string;
 }
+
+export interface IGetSketchRequest {
+    size: number;
+    offset: number;
+    search?: string;
+    startTime?: string;
+    endTime?: string;
+    status?: string
+    sortBy?: string
+    sortOrder?: string
+}
+
+export interface IStatisticSketch {
+    totalProduct: number;
+    totalProductNew: number;
+}
+
+export interface ISellerStatisticSketch {
+    totalProduct: number;
+    totalHiddenProduct: number;
+}

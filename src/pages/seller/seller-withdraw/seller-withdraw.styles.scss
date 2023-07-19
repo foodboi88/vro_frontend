@@ -1,12 +1,9 @@
-.withdraw-main{
+.withdraw-main {
     font-family: Arial, Helvetica, sans-serif;
 
-    .approve-request-modal{
+    .approve-request-modal {}
 
-        
-    }
-
-    .create-request{
+    .create-request {
         display: flex;
         justify-content: space-between;
         .infor-cards {
@@ -22,11 +19,20 @@
         margin-top: 1em;
         background-color: white;
     }
+
+    .ant-table-thead {
+        tr {
+            .ant-table-cell {
+                // white-space: nowrap;
+            }
+        }
+    }
 }
 
-.ant-modal-content{
+.ant-modal-content {
     width: 571px !important;
-    .ant-modal-title{
+
+    .ant-modal-title {
         font-size: 20px !important;
     }
 }

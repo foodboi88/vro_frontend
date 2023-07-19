@@ -22,6 +22,7 @@ import {
     IFilteredSketch,
     IReqGetLatestSketchs,
     IReqProductsFiles,
+    ISellerStatisticSketch,
     ISketch,
     ISketchInCart,
 } from "../../common/sketch.interface";
@@ -35,7 +36,11 @@ import RatesApi from "../../api/rates/rates.api";
 import { IInFoSketch } from "../../common/sketch.interface";
 import PaymentApi from "../../api/payment/payment.api";
 import { IPaymentRequest } from "../../common/payment.interface";
+import { IBank, IBusiness, IReqFormArchitect, IReqLookUp } from "../../common/profile.interface";
+import ProfileAPI from "../../api/profile/profile.api";
 import UserApi from "../../api/user/user.api";
+import { IOverViewStatictis, IOverViewStatictisDay, IOverViewStatictisMonth, IOverViewStatictisQuarter, IOverViewStatictisYear, IStatictisSellerDay, IStatictisUserDay } from "../../common/statistic.interface";
+import StatisticAPI from "../../api/statistic/statistic.api";
 
 type MessageLogin = {
     content: string;
@@ -81,8 +86,26 @@ interface SketchState {
     authorIntroduction: IAuthor | undefined;
     checkPayment: boolean;
     checkInCart: boolean;
+    businessProfile: IBusiness | undefined;
+    sellerRegister: any | undefined;
     withdrawRequestList: any[];
     totalWithdrawRequestRecord: number;
+    overViewStatistic: IOverViewStatistic | undefined;
+    hotProducts: IHotProducts[];
+    billList: IBill[];
+    totalBillRecord: number;
+    detailBill: any | undefined
+    sketchsOfArchitect: ISketch[];
+    totalSketchRecords: number;
+    sketchStatistic: ISellerStatisticSketch | undefined;
+    typeViewStatistic: string;
+    overviewStatistic: IOverViewStatictis | undefined;
+    overViewStatisticDay: IOverViewStatictisDay | undefined;
+    overViewStatisticMonth: IOverViewStatictisMonth | undefined;
+    overViewStatisticQuarter: IOverViewStatictisQuarter | undefined;
+    overViewStatisticYear: IOverViewStatictisYear | undefined;
+    overViewStatisticUserDay: IStatictisUserDay | undefined;
+    overViewStatisticSellerDay: IStatictisSellerDay | undefined;
 
     lstBank: IBank[];
     accountBankName: string;
@@ -134,6 +157,10 @@ const initState: SketchState = {
     authorIntroduction: undefined,
     checkPayment: false,
     checkInCart: false,
+
+    businessProfile: undefined,
+    sellerRegister: undefined,
+
     withdrawRequestList: [],
     totalWithdrawRequestRecord: 0,
 
@@ -173,49 +200,15 @@ const sketchSlice = createSlice({
         },
 
         getHomeListSketchRequest(state) {
-            state.loading = true;
         },
 
         getHomeListSketchSuccess(state, action: PayloadAction<any>) {
-            state.loading = false;
             console.log("Da chui vao voi action: ", action);
         },
 
-       
 
-        getAllVillaSketchRequest(state){
 
-        },
-
-        getAllVillaSketchSuccess(state, action: PayloadAction<any>){
-            state.villaSketchList = action.payload.data[0].items
-        },
-
-        getAllStreetHouseSketchRequest(state){
-
-        },
-
-        getAllStreetHouseSketchSuccess(state, action: PayloadAction<any>){
-            state.streetHouseSketchList = action.payload.data[0].items
-
-        },
-
-        getAllFactorySketchRequest(state){
-
-        },
-
-        getAllFactorySketchSuccess(state, action: PayloadAction<any>){
-            state.factorySketchList = action.payload.data[0].items
-
-        },
-
-        getAllInteriorSketchRequest(state){
-
-        },
-
-        getAllInteriorSketchSuccess(state, action: PayloadAction<any>){
-            state.interiorSketchList = action.payload.data[0].items
-        },
+        
 
         getLatestSketchRequest(state, action: PayloadAction<any>) {
             state.loading = true;
@@ -261,8 +254,9 @@ const sketchSlice = createSlice({
         },
 
         getFreeSketchSuccess(state, action: PayloadAction<any>) {
-            console.log(action);
-            state.freeSketchList = action.payload.data.items;
+            console.log(action.payload);
+            if (action.payload.data.items)
+                state.freeSketchList = action.payload.data.items;
             // notification.open({
             //     message: "Load success",
             //     // description:
@@ -305,13 +299,16 @@ const sketchSlice = createSlice({
             console.log("Da chui vao voi action: ", action);
         },
 
+        getMostViewdSketchsFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            
+        },
+
         getAllToolsRequest(state, action: PayloadAction<any>) {
-            state.loading = true;
             console.log("Da chui vao voi action: ", action);
         },
 
         getAllToolsSuccess(state, action: PayloadAction<any>) {
-            state.loading = false;
             console.log(action.payload.data);
             state.toolList = action.payload.data.map(
                 (item: ITool) =>
@@ -323,14 +320,13 @@ const sketchSlice = createSlice({
             console.log(state.toolList);
             console.log("Da chui vao voi action: ", action);
         },
+        
 
         getAllStylesRequest(state, action: PayloadAction<any>) {
-            state.loading = true;
             console.log("Da chui vao voi action: ", action);
         },
 
         getAllStylesSuccess(state, action: PayloadAction<any>) {
-            state.loading = false;
             console.log(action.payload.data);
             state.styleList = action.payload.data.map(
                 (item: ITool) =>
@@ -344,12 +340,10 @@ const sketchSlice = createSlice({
         },
 
         getAllArchitecturesRequest(state, action: PayloadAction<any>) {
-            state.loading = true;
             console.log("Da chui vao voi action: ", action);
         },
 
         getAllArchitecturesSuccess(state, action: PayloadAction<any>) {
-            state.loading = false;
             console.log(action.payload.data);
             state.architectureList = action.payload.data.map(
                 (item: ITool) =>
@@ -363,21 +357,21 @@ const sketchSlice = createSlice({
         },
 
         getAllFilterCriteriasRequest(state) {
-            state.loading = true;
         },
 
         getAllFilterCriteriasSuccess(state) {
-            state.loading = false;
         },
 
         getDetailSketchRequest(state, action: PayloadAction<any>) {
-            state.loading = true;
         },
 
         getDetailSketchSuccess(state, action: PayloadAction<any>) {
-            state.loading = true;
             state.detailSketch = action.payload.data;
             console.log(action.payload.data);
+        },
+
+        getDetailSketchFail(state, action: PayloadAction<any>) {
+           
         },
 
         getCommentBySketchIdRequest(state, action: PayloadAction<any>) {
@@ -400,11 +394,14 @@ const sketchSlice = createSlice({
             state.loading = false;
         },
 
+        getDetailSketchPageContentFail(state) {
+            state.loading = false;
+        },
+
         advancedSearchingRequest(
             state,
             action: PayloadAction<ICurrentSearchValue>
         ) {
-            state.loading = true;
 
             state.currentSearchValue = {
                 // Xu ly de lay duoc ca gia tri cua o input cua header va cac o selectbox cua filter. Neu co
@@ -426,7 +423,11 @@ const sketchSlice = createSlice({
 
         advancedSearchingSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
-            state.filteredAuthors = action.payload.data.author;
+            state.filteredSketchs = action.payload.data.items;
+        },
+
+        advancedSearchingFail(state, action: PayloadAction<any>) {
+            state.loading = false;
             state.filteredSketchs = action.payload.data.items;
         },
 
@@ -462,27 +463,21 @@ const sketchSlice = createSlice({
         },
 
         uploadFileSketchRequest(state, action: PayloadAction<any>) {
-            state.loading = true;
         },
 
         uploadFileSketchSuccess(state) {
-            state.loading = false;
         },
 
         uploadImageSketchRequest(state, action: PayloadAction<any>) {
-            state.loading = true;
         },
 
         uploadImageSketchSuccess(state) {
-            state.loading = false;
         },
 
         uploadContentSketchRequest(state, action: PayloadAction<any>) {
-            state.loading = true;
         },
 
         uploadContentSketchSuccess(state, action: PayloadAction<any>) {
-            state.loading = false;
         },
 
         getRatesBySketchIdRequest(state, action: PayloadAction<any>) {
@@ -528,7 +523,7 @@ const sketchSlice = createSlice({
         },
         addSketchToCartSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
-            
+
             state.sketchsQuantityInCart = action.payload.Quantity;
             notification.open({
                 message: "Thành công",
@@ -542,7 +537,7 @@ const sketchSlice = createSlice({
             state.loading = false;
             notification.open({
                 message: "Thêm sản phẩm không thành công",
-                description: action.payload.response.message,
+                description: action.payload.response.message === 'Products-already-in-the-cart' ? 'Sản phẩm đã có trong giỏ' : 'Network error',
                 onClick: () => {
                     console.log(action.payload.message);
                 },
@@ -605,7 +600,10 @@ const sketchSlice = createSlice({
             console.log(action.payload);
             state.vnpayLink = action.payload;
         },
-        purchaseWithVNPayFail(state, action: PayloadAction<any>) { },
+        purchaseWithVNPayFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+
+         },
 
         // Get Author intro
         getAuthorIntroductionByIdRequest(state, action: PayloadAction<string>) {
@@ -631,6 +629,49 @@ const sketchSlice = createSlice({
         },
         getSketchListByAuthorIdFail(state, action: PayloadAction<any>) {
             state.loading = false;
+        },
+
+        // Get business by tax code
+        getBusinessByTaxCodeRequest(state, action: PayloadAction<string>) {
+            state.loading = true;
+        },
+
+        getBusinessByTaxCodeSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload);
+            if (action.payload.data)
+                state.businessProfile = action.payload.data;
+        },
+        getBusinessByTaxCodeFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+        },
+
+        // Seller Register
+        sellerRegisterRequest(state, action: PayloadAction<IReqFormArchitect>) {
+            state.loading = true;
+        },
+
+        sellerRegisterSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload);
+            notification.open({
+                message: "Đăng ký người bán thành công",
+                description: "Vui long đợi cho admin chấp nhận",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+        },
+
+        sellerRegisterFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            notification.open({
+                message: "Đăng ký không thành công",
+                description: 'Gửi đơn đăng ký không thành công! Đơn đăng ký của bạn đã tồn tại. Hãy chờ admin phê duyệt',
+                onClick: () => {
+                    console.log(action.payload.message);
+                },
+            });
         },
 
         // get list withdraw request 
@@ -661,7 +702,7 @@ const sketchSlice = createSlice({
 
         },
 
-        
+
         //Approve withdraw request
         createWithdrawRequest(state, action: PayloadAction<any>) {
             state.loading = true;
@@ -1143,89 +1184,14 @@ const getHomeListSketch$: RootEpic = (action$) =>
                 // sketchSlice.actions.getAllFactorySketchRequest(),
                 // sketchSlice.actions.getAllInteriorSketchRequest(),
                 sketchSlice.actions.getFreeSketchRequest(),
-                
+
             ];
         })
     );
 
-const getAllVillaSketch$: RootEpic = (action$) =>
-    action$.pipe(
-        filter(getAllVillaSketchRequest.match),
-        switchMap((re) => {
-            // IdentityApi.login(re.payload) ?
-            console.log(re);
 
-            const typeId = "64231026edf9dd11e488c250"
 
-            return SketchsApi.getSketchsByTypeOfArchitecture(typeId).pipe(
-                mergeMap((res: any) => {
-                    console.log(res);
 
-                    return [sketchSlice.actions.getAllVillaSketchSuccess(res)];
-                }),
-                catchError((err) => [])
-            );
-        })
-    );
-
-const getAllStreetHouseSketch$: RootEpic = (action$) =>
-    action$.pipe(
-        filter(getAllStreetHouseSketchRequest.match),
-        switchMap((re) => {
-            // IdentityApi.login(re.payload) ?
-            console.log(re);
-
-            const typeId = "64231030edf9dd11e488c252"
-
-            return SketchsApi.getSketchsByTypeOfArchitecture(typeId).pipe(
-                mergeMap((res: any) => {
-                    console.log(res);
-
-                    return [sketchSlice.actions.getAllStreetHouseSketchSuccess(res)];
-                }),
-                catchError((err) => [])
-            );
-        })
-    );
-
-const getAllFactorySketch$: RootEpic = (action$) =>
-    action$.pipe(
-        filter(getAllFactorySketchRequest.match),
-        switchMap((re) => {
-            console.log(re);
-
-            const typeId = "642ce3895de07140c4f4cd61"
-
-            return SketchsApi.getSketchsByTypeOfArchitecture(typeId).pipe(
-                mergeMap((res: any) => {
-                    console.log(res);
-
-                    return [sketchSlice.actions.getAllFactorySketchSuccess(res)];
-                }),
-                catchError((err) => [])
-            );
-        })
-    );
-
-const getAllInteriorSketch$: RootEpic = (action$) =>
-    action$.pipe(
-        filter(getAllInteriorSketchRequest.match),
-        switchMap((re) => {
-            // IdentityApi.login(re.payload) ?
-            console.log(re);
-
-            const typeId = "642ce3965de07140c4f4cd62"
-
-            return SketchsApi.getSketchsByTypeOfArchitecture(typeId).pipe(
-                mergeMap((res: any) => {
-                    console.log(res);
-
-                    return [sketchSlice.actions.getAllInteriorSketchSuccess(res)];
-                }),
-                catchError((err) => [])
-            );
-        })
-    );
 
 const getLatestSketchs$: RootEpic = (action$) =>
     action$.pipe(
@@ -1240,7 +1206,9 @@ const getLatestSketchs$: RootEpic = (action$) =>
 
                     return [sketchSlice.actions.getLatestSketchSuccess(res)];
                 }),
-                catchError((err) => [])
+                catchError((err) => [
+                    sketchSlice.actions.getLatestSketchFail(err)
+                ])
             );
         })
     );
@@ -1266,7 +1234,7 @@ const getFreeSketch$: RootEpic = (action$) =>
             );
         })
     );
-   
+
 
 const getMostViewdSketchs$: RootEpic = (action$) =>
     action$.pipe(
@@ -1283,7 +1251,9 @@ const getMostViewdSketchs$: RootEpic = (action$) =>
                         sketchSlice.actions.getMostViewdSketchsSuccess(res),
                     ];
                 }),
-                catchError((err) => [])
+                catchError((err) => [
+                    sketchSlice.actions.getMostViewdSketchsFail(err)
+                ])
             );
         })
     );
@@ -1420,7 +1390,9 @@ const getDetailSketch$: RootEpic = (action$) =>
                         sketchSlice.actions.getDetailSketchPageContentSuccess(),
                     ];
                 }),
-                catchError((err) => [])
+                catchError((err) => [
+                    sketchSlice.actions.getDetailSketchPageContentFail(err)
+                ])
             );
         })
     );
@@ -1468,7 +1440,9 @@ const getAuthorIntroductionById$: RootEpic = (action$) =>
                         ),
                     ];
                 }),
-                catchError((err) => [])
+                catchError((err) => [sketchSlice.actions.getAuthorIntroductionByIdFail(
+                    err
+                )])
             );
         })
     );
@@ -1496,7 +1470,9 @@ const advancedSearchSketch$: RootEpic = (action$) =>
                     console.log(res);
                     return [sketchSlice.actions.advancedSearchingSuccess(res)];
                 }),
-                catchError((err) => [])
+                catchError((err) => [
+                    sketchSlice.actions.advancedSearchingFail(err)
+                ])
             );
         })
     );
@@ -1611,7 +1587,10 @@ const getSketchListByAuthorId$: RootEpic = (action$) =>
                         sketchSlice.actions.getSketchListByAuthorIdSuccess(res),
                     ];
                 }),
-                catchError((err) => [])
+                catchError((err) => [
+                    sketchSlice.actions.getSketchListByAuthorIdFail(err),
+
+                ])
             );
         })
     );
@@ -1702,7 +1681,10 @@ const getSketchQuantityInCart$: RootEpic = (action$) =>
                         sketchSlice.actions.getSketchQuantityInCartSuccess(res),
                     ];
                 }),
-                catchError((err) => [])
+                catchError((err) => [
+                    sketchSlice.actions.getSketchQuantityInCartFail(err),
+
+                ])
             );
         })
     );
@@ -1745,6 +1727,42 @@ const deleteSketchInCart$: RootEpic = (action$) =>
 
                 ])
             );
+        })
+    );
+
+const getBusinessByTaxCode$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getBusinessByTaxCodeRequest.match),
+        switchMap((re) => {
+
+            return ProfileAPI.getBusiness(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getBusinessByTaxCodeSuccess(res),
+                    ];
+                }),
+                catchError((err) => [
+                    sketchSlice.actions.getBusinessByTaxCodeFail(err),
+                ])
+            );
+        })
+    );
+
+const sellerRegister$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(sellerRegisterRequest.match),
+        switchMap((re) => {
+            console.log(re);
+            return ProfileAPI.sellerRegister(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.sellerRegisterSuccess(res),
+                    ];
+                }),
+                catchError((err) => [
+                    sketchSlice.actions.sellerRegisterFail(err),
+                ])
+            )
         })
     );
 
@@ -2142,10 +2160,9 @@ export const SketchEpics = [
     getRatesBySketchId$,
     getSketchListByAuthorId$,
     deleteSketchInCart$,
-    getAllVillaSketch$,
-    getAllFactorySketch$,
-    getAllStreetHouseSketch$,
-    getAllInteriorSketch$,
+ 
+    getBusinessByTaxCode$,
+    sellerRegister$,
     getWithdrawRequests$,
     createWithdrawRequest$,
     confirmPurchased$,
@@ -2196,10 +2213,9 @@ export const {
     getAuthorIntroductionByIdRequest,
     getSketchListByAuthorIdRequest,
     deleteSketchInCartRequest,
-    getAllVillaSketchRequest,
-    getAllStreetHouseSketchRequest,
-    getAllFactorySketchRequest,
-    getAllInteriorSketchRequest,
+  
+    getBusinessByTaxCodeRequest,
+    sellerRegisterRequest,
     getWithdrawRequests,
     createWithdrawRequest,
     confirmPurchasedRequest,

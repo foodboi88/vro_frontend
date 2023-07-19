@@ -170,6 +170,13 @@ const AdvancedSeaching = () => {
     } = useSelectorRoot((state) => state.sketch);
 
     useEffect(() => {
+        document.body.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }, [navigate]);
+
+    useEffect(() => {
         const handleWindowResize = () => {
             setWindowSize([window.innerWidth, window.innerHeight]);
         };
@@ -203,13 +210,10 @@ const AdvancedSeaching = () => {
             <CFilter />
             <div className="filtered-items">
                 <div className="author-introduction">
-                    
+
                 </div>
                 <div className="sketch-list">
-                    <div className="searched-sketch-title">
-                        <SearchOutlined /> Bản vẽ liên quan tới{" "}
-                        <strong>{currentSearchValue.name}</strong>
-                    </div>
+                   
                     <CArrangeBar />
                     <Row className="detail-list" gutter={[16, 24]}>
                         {filteredSketchs &&
@@ -226,7 +230,7 @@ const AdvancedSeaching = () => {
                                         title={card.title}
                                         view={card.views}
                                         price={card.price}
-                                        // type={card.}
+                                    // type={card.}
                                     />
                                 </Col>
                             ))}

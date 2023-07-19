@@ -15,6 +15,11 @@ import PurchaseSuccessfully from "../pages/purchased-successfully/purchased-succ
 import SellerLayout from "../layouts/seller/seller-layout";
 import SellerWithdraw from "../pages/seller/seller-withdraw/seller-withdraw";
 import SellerGeneral from "../pages/seller/seller-general/seller-general";
+import SellerBill from "../pages/seller/seller-bill/seller-bill";
+import SellerSketchs from "../pages/seller/seller-sketchs/seller-sketchs";
+import ProfileResume from "../pages/Profile/profile-resume/ProfileResume";
+import ProfileBecomeSeller from "../pages/Profile/profile-become-seller/ProfileBecomeSeller";
+import PurchasedSketchs from "../pages/purchased-sketchs/purchased-sketchs";
 
 // Dùng để set animation cho các router với nhau
 const AnimationRouter = () => {
@@ -25,10 +30,14 @@ const AnimationRouter = () => {
 
                 {/* Trang kỹ sư - công ty */}
                 <Route element={<PrivateSellerRoutes />}>
-                    <Route path="/seller" element={<SellerLayout/>}>
+                    <Route path="/seller" element={<SellerLayout />}>
                         <Route path="/seller" element={<SellerGeneral />}></Route>
                         <Route path="/seller/upload-sketch" element={<UploadSketch />}></Route>
-                        <Route path="/seller/withdraw" element={<SellerWithdraw/>}></Route>
+                        <Route path="/seller/withdraw" element={<SellerWithdraw />}></Route>
+                        <Route path="/seller/order" element={<SellerBill />}></Route>
+                        <Route path="/seller/withdraw" element={<SellerWithdraw />}></Route>
+                        <Route path="/seller/management-sketch" element={<SellerSketchs />}></Route>
+                        <Route path="/seller/purchased-sketchs" element={<PurchasedSketchs />}></Route>
                     </Route>
                 </Route>
 
@@ -39,8 +48,14 @@ const AnimationRouter = () => {
                         <Route path="/buyer/registration-seller"></Route>
                         <Route path="/buyer/profile" element={<Profile />}></Route>
                     </Route>
+                    <Route path="/profile" element={<Profile />}>
+                        <Route path="/profile/resume" element={<ProfileResume />}></Route>
+                        <Route path="/profile/become-seller" element={<ProfileBecomeSeller />}></Route>
+                        <Route path="/profile/purchased-sketchs" element={<PurchasedSketchs />}></Route>
+
+                    </Route>
                 </Route>
-                
+
                 {/* Public route */}
                 <Route path="/" element={<Home />}></Route>
                 <Route path="/searching" element={<AdvancedSeaching />}></Route>
@@ -62,3 +77,18 @@ const AnimationRouter = () => {
 };
 
 export default AnimationRouter;
+
+
+// http://vroteam.online:3000/purchased-successfully?
+// vnp_Amount=22000000&
+// vnp_BankCode=NCB&
+// vnp_BankTranNo=VNP14062588&
+// vnp_CardType=ATM&
+// vnp_OrderInfo=Thanh+toan+cho+ma+GD%3A0b0ecaff-b6a8-4ea8-ad86-2e746f0191bb&
+// vnp_PayDate=20230710165116&
+// vnp_ResponseCode=00&
+// vnp_TmnCode=VKCTCEMP&
+// vnp_TransactionNo=14062588&
+// vnp_TransactionStatus=00&
+// vnp_TxnRef=0b0ecaff-b6a8-4ea8-ad86-2e746f0191bb&
+// vnp_SecureHash=b1d165c371892f74362d4dac7cf22117191fa0e28375dc78598ec8c75749eae6a2a7f0b1771f83d12a87ecd1fad9625fdcf35160af6416bacf22c6d4c44fbe7d
