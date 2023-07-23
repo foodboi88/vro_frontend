@@ -2,9 +2,7 @@ import { useEffect, useState } from 'react'
 import { AiOutlineGift, AiOutlineLock, AiOutlineQuestionCircle, AiOutlineSetting } from 'react-icons/ai'
 import { BiGridAlt } from 'react-icons/bi'
 import { BsShop } from 'react-icons/bs'
-import { RiBillLine } from 'react-icons/ri'
-import ProfileBecomeSeller from './profile-become-seller/ProfileBecomeSeller'
-import ProfileResume from './profile-resume/ProfileResume'
+
 import './style.profile.scss'
 import { Outlet, useNavigate } from 'react-router-dom'
 const Profile = () => {

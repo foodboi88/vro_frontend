@@ -289,7 +289,7 @@ const Cart = () => {
                                         {item.label}
                                     </div>
                                     <div className="value-info-user">
-                                        {item.value.toLocaleString().replace(/,/g, '.') + 'đ'}
+                                        {item.value.toLocaleString().replace(/,/g, '.') }
                                     </div>
                                 </div>
                             ))}
@@ -312,7 +312,7 @@ const Cart = () => {
                                         {item.label}
                                     </div>
                                     <div className="value-info-user">
-                                        {item.value.toLocaleString().replace(/,/g, '.') + 'đ'}
+                                        {item.value.toLocaleString().replace(/,/g, '.') + ' VND'}
                                     </div>
                                 </div>
                             ))}
@@ -348,7 +348,7 @@ const Cart = () => {
                         <div className="total-price">
                             <div className="total-price-title">Tổng tiền</div>
                             <div className="total-price-value">
-                                {totalMoney.toLocaleString().replace(/,/g, '.') + ' đ'}
+                                {totalMoney.toLocaleString().replace(/,/g, '.') + ' VND'}
                             </div>
                         </div>
                     </div>
