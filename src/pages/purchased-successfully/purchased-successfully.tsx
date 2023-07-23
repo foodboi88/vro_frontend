@@ -42,7 +42,7 @@ const PurchaseSuccessfully = () => {
 
 
     const handleConfirmPurchased = () => {
-        if(userRole === "user") navigate('/profile/purchased-sketchs')
+        if(userRole === "user") navigate('/buyer/purchased-sketchs')
         else if(userRole === "seller") 	navigate('/seller/purchased-sketchs')
         else navigate('/')
 

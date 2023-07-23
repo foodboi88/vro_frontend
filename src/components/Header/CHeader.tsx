@@ -190,12 +190,22 @@ export const CHeader = (props: MyProps) => {
     };
     const handleClickCart = () => {
         dispatch(getAllSketchInCartRequest());
-        navigate("/cart");
+        if(userRole === 'seller'){
+
+            navigate("/seller/cart");
+        } else if(userRole === 'user'){
+            navigate("/buyer/cart");
+
+        }
+        else{
+            navigate("/");
+
+        }
     };
 
     // Hàm xử lý khi click vào avatar
     const onClickAvatar = () => {
-        userRole === ROLE.BUYER ? navigate('/buyer/profile') : navigate('/seller')
+        userRole === ROLE.BUYER ? navigate('/buyer') : navigate('/seller')
     }
 
     return (
