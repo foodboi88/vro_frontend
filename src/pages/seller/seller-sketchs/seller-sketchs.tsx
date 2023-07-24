@@ -54,6 +54,11 @@ const SellerSketchs = () => {
         //     dataIndex: 'status',
         //     key: 'status'
         //   },
+        {
+          title: 'STT',
+          dataIndex: 'index',
+          key: 'index',
+      },
           {
             title: 'Tên',
             dataIndex: 'title',
