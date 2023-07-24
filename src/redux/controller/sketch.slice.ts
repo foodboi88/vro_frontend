@@ -114,6 +114,8 @@ interface SketchState {
     totalPurchasedSketch: number;
     sellerInformation: ISellerProfile | undefined
 
+
+
 }
 
 const initState: SketchState = {
@@ -208,7 +210,7 @@ const sketchSlice = createSlice({
 
 
 
-        
+
 
         getLatestSketchRequest(state, action: PayloadAction<any>) {
             state.loading = true;
@@ -301,7 +303,7 @@ const sketchSlice = createSlice({
 
         getMostViewdSketchsFail(state, action: PayloadAction<any>) {
             state.loading = false;
-            
+
         },
 
         getAllToolsRequest(state, action: PayloadAction<any>) {
@@ -320,7 +322,7 @@ const sketchSlice = createSlice({
             console.log(state.toolList);
             console.log("Da chui vao voi action: ", action);
         },
-        
+
 
         getAllStylesRequest(state, action: PayloadAction<any>) {
             console.log("Da chui vao voi action: ", action);
@@ -371,7 +373,7 @@ const sketchSlice = createSlice({
         },
 
         getDetailSketchFail(state, action: PayloadAction<any>) {
-           
+
         },
 
         getCommentBySketchIdRequest(state, action: PayloadAction<any>) {
@@ -603,7 +605,7 @@ const sketchSlice = createSlice({
         purchaseWithVNPayFail(state, action: PayloadAction<any>) {
             state.loading = false;
 
-         },
+        },
 
         // Get Author intro
         getAuthorIntroductionByIdRequest(state, action: PayloadAction<string>) {
@@ -1143,12 +1145,12 @@ const sketchSlice = createSlice({
             state.loading = false;
 
             Utils.setLocalStorage("sellerProfile", action.payload);
-            
+
             state.sellerInformation = action.payload
-            
+
         },
         getSellerProfileFail(state, action: any) {
-            
+
             state.loading = false;
 
             notification.open({
@@ -1161,7 +1163,7 @@ const sketchSlice = createSlice({
                     paddingTop: 40,
                 },
             });
-            
+
         },
     },
 });
@@ -2117,7 +2119,7 @@ const getSellerProfile$: RootEpic = (action$) =>
     action$.pipe(
         filter(getSellerProfileRequest.match),
         mergeMap((re) => {
-            
+
 
             return IdentityApi.getSellerInformation().pipe(
                 mergeMap((res: any) => {
@@ -2160,7 +2162,7 @@ export const SketchEpics = [
     getRatesBySketchId$,
     getSketchListByAuthorId$,
     deleteSketchInCart$,
- 
+
     getBusinessByTaxCode$,
     sellerRegister$,
     getWithdrawRequests$,
@@ -2213,7 +2215,7 @@ export const {
     getAuthorIntroductionByIdRequest,
     getSketchListByAuthorIdRequest,
     deleteSketchInCartRequest,
-  
+
     getBusinessByTaxCodeRequest,
     sellerRegisterRequest,
     getWithdrawRequests,
