@@ -38,7 +38,7 @@ const CProductCard = (props: props) => {
                             <div className="h-c-t-view-point">
                                 <EyeOutlined />
                                 <div className="number-of-view">
-                                    {props.view}
+                                    {Math.round(props.view)}
                                 </div>
                             </div>
                         </div>

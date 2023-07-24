@@ -9,6 +9,7 @@ import {
     SelectProps,
     Steps,
     Upload,
+    Radio
 } from "antd";
 import VirtualList from "rc-virtual-list";
 import React, { useEffect, useState } from "react";
@@ -34,6 +35,8 @@ import {
     uploadSketchRequest,
 } from "../../../redux/controller";
 import { useNavigate } from "react-router-dom";
+import { RadioChangeEventTarget } from "antd/lib/radio";
+import { TEXT_FIELD, TEXT_INPUT } from "../../../enum/common.enum";
 
 const options: SelectProps["options"] = [];
 
@@ -169,7 +172,7 @@ const UploadSketch = () => {
     const [note, setNote] = useState(""); // Biến lưu giá trị ghi chú bản vẽ
     const [selectStyle, setSelectStyle] = useState(""); // Biến lưu giá trị kiểu bản vẽ
     const [selectTool, setSelectTool] = useState<CheckboxValueType[]>([]); // Biến lưu giá trị công cụ vẽ bản vẽ
-    const [selectCategory, setSelectCategory] = useState<CheckboxValueType[]>(
+    const [selectCategory, setSelectCategory] = useState<RadioChangeEventTarget[]>(
         []
     ); // Biến lưu giá trị danh mục bản vẽ
     const [isCheckedRules, setIsCheckedRules] = useState(false); // Biến lưu giá trị quy tắc bản vẽ
@@ -211,9 +214,9 @@ const UploadSketch = () => {
         };
     });
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getAllFilterCriteriasRequest())
-    },[])
+    }, [])
 
     const handleChangeFileLst: UploadProps["onChange"] = ({
         fileList: newFileList,
@@ -317,11 +320,11 @@ const UploadSketch = () => {
                             ? [
 
                                 {
-                                    title: "Mô tả bản vẽ",
+                                    title: "Thông tin bản vẽ",
                                     icon: <ProfileOutlined />,
                                 },
                                 {
-                                    title: "Thông tin bản vẽ",
+                                    title: "Upload file bản vẽ",
                                     icon: <PictureOutlined />,
                                 },
                             ]
@@ -361,6 +364,7 @@ const UploadSketch = () => {
                                                         e.target.value
                                                     )
                                                 }
+                                                maxLength={TEXT_INPUT.MAX_LENGTH}
                                             />
                                         </div>
                                     </Form.Item>
@@ -375,6 +379,136 @@ const UploadSketch = () => {
                                             options={options}
                                         />
                                     </Form.Item> */}
+                                    {/* <Form.Item>
+                                        <div className="title-input">
+                                            Phong cách <strong>*</strong>
+                                        </div>
+                                        <div className="button-group">
+                                            {styleList.map((item) => (
+                                                <Button
+                                                    className={
+                                                        selectStyle ===
+                                                            item.value
+                                                            ? "active"
+                                                            : ""
+                                                    }
+                                                    onClick={() => {}
+                                                        // handleClickBtnStyle(
+                                                        //     item.value
+                                                        // )
+                                                    }
+                                                >
+                                                    {item.label}
+                                                </Button>
+                                            ))}
+                                        </div>
+                                    </Form.Item> */}
+                                    <Form.Item>
+                                        <div className="title-input">
+                                            Công cụ <strong>*</strong>
+                                        </div>
+                                        <div className="tool-list">
+                                            <Checkbox.Group
+                                                className="lst-tool"
+                                                options={toolList}
+                                                onChange={(e) =>
+                                                    setSelectTool(e)
+                                                }
+                                            />
+                                        </div>
+                                    </Form.Item>
+                                    <Form.Item>
+                                        <div className="title-input">
+                                            Kiến trúc <strong>*</strong>
+                                        </div>
+                                        <div className="tool-list">
+                                            <Radio.Group
+                                                className="lst-category"
+                                                options={architectureList}
+                                                onChange={(e) =>
+                                                    
+                                                    {
+                                                        const selectValue =[e.target]
+                                                        setSelectCategory(selectValue)
+
+                                                    }
+                                                }
+                                            />
+                                        </div>
+                                    </Form.Item>
+                                    
+                                    <Form.Item>
+                                        <div className="title-input">
+                                            Phí download (VNĐ){" "}
+                                            <strong>*</strong>
+                                        </div>
+                                        <div className={`header-content-input`}>
+                                            <Input
+                                                type="number"
+                                                className="search-input"
+                                                placeholder="Nhập phí download"
+                                                min={0}
+                                                onChange={(e) =>
+                                                    setSelectPrice(parseInt(e.target.value))
+                                                }
+                                                maxLength={TEXT_INPUT.MAX_LENGTH}
+
+                                            />
+                                        </div>
+                                    </Form.Item>
+
+                                    <Form.Item>
+                                        <div className="title-input">
+                                            Mô tả chi tiết <strong>*</strong>
+                                        </div>
+                                        <div className={`header-content-input`}>
+                                            <TextArea
+                                                rows={4}
+                                                placeholder="Nhập mô tả"
+                                                onChange={(e) =>
+                                                    setNote(e.target.value)
+                                                }
+                                                maxLength={TEXT_FIELD.MAX_LENGTH}
+
+                                            />
+                                        </div>
+                                    </Form.Item>
+                                </div>
+                                <motion.div className="btn-submit-upload">
+                                    {
+                                        selectTool &&
+                                        selectCategory &&
+                                        selectTitle &&
+                                        // selectTag &&
+                                        
+                                        selectPrice >= 0 &&
+                                        note ? (
+                                        <Button
+                                            onClick={() => handleClickNextBtn()}
+                                        >
+                                            Tiếp tục
+                                        </Button>
+                                    ) : (
+                                        <Button
+                                            onClick={() => handleClickNextBtn()}
+                                            disabled
+                                        >
+                                            Tiếp tục
+                                        </Button>
+                                    )}
+                                </motion.div>
+                            </div>
+                        )}
+                        {current === 1 && (
+                            <div className="content-area">
+                                <div className="sketch-content">
+                                    {/* <div className="title">
+                                        Thông tin bản vẽ
+                                    </div>
+                                    <div className="description">
+                                        Vui lòng nhập các thông tin chung
+                                    </div> */}
+                                    
                                     <div className="image">
                                         <Form.Item
                                             className="thumbnail"
@@ -388,6 +522,9 @@ const UploadSketch = () => {
                                                     "https://localhost:3000/"
                                                 }
                                                 multiple
+                                                onRemove={(file)=>{
+                                                    return true
+                                                }}
                                                 listType="picture-card"
                                                 showUploadList={{
                                                     showRemoveIcon: true,
@@ -445,8 +582,9 @@ const UploadSketch = () => {
                                                 showUploadList={{
                                                     showRemoveIcon: true,
                                                 }}
-                                                accept=".zip, .rar, .png, .jpeg, .jpg"
+                                                accept=".zip, .rar"
                                                 beforeUpload={(file) => {
+                                                    console.log(file)
                                                     let tmplst = fileUploadLst;
                                                     tmplst.push(file);
                                                     setFileUploadList(tmplst);
@@ -462,128 +600,13 @@ const UploadSketch = () => {
                                                 }}
                                             >
                                                 Click hoặc kéo file bản vẽ vào
-                                                đây
+                                                đây (file .zip hoặc .zar)
                                                 <br />
                                             </Upload.Dragger>
                                         </Form.Item>
                                     </div>
-                                    <Form.Item>
-                                        <div className="title-input">
-                                            Phí download (VNĐ){" "}
-                                            <strong>*</strong>
-                                        </div>
-                                        <div className={`header-content-input`}>
-                                            <Input
-                                                type="number"
-                                                className="search-input"
-                                                placeholder="Nhập phí download"
-                                                min={0}
-                                                onChange={(e) =>
-                                                    setSelectPrice(parseInt(e.target.value))
-                                                }
-                                            />
-                                        </div>
-                                    </Form.Item>
 
-                                    <Form.Item>
-                                        <div className="title-input">
-                                            Mô tả chi tiết <strong>*</strong>
-                                        </div>
-                                        <div className={`header-content-input`}>
-                                            <TextArea
-                                                rows={4}
-                                                placeholder="Nhập mô tả"
-                                                onChange={(e) =>
-                                                    setNote(e.target.value)
-                                                }
-                                            />
-                                        </div>
-                                    </Form.Item>
-                                </div>
-                                <motion.div className="btn-submit-upload">
-                                    {selectTitle &&
-                                        // selectTag &&
-                                        imageUploadLst &&
-                                        fileUploadLst &&
-                                        selectPrice >= 0 &&
-                                        note ? (
-                                        <Button
-                                            onClick={() => handleClickNextBtn()}
-                                        >
-                                            Tiếp tục
-                                        </Button>
-                                    ) : (
-                                        <Button
-                                            onClick={() => handleClickNextBtn()}
-                                            disabled
-                                        >
-                                            Tiếp tục
-                                        </Button>
-                                    )}
-                                </motion.div>
-                            </div>
-                        )}
-                        {current === 1 && (
-                            <div className="content-area">
-                                <div className="sketch-content">
-                                    <div className="title">
-                                        Thông tin bản vẽ
-                                    </div>
-                                    <div className="description">
-                                        Vui lòng nhập các thông tin chung
-                                    </div>
-                                    {/* <Form.Item>
-                                        <div className="title-input">
-                                            Phong cách <strong>*</strong>
-                                        </div>
-                                        <div className="button-group">
-                                            {styleList.map((item) => (
-                                                <Button
-                                                    className={
-                                                        selectStyle ===
-                                                            item.value
-                                                            ? "active"
-                                                            : ""
-                                                    }
-                                                    onClick={() => {}
-                                                        // handleClickBtnStyle(
-                                                        //     item.value
-                                                        // )
-                                                    }
-                                                >
-                                                    {item.label}
-                                                </Button>
-                                            ))}
-                                        </div>
-                                    </Form.Item> */}
-                                    <Form.Item>
-                                        <div className="title-input">
-                                            Công cụ <strong>*</strong>
-                                        </div>
-                                        <div className="tool-list">
-                                            <Checkbox.Group
-                                                className="lst-tool"
-                                                options={toolList}
-                                                onChange={(e) =>
-                                                    setSelectTool(e)
-                                                }
-                                            />
-                                        </div>
-                                    </Form.Item>
-                                    <Form.Item>
-                                        <div className="title-input">
-                                            Kiến trúc <strong>*</strong>
-                                        </div>
-                                        <div className="tool-list">
-                                            <Checkbox.Group
-                                                className="lst-category"
-                                                options={architectureList}
-                                                onChange={(e) =>
-                                                    setSelectCategory(e)
-                                                }
-                                            />
-                                        </div>
-                                    </Form.Item>
+
                                     <Form.Item>
                                         <div className="title-input">
                                             Quy định chung
@@ -616,22 +639,22 @@ const UploadSketch = () => {
                                     </Button>
                                     {
                                         // selectStyle &&
-                                        selectTool &&
-                                        selectCategory &&
-                                        isCheckedRules ? (
-                                        <Button
-                                            onClick={() => handleUploadSketch()}
-                                        >
-                                            Đăng bài
-                                        </Button>
-                                    ) : (
-                                        <Button
-                                            onClick={() => handleUploadSketch()}
-                                            disabled
-                                        >
-                                            Đăng bài
-                                        </Button>
-                                    )}
+                                        imageUploadLst &&
+                                        fileUploadLst &&
+                                            isCheckedRules ? (
+                                            <Button
+                                                onClick={() => handleUploadSketch()}
+                                            >
+                                                Đăng bài
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                onClick={() => handleUploadSketch()}
+                                                disabled
+                                            >
+                                                Đăng bài
+                                            </Button>
+                                        )}
                                 </motion.div>
                             </div>
                         )}

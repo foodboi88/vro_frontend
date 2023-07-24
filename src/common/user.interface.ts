@@ -59,3 +59,16 @@ export interface IGetUsersRequest {
     sortBy?: string
     sortOrder?: string
 }
+
+export interface ISellerProfile {
+    sellerType?: string,
+    identityCardNumber?: string,
+    identityCardDate?: string,
+    identityCardPlace?: string,
+    vatCode?: string,
+    bankAccountNumber?: string,
+    bankAccountName?: string,
+    bankName?: string,
+    bankBranch?: string,
+    currentBalance?: number
+}

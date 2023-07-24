@@ -17,6 +17,7 @@ export enum API_URL {
     REGISTER = "users/register",
     REFRESH_TOKEN = "users/refreshtoken",
     GET_USER_INFO = "users/profile",
+    GET_SELLER_INFO = "sellers/profile",
     GET_RATES_BY_SKETCH_ID = "rates/by-id-product",
     GET_PRODUCT_FILE_BY_ID = "product-files/by-id-product",
     ADD_SKETCH_TO_CART = "Carts/add-product-to-cart", // Thêm bản vẽ vào giỏ hàng
@@ -30,6 +31,7 @@ export enum API_URL {
     SELLER_REGISTER = "sellers/register",
     WITHDRAW_REQUEST = "withdrawal-requests/seller",
     CREATE_WITHDRAW_REQUEST = "withdrawal-requests",
+    GET_BILL_LIST = "/order",
     VNPAY_RETURN = "VNPays/vnpay_return",
     GET_OVERVIEW_STATISTIC = "architect/overview-statistic",
     GET_HOT_PRODUCTS = "architect/overview-top-hot-product",
@@ -37,6 +39,19 @@ export enum API_URL {
     GET_BILL_DETAIL = "architect/order",
     SKETCH_MANAGEMENT = "architect/product-management",
     DELETE_PRODUCT = "products/delete-product-by-id",
-    STATISTIC_PRODUCT = "architect/statistic-product-management"
+    STATISTIC_PRODUCT = "architect/statistic-product-management",
+
+    OVERVIEW_STATISTIC = "Admin/overview-statistic",
+    STATISTIC_SKETCH = "Admin/statistic-products",
+    OVERVIEW_STATISTIC_DAY = "architect/overview-statistic-day",
+    OVERVIEW_STATISTIC_MONTH = "architect/overview-statistic-month",
+    OVERVIEW_STATISTIC_QUARTER = "architect/overview-statistic-quarter",
+    OVERVIEW_STATISTIC_YEAR = "architect/overview-statistic-year",
+    USER_STATISTIC_DAY = "Admin/get-user-day",
+    SELLER_STATISTIC_DAY = "Admin/get-seller-day",
+
+    GET_BANKS = "https://api.vietqr.io/v2/banks",
+    GET_ACCOUNT_BANK_NAME = "https://api.vietqr.io/v2/lookup",
+    GET_PURCHASED_SKETCHS = "orders/product-purchased-product/all-role"
 }
 

@@ -66,6 +66,16 @@ export const CHeader = (props: MyProps) => {
     const { currentSearchValue } = useSelectorRoot((state) => state.sketch);
     const dispatch = useDispatchRoot();
     const { userRole } = useSelectorRoot((state) => state.login); // Biến kiểm tra xem user có phải là admin hay không
+
+    useEffect(() => {
+        document.body.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }, [navigate]);
+
+
+
     useEffect(() => {
         if (window.location.pathname === "/test") setCurrent("2");
         if (window.location.pathname === "/news") setCurrent("3");
@@ -180,13 +190,22 @@ export const CHeader = (props: MyProps) => {
     };
     const handleClickCart = () => {
         dispatch(getAllSketchInCartRequest());
-        navigate("/cart");
+        if(userRole === 'seller'){
+
+            navigate("/seller/cart");
+        } else if(userRole === 'user'){
+            navigate("/buyer/cart");
+
+        }
+        else{
+            navigate("/");
+
+        }
     };
 
     // Hàm xử lý khi click vào avatar
     const onClickAvatar = () => {
-        userRole === ROLE.BUYER ? navigate('/buyer/profile') : navigate('/seller')
-        
+        userRole === ROLE.BUYER ? navigate('/buyer') : navigate('/seller')
     }
 
     return (

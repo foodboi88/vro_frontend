@@ -61,3 +61,32 @@
 .total-box:nth-child(4) {
     background: linear-gradient(134deg, #54CE9C 0%, #A4E05F 100%);
 }
+
+@media (max-width: 1200px) {
+    .total-box {
+        width: 170px;
+        height: 120px;
+        margin-bottom: 1em;
+
+        .total-box-icon {
+
+
+            img {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        .total-box-content {
+
+
+            .total-box-title {
+                font-size: .8em;
+            }
+
+            .total-box-number {
+                font-size: 1.2em;
+            }
+        }
+    }
+}

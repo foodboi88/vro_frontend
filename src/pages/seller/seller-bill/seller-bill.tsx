@@ -10,6 +10,7 @@ import { getBillListRequests, getDetailBillRequests } from '../../../redux/contr
 import { IGetUsersRequest } from '../../../common/user.interface';
 import Utils from '../../../common/utils';
 import CTable from '../../../components/CTable/CTable';
+import './style.sellerbill.scss'
 const moment = require('moment');
 
 const SellerBill = () => {
@@ -30,19 +31,33 @@ const SellerBill = () => {
         }
     )
 
+    useEffect(() => {
+        dispatch(
+            getBillListRequests(currentSearchValue)
+        )
+    }, [])
+
 
 
     const columns: ColumnType<any>[] = [
         {
-            title: 'STT',
-            dataIndex: 'index',
-            key: 'index',
+            title: 'Số thứ tự',
+            render: (_, __, rowIndex) => (
+                <span className='span-table'>{rowIndex + 1}</span>
+            )
         },
-        {
-            title: 'Tên sản phẩm',
-            dataIndex: 'product',
-            key: 'product',
-        },
+        // {
+        //     title: 'Tên sản phẩm',
+        //     key: 'product',
+        //     render: (_, record) => (
+        //         <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+        //             <img src={record.product?.image} alt="" width={50} />
+        //             <Tooltip title={record?.title}>
+        //                 <span className='span-title-table' >{record.product.title}</span>
+        //             </Tooltip>
+        //         </div>
+        //     )
+        // },
         {
             title: 'Tài khoản mua',
             dataIndex: 'userName',
@@ -50,13 +65,21 @@ const SellerBill = () => {
         },
         {
             title: 'Thời gian',
-            dataIndex: 'createdAt',
             key: 'createdAt',
+            render: (_, record) => (
+                <div>
+                    {new Date(record.createdAt).toLocaleDateString('en-GB')}
+                </div>
+            )
         },
         {
             title: 'Giá (VNĐ)',
-            dataIndex: 'price',
-            key: 'price',
+            key: 'totalPrice',
+            render: (_, record) => (
+                <div>
+                    {Utils.formatMoney(record.totalPrice) + ' VND'}
+                </div>
+            )
         },
         {
             title: 'Action',
@@ -120,27 +143,12 @@ const SellerBill = () => {
         dispatch(getBillListRequests(currentSearchValue))
     }
 
+
+
     useEffect(() => {
-        if (billList.length > 0) {
-            const data = billList.map((item: any, index: number) => {
-                const date = moment(item.createdAt).format('DD/MM/YYYY');
-                return {
-                    index: index + 1,
-                    userName: item.userName,
-                    product:
-                        <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-                            <img src={item.product.image} alt="" width={50} />
-                            <Tooltip title={item.title}>
-                                <span className='span-title-table' >{item.product.title}</span>
-                            </Tooltip>
-                        </div>,
-                    createdAt: new Date(date).toLocaleDateString('en-GB'),
-                    price: item.price.toLocaleString().replace(/,/g, '.') + 'đ'
-                }
-            })
-            setDataBillLst(data)
-        }
-    }, [billList])
+        console.log('detailBill', detailBill);
+
+    }, [detailBill])
 
     return (
         <motion.div className='sketch-main'
@@ -148,7 +156,7 @@ const SellerBill = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}>
             {
-                detailBill && openModal &&
+                (detailBill && openModal) &&
                 <Modal
                     open={openModal}
                     onOk={() => setOpenModal(false)}
@@ -161,69 +169,56 @@ const SellerBill = () => {
                     <div>
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <div>Tổng tiền:</div>
-                            <div>{detailBill.total}</div>
+                            <div>{Utils.formatMoney(detailBill.totalPrice) + ' VND'}</div>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <div>Tạo lúc: </div>
                             <div>{detailBill.createdAt}</div>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <div>Id đơn hàng:</div>
+                            <div>Mã đơn hàng:</div>
                             <div>{detailBill.orderId}</div>
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        {/* <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <div>Hình thức thanh toán:</div>
                             <div>{detailBill.paymentMethods}</div>
-                        </div>
+                        </div> */}
                         <Divider>Thông tin người mua</Divider>
 
                         <div>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <div>Email:</div>
-                                <div>{detailBill.user.email}</div>
+                                <div>{detailBill.user_buy.email}</div>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <div>Tên:</div>
-                                <div>{detailBill.user.name}</div>
+                                <div>{detailBill.user_buy.name}</div>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <div>Địa chỉ:</div>
-                                <div>{detailBill.user.address}</div>
+                                <div>{detailBill.user_buy.address}</div>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <div>Số điện thoại:</div>
-                                <div>{detailBill.user.phone}</div>
+                                <div>{detailBill.user_buy.phone}</div>
                             </div>
                         </div>
                         <Divider>Danh sách sản phẩm</Divider>
                         <div style={{ padding: '10px' }}>
                             {detailBill.products.map((item: any, index: number) => {
                                 return (
-                                    <div>
-                                        <div>Sản phẩm {index + 1}:
+                                    <div style={{ marginBottom: '30px' }}>
+                                        <div><b>Sản phẩm {index + 1}:</b>
 
-                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>{item.title}</div>
-                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>{item.price}</div>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                <div>Tiêu đề:</div>
+                                                <div>{item.title}</div>
+                                            </div>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                <div>Giá:</div>
+                                                <div>{Utils.formatMoney(item.price) + ' VND'}</div></div>
                                             <div>
                                                 <img style={{ width: "200px" }} src={item.image} />
-                                            </div>
-                                        </div>
-                                        <div>Người bán:
-                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                                <div>Email:</div>
-                                                <div>{item.seller.email}</div>
-                                            </div>
-                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                                <div>Tên:</div>
-                                                <div>{item.seller.name}</div>
-                                            </div>
-                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                                <div>Địa chỉ:</div>
-                                                <div>{item.seller.address}</div>
-                                            </div>
-                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                                <div>Số điện thoại:</div>
-                                                <div>{item.seller.phone}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -242,7 +237,7 @@ const SellerBill = () => {
                     onChangeInput={onChangeInput}
                     onChangeRangePicker={onChangeRangePicker}
                     onSearch={onSearch}
-                    data={dataBillLst}
+                    data={billList}
                     titleOfColumnList={columns}
                     totalRecord={totalBillRecord}
                     onChangePagination={onChangePagination}

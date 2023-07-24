@@ -71,6 +71,13 @@ const DetailSketch = () => {
 
     const [currentIndexLatestSketch, setCurrentIndexLatestSketch] = useState(0);
 
+    useEffect(() => {
+        document.body.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }, [navigate]);
+
 
     useEffect(() => {
         const handleWindowResize = () => {
