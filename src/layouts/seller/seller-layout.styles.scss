@@ -272,3 +272,33 @@
     scale: 1.1;
     color: #CF0201;
 }
+
+@media (max-width: 1000px) {
+    .main-profile {
+        display: flex;
+        flex-direction: column;
+
+        .profile-navbar {
+            flex-direction: row;
+            border: none;
+            width: 100%;
+            padding-right: 0;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 1em;
+
+            .profile-navbar-item {
+                font-size: .8em;
+
+                .profile-navbar-item-icon {
+                    font-size: 1.5em;
+                }
+            }
+        }
+
+        .profile-content {
+            width: 100%;
+        }
+    }
+}

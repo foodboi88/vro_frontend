@@ -292,7 +292,7 @@ const loginSlice = createSlice({
             console.log(action);
 
             notification.open({
-                message: "Đăng ký không thành công",
+                message: action.payload.response?.message ? action.payload.response?.message : "Đăng ký không thành công!",
                 // description:
                 //     action.payload.response.message,
                 onClick: () => {
@@ -322,7 +322,7 @@ const login$: RootEpic = (action$) =>
                 mergeMap((res: any) => {
                     console.log(res);
                     console.log(res.data.accessToken);
-
+                    
                     return [
                         loginSlice.actions.loginSuccess(res.data),
                         loginSlice.actions.getUserInfoRequest(res.data.accessToken),

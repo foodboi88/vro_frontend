@@ -74,6 +74,14 @@ const SellerLayout = () => {
 						<RiBillLine className='profile-navbar-item-icon' />
 						<span className='profile-navbar-item-text'>Giải quyết phản hồi</span>
 					</div>
+					<div className={'profile-navbar-item' + (active === 8 ? ' active' : '')} onClick={() => {
+						setActive(8)
+						navigate('/seller/purchased-sketchs')
+					}
+					}>
+						<BsShop className='profile-navbar-item-icon' />
+						<span className='profile-navbar-item-text'>Sản phẩm đã mua</span>
+					</div>
 
 				</div>
 				<div className='profile-content'>

@@ -5,7 +5,13 @@
 
     .create-request {
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
+        .infor-cards {
+            display: flex;
+            align-items: center;
+            justify-content: space-around   ;
+            gap: 3em;
+        }
     }
 
     .table-area {

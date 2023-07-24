@@ -29,7 +29,7 @@ import {
 import { ITool } from "../../common/tool.interface";
 import FilterCriteriasApi from "../../api/filter-criterias/filter-criterias.api";
 import CommentsApi from "../../api/comment/comment.api";
-import { IAuthor, IBill, IHotProducts, IOverViewStatistic, IUser } from "../../common/user.interface";
+import { IAuthor, IBill, IHotProducts, IOverViewStatistic, ISellerProfile, IUser } from "../../common/user.interface";
 import ImageSketchApi from "../../api/image-sketch/image-sketch.api";
 import { IRates } from "../../common/rates.interface";
 import RatesApi from "../../api/rates/rates.api";
@@ -109,6 +109,11 @@ interface SketchState {
 
     lstBank: IBank[];
     accountBankName: string;
+
+    listPurchasedSketch: any[];
+    totalPurchasedSketch: number;
+    sellerInformation: ISellerProfile | undefined
+
 }
 
 const initState: SketchState = {
@@ -180,6 +185,10 @@ const initState: SketchState = {
 
     lstBank: [],
     accountBankName: "",
+    listPurchasedSketch: [],
+    totalPurchasedSketch: 0,
+    sellerInformation: undefined,
+
 };
 
 const sketchSlice = createSlice({
@@ -1100,9 +1109,60 @@ const sketchSlice = createSlice({
                     },
                 });
             }
-        }
+        },
 
+        // get list purchased sketch
+        getPurchasedSketchsRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
 
+        getPurchasedSketchsSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            console.log(action.payload);
+            state.listPurchasedSketch = action.payload.items;
+        },
+
+        getPurchasedSketchsFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            if (action.payload.status === 400 || action.payload.status === 404) {
+                notification.open({
+                    message: action.payload.response.message,
+                    onClick: () => {
+                        console.log("Notification Clicked!");
+                    },
+                });
+            }
+        },
+
+        getSellerProfileRequest(state) {
+            state.loading = true;
+
+            // console.log("da chui vao",state.loading)
+        },
+        getSellerProfileSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+
+            Utils.setLocalStorage("sellerProfile", action.payload);
+            
+            state.sellerInformation = action.payload
+            
+        },
+        getSellerProfileFail(state, action: any) {
+            
+            state.loading = false;
+
+            notification.open({
+                message: "Lỗi",
+                description: "Không tìm thấy thông tin người kiến trúc sư/ công ty",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+                style: {
+                    paddingTop: 40,
+                },
+            });
+            
+        },
     },
 });
 
@@ -1719,7 +1779,6 @@ const getWithdrawRequests$: RootEpic = (action$) =>
                 mergeMap((res: any) => {
                     return [
                         sketchSlice.actions.getWithdrawRequestsSuccess(res.data),
-
                     ];
                 }),
                 catchError((err) => [sketchSlice.actions.getWithdrawRequestsFail(err)])
@@ -2037,6 +2096,42 @@ const getAccountBankName$: RootEpic = (action$) =>
             );
         })
     );
+
+const getPurchasedSketchs$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getPurchasedSketchsRequest.match),
+        mergeMap((re) => {
+            console.log(re);
+            return SketchsApi.getPurchasedSketchs(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getPurchasedSketchsSuccess(res.data),
+                    ]
+                }),
+                catchError((err) => [sketchSlice.actions.getPurchasedSketchsFail(err)])
+            );
+        })
+    );
+
+const getSellerProfile$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getSellerProfileRequest.match),
+        mergeMap((re) => {
+            
+
+            return IdentityApi.getSellerInformation().pipe(
+                mergeMap((res: any) => {
+                    console.log(res);
+
+
+                    return [
+                        sketchSlice.actions.getSellerProfileSuccess(res.data)
+                    ]
+                }),
+                catchError((err) => [sketchSlice.actions.getSellerProfileFail(err)])
+            );
+        })
+    );
 export const SketchEpics = [
     // uploadSketch$,
     getHomeListSketch$,
@@ -2089,6 +2184,8 @@ export const SketchEpics = [
 
     getLstBank$,
     getAccountBankName$,
+    getPurchasedSketchs$,
+    getSellerProfile$
 ];
 export const {
     getLatestSketchRequest,
@@ -2142,7 +2239,8 @@ export const {
 
     getLstBankRequest,
     getAccountBankNameRequest,
-
+    getPurchasedSketchsRequest,
+    getSellerProfileRequest
 
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;

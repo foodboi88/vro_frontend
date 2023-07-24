@@ -44,6 +44,16 @@ export default class IdentityApi {
         );
     }
 
+    static getSellerInformation(): Observable<any> {
+        const api = `${IdentityApi.apiURL.HOST}/${this.apiURL.GET_SELLER_INFO}`;
+        return HttpClient.get(api).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
+
     static handleRefreshToken(bodyrequest: any): Observable<any> {
         const api = `${IdentityApi.apiURL.HOST}/${this.apiURL.REFRESH_TOKEN}`;
         return HttpClient.post(api, bodyrequest).pipe(
