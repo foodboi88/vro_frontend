@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { IReqFormArchitect, IReqLookUp } from '../../../common/profile.interface';
 import { DeleteOutlined, EditOutlined, FlagOutlined, CaretDownOutlined } from '@ant-design/icons';
 import { Rule } from 'antd/lib/form';
+import moment from 'moment';
 
 interface Props {
     setPage(e: any): void;
@@ -157,16 +158,11 @@ const FormIndividuals = (props: Props) => {
             callback();
         }
     }
-    // useEffect(() => {
-    //     if (bankName && accountNumber) {
-    //         const req: IReqLookUp = {
-    //             bin: bankName,
-    //             accountNumber: accountNumber
-    //         }
-    //         dispatch(getAccountBankNameRequest(req))
-    //     }
-    // }, [bankName, accountNumber])
-
+    // Define the disabledDate function
+    const disabledDate = (current: any) => {
+        // Disable dates that are after the current date
+        return current && current > moment().endOf('day');
+    };
     return (
         <div className='profile-content form-individuals'>
             <div className='profile-content-title'>Điền thông tin của bạn vào ô dưới đây!</div>
@@ -203,7 +199,7 @@ const FormIndividuals = (props: Props) => {
                         name="dateOfIssue"
                         rules={[{ required: true, message: 'Vui lòng nhập ngày cấp' }]}
                     >
-                        <DatePicker placeholder='Nhập ngày cấp' />
+                        <DatePicker placeholder='Nhập ngày cấp' format={'DD/MM/YYYY'} disabledDate={disabledDate} inputReadOnly={true} />
                     </Form.Item>
                     <Form.Item
                         label="Nơi cấp"

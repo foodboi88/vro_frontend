@@ -31,13 +31,11 @@ const SellerBill = () => {
         }
     )
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(
-
             getBillListRequests(currentSearchValue)
         )
-        
-      },[])
+    }, [])
 
 
 
@@ -48,18 +46,18 @@ const SellerBill = () => {
                 <span className='span-table'>{rowIndex + 1}</span>
             )
         },
-        {
-            title: 'Tên sản phẩm',
-            key: 'product',
-            render: (_, record) => (
-                <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-                    <img src={record.product.image} alt="" width={50} />
-                    <Tooltip title={record.title}>
-                        <span className='span-title-table' >{record.product.title}</span>
-                    </Tooltip>
-                </div>
-            )
-        },
+        // {
+        //     title: 'Tên sản phẩm',
+        //     key: 'product',
+        //     render: (_, record) => (
+        //         <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+        //             <img src={record.product?.image} alt="" width={50} />
+        //             <Tooltip title={record?.title}>
+        //                 <span className='span-title-table' >{record.product.title}</span>
+        //             </Tooltip>
+        //         </div>
+        //     )
+        // },
         {
             title: 'Tài khoản mua',
             dataIndex: 'userName',
@@ -76,10 +74,10 @@ const SellerBill = () => {
         },
         {
             title: 'Giá (VNĐ)',
-            key: 'price',
+            key: 'totalPrice',
             render: (_, record) => (
                 <div>
-                    {Utils.formatMoney(record.price) + ' đ'}
+                    {Utils.formatMoney(record.totalPrice) + ' VND'}
                 </div>
             )
         },
@@ -171,15 +169,15 @@ const SellerBill = () => {
                     <div>
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <div>Tổng tiền:</div>
-                            <div>{detailBill.price}</div>
+                            <div>{Utils.formatMoney(detailBill.totalPrice) + ' VND'}</div>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <div>Tạo lúc: </div>
                             <div>{detailBill.createdAt}</div>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <div>Id đơn hàng:</div>
-                            <div>{detailBill.code_Order}</div>
+                            <div>Mã đơn hàng:</div>
+                            <div>{detailBill.orderId}</div>
                         </div>
                         {/* <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <div>Hình thức thanh toán:</div>
@@ -190,52 +188,39 @@ const SellerBill = () => {
                         <div>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <div>Email:</div>
-                                <div>{detailBill.user.email}</div>
+                                <div>{detailBill.user_buy.email}</div>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <div>Tên:</div>
-                                <div>{detailBill.user.name}</div>
+                                <div>{detailBill.user_buy.name}</div>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <div>Địa chỉ:</div>
-                                <div>{detailBill.user.address}</div>
+                                <div>{detailBill.user_buy.address}</div>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <div>Số điện thoại:</div>
-                                <div>{detailBill.user.phone}</div>
+                                <div>{detailBill.user_buy.phone}</div>
                             </div>
                         </div>
                         <Divider>Danh sách sản phẩm</Divider>
                         <div style={{ padding: '10px' }}>
                             {detailBill.products.map((item: any, index: number) => {
                                 return (
-                                    <div>
-                                        <div>Sản phẩm {index + 1}:
+                                    <div style={{ marginBottom: '30px' }}>
+                                        <div><b>Sản phẩm {index + 1}:</b>
 
-                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>{item.title}</div>
-                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>{item.price}</div>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                <div>Tiêu đề:</div>
+                                                <div>{item.title}</div>
+                                            </div>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                <div>Giá:</div>
+                                                <div>{Utils.formatMoney(item.price) + ' VND'}</div></div>
                                             <div>
                                                 <img style={{ width: "200px" }} src={item.image} />
                                             </div>
                                         </div>
-                                        {/* <div>Người bán:
-                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                                <div>Email:</div>
-                                                <div>{item.seller.email}</div>
-                                            </div>
-                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                                <div>Tên:</div>
-                                                <div>{item.seller.name}</div>
-                                            </div>
-                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                                <div>Địa chỉ:</div>
-                                                <div>{item.seller.address}</div>
-                                            </div>
-                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                                <div>Số điện thoại:</div>
-                                                <div>{item.seller.phone}</div>
-                                            </div>
-                                        </div> */}
                                     </div>
                                 )
                             })}
