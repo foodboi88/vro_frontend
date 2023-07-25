@@ -13,7 +13,7 @@ const Profile = () => {
         if (window.location.pathname === "/buyer/become-seller") setActive(3);
         if (window.location.pathname === "/buyer/purchased-sketchs") setActive(5);
         if (window.location.pathname === "/buyer/cart") setActive(8);
-    
+
 
     }, []);
 
@@ -44,11 +44,8 @@ const Profile = () => {
                     <BsShop className='profile-navbar-item-icon' />
                     <span className='profile-navbar-item-text'>Sản phẩm đã mua</span>
                 </div>
-                
-                
 
-                
-                
+
                 <div className={'profile-navbar-item' + (active === 6 ? ' active' : '')} onClick={() => setActive(6)}>
                     <AiOutlineGift className='profile-navbar-item-icon' />
                     <span className='profile-navbar-item-text'>Kho Voucher</span>

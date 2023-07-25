@@ -49,6 +49,7 @@ const CTable = (props: CTableProps) => {
                             onChange={(event) => {
                                 if (props.onChangeRangePicker) props.onChangeRangePicker(event)
                             }}
+                            placeholder={['Từ ngày', 'Đến ngày']}
                         />
                     }
                     {

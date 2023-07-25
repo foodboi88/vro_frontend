@@ -228,6 +228,10 @@ const SellerWithdraw = () => {
     currentSearchValue.offset = (event - 1) * QUERY_PARAM.size;
     setCurrentSearchValue(currentSearchValue);
     dispatch(getWithdrawRequests(currentSearchValue))
+    document.body.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
   }
 
   return (
@@ -289,23 +293,23 @@ const SellerWithdraw = () => {
             icon={CoinIcon}
           />
 
-        
-          
+
+
         </div>
-        
+
       </div>
       <Button
-          onClick={
-            () => {
-              setOpenModalCreate(true)
-            }
+        onClick={
+          () => {
+            setOpenModalCreate(true)
           }
-          style={{
-            marginTop: "30px"
-          }}
-        >
-          Tạo yêu cầu rút tiền
-        </Button>
+        }
+        style={{
+          marginTop: "30px"
+        }}
+      >
+        Tạo yêu cầu rút tiền
+      </Button>
       <div className='table-area'>
         <CTable
           tableMainTitle='Danh sách yêu cầu rút tiền'

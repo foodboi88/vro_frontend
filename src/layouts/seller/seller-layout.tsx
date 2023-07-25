@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { AiOutlineSetting, AiOutlineLock, AiOutlineGift, AiOutlineQuestionCircle } from 'react-icons/ai';
-import { BiGridAlt } from 'react-icons/bi';
+import { BiGridAlt, BiPurchaseTagAlt } from 'react-icons/bi';
 import { BsShop } from 'react-icons/bs';
 import { RiBillLine } from 'react-icons/ri';
+
 import { Outlet, useNavigate } from 'react-router-dom'
+
 import './seller-layout.styles.scss';
 
 const SellerLayout = () => {
@@ -24,6 +26,7 @@ const SellerLayout = () => {
 
 		if (window.location.pathname === "/seller/upload-sketch") setActive(6);
 		if (window.location.pathname === "/seller/withdraw") setActive(7);
+		if (window.location.pathname === "/seller/purchased-sketchs") setActive(8);
 	}, []);
 
 
@@ -79,7 +82,7 @@ const SellerLayout = () => {
 						navigate('/seller/purchased-sketchs')
 					}
 					}>
-						<BsShop className='profile-navbar-item-icon' />
+						<BiPurchaseTagAlt className='profile-navbar-item-icon' />
 						<span className='profile-navbar-item-text'>Sản phẩm đã mua</span>
 					</div>
 

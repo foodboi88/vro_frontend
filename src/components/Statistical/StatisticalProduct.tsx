@@ -84,6 +84,10 @@ const StatisticalProduct = () => {
 
     const onChangePagination = (event: any) => {
         console.log(event)
+        document.body.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
     }
 
     return (

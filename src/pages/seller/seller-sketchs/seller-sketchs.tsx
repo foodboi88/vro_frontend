@@ -49,12 +49,12 @@ const SellerSketchs = () => {
 
 
     const columns: ColumnType<any>[] = [
-      {
-        title: 'Số thứ tự',
-        render: (_, __, rowIndex) => (
-            <span className='span-table'>{rowIndex + 1}</span>
-        )
-    },
+        {
+            title: 'Số thứ tự',
+            render: (_, __, rowIndex) => (
+                <span className='span-table'>{rowIndex + 1}</span>
+            )
+        },
         {
             title: 'Tên',
             dataIndex: 'title',
@@ -181,6 +181,10 @@ const SellerSketchs = () => {
     }
 
     const onChangePagination = (event: any) => {
+        document.body.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
         currentSearchValue.offset = (event - 1) * QUERY_PARAM.size;
         setCurrentSearchValue(currentSearchValue);
         dispatch(getSketchByArchitectRequest(currentSearchValue))
