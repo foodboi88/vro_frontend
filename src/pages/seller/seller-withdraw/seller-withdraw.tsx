@@ -26,6 +26,7 @@ const SellerWithdraw = () => {
   const [textSearch, setTextSearch] = useState('');
   const [beginDate, setBeginDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const [detailWithdraw, setDetailWithdraw] = useState();
   const [withdrawAmount, setWithdrawAmount] = useState('');
   const [openModalCreate, setOpenModalCreate] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
@@ -49,15 +50,26 @@ const SellerWithdraw = () => {
     //     key: 'status'
     //   },
     {
+      title: 'Số thứ tự',
+      render: (_, __, rowIndex) => (
+          <span className='span-table'>{rowIndex + 1}</span>
+      )
+  },
+  {
+    title: 'Mã yêu cầu',
+    dataIndex: 'id',
+    key: 'id',
+  },
+    {
       title: 'Tình trạng xử lý',
       dataIndex: 'isProcessed',
       key: 'isProcessed',
       render: (_, record) => {
         if (record.isProcessed) {
-          return (<span>Đã xử lý</span>)
+          return (<span>Đã chuyển</span>)
         }
         else {
-          return (<span>Chưa xử lý</span>)
+          return (<span>Chưa chuyển</span>)
         }
       }
     },
@@ -77,88 +89,21 @@ const SellerWithdraw = () => {
         <span>{new Date(record.createdAt).toLocaleDateString('en-GB')}</span>
       )
     },
-    {
-      title: 'Ngân hàng',
-      dataIndex: 'bankName',
-      key: 'bankName',
-    },
-    {
-      title: 'Chi nhánh ngân hàng',
-      dataIndex: 'bankBranch',
-      key: 'bankBranch',
-    },
-    {
-      title: 'Tạo lúc',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
-      render: (_, record) => (
-        <span>{new Date(record.createdAt).toLocaleDateString('en-GB')}</span>
-      )
-    },
+ 
     //   {
     //     title: 'updatedAt',
     //     dataIndex: 'updatedAt',
     //     key: 'updatedAt',
     // },
-
     {
-      title: 'Tên',
-      dataIndex: 'name',
-      key: 'name',
-    },
-    {
-      title: 'Địa chỉ',
-      dataIndex: 'address',
-      key: 'address',
-    },
-    {
-      title: 'Loại tài khoản',
-      dataIndex: 'sellerType',
-      key: 'sellerType',
-      render: (_, record) => {
-        if (record.sellerType === "ARCHITECT") {
-          return (<span>Kiến trúc sư</span>)
-        }
-        else {
-          return (<span>Công ty</span>)
-        }
-      }
-    },
-    {
-      title: 'Địa chỉ',
-      dataIndex: 'address',
-      key: 'address',
-    },
-    //   {
-    //     title: 'dob',
-    //     dataIndex: 'dob',
-    //     key: 'dob',
-    //   },
-    // {
-    //   title: 'Tags',
-    //   key: 'tags',
-    //   dataIndex: 'tags',
-    //   render: (_, { tags }) => (
-    //     <>
-    //       {tags.map((tag) => {
-    //         let color = tag.length > 5 ? 'geekblue' : 'green';
-    //         if (tag === 'loser') {
-    //           color = 'volcano';
-    //         }
-    //         return (
-    //           <Tag color={color} key={tag}>
-    //             {tag.toUpperCase()}
-    //           </Tag>
-    //         );
-    //       })}
-    //     </>
-    //   ),
-    // },
-    {
-      title: 'Action',
+      title: 'Thao tác',
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
+          <a onClick={(event) => {
+            handleOpenDetail(record)
+            setDetailWithdraw(record)
+          }}>Xem chi tiết</a>
           <a onClick={(event) => handleOpenDelete(record)}>Xóa</a>
         </Space>
       ),
@@ -178,6 +123,10 @@ const SellerWithdraw = () => {
   //       icon: UserMinus,
   //   },
   // ]
+
+  const handleOpenDetail = (record: any) => {
+
+  }
 
 
   const handleOpenDelete = (record: any) => {
