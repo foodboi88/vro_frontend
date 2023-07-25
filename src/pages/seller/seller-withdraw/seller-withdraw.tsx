@@ -1,4 +1,4 @@
-import { Space, Modal, Button, Input } from 'antd';
+import { Space, Modal, Button, Input, Form, Popover, notification } from 'antd';
 import { ColumnType } from 'antd/lib/table';
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react'
@@ -30,6 +30,9 @@ const SellerWithdraw = () => {
   const [withdrawAmount, setWithdrawAmount] = useState('');
   const [openModalCreate, setOpenModalCreate] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
+  const [openPopover,setOpenPopover] = useState(false)
+  const [form] = Form.useForm();
+
 
   const [currentSearchValue, setCurrentSearchValue] = useState<IGetWithdrawRequest>(
     {
@@ -89,25 +92,76 @@ const SellerWithdraw = () => {
         <span>{new Date(record.createdAt).toLocaleDateString('en-GB')}</span>
       )
     },
- 
+   
+   
     //   {
     //     title: 'updatedAt',
     //     dataIndex: 'updatedAt',
     //     key: 'updatedAt',
     // },
-    {
-      title: 'Thao tác',
-      key: 'action',
-      render: (_, record) => (
-        <Space size="middle">
-          <a onClick={(event) => {
-            handleOpenDetail(record)
-            setDetailWithdraw(record)
-          }}>Xem chi tiết</a>
-          <a onClick={(event) => handleOpenDelete(record)}>Xóa</a>
-        </Space>
-      ),
-    },
+
+    // {
+    //   title: 'Tên',
+    //   dataIndex: 'name',
+    //   key: 'name',
+    // },
+    // {
+    //   title: 'Địa chỉ',
+    //   dataIndex: 'address',
+    //   key: 'address',
+    // },
+    // {
+    //   title: 'Loại tài khoản',
+    //   dataIndex: 'sellerType',
+    //   key: 'sellerType',
+    //   render: (_, record) => {
+    //     if (record.sellerType === "ARCHITECT") {
+    //       return (<span>Kiến trúc sư</span>)
+    //     }
+    //     else {
+    //       return (<span>Công ty</span>)
+    //     }
+    //   }
+    // },
+    // {
+    //   title: 'Địa chỉ',
+    //   dataIndex: 'address',
+    //   key: 'address',
+    // },
+    //   {
+    //     title: 'dob',
+    //     dataIndex: 'dob',
+    //     key: 'dob',
+    //   },
+    // {
+    //   title: 'Tags',
+    //   key: 'tags',
+    //   dataIndex: 'tags',
+    //   render: (_, { tags }) => (
+    //     <>
+    //       {tags.map((tag) => {
+    //         let color = tag.length > 5 ? 'geekblue' : 'green';
+    //         if (tag === 'loser') {
+    //           color = 'volcano';
+    //         }
+    //         return (
+    //           <Tag color={color} key={tag}>
+    //             {tag.toUpperCase()}
+    //           </Tag>
+    //         );
+    //       })}
+    //     </>
+    //   ),
+    // },
+    // {
+    //   title: 'Action',
+    //   key: 'action',
+    //   render: (_, record) => (
+    //     <Space size="middle">
+    //       <a onClick={(event) => handleOpenDelete(record)}>Xóa</a>
+    //     </Space>
+    //   ),
+    // },
   ];
 
   // let statisticalUser = [
@@ -124,10 +178,6 @@ const SellerWithdraw = () => {
   //   },
   // ]
 
-  const handleOpenDetail = (record: any) => {
-
-  }
-
 
   const handleOpenDelete = (record: any) => {
     setOpenModalDelete(true);
@@ -135,14 +185,27 @@ const SellerWithdraw = () => {
 
   const handleCreate = () => {
 
-    const bodyrequest = {
+    if(form.getFieldValue('amount')){
+      const bodyrequest = {
 
-      amount: withdrawAmount,
-      additionalProp1: {},
-      currentSearchValue: currentSearchValue
+        amount: form.getFieldValue('amount'),
+        additionalProp1: {},
+        currentSearchValue: currentSearchValue
+      }
+      dispatch(createWithdrawRequest(bodyrequest));
+      setOpenModalCreate(false);
+      form.resetFields();
+    }else{
+      notification.open({
+          message: "Vui lòng nhập đầy đủ thông tin yêu cầu rút tiền",
+          // description:
+          //     action.payload.response.message,
+          onClick: () => {
+              console.log("Notification Clicked!");
+          },
+      });
     }
-    dispatch(createWithdrawRequest(bodyrequest));
-    setOpenModalCreate(false);
+    
   }
 
   const onChangeInput = (event: any) => {
@@ -189,16 +252,66 @@ const SellerWithdraw = () => {
         <div className='approve-request-modal'>
           <Modal
             open={openModalCreate}
-            onOk={handleCreate}
-            okText={'Xác nhận'}
-            title={"Nhập lượng tiền muốn rút"}
-            cancelText={'Hủy'}
+        
+            title={"Tạo yêu cầu rút tiền"}
             closable={true}
             onCancel={() => setOpenModalCreate(false)}
+            footer={false}
+            
           >
-            <Input onChange={(event) => {
-              setWithdrawAmount(event.target.value)
-            }} />
+
+            <Form
+              name="basic"
+              form={form}
+
+              labelCol={{ span: 8 }}
+              wrapperCol={{ span: 16 }}
+              style={{ maxWidth: 600 }}
+              initialValues={{ remember: true }}
+              onFinish={handleCreate}
+              autoComplete="off"
+            >
+              <Form.Item
+                label="Thời gian"
+                name="time"
+              >
+                <Input readOnly={true} />
+              </Form.Item>
+              <Form.Item
+                label="Lượng tiền muốn rút"
+                name="amount"
+                rules={[{ required: true, message: 'Vui lòng nhập số tiền!' }]}
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                label="Ghi chú"
+                name="note"
+              >
+                <Input.TextArea />
+              </Form.Item>
+
+              
+
+              <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                <Popover content={(
+                  <div style={{display:'flex', justifyContent: 'center'}}>
+                    <Button onClick={handleCreate} type="primary">Xác nhận</Button>
+                    <Button onClick={() => {
+                      setOpenPopover(false)
+                    }}>Hủy</Button>
+
+                  </div>
+                )} title="Bạn có xác nhận tạo yêu cầu hay không?" trigger="click" open={openPopover}>
+                  <Button type="primary" onClick={()=>{
+                    setOpenPopover(true)
+                  }}>Tạo yêu cầu</Button>
+                </Popover>
+             
+              </Form.Item>
+            </Form>
+            
           </Modal>
         </div>
       }
@@ -246,6 +359,7 @@ const SellerWithdraw = () => {
       <Button
           onClick={
             () => {
+              form.setFieldValue('time', new Date().toLocaleDateString('en-GB'))
               setOpenModalCreate(true)
             }
           }
