@@ -194,6 +194,8 @@ const SellerWithdraw = () => {
       }
       dispatch(createWithdrawRequest(bodyrequest));
       setOpenModalCreate(false);
+      setOpenPopover(false)
+
       form.resetFields();
     }else{
       notification.open({
