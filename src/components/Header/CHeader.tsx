@@ -190,14 +190,14 @@ export const CHeader = (props: MyProps) => {
     };
     const handleClickCart = () => {
         dispatch(getAllSketchInCartRequest());
-        if(userRole === 'seller'){
+        if (userRole === 'seller') {
 
             navigate("/seller/cart");
-        } else if(userRole === 'user'){
+        } else if (userRole === 'user') {
             navigate("/buyer/cart");
 
         }
-        else{
+        else {
             navigate("/");
 
         }
@@ -277,12 +277,12 @@ export const CHeader = (props: MyProps) => {
                                     </Button>
                                 </motion.div> */}
                                 <div className="icon-group">
-                                    <Badge count={10} size="default">
+                                    {/* <Badge count={10} size="default">
                                         <BellOutlined />
                                     </Badge>
                                     <Badge count={10} size="default">
                                         <MessageOutlined />
-                                    </Badge>
+                                    </Badge> */}
                                     <Badge
                                         count={sketchsQuantityInCart}
                                         size="default"

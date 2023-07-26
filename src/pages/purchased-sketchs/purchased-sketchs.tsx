@@ -57,11 +57,11 @@ const PurchasedSketchs = () => {
         },
         {
             title: 'Giá',
-            dataIndex: 'userName',
-            key: 'userName',
+            dataIndex: 'price',
+            key: 'price',
             render: (_, record) => (
-                <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-                    {record?.product?.price}
+                <div style={{ display: 'flex', gap: 10, alignItems: 'center', justifyContent: 'end' }}>
+                    {Utils.formatMoney(record?.product?.price) + ' VND'}
                 </div>
             )
         },

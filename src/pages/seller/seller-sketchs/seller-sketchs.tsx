@@ -66,7 +66,7 @@ const SellerSketchs = () => {
             dataIndex: 'price',
             key: 'price',
             render: (_, record) => (
-                <span style={{ whiteSpace: 'nowrap' }}>{Utils.formatMoney(record.price) + ' đ'}</span>
+                <span style={{ whiteSpace: 'nowrap', display: 'flex', justifyContent: 'end' }}>{Utils.formatMoney(record.price) + ' VND'}</span>
             )
         },
         {

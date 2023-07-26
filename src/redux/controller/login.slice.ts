@@ -67,7 +67,7 @@ const loginSlice = createSlice({
             Utils.setLocalStorage("token", action.payload.accessToken);
             Utils.setLocalStorage("refresh_token", action.payload.refreshToken);
             Utils.setLocalStorage("role", action.payload.role);
-            
+
             state.tokenLogin = action.payload.accessToken;
             state.loading = false;
             state.isSuccess = true;
@@ -85,18 +85,15 @@ const loginSlice = createSlice({
             });
         },
         loginFail(state, action: any) {
-            console.log(action);
+            console.log(action.payload.response);
             state.loading = false;
             state.accesstokenExpỉred = true;
 
             notification.open({
                 message: "Đăng nhập không thành công",
-                description: "Hãy kiểm tra lại thông tin đăng nhập.",
+                description: action.payload.response.message.message,
                 onClick: () => {
                     console.log("Notification Clicked!");
-                },
-                style: {
-                    paddingTop: 40,
                 },
             });
             state.message = action.payload.message;
@@ -322,7 +319,7 @@ const login$: RootEpic = (action$) =>
                 mergeMap((res: any) => {
                     console.log(res);
                     console.log(res.data.accessToken);
-                    
+
                     return [
                         loginSlice.actions.loginSuccess(res.data),
                         loginSlice.actions.getUserInfoRequest(res.data.accessToken),

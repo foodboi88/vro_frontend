@@ -30,7 +30,7 @@ const SellerWithdraw = () => {
   const [withdrawAmount, setWithdrawAmount] = useState('');
   const [openModalCreate, setOpenModalCreate] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
-  const [openPopover,setOpenPopover] = useState(false)
+  const [openPopover, setOpenPopover] = useState(false)
   const [form] = Form.useForm();
 
 
@@ -55,14 +55,14 @@ const SellerWithdraw = () => {
     {
       title: 'Số thứ tự',
       render: (_, __, rowIndex) => (
-          <span className='span-table'>{rowIndex + 1}</span>
+        <span className='span-table'>{rowIndex + 1}</span>
       )
-  },
-  {
-    title: 'Mã yêu cầu',
-    dataIndex: 'id',
-    key: 'id',
-  },
+    },
+    {
+      title: 'Mã yêu cầu',
+      dataIndex: 'id',
+      key: 'id',
+    },
     {
       title: 'Tình trạng xử lý',
       dataIndex: 'isProcessed',
@@ -81,7 +81,7 @@ const SellerWithdraw = () => {
       dataIndex: 'amount',
       key: 'amount',
       render: (_, record) => (
-        <span>{Utils.formatMoney(record.amount)} đ</span>
+        <span style={{ display: 'flex', justifyContent: 'end' }}>{Utils.formatMoney(record.amount)} đ</span>
       )
     },
     {
@@ -92,8 +92,8 @@ const SellerWithdraw = () => {
         <span>{new Date(record.createdAt).toLocaleDateString('en-GB')}</span>
       )
     },
-   
-   
+
+
     //   {
     //     title: 'updatedAt',
     //     dataIndex: 'updatedAt',
@@ -185,7 +185,7 @@ const SellerWithdraw = () => {
 
   const handleCreate = () => {
 
-    if(form.getFieldValue('amount')){
+    if (form.getFieldValue('amount')) {
       const bodyrequest = {
 
         amount: form.getFieldValue('amount'),
@@ -197,17 +197,17 @@ const SellerWithdraw = () => {
       setOpenPopover(false)
 
       form.resetFields();
-    }else{
+    } else {
       notification.open({
-          message: "Vui lòng nhập đầy đủ thông tin yêu cầu rút tiền",
-          // description:
-          //     action.payload.response.message,
-          onClick: () => {
-              console.log("Notification Clicked!");
-          },
+        message: "Vui lòng nhập đầy đủ thông tin yêu cầu rút tiền",
+        // description:
+        //     action.payload.response.message,
+        onClick: () => {
+          console.log("Notification Clicked!");
+        },
       });
     }
-    
+
   }
 
   const onChangeInput = (event: any) => {
@@ -258,12 +258,12 @@ const SellerWithdraw = () => {
         <div className='approve-request-modal'>
           <Modal
             open={openModalCreate}
-        
+
             title={"Tạo yêu cầu rút tiền"}
             closable={true}
             onCancel={() => setOpenModalCreate(false)}
             footer={false}
-            
+
           >
 
             <Form
@@ -298,11 +298,11 @@ const SellerWithdraw = () => {
                 <Input.TextArea />
               </Form.Item>
 
-              
+
 
               <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                 <Popover content={(
-                  <div style={{display:'flex', justifyContent: 'center'}}>
+                  <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <Button onClick={handleCreate} type="primary">Xác nhận</Button>
                     <Button onClick={() => {
                       setOpenPopover(false)
@@ -310,14 +310,14 @@ const SellerWithdraw = () => {
 
                   </div>
                 )} title="Bạn có xác nhận tạo yêu cầu hay không?" trigger="click" open={openPopover}>
-                  <Button type="primary" onClick={()=>{
+                  <Button type="primary" onClick={() => {
                     setOpenPopover(true)
                   }}>Tạo yêu cầu</Button>
                 </Popover>
-             
+
               </Form.Item>
             </Form>
-            
+
           </Modal>
         </div>
       }
@@ -363,13 +363,13 @@ const SellerWithdraw = () => {
 
       </div>
       <Button
-          onClick={
-            () => {
-              form.setFieldValue('time', new Date().toLocaleDateString('en-GB'))
-              setOpenModalCreate(true)
-            }
+        onClick={
+          () => {
+            form.setFieldValue('time', new Date().toLocaleDateString('en-GB'))
+            setOpenModalCreate(true)
           }
-        
+        }
+
         style={{
           marginTop: "30px"
         }}

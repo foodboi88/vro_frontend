@@ -82,7 +82,7 @@ const SellerBill = () => {
             title: 'Giá (VNĐ)',
             key: 'totalPrice',
             render: (_, record) => (
-                <div>
+                <div style={{ display: 'flex', justifyContent: 'end' }}>
                     {Utils.formatMoney(record.totalPrice) + ' VND'}
                 </div>
             )
