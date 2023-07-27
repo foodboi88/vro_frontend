@@ -88,7 +88,7 @@ const SellerBill = () => {
             )
         },
         {
-            title: 'Action',
+            title: 'Thao tác',
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">

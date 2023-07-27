@@ -1126,9 +1126,11 @@ const sketchSlice = createSlice({
 
         getPurchasedSketchsFail(state, action: PayloadAction<any>) {
             state.loading = false;
+
             if (action.payload.status === 400 || action.payload.status === 404) {
-                notification.open({
-                    message: action.payload.response.message,
+                notification.error({
+                    message: 'Lỗi tải dữ liệu',
+                    description: action.payload.response.message,
                     onClick: () => {
                         console.log("Notification Clicked!");
                     },
@@ -1150,9 +1152,7 @@ const sketchSlice = createSlice({
 
         },
         getSellerProfileFail(state, action: any) {
-
             state.loading = false;
-
             notification.open({
                 message: "Lỗi",
                 description: "Không tìm thấy thông tin người kiến trúc sư/ công ty",
@@ -2102,10 +2102,10 @@ const getAccountBankName$: RootEpic = (action$) =>
 const getPurchasedSketchs$: RootEpic = (action$) =>
     action$.pipe(
         filter(getPurchasedSketchsRequest.match),
-        mergeMap((re) => {
+        switchMap((re) => {
             console.log(re);
             return SketchsApi.getPurchasedSketchs(re.payload).pipe(
-                mergeMap((res: any) => {
+                switchMap((res: any) => {
                     return [
                         sketchSlice.actions.getPurchasedSketchsSuccess(res.data),
                     ]
@@ -2124,8 +2124,6 @@ const getSellerProfile$: RootEpic = (action$) =>
             return IdentityApi.getSellerInformation().pipe(
                 mergeMap((res: any) => {
                     console.log(res);
-
-
                     return [
                         sketchSlice.actions.getSellerProfileSuccess(res.data)
                     ]

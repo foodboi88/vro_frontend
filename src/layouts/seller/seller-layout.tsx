@@ -27,6 +27,7 @@ const SellerLayout = () => {
 		if (window.location.pathname === "/seller/upload-sketch") setActive(6);
 		if (window.location.pathname === "/seller/withdraw") setActive(7);
 		if (window.location.pathname === "/seller/purchased-sketchs") setActive(8);
+		if (window.location.pathname === "/seller/cart") setActive(9);
 	}, []);
 
 
@@ -40,6 +41,14 @@ const SellerLayout = () => {
 					}}>
 						<BiGridAlt className='profile-navbar-item-icon' />
 						<span className='profile-navbar-item-text'>Tổng quan</span>
+					</div>
+					<div className={'profile-navbar-item' + (active === 9 ? ' active' : '')} onClick={() => {
+						setActive(9)
+						navigate('/seller/cart')
+					}
+					}>
+						<BsShop className='profile-navbar-item-icon' />
+						<span className='profile-navbar-item-text'>Giỏ hàng</span>
 					</div>
 					<div className={'profile-navbar-item' + (active === 2 ? ' active' : '')} onClick={() => {
 						setActive(2)

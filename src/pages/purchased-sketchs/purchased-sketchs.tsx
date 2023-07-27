@@ -1,7 +1,7 @@
 import { Tooltip, Space, Modal, Divider } from 'antd';
 import { ColumnType } from 'antd/lib/table';
 import { motion } from 'framer-motion';
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { IGetSketchRequest } from '../../common/sketch.interface';
 import { IGetUsersRequest } from '../../common/user.interface';
 import Utils from '../../common/utils';
@@ -21,20 +21,17 @@ const PurchasedSketchs = () => {
     const [beginDate, setBeginDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [dataBillLst, setDataBillLst] = useState<any[]>([]);
-    const [currentSearchValue, setCurrentSearchValue] = useState<IGetSketchRequest>(
-        {
-            size: QUERY_PARAM.size,
-            offset: 0
-        }
-    )
+    const [currentSearchValue, setCurrentSearchValue] = useState<IGetSketchRequest>({ size: QUERY_PARAM.size, offset: 0 })
 
     const navigate = useNavigate();
+    const dispatch = useDispatchRoot();
+
+    const firstGetData = useCallback(() => {
+    }, [])
 
 
     useEffect(() => {
-        dispatch(
-            getPurchasedSketchsRequest(currentSearchValue)
-        )
+        dispatch(getPurchasedSketchsRequest(currentSearchValue))
     }, [])
 
 
@@ -75,7 +72,7 @@ const PurchasedSketchs = () => {
             )
         },
         {
-            title: 'Action',
+            title: 'Thao tác',
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
@@ -90,7 +87,6 @@ const PurchasedSketchs = () => {
     //     setOpenModal(true)
     //   },[detailBill])
 
-    const dispatch = useDispatchRoot()
 
     const handleDetail = (record: any) => {
         navigate(`/detail-sketch/${record?.product?.id}`)
@@ -108,7 +104,6 @@ const PurchasedSketchs = () => {
     }
 
     const onSearch = () => {
-        console.log('hehee')
         const body: IGetUsersRequest = {
             size: QUERY_PARAM.size,
             offset: 0,
