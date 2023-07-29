@@ -113,7 +113,10 @@ const DetailSketch = () => {
         if (sketchId) {
             dispatch(getDetailSketchPageContentRequest(sketchId));
             dispatch(getRatesBySketchIdRequest(sketchId));
-            dispatch(getProductFilesByIdRequest(sketchId));
+            
+            if(tokenLogin) {
+                dispatch(getProductFilesByIdRequest(sketchId));
+            }
 
         }
     }, [sketchId]);

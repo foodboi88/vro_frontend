@@ -334,24 +334,26 @@ const SellerWithdraw = () => {
       }
       <div className='create-request'>
         <div className='infor-cards'>
-          <TotalBox
-            key={1}
-            title={`Tài khoản nhận: ${sellerInformation?.bankName}`}
-            number={`${sellerInformation?.bankAccountNumber ? sellerInformation?.bankAccountNumber : ''}`}
-            icon={CoinIcon}
-          />
-          <TotalBox
-            key={2}
-            title={`Chi nhánh`}
-            number={`${sellerInformation?.bankBranch ? Utils.formatMoney(sellerInformation?.bankBranch) : ''}`}
-            icon={CoinIcon}
-          />
-          <TotalBox
-            key={3}
-            title={`Số dư hiện tại`}
-            number={`${sellerInformation?.currentBalance ? Utils.formatMoney(sellerInformation?.currentBalance) : 0}Đ`}
-            icon={CoinIcon}
-          />
+          <div>
+            <div>Tài khoản nhận:</div>
+            <div>{sellerInformation?.bankName}</div>
+          </div>
+          <div>
+            <div>Số tài khoản:</div>
+            <div>{sellerInformation?.bankAccountNumber ? sellerInformation?.bankAccountNumber : ''}</div>
+          </div>
+          <div>
+            <div>Chi nhánh ngân hàng:</div>
+            <div>{sellerInformation?.bankBranch ? Utils.formatMoney(sellerInformation?.bankBranch) : ''}</div>
+          </div>
+          <div>
+            <div>Số dư hiện tại:</div>
+            <div>{sellerInformation?.currentBalance ? Utils.formatMoney(sellerInformation?.currentBalance) : 0} VND</div>
+          </div> 
+          <div>
+            <div>Số tiền đã lĩnh:</div>
+            <div>{sellerInformation?.currentBalance ? Utils.formatMoney(sellerInformation?.currentBalance) : 0} VND</div>
+          </div>
 
         
           
