@@ -12,6 +12,7 @@ interface MyProps {
     isOpenModal: boolean;
     toggleRegisterModal: () => void;
     toggleLoginModal: () => void;
+    handleCancelModal: () => void;
 }
 const regexPhoneNumber = /^0(1\d{9}|3\d{8}|5\d{8}|7\d{8}|8\d{8}|9\d{8})$/;
 const regexEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -141,8 +142,8 @@ const Register = (props: MyProps) => {
             <Modal
                 title="Đăng ký"
                 open={props.isOpenModal}
-                onOk={props.toggleRegisterModal}
-                onCancel={props.toggleRegisterModal}
+                onOk={props.handleCancelModal}
+                onCancel={props.handleCancelModal}
                 footer={false}
             >
                 <Form

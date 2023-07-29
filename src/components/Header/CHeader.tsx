@@ -161,15 +161,19 @@ export const CHeader = (props: MyProps) => {
 
     // Hàm chuyển đổi trạng thái đóng mở modal login
     const toggleLoginModal = () => {
-        setIsOpenLoginModal(true);
-        setIsOpenRegisterModal(false);
+        setIsOpenLoginModal(!isOpenLoginModal);
+        setIsOpenRegisterModal(!isOpenRegisterModal);
     };
     // Hàm chuyển đổi trạng thái đóng mở modal registration
     const toggleRegisterModal = () => {
-        setIsOpenLoginModal(false);
+        setIsOpenLoginModal(!isOpenLoginModal);
         setIsOpenRegisterModal(!isOpenRegisterModal);
     };
 
+    const handleCancelModal = () => {
+        setIsOpenLoginModal(false);
+        setIsOpenRegisterModal(false);
+    }
     const handleSearching = (event: any) => {
         console.log(event);
         const bodyrequest: ICurrentSearchValue = {
@@ -316,11 +320,13 @@ export const CHeader = (props: MyProps) => {
                             isOpenModal={isOpenLoginModal}
                             toggleLoginModal={toggleLoginModal}
                             toggleRegisterModal={toggleRegisterModal}
+                            handleCancelModal={handleCancelModal}
                         />
                         <Register
                             isOpenModal={isOpenRegisterModal}
                             toggleLoginModal={toggleLoginModal}
                             toggleRegisterModal={toggleRegisterModal}
+                            handleCancelModal={handleCancelModal}
                         />
                     </div>
                     <>

@@ -11,6 +11,7 @@ interface MyProps {
     toggleLoginModal: () => void;
     toggleRegisterModal: () => void;
     checkIsLogin: (val: boolean) => void;
+    handleCancelModal: () => void;
 }
 const regexPhoneNumber = /^0(1\d{9}|3\d{8}|5\d{8}|7\d{8}|8\d{8}|9\d{8})$/;
 const regexEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -20,14 +21,16 @@ const Login = (props: MyProps) => {
     const [userEmailLogin, setUserEmailLogin] = useState<string>("");
     const [userPassLogin, setUserPassLogin] = useState<string>("");
     const [checkLoginBtn, setCheckLoginBtn] = useState<boolean>(true);
-    const { accesstokenExpỉred } = useSelectorRoot((state) => state.login);
+    const { accesstokenExpỉred, tokenLogin } = useSelectorRoot((state) => state.login);
 
 
     const dispatch = useDispatchRoot();
 
     useEffect(() => {
+        console.log("tokenLogin", tokenLogin);
+
         if (!accesstokenExpỉred) {
-            props.toggleLoginModal();
+            props.handleCancelModal();
             props.checkIsLogin(true);
         }
     }, [accesstokenExpỉred])
@@ -92,6 +95,7 @@ const Login = (props: MyProps) => {
         dispatch(loginRequest(bodyrequest));
 
 
+
     };
 
 
@@ -100,8 +104,8 @@ const Login = (props: MyProps) => {
             <Modal
                 title="Đăng nhập"
                 open={props.isOpenModal}
-                onOk={props.toggleLoginModal}
-                onCancel={props.toggleLoginModal}
+                onOk={props.handleCancelModal}
+                onCancel={props.handleCancelModal}
                 footer={false}
             >
                 <Form

@@ -67,8 +67,9 @@ const loginSlice = createSlice({
             Utils.setLocalStorage("token", action.payload.accessToken);
             Utils.setLocalStorage("refresh_token", action.payload.refreshToken);
             Utils.setLocalStorage("role", action.payload.role);
+            console.log(action.payload.accessToken);
 
-            state.tokenLogin = action.payload.accessToken;
+            state.tokenLogin = action?.payload?.accessToken;
             state.loading = false;
             state.isSuccess = true;
             state.accesstokenExpỉred = false;
