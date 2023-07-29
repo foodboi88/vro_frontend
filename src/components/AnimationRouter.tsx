@@ -20,6 +20,7 @@ import SellerSketchs from "../pages/seller/seller-sketchs/seller-sketchs";
 import ProfileResume from "../pages/Profile/profile-resume/ProfileResume";
 import ProfileBecomeSeller from "../pages/Profile/profile-become-seller/ProfileBecomeSeller";
 import PurchasedSketchs from "../pages/purchased-sketchs/purchased-sketchs";
+import ActiveAccount from "../pages/ActiveAccount/ActiveAccount";
 
 // Dùng để set animation cho các router với nhau
 const AnimationRouter = () => {
@@ -46,7 +47,7 @@ const AnimationRouter = () => {
 
                 {/* Trang người mua */}
                 <Route element={<PrivateBuyerRoutes />}>
-                    
+
                     <Route path="/buyer" element={<Profile />}>
                         <Route path="/buyer" element={<ProfileResume />}></Route>
                         <Route path="/buyer/become-seller" element={<ProfileBecomeSeller />}></Route>
@@ -70,7 +71,7 @@ const AnimationRouter = () => {
                 ></Route>
                 <Route path="/purchased-successfully" element={<PurchaseSuccessfully />}></Route>
 
-
+                <Route path="*" element={<ActiveAccount />} />
             </Routes>
         </AnimatePresence>
     );

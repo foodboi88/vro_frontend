@@ -161,7 +161,7 @@ export const CHeader = (props: MyProps) => {
 
     // Hàm chuyển đổi trạng thái đóng mở modal login
     const toggleLoginModal = () => {
-        setIsOpenLoginModal(false);
+        setIsOpenLoginModal(true);
         setIsOpenRegisterModal(false);
     };
     // Hàm chuyển đổi trạng thái đóng mở modal registration

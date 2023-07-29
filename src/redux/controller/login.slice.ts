@@ -268,13 +268,11 @@ const loginSlice = createSlice({
         },
 
         registerSuccess(state, action: PayloadAction<any>) {
-            console.log(action);
+            console.log(action.payload.data.message);
             state.loading = false;
 
             notification.open({
-                message: "Đăng ký tài khoản thành công",
-                // description:
-                //     action.payload.response.message,
+                message: action.payload.data.message,
                 onClick: () => {
                     console.log("Notification Clicked!");
                 },
@@ -413,12 +411,31 @@ const getUserInfo$: RootEpic = (action$) =>
             );
         })
     );
+
+const checkActiveAccount$: RootEpic = (action$) => action$.pipe(
+    filter(checkActiveAccountRequest.match),
+    switchMap((re) => {
+        console.log(re);
+        return IdentityApi.checkActiveAccount(re.payload).pipe(
+            mergeMap((res: any) => {
+                console.log(res);
+                return [
+                    loginSlice.actions.checkActiveAccountSuccess(res),
+                ];
+            }),
+            catchError(err =>
+                [loginSlice.actions.checkActiveAccountFailed(err)]
+            )
+        )
+    })
+)
 export const LoginEpics = [
     login$,
     clearMessage$,
     logOut$,
     register$,
     getUserInfo$,
+    checkActiveAccount$,
 ];
 export const {
     getUserInfoRequest,
