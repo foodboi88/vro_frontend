@@ -14,6 +14,7 @@ import SketchCancel from '../../../images/seller-product/document-cancel.png'
 import Sketch from '../../../images/seller-product/document-text.png'
 
 import './seller-sketchs.styles.scss'
+import CModalEditSketch from '../../../components/ModalEditSketch/CModalEditSketch';
 
 const SellerSketchs = () => {
     const {
@@ -27,6 +28,8 @@ const SellerSketchs = () => {
     const [endDate, setEndDate] = useState('');
     const [openModalDelete, setOpenModalDelete] = useState(false);
     const [idSketch, setIdSketch] = useState('');
+    const [openModalEdit, setOpenModalEdit] = useState(false);
+    const [editSketch, setEditSketch] = useState<any>()
 
     const [currentSearchValue, setCurrentSearchValue] = useState<IGetWithdrawRequest>(
         {
@@ -114,6 +117,7 @@ const SellerSketchs = () => {
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
+                    <a onClick={(event) => handleOpenEdit(record)}>Sửa</a>
                     <a onClick={(event) => handleOpenDelete(record)}>Xóa</a>
                 </Space>
             ),
@@ -139,6 +143,11 @@ const SellerSketchs = () => {
     const handleOpenDelete = (record: any) => {
         setOpenModalDelete(true);
         setIdSketch(record.id)
+    }
+
+    const handleOpenEdit = (record: any) => {
+        setOpenModalEdit(true);
+        setEditSketch(record);
     }
 
     const handleDelete = () => {
@@ -192,6 +201,15 @@ const SellerSketchs = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}>
 
+            {
+                openModalEdit && editSketch &&
+                <CModalEditSketch
+                    open={openModalEdit}
+                    data={editSketch}
+                    setOpenModalEdit = {setOpenModalEdit}
+                />
+
+            }
             {
                 openModalDelete &&
                 <div className='approve-request-modal'>

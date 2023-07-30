@@ -41,6 +41,7 @@ import ProfileAPI from "../../api/profile/profile.api";
 import UserApi from "../../api/user/user.api";
 import { IOverViewStatictis, IOverViewStatictisDay, IOverViewStatictisMonth, IOverViewStatictisQuarter, IOverViewStatictisYear, IStatictisSellerDay, IStatictisUserDay } from "../../common/statistic.interface";
 import StatisticAPI from "../../api/statistic/statistic.api";
+import { QUERY_PARAM } from "../../constants/get-api.constants";
 
 type MessageLogin = {
     content: string;
@@ -1163,6 +1164,37 @@ const sketchSlice = createSlice({
             });
             
         },
+
+        editSketchRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+            
+        },
+
+        editSketchSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            // state.checkWhetherSketchUploaded += 1;
+            // if (state.checkWhetherSketchUploaded % 2 === 0) {
+            // Cu chia het cho 2 thi la up file thanh cong
+            notification.open({
+                message: "Thành công",
+                description: "Cập nhật bản vẽ thành công",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+            // }
+        },
+
+        editSketchFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            notification.open({
+                message: "Thất bại",
+                description: "Tải bản vẽ lên thất bại",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+        },
     },
 });
 
@@ -2132,6 +2164,29 @@ const getSellerProfile$: RootEpic = (action$) =>
             );
         })
     );
+
+const editSketch$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(editSketchRequest.match),
+        mergeMap((re) => {
+            const bodyrequest = {
+                size: QUERY_PARAM.size,
+                offset: 0
+            }
+
+            return SketchsApi.deleteSketchOfArchitect(re.payload).pipe(
+                mergeMap((res: any) => {
+                    console.log(re.payload)
+                    return [
+                        sketchSlice.actions.editSketchSuccess(res.data),
+                        sketchSlice.actions.getSketchByArchitectRequest(bodyrequest)
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.editSketchFail(err)])
+            );
+        })
+    );
+
 export const SketchEpics = [
     // uploadSketch$,
     getHomeListSketch$,
@@ -2240,7 +2295,8 @@ export const {
     getLstBankRequest,
     getAccountBankNameRequest,
     getPurchasedSketchsRequest,
-    getSellerProfileRequest
+    getSellerProfileRequest,
+    editSketchRequest,
 
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;

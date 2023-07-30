@@ -1,3 +1,4 @@
+import { RcFile } from "antd/lib/upload";
 import { IArchitecture, IStyle, ITool } from "./tool.interface";
 
 export interface IReqGetLatestSketchs {
@@ -99,3 +100,16 @@ export interface ISellerStatisticSketch {
     totalProduct: number;
     totalHiddenProduct: number;
 }
+
+export interface IUploadSketchRequest{
+    title?: string,
+    imageUploadLst?: RcFile,
+    fileUploadLst?: RcFile,
+    size?: string,
+    price?: string,
+    content?: string,
+    productDesignStyles?: string, // Set default value
+    productDesignTools?: string,
+    productTypeOfArchitecture?: string,
+    note: string
+};

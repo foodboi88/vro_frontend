@@ -212,6 +212,19 @@ export default class SketchsApi {
         );
     }
 
+    // Sửa sản phẩm của KTS <===== sửa ở đây nhé 
+    static editSketchOfArchitect(bodyrequest: any): Observable<any> {
+        const queryParam = Utils.parseObjectToQueryParameter(bodyrequest);
+
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.DELETE_PRODUCT}${queryParam}`;
+        return HttpClient.put(api,bodyrequest).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
+
     // Thống kê sản phẩm của KTS
     static getSketchStatistic(): Observable<any> {
 
