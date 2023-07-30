@@ -7,6 +7,7 @@ import is from 'date-fns/esm/locale/is'
 import { useDispatchRoot, useSelectorRoot } from '../../redux/store'
 import { getOverviewStatisticDayRequest, getOverviewStatisticMonthRequest, getOverviewStatisticQuarterRequest, getOverviewStatisticSellerDayRequest, getOverviewStatisticUserDayRequest, getOverviewStatisticYearRequest, setViewStatistic } from '../../redux/controller'
 import { IStatictisSellerDay, IStatictisUserDay } from '../../common/statistic.interface'
+import moment from 'moment'
 const { RangePicker } = DatePicker;
 
 const Statistical = () => {
@@ -21,6 +22,15 @@ const Statistical = () => {
     const [dataSellerChart, setDataSellerChart] = useState<IStatictisSellerDay>() // Biến lưu trữ dữ liệu thống kê
     const [startDateUser, setStartDateUser] = useState<string>('') // Biến lưu trữ ngày bắt đầu thống kê
     const [endDateUser, setEndDateUser] = useState<string>('') // Biến lưu trữ ngày kết thúc thống kê
+
+    useEffect(() => {
+        switch (typeViewStatistic) {
+            case 'day':
+                setStartDate(moment().subtract(7, 'days').format('YYYY-MM-DD'))
+                setEndDate(moment().format('YYYY-MM-DD'))
+        }
+    }, [typeViewStatistic])
+
     useEffect(() => {
         if (startDateUser && endDateUser) {
             if (isDateRangeValid4Day(startDateUser, endDateUser)) {
@@ -201,7 +211,9 @@ const Statistical = () => {
                         </div>
                         <div className='picker'>
                             {typeViewStatistic === 'day' &&
-                                <RangePicker placeholder={['Ngày bắt đầu', 'Ngày kết thúc']} onChange={handleChangeDate} />
+                                <RangePicker placeholder={['Ngày bắt đầu', 'Ngày kết thúc']} onChange={handleChangeDate}
+                                    defaultValue={[moment().subtract(7, 'days'), moment()]}
+                                />
                             }
 
                             {typeViewStatistic === 'month' &&

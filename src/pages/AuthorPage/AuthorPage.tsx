@@ -13,6 +13,8 @@ import {
     getSketchListByAuthorIdRequest,
 } from "../../redux/controller";
 import CProductCard from "../../components/ProductCard/CProductCard";
+import CPagination from "../../components/Pagination/CPagination";
+import { IFilteredSketch } from "../../common/sketch.interface";
 
 const items: MenuProps["items"] = [
     {
@@ -48,6 +50,10 @@ const AuthorPage = () => {
     ); // Lấy ra dữ liệu detail sketch và danh sách comment từ redux
     const dispatch = useDispatchRoot();
     const { authorId } = useParams();
+
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [pageSize, setPageSize] = useState<number>(12);
+    const [newfilteredSketchs, setNewFilteredSketchs] = useState<IFilteredSketch[]>();
     useEffect(() => {
         document.body.scrollTo({
             top: 0,
@@ -70,9 +76,23 @@ const AuthorPage = () => {
     const goToDetailPageHandle = (id: string) => {
         navigate(`/detail-sketch/${id}`);
     };
+
+    const onChangePage = (page: number) => {
+        setCurrentPage(page);
+    }
+
+    useEffect(() => {
+        if (!filteredSketchs) return;
+        const startIndex = (currentPage - 1) * pageSize;
+        const endIndex = startIndex + pageSize;
+        const currentItems = filteredSketchs?.slice(startIndex, endIndex);
+        setNewFilteredSketchs(currentItems);
+    }, [currentPage, filteredSketchs]);
     return (
         <div className="main-author-page">
-            <CFilter />
+            <CFilter
+
+            />
             <div className="page-content">
                 {authorIntroduction && (
                     <CAuthorIntroduction
@@ -95,8 +115,8 @@ const AuthorPage = () => {
                 <CArrangeBar />
                 <div className="sketch-list">
                     <Row className="detail-list" gutter={[16, 24]}>
-                        {filteredSketchs &&
-                            filteredSketchs.map((card) => (
+                        {newfilteredSketchs &&
+                            newfilteredSketchs.map((card) => (
                                 <Col
                                     onClick={() => {
                                         goToDetailPageHandle(card.id);
@@ -116,6 +136,11 @@ const AuthorPage = () => {
                             ))}
                     </Row>
                 </div>
+                <CPagination
+                    total={filteredSketchs?.length}
+                    currentPage={currentPage}
+                    onChange={onChangePage}
+                />
             </div>
         </div>
     );

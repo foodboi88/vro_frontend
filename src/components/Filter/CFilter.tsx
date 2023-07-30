@@ -16,7 +16,9 @@ import {
 } from "../../redux/controller";
 import { IReqGetAllTools } from "../../common/tool.interface";
 
-interface props {}
+interface props {
+
+}
 
 const optionsTools = [
     { label: "Autocad", value: "Autocad" },
@@ -70,9 +72,9 @@ const CFilter = (props: props) => {
             // tool: param.target === "tool" ? param.value : selectedTool,
             architecture:
                 // param.target === "architecture"
-                    // ? 
-                    param.value,
-                    // : selectedArchitecture,
+                // ? 
+                param.value,
+            // : selectedArchitecture,
             // style: param.target === "style" ? param.value : selectedStyle,
             name: currentSearchValue.name, // Lay ra gia tri text luu trong redux
         };
@@ -82,6 +84,8 @@ const CFilter = (props: props) => {
         //     setSelectedArchitecture(param.value);
         // if (param.target === "style") setSelectedStyle(param.value);
         // console.log(bodyrequest);
+
+        console.log(bodyrequest);
 
         dispatch(advancedSearchingRequest(bodyrequest));
     };

@@ -53,6 +53,15 @@ const PurchasedSketchs = () => {
             )
         },
         {
+            title: 'Loại bản vẽ',
+            key: 'product',
+            render: (_, record) => (
+                <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+                    {record?.product?.typeOfArchitecturesName}
+                </div>
+            )
+        },
+        {
             title: 'Giá',
             dataIndex: 'price',
             key: 'price',

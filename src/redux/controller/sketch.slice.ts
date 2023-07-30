@@ -404,7 +404,6 @@ const sketchSlice = createSlice({
             state,
             action: PayloadAction<ICurrentSearchValue>
         ) {
-
             state.currentSearchValue = {
                 // Xu ly de lay duoc ca gia tri cua o input cua header va cac o selectbox cua filter. Neu co
                 // truong nao khong co gia tri thi lay gia tri hien tai duoc luu trong redux
@@ -424,8 +423,10 @@ const sketchSlice = createSlice({
         },
 
         advancedSearchingSuccess(state, action: PayloadAction<any>) {
+            console.log(action.payload.data[0].items.length);
+
             state.loading = false;
-            state.filteredSketchs = action.payload.data.items;
+            state.filteredSketchs = action.payload?.data[0]?.items;
         },
 
         advancedSearchingFail(state, action: PayloadAction<any>) {
@@ -1457,7 +1458,7 @@ const advancedSearchSketch$: RootEpic = (action$) =>
             // IdentityApi.login(re.payload) ?
             console.log(re);
             const bodyrequest: ICurrentSearchValue = {
-                size: 40,
+                size: 1000,
                 offset: 0,
                 name: re.payload.name ? re.payload.name : "",
                 tool: re.payload.tool ? re.payload.tool : "",
