@@ -88,4 +88,14 @@ export default class UserApi {
         );
     }
 
+    static changePassword(body: any): Observable<any> {
+        const api = `${UserApi.apiURL.HOST}/${this.apiURL.CHANGE_PASSWORD}`;
+        return HttpClient.put(api, body).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
+
 }

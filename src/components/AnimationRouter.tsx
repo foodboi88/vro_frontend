@@ -21,6 +21,7 @@ import ProfileResume from "../pages/Profile/profile-resume/ProfileResume";
 import ProfileBecomeSeller from "../pages/Profile/profile-become-seller/ProfileBecomeSeller";
 import PurchasedSketchs from "../pages/purchased-sketchs/purchased-sketchs";
 import ActiveAccount from "../pages/ActiveAccount/ActiveAccount";
+import ChangePassword from "./ChangePassword/ChangePassword";
 
 // Dùng để set animation cho các router với nhau
 const AnimationRouter = () => {
@@ -40,7 +41,8 @@ const AnimationRouter = () => {
                         <Route path="/seller/management-sketch" element={<SellerSketchs />}></Route>
                         <Route path="/seller/purchased-sketchs" element={<PurchasedSketchs />}></Route>
                         <Route path="/seller/cart" element={<Cart />}></Route>
-
+                        <Route path="/seller/profile" element={<ProfileResume />}></Route>
+                        <Route path="/seller/change-password" element={<ChangePassword />}></Route>
                     </Route>
                 </Route>
 
@@ -53,8 +55,7 @@ const AnimationRouter = () => {
                         <Route path="/buyer/become-seller" element={<ProfileBecomeSeller />}></Route>
                         <Route path="/buyer/purchased-sketchs" element={<PurchasedSketchs />}></Route>
                         <Route path="/buyer/cart" element={<Cart />}></Route>
-
-
+                        <Route path="/buyer/change-password" element={<ChangePassword />}></Route>
                     </Route>
                 </Route>
 

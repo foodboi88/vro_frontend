@@ -13,7 +13,7 @@ const Profile = () => {
         if (window.location.pathname === "/buyer/become-seller") setActive(3);
         if (window.location.pathname === "/buyer/purchased-sketchs") setActive(5);
         if (window.location.pathname === "/buyer/cart") setActive(8);
-
+        if (window.location.pathname === "/buyer/change-password") setActive(4);
 
     }, []);
 
@@ -54,7 +54,13 @@ const Profile = () => {
                     <AiOutlineQuestionCircle className='profile-navbar-item-icon' />
                     <span className='profile-navbar-item-text'>Hỗ trợ</span>
                 </div>
-                <div className={'profile-navbar-item' + (active === 4 ? ' active' : '')} onClick={() => setActive(4)}>
+                <div className={'profile-navbar-item' + (active === 4 ? ' active' : '')}
+                    onClick={() => {
+                        setActive(4)
+                        navigate('/buyer/change-password')
+                    }}
+
+                >
                     <AiOutlineLock className='profile-navbar-item-icon' />
                     <span className='profile-navbar-item-text'>Thay đổi mật khẩu</span>
                 </div>

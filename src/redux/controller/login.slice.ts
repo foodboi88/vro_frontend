@@ -8,6 +8,7 @@ import { catchError, filter, map, mergeMap, switchMap } from "rxjs/operators";
 import { RootEpic } from "../../common/define-type";
 import Utils from "../../common/utils";
 import IdentityApi from "../../api/identity/identity.api";
+import UserApi from "../../api/user/user.api";
 
 type MessageLogin = {
     content: string;
@@ -298,6 +299,36 @@ const loginSlice = createSlice({
             state.loading = false;
             state.registerSuccess = false;
         },
+
+        changePasswordRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        changePasswordSuccess(state, action: PayloadAction<any>) {
+            console.log(action.payload);
+            state.loading = false;
+
+            notification.open({
+                message: 'Đổi mật khẩu thành công!',
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+        },
+
+        changePasswordFail(state, action: PayloadAction<any>) {
+            console.log(action);
+
+            notification.open({
+                message: action.payload.response?.message ? action.payload.response?.message : "Đổi mật khẩu không thành công!",
+                // description:
+                //     action.payload.response.message,
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+            state.loading = false;
+        }
     },
 });
 
@@ -430,6 +461,24 @@ const checkActiveAccount$: RootEpic = (action$) => action$.pipe(
         )
     })
 )
+
+const changePassword$: RootEpic = (action$) => action$.pipe(
+    filter(changePasswordRequest.match),
+    switchMap((re) => {
+        console.log(re.payload);
+        return UserApi.changePassword(re.payload).pipe(
+            mergeMap((res: any) => {
+                console.log(res);
+                return [
+                    loginSlice.actions.changePasswordSuccess(res),
+                ];
+            }),
+            catchError(err =>
+                [loginSlice.actions.changePasswordFail(err)]
+            )
+        )
+    })
+)
 export const LoginEpics = [
     login$,
     clearMessage$,
@@ -437,6 +486,7 @@ export const LoginEpics = [
     register$,
     getUserInfo$,
     checkActiveAccount$,
+    changePassword$,
 ];
 export const {
     getUserInfoRequest,
@@ -448,5 +498,6 @@ export const {
     registerRequest,
     checkAbleToLogin,
     checkActiveAccountRequest,
+    changePasswordRequest,
 } = loginSlice.actions;
 export const loginReducer = loginSlice.reducer;

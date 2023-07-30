@@ -17,6 +17,8 @@ export enum API_URL {
     REGISTER = "users/register",
     REFRESH_TOKEN = "users/refreshtoken",
     GET_USER_INFO = "users/profile",
+    CHANGE_PASSWORD = "users/changepassword",
+
     GET_SELLER_INFO = "sellers/profile",
     GET_RATES_BY_SKETCH_ID = "rates/by-id-product",
     GET_PRODUCT_FILE_BY_ID = "product-files/by-id-product",
@@ -53,5 +55,6 @@ export enum API_URL {
     GET_BANKS = "https://api.vietqr.io/v2/banks",
     GET_ACCOUNT_BANK_NAME = "https://api.vietqr.io/v2/lookup",
     GET_PURCHASED_SKETCHS = "orders/product-purchased-product/all-role"
+
 }
 

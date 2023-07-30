@@ -28,6 +28,8 @@ const SellerLayout = () => {
 		if (window.location.pathname === "/seller/withdraw") setActive(7);
 		if (window.location.pathname === "/seller/purchased-sketchs") setActive(8);
 		if (window.location.pathname === "/seller/cart") setActive(9);
+		if (window.location.pathname === "/seller/profile") setActive(10);
+		if (window.location.pathname === "/seller/change-password") setActive(13);
 	}, []);
 
 
@@ -41,6 +43,14 @@ const SellerLayout = () => {
 					}}>
 						<BiGridAlt className='profile-navbar-item-icon' />
 						<span className='profile-navbar-item-text'>Tổng quan</span>
+					</div>
+					<div className={'profile-navbar-item' + (active === 10 ? ' active' : '')} onClick={() => {
+						setActive(10)
+						navigate('/seller/profile')
+					}
+					}>
+						<BiGridAlt className='profile-navbar-item-icon' />
+						<span className='profile-navbar-item-text'>Hồ sơ cá nhân</span>
 					</div>
 					<div className={'profile-navbar-item' + (active === 9 ? ' active' : '')} onClick={() => {
 						setActive(9)
@@ -94,7 +104,29 @@ const SellerLayout = () => {
 						<BiPurchaseTagAlt className='profile-navbar-item-icon' />
 						<span className='profile-navbar-item-text'>Sản phẩm đã mua</span>
 					</div>
-
+					<div className={'profile-navbar-item' + (active === 11 ? ' active' : '')}
+						onClick={() => setActive(11)}
+					>
+						<AiOutlineGift className='profile-navbar-item-icon' />
+						<span className='profile-navbar-item-text'>Kho Voucher</span>
+					</div>
+					<div className={'profile-navbar-item' + (active === 12 ? ' active' : '')} onClick={() => setActive(12)}>
+						<AiOutlineQuestionCircle className='profile-navbar-item-icon' />
+						<span className='profile-navbar-item-text'>Hỗ trợ</span>
+					</div>
+					<div className={'profile-navbar-item' + (active === 13 ? ' active' : '')}
+						onClick={() => {
+							setActive(13)
+							navigate('/seller/change-password')
+						}}
+					>
+						<AiOutlineLock className='profile-navbar-item-icon' />
+						<span className='profile-navbar-item-text'>Thay đổi mật khẩu</span>
+					</div>
+					<div className={'profile-navbar-item' + (active === 14 ? ' active' : '')} onClick={() => setActive(14)}>
+						<AiOutlineSetting className='profile-navbar-item-icon' />
+						<span className='profile-navbar-item-text'>Cài đặt chung</span>
+					</div>
 				</div>
 				<div className='profile-content'>
 					<Outlet />
