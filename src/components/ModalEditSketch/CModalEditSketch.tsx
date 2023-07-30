@@ -1,12 +1,8 @@
-import { PlusOutlined, ProfileOutlined, PictureOutlined } from "@ant-design/icons";
 import { SelectProps, UploadFile, UploadProps, Steps, Form, Input, Checkbox, Radio, Button, Upload, Modal } from "antd";
 import { CheckboxValueType } from "antd/lib/checkbox/Group";
 import TextArea from "antd/lib/input/TextArea";
-import { RadioChangeEventTarget } from "antd/lib/radio";
 import { RcFile } from "antd/lib/upload";
-import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { TEXT_INPUT, TEXT_FIELD } from "../../enum/common.enum";
 import { editSketchRequest, getAllFilterCriteriasRequest, uploadSketchRequest } from "../../redux/controller";
 import { useSelectorRoot, useDispatchRoot } from "../../redux/store";
@@ -20,6 +16,9 @@ interface MyProps{
     setOpenModalEdit: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
+type LayoutType = Parameters<typeof Form>[0]['layout'];
+
+
 const CModalEditSketch = (props: MyProps) => {
     const [searchType, setSearchType] = useState(""); // Biến lưu giá trị tìm kiếm loại bản vẽ
     const [selectTitle, setSelectTitle] = useState(props.data? props.data.title : ''); // Biến lưu giá trị tiêu đề bản vẽ
@@ -31,10 +30,17 @@ const CModalEditSketch = (props: MyProps) => {
     const [selectCategory, setSelectCategory] = useState(
         [props.data? props.data.productTypeOfArchitecture  : '']
     ); // Biến lưu giá trị danh mục bản vẽ
+    const [formLayout, setFormLayout] = useState<LayoutType>('horizontal');
+
 
     const { checkProductsFile, toolList, architectureList, styleList } = useSelectorRoot((state) => state.sketch); // Lst cac ban ve        
     const dispatch = useDispatchRoot();
 
+    const [form] = Form.useForm();
+
+
+
+    const formItemLayout = formLayout === 'horizontal' ? { labelCol: { span: 6 }, wrapperCol: { span: 18 } } : null;
 
 
 
@@ -61,17 +67,8 @@ const CModalEditSketch = (props: MyProps) => {
 
 
     const handleUploadSketch = () => {
-        const bodyrequest = {
-            title: selectTitle,
-            size: "40m*40m",
-            price: selectPrice,
-            content: note,
-            productDesignStyles: "64230fdaedf9dd11e488c249", // Set default value
-            productDesignTools: selectTool,
-            productTypeOfArchitecture: selectCategory,
-        };
+        
 
-        console.log(bodyrequest);
 
         
 
@@ -80,7 +77,8 @@ const CModalEditSketch = (props: MyProps) => {
         //     fileUploadLst: fileUploadLst,
         //     id: "6423f410c55e590e7080e5fa",
         // };
-
+        console.log(form.getFieldsValue())
+        const bodyrequest = {...form.getFieldsValue(),id: props?.data?.id}
         dispatch(editSketchRequest(bodyrequest));
 
         props.setOpenModalEdit(false)
@@ -100,114 +98,81 @@ const CModalEditSketch = (props: MyProps) => {
                 props.setOpenModalEdit(false)
             }}
             cancelText={'Hủy'}
+            title="Chỉnh sửa bản vẽ"
         >
             <div className="main-upload">
                 <div className="upload-area">
                     
-                    <Form className="form">
-                        <div className="sketch-content-area">
-                            <div className="content-area">
-                                <div className="sketch-content">
-                                    <div className="title">Chỉnh sửa thông tin bản vẽ</div>
-                                    <div className="description">
-                                        Vui lòng nhập để sửa các thông tin chung
-                                    </div>
+                    <Form 
+                        initialValues={props.data}
+                        form={form} 
+                        className="form"
+                        {...formItemLayout}
+                        layout={formLayout}
+                        style={{ maxWidth: formLayout === 'inline' ? 'none' : 600 }}
 
-                                    <Form.Item>
-                                        <div className="title-input">
-                                            Tiêu đề <strong>*</strong>
-                                        </div>
-                                        <div className={`header-content-input`}>
-                                            <Input
-                                                className="search-input"
-                                                placeholder="Nhập tiêu đề"
-                                                onChange={(e) =>
-                                                    setSelectTitle(
-                                                        e.target.value
-                                                    )
-                                                }
-                                                maxLength={TEXT_INPUT.MAX_LENGTH}
-                                            />
-                                        </div>
-                                    </Form.Item>
-                                    
-                                    <Form.Item>
-                                        <div className="title-input">
-                                            Công cụ <strong>*</strong>
-                                        </div>
-                                        <div className="tool-list">
-                                            <Checkbox.Group
-                                                className="lst-tool"
-                                                options={toolList}
-                                                onChange={(e) =>
-                                                    setSelectTool(e)
-                                                }
-                                            />
-                                        </div>
-                                    </Form.Item>
+                    >
+                        <Form.Item
+                            label="Tiêu đề"
+                            name="title"
+                        >
+                                <Input
+                                    className="search-input"
+                                    placeholder="Nhập tiêu đề"
 
-                                    <Form.Item>
-                                        <div className="title-input">
-                                            Kiến trúc <strong>*</strong>
-                                        </div>
-                                        <div className="tool-list">
-                                            <Radio.Group
-                                                className="lst-category"
-                                                options={architectureList}
-                                                onChange={(e) =>
-                                                    
-                                                    {
-                                                        const selectValue =[e.target.value]
-                                                        setSelectCategory(selectValue)
+                                    maxLength={TEXT_INPUT.MAX_LENGTH}
+                                />
+                        </Form.Item>
+                        
+                        <Form.Item
+                            label="Công cụ"
+                            name="productDesignTools"
+                        >
+                            <Radio.Group
+                                className="lst-tool"
+                                options={toolList}
+                
+                            />
+                        </Form.Item>
 
-                                                    }
-                                                }
-                                            />
-                                        </div>
-                                    </Form.Item>
-                                    
-                                    <Form.Item>
-                                        <div className="title-input">
-                                            Phí download (VNĐ){" "}
-                                            <strong>*</strong>
-                                        </div>
-                                        <div className={`header-content-input`}>
-                                            <Input
-                                                type="number"
-                                                className="search-input"
-                                                placeholder="Nhập phí download"
-                                                min={0}
-                                                onChange={(e) =>
-                                                    setSelectPrice(e.target.value)
-                                                }
-                                                maxLength={TEXT_INPUT.MAX_LENGTH}
+                        <Form.Item
+                            label="Kiến trúc"
+                            name="productTypeOfArchitecture"
+                        >
+                            <Radio.Group
+                                className="lst-category"
+                                options={architectureList}
+                       
+                            />
+                        </Form.Item>
+                        
+                        <Form.Item
+                        label="Giá"
+                            name="price"
+                        >
 
-                                            />
-                                        </div>
-                                    </Form.Item>
+                            <Input
+                                type="number"
+                                className="search-input"
+                                placeholder="Nhập phí download"
+                                min={0}
+                                maxLength={TEXT_INPUT.MAX_LENGTH}
 
-                                    <Form.Item>
-                                        <div className="title-input">
-                                            Mô tả chi tiết <strong>*</strong>
-                                        </div>
-                                        <div className={`header-content-input`}>
-                                            <TextArea
-                                                rows={4}
-                                                placeholder="Nhập mô tả"
-                                                onChange={(e) =>
-                                                    setNote(e.target.value)
-                                                }
-                                                maxLength={TEXT_FIELD.MAX_LENGTH}
+                            />
+                        </Form.Item>
 
-                                            />
-                                        </div>
-                                    </Form.Item>
+                        <Form.Item
+                        label="Mô tả chi tiết"
+                            name="content"
+                        >
+                            <TextArea
+                                rows={4}
+                                placeholder="Nhập mô tả"
+                               
+                                maxLength={TEXT_FIELD.MAX_LENGTH}
 
-                                </div>
-                                
-                            </div>
-                            
-                        </div>
+                            />
+                        </Form.Item>
                     </Form>
                 </div>
             </div>

@@ -8,7 +8,7 @@ import { IGetWithdrawRequest } from '../../../common/user.interface';
 import Utils from '../../../common/utils';
 import CTable from '../../../components/CTable/CTable';
 import { QUERY_PARAM } from '../../../constants/get-api.constants';
-import { IFilteredSketch, ISketch } from '../../../common/sketch.interface';
+import { IFilteredSketch, ISketch, IUploadSketchRequest } from '../../../common/sketch.interface';
 import TotalBox from '../../../components/TotalBox/TotalBox';
 import SketchCancel from '../../../images/seller-product/document-cancel.png'
 import Sketch from '../../../images/seller-product/document-text.png'
@@ -89,7 +89,7 @@ const SellerSketchs = () => {
             )
         },
         {
-            title: 'Lượng bán được',
+            title: 'Kiến trúc',
             dataIndex: 'typeOfArchitecture',
             key: 'typeOfArchitecture',
 
@@ -147,7 +147,16 @@ const SellerSketchs = () => {
 
     const handleOpenEdit = (record: any) => {
         setOpenModalEdit(true);
-        setEditSketch(record);
+        console.log(record)
+        const selectedSketch: IUploadSketchRequest =  {
+            title: record.title,
+            price: record.price,
+            content: record.content,
+            productDesignTools: record.designTools[0].id,
+            productTypeOfArchitecture: record.typeOfArchitecture.id,
+            id: record.id
+        };
+        setEditSketch(selectedSketch);
     }
 
     const handleDelete = () => {

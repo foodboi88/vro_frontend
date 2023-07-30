@@ -1191,7 +1191,7 @@ const sketchSlice = createSlice({
             state.loading = false;
             notification.open({
                 message: "Thất bại",
-                description: "Tải bản vẽ lên thất bại",
+                description: "Cập nhật bản vẽ thất bại",
                 onClick: () => {
                     console.log("Notification Clicked!");
                 },
@@ -2174,7 +2174,7 @@ const editSketch$: RootEpic = (action$) =>
                 offset: 0
             }
 
-            return SketchsApi.deleteSketchOfArchitect(re.payload).pipe(
+            return SketchsApi.editSketchOfArchitect(re.payload).pipe(
                 mergeMap((res: any) => {
                     console.log(re.payload)
                     return [
@@ -2240,7 +2240,8 @@ export const SketchEpics = [
     getLstBank$,
     getAccountBankName$,
     getPurchasedSketchs$,
-    getSellerProfile$
+    getSellerProfile$,
+    editSketch$
 ];
 export const {
     getLatestSketchRequest,

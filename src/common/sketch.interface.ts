@@ -111,5 +111,6 @@ export interface IUploadSketchRequest{
     productDesignStyles?: string, // Set default value
     productDesignTools?: string,
     productTypeOfArchitecture?: string,
-    note: string
+    note?: string
+    id?: string
 };
