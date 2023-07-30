@@ -12,6 +12,7 @@ import { API_URL } from "../../enum/api.enum";
 import {
     ICurrentSearchValue,
     IReqGetLatestSketchs,
+    IUploadSketchRequest,
 } from "../../common/sketch.interface";
 import axios from "axios";
 import Utils from "../../common/utils";
@@ -205,6 +206,28 @@ export default class SketchsApi {
 
         const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.DELETE_PRODUCT}${queryParam}`;
         return HttpClient.delete(api).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
+
+    // Sửa sản phẩm của KTS <===== sửa ở đây nhé 
+    static editSketchOfArchitect(bodyrequest: IUploadSketchRequest): Observable<any> {
+        const finalBodyrequest = {
+            title: bodyrequest.title,
+            content: bodyrequest.content,
+            price: bodyrequest.price,
+            productDesignTools: [
+              bodyrequest.productDesignTools
+            ],
+            productTypeOfArchitecture: [
+              bodyrequest.productTypeOfArchitecture
+            ],
+          }
+        const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.EDIT_PRODUCT}/${bodyrequest.id}`;
+        return HttpClient.put(api,finalBodyrequest).pipe(
             map(
                 (res) => (res as any) || null,
                 catchError((error) => new Observable())

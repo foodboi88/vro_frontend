@@ -65,14 +65,17 @@ const SellerWithdraw = () => {
     },
     {
       title: 'Tình trạng xử lý',
-      dataIndex: 'isProcessed',
-      key: 'isProcessed',
+      dataIndex: 'status',
+      key: 'status',
       render: (_, record) => {
-        if (record.isProcessed) {
+        if (record.status === "APPROVED") {
           return (<span>Đã chuyển</span>)
         }
+        else if(record.status === "REJECTED") {
+          return (<span>Từ chối</span>)
+        }
         else {
-          return (<span>Chưa chuyển</span>)
+          return (<span>Đang xử lý</span>)
         }
       }
     },
