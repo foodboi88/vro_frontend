@@ -161,15 +161,19 @@ export const CHeader = (props: MyProps) => {
 
     // Hàm chuyển đổi trạng thái đóng mở modal login
     const toggleLoginModal = () => {
-        setIsOpenLoginModal(false);
-        setIsOpenRegisterModal(false);
+        setIsOpenLoginModal(!isOpenLoginModal);
+        setIsOpenRegisterModal(!isOpenRegisterModal);
     };
     // Hàm chuyển đổi trạng thái đóng mở modal registration
     const toggleRegisterModal = () => {
-        setIsOpenLoginModal(false);
+        setIsOpenLoginModal(!isOpenLoginModal);
         setIsOpenRegisterModal(!isOpenRegisterModal);
     };
 
+    const handleCancelModal = () => {
+        setIsOpenLoginModal(false);
+        setIsOpenRegisterModal(false);
+    }
     const handleSearching = (event: any) => {
         console.log(event);
         const bodyrequest: ICurrentSearchValue = {
@@ -190,14 +194,14 @@ export const CHeader = (props: MyProps) => {
     };
     const handleClickCart = () => {
         dispatch(getAllSketchInCartRequest());
-        if(userRole === 'seller'){
+        if (userRole === 'seller') {
 
             navigate("/seller/cart");
-        } else if(userRole === 'user'){
+        } else if (userRole === 'user') {
             navigate("/buyer/cart");
 
         }
-        else{
+        else {
             navigate("/");
 
         }
@@ -277,12 +281,12 @@ export const CHeader = (props: MyProps) => {
                                     </Button>
                                 </motion.div> */}
                                 <div className="icon-group">
-                                    <Badge count={10} size="default">
+                                    {/* <Badge count={10} size="default">
                                         <BellOutlined />
                                     </Badge>
                                     <Badge count={10} size="default">
                                         <MessageOutlined />
-                                    </Badge>
+                                    </Badge> */}
                                     <Badge
                                         count={sketchsQuantityInCart}
                                         size="default"
@@ -316,11 +320,13 @@ export const CHeader = (props: MyProps) => {
                             isOpenModal={isOpenLoginModal}
                             toggleLoginModal={toggleLoginModal}
                             toggleRegisterModal={toggleRegisterModal}
+                            handleCancelModal={handleCancelModal}
                         />
                         <Register
                             isOpenModal={isOpenRegisterModal}
                             toggleLoginModal={toggleLoginModal}
                             toggleRegisterModal={toggleRegisterModal}
+                            handleCancelModal={handleCancelModal}
                         />
                     </div>
                     <>

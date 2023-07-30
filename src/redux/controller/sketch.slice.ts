@@ -115,6 +115,8 @@ interface SketchState {
     totalPurchasedSketch: number;
     sellerInformation: ISellerProfile | undefined
 
+
+
 }
 
 const initState: SketchState = {
@@ -209,7 +211,7 @@ const sketchSlice = createSlice({
 
 
 
-        
+
 
         getLatestSketchRequest(state, action: PayloadAction<any>) {
             state.loading = true;
@@ -302,7 +304,7 @@ const sketchSlice = createSlice({
 
         getMostViewdSketchsFail(state, action: PayloadAction<any>) {
             state.loading = false;
-            
+
         },
 
         getAllToolsRequest(state, action: PayloadAction<any>) {
@@ -321,7 +323,7 @@ const sketchSlice = createSlice({
             console.log(state.toolList);
             console.log("Da chui vao voi action: ", action);
         },
-        
+
 
         getAllStylesRequest(state, action: PayloadAction<any>) {
             console.log("Da chui vao voi action: ", action);
@@ -372,7 +374,7 @@ const sketchSlice = createSlice({
         },
 
         getDetailSketchFail(state, action: PayloadAction<any>) {
-           
+
         },
 
         getCommentBySketchIdRequest(state, action: PayloadAction<any>) {
@@ -604,7 +606,7 @@ const sketchSlice = createSlice({
         purchaseWithVNPayFail(state, action: PayloadAction<any>) {
             state.loading = false;
 
-         },
+        },
 
         // Get Author intro
         getAuthorIntroductionByIdRequest(state, action: PayloadAction<string>) {
@@ -1125,9 +1127,11 @@ const sketchSlice = createSlice({
 
         getPurchasedSketchsFail(state, action: PayloadAction<any>) {
             state.loading = false;
+
             if (action.payload.status === 400 || action.payload.status === 404) {
-                notification.open({
-                    message: action.payload.response.message,
+                notification.error({
+                    message: 'Lỗi tải dữ liệu',
+                    description: action.payload.response.message,
                     onClick: () => {
                         console.log("Notification Clicked!");
                     },
@@ -1144,14 +1148,12 @@ const sketchSlice = createSlice({
             state.loading = false;
 
             Utils.setLocalStorage("sellerProfile", action.payload);
-            
+
             state.sellerInformation = action.payload
-            
+
         },
         getSellerProfileFail(state, action: any) {
-            
             state.loading = false;
-
             notification.open({
                 message: "Lỗi",
                 description: "Không tìm thấy thông tin người kiến trúc sư/ công ty",
@@ -1162,7 +1164,7 @@ const sketchSlice = createSlice({
                     paddingTop: 40,
                 },
             });
-            
+
         },
 
         editSketchRequest(state, action: PayloadAction<any>) {
@@ -2132,10 +2134,10 @@ const getAccountBankName$: RootEpic = (action$) =>
 const getPurchasedSketchs$: RootEpic = (action$) =>
     action$.pipe(
         filter(getPurchasedSketchsRequest.match),
-        mergeMap((re) => {
+        switchMap((re) => {
             console.log(re);
             return SketchsApi.getPurchasedSketchs(re.payload).pipe(
-                mergeMap((res: any) => {
+                switchMap((res: any) => {
                     return [
                         sketchSlice.actions.getPurchasedSketchsSuccess(res.data),
                     ]
@@ -2149,13 +2151,11 @@ const getSellerProfile$: RootEpic = (action$) =>
     action$.pipe(
         filter(getSellerProfileRequest.match),
         mergeMap((re) => {
-            
+
 
             return IdentityApi.getSellerInformation().pipe(
                 mergeMap((res: any) => {
                     console.log(res);
-
-
                     return [
                         sketchSlice.actions.getSellerProfileSuccess(res.data)
                     ]
@@ -2215,7 +2215,7 @@ export const SketchEpics = [
     getRatesBySketchId$,
     getSketchListByAuthorId$,
     deleteSketchInCart$,
- 
+
     getBusinessByTaxCode$,
     sellerRegister$,
     getWithdrawRequests$,
@@ -2268,7 +2268,7 @@ export const {
     getAuthorIntroductionByIdRequest,
     getSketchListByAuthorIdRequest,
     deleteSketchInCartRequest,
-  
+
     getBusinessByTaxCodeRequest,
     sellerRegisterRequest,
     getWithdrawRequests,

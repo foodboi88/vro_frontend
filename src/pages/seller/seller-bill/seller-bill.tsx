@@ -46,18 +46,15 @@ const SellerBill = () => {
                 <span className='span-table'>{rowIndex + 1}</span>
             )
         },
-        // {
-        //     title: 'Tên sản phẩm',
-        //     key: 'product',
-        //     render: (_, record) => (
-        //         <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-        //             <img src={record.product?.image} alt="" width={50} />
-        //             <Tooltip title={record?.title}>
-        //                 <span className='span-title-table' >{record.product.title}</span>
-        //             </Tooltip>
-        //         </div>
-        //     )
-        // },
+        {
+            title: 'Mã đơn hàng',
+            key: 'orderId',
+            render: (_, record) => (
+                <div style={{ fontSize: 12, fontStyle: 'italic' }}>
+                    {record.orderId}
+                </div>
+            )
+        },
         {
             title: 'Tài khoản mua',
             dataIndex: 'userName',
@@ -73,16 +70,25 @@ const SellerBill = () => {
             )
         },
         {
+            title: 'Số lượng sản phẩm',
+            key: 'totalProduct',
+            render: (_, record) => (
+                <div style={{ textAlign: 'center' }}>
+                    {record.totalProduct}
+                </div>
+            )
+        },
+        {
             title: 'Giá (VNĐ)',
             key: 'totalPrice',
             render: (_, record) => (
-                <div>
+                <div style={{ display: 'flex', justifyContent: 'end' }}>
                     {Utils.formatMoney(record.totalPrice) + ' VND'}
                 </div>
             )
         },
         {
-            title: 'Action',
+            title: 'Thao tác',
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
@@ -138,9 +144,14 @@ const SellerBill = () => {
     }
 
     const onChangePagination = (event: any) => {
+        document.body.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
         currentSearchValue.offset = (event - 1) * QUERY_PARAM.size;
         setCurrentSearchValue(currentSearchValue);
         dispatch(getBillListRequests(currentSearchValue))
+
     }
 
 

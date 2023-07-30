@@ -6,6 +6,7 @@ import { getHotProductRequest } from '../../redux/controller'
 import { IHotProducts } from '../../common/user.interface'
 import { ColumnType } from 'antd/lib/table'
 import { Tooltip } from 'antd'
+import Utils from '../../common/utils'
 const StatisticalProduct = () => {
 
     const columns: ColumnType<any>[] = [
@@ -13,21 +14,38 @@ const StatisticalProduct = () => {
             title: 'Tên sản phẩm',
             dataIndex: 'title',
             key: 'title',
+            render: (_, record) => (
+                <div className='title-table'>
+                    <img src={record.image} alt="" width={50} />
+                    <Tooltip title={record.title}>
+                        <span className='span-title-table' >{record.title}</span>
+                    </Tooltip>
+                </div>
+            )
         },
         {
             title: 'Giá',
             dataIndex: 'price',
             key: 'price',
+            render: (_, record) => (
+                <span style={{ display: 'flex', justifyContent: 'end' }}>{Utils.formatMoney(record.price) + ' VND'}</span>
+            )
         },
         {
             title: 'Đã bán',
             dataIndex: 'quantityPurchased',
             key: 'quantityPurchased',
+            render: (_, record) => (
+                <span >{record.quantityPurchased}</span>
+            )
         },
         {
             title: 'Doanh thu',
             dataIndex: 'revenue',
             key: 'revenue',
+            render: (_, record) => (
+                <span style={{ display: 'flex', justifyContent: 'end' }}>{Utils.formatMoney(record.price) + ' VND'}</span>
+            )
         }
 
     ];
@@ -44,32 +62,6 @@ const StatisticalProduct = () => {
         dispatch(getHotProductRequest(req));
     }, [])
 
-    useEffect(() => {
-        setNumberProduct(hotProducts.length)
-        // setDataHotProducts(hotProducts)
-        if (hotProducts.length > 0) {
-            // Gán dữ liệu lấy được vào biến data
-            const data = hotProducts.map((item: IHotProducts, index: number) => {
-                // Chuyển đổi dữ liệu lấy được thành dạng dữ liệu của bảng
-                return {
-                    title:
-                        <div className='title-table'>
-                            <img src={item.image} alt="" width={50} />
-                            <Tooltip title={item.title}>
-                                <span className='span-title-table' >{item.title}</span>
-                            </Tooltip>
-                        </div>,
-                    price: item.price.toLocaleString().replace(/,/g, '.') + 'đ',
-                    quantityPurchased: item.quantityPurchased,
-                    revenue: item.revenue.toLocaleString().replace(/,/g, '.') + 'đ',
-
-                }
-            });
-            // Gán dữ liệu vào biến dataTagPigs
-            setDataHotProducts(data);
-        }
-    }, [hotProducts])
-
     const onChangeInput = (event: any) => {
         console.log(event.target.value)
     }
@@ -84,12 +76,16 @@ const StatisticalProduct = () => {
 
     const onChangePagination = (event: any) => {
         console.log(event)
+        document.body.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
     }
 
     return (
         <div className='main-static-product'>
             <div className="static-product-title">
-                Top {numberProduct} sản phẩm bán chạy
+                Top {hotProducts.length} sản phẩm bán chạy
             </div>
             <div className="static-product-content">
                 <CTable
@@ -99,7 +95,7 @@ const StatisticalProduct = () => {
                     onChangeInput={onChangeInput}
                     onChangeRangePicker={onChangeRangePicker}
                     onSearch={onSearch}
-                    data={dataHotProducts}
+                    data={hotProducts}
                     titleOfColumnList={columns}
                     totalRecord={hotProducts.length}
                     onChangePagination={onChangePagination}

@@ -52,12 +52,12 @@ const SellerSketchs = () => {
 
 
     const columns: ColumnType<any>[] = [
-      {
-        title: 'Số thứ tự',
-        render: (_, __, rowIndex) => (
-            <span className='span-table'>{rowIndex + 1}</span>
-        )
-    },
+        {
+            title: 'Số thứ tự',
+            render: (_, __, rowIndex) => (
+                <span className='span-table'>{rowIndex + 1}</span>
+            )
+        },
         {
             title: 'Tên',
             dataIndex: 'title',
@@ -69,7 +69,7 @@ const SellerSketchs = () => {
             dataIndex: 'price',
             key: 'price',
             render: (_, record) => (
-                <span style={{ whiteSpace: 'nowrap' }}>{Utils.formatMoney(record.price) + ' đ'}</span>
+                <span style={{ whiteSpace: 'nowrap', display: 'flex', justifyContent: 'end' }}>{Utils.formatMoney(record.price) + ' VND'}</span>
             )
         },
         {
@@ -113,7 +113,7 @@ const SellerSketchs = () => {
 
 
         {
-            title: 'Action',
+            title: 'Thao tác',
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
@@ -190,6 +190,10 @@ const SellerSketchs = () => {
     }
 
     const onChangePagination = (event: any) => {
+        document.body.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
         currentSearchValue.offset = (event - 1) * QUERY_PARAM.size;
         setCurrentSearchValue(currentSearchValue);
         dispatch(getSketchByArchitectRequest(currentSearchValue))

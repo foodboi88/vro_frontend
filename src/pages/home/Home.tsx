@@ -473,7 +473,7 @@ const Home = () => {
             />
             <div className="tool-of-web">
                 <div className="title">
-                    <div>Bản vẽ mới hôm nay</div>
+                    <div>Bản vẽ mới nhất</div>
                     <div className="sub-title">{"Xem thêm"}</div>
                 </div>
                 <div className="lst-tool">
@@ -578,6 +578,7 @@ const Home = () => {
                     </div>
                 }
             </div>
+
 
         </motion.div>
     );

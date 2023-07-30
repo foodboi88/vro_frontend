@@ -72,3 +72,8 @@ export interface ISellerProfile {
     bankBranch?: string,
     currentBalance?: number
 }
+
+export interface ActiveAccountRequest {
+    email: string;
+    activeCode: string;
+}

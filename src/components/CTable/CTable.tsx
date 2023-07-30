@@ -37,11 +37,14 @@ const CTable = (props: CTableProps) => {
                 <div className='search-area'>
                     {
                         props.allowTextSearch &&
-                        <Input onChange={
-                            (event) => {
-                                if (props.onChangeInput) props.onChangeInput(event)
+                        <Input
+                            onChange={
+                                (event) => {
+                                    if (props.onChangeInput) props.onChangeInput(event)
+                                }
                             }
-                        } />
+                            placeholder='Nhập từ khóa tìm kiếm'
+                        />
                     }
                     {
                         props.allowDateRangeSearch &&
@@ -49,6 +52,7 @@ const CTable = (props: CTableProps) => {
                             onChange={(event) => {
                                 if (props.onChangeRangePicker) props.onChangeRangePicker(event)
                             }}
+                            placeholder={['Từ ngày', 'Đến ngày']}
                         />
                     }
                     {
