@@ -1557,12 +1557,12 @@ const uploadContentSketch$: RootEpic = (action$) =>
                 price: re.payload.price,
                 content: re.payload.content,
                 productDesignStyles: re.payload.productDesignStyles,
-                productDesignTools: re.payload.productDesignTools,
-                productTypeOfArchitecture: re.payload.productTypeOfArchitecture,
+                productDesignTools: re.payload.productDesignTools[0].value,
+                productTypeOfArchitecture: re.payload.productTypeOfArchitecture[0].value,
             };
 
             return SketchsApi.uploadSketchContent(bodyrequest).pipe(
-                mergeMap((res: any) => {
+                switchMap((res: any) => {
                     console.log(res);
                     res = { ...res.data, ...re.payload };
                     return [
