@@ -1596,6 +1596,8 @@ const uploadContentSketch$: RootEpic = (action$) =>
                 productTypeOfArchitecture: re.payload.productTypeOfArchitecture[0].value,
             };
 
+            
+
             return SketchsApi.uploadSketchContent(bodyrequest).pipe(
                 switchMap((res: any) => {
                     console.log(res);

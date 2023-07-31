@@ -9,8 +9,7 @@ import {
     SelectProps,
     Steps,
     Upload,
-    Radio,
-    InputNumber
+    Radio
 } from "antd";
 import VirtualList from "rc-virtual-list";
 import React, { useEffect, useState } from "react";
@@ -169,7 +168,7 @@ const UploadSketch = () => {
     const [selectTag, setSelectTag] = useState(""); // Biến lưu giá trị tag bản vẽ
     const [imageUploadLst, setImageUpload] = useState<UploadFile[]>([]); // Biến lưu giá trị ảnh bản vẽ đã upload
     const [fileUploadLst, setFileUploadList] = useState<RcFile[]>([]); // Biến lưu giá trị file bản vẽ đã upload
-    const [selectPrice, setSelectPrice] = useState(1000000); // Biến lưu giá trị giá bản vẽ
+    const [selectPrice, setSelectPrice] = useState(0); // Biến lưu giá trị giá bản vẽ
     const [note, setNote] = useState(""); // Biến lưu giá trị ghi chú bản vẽ
     const [selectStyle, setSelectStyle] = useState(""); // Biến lưu giá trị kiểu bản vẽ
     const [selectTool, setSelectTool] = useState<RadioChangeEventTarget[]>([]); // Biến lưu giá trị công cụ vẽ bản vẽ
@@ -184,11 +183,6 @@ const UploadSketch = () => {
     const { checkProductsFile, toolList, architectureList, styleList } = useSelectorRoot((state) => state.sketch); // Lst cac ban ve        
     const dispatch = useDispatchRoot();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        console.log(selectCategory);
-
-    }, [selectCategory]);
 
     const handleCancelPreview = () => setPreviewOpen(false); // Hàm xử lý khi click hủy xem ảnh
 
@@ -267,8 +261,6 @@ const UploadSketch = () => {
         setCurrent(current + 1);
         document.body.scrollTop = 0; // For Safari
         document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-
-
     };
 
     const handleClickBackBtn = () => {
@@ -285,7 +277,6 @@ const UploadSketch = () => {
     };
 
     const handleUploadSketch = () => {
-        const categotyLst = selectCategory.map((item) => item.value);
         const bodyrequest = {
             // searchType: searchType,
             // selectedType: selectedType,
@@ -298,7 +289,7 @@ const UploadSketch = () => {
             content: note,
             productDesignStyles: ["64230fdaedf9dd11e488c249"], // Set default value
             productDesignTools: selectTool,
-            productTypeOfArchitecture: categotyLst,
+            productTypeOfArchitecture: selectCategory,
         };
 
         console.log(bodyrequest);
@@ -374,7 +365,6 @@ const UploadSketch = () => {
                                                     )
                                                 }
                                                 maxLength={TEXT_INPUT.MAX_LENGTH}
-                                                defaultValue={selectTitle}
                                             />
                                         </div>
                                     </Form.Item>
@@ -430,7 +420,6 @@ const UploadSketch = () => {
 
                                                     }
                                                 }
-                                                defaultValue={selectTool}
                                             />
                                         </div>
                                     </Form.Item>
@@ -442,11 +431,14 @@ const UploadSketch = () => {
                                             <Radio.Group
                                                 className="lst-category"
                                                 options={architectureList}
-                                                onChange={(e) => {
-                                                    const selectValue = [e.target]
-                                                    setSelectCategory(selectValue)
-                                                }}
-                                                defaultValue={selectCategory.length > 0 ? selectCategory[0].value : ""}
+                                                onChange={(e) =>
+                                                    
+                                                    {
+                                                        const selectValue =[e.target]
+                                                        setSelectCategory(selectValue)
+
+                                                    }
+                                                }
                                             />
                                         </div>
                                     </Form.Item>
@@ -466,7 +458,7 @@ const UploadSketch = () => {
                                                     setSelectPrice(parseInt(e.target.value))
                                                 }
                                                 maxLength={TEXT_INPUT.MAX_LENGTH}
-                                                defaultValue={selectPrice}
+
                                             />
                                         </div>
                                     </Form.Item>
@@ -483,7 +475,7 @@ const UploadSketch = () => {
                                                     setNote(e.target.value)
                                                 }
                                                 maxLength={TEXT_FIELD.MAX_LENGTH}
-                                                defaultValue={note}
+
                                             />
                                         </div>
                                     </Form.Item>
@@ -491,23 +483,25 @@ const UploadSketch = () => {
                                 <motion.div className="btn-submit-upload">
                                     {
                                         selectTool &&
-                                            selectCategory &&
-                                            selectTitle &&
-                                            selectPrice >= 0 &&
-                                            note ? (
-                                            <Button
-                                                onClick={() => handleClickNextBtn()}
-                                            >
-                                                Tiếp tục
-                                            </Button>
-                                        ) : (
-                                            <Button
-                                                onClick={() => handleClickNextBtn()}
-                                                disabled
-                                            >
-                                                Tiếp tục
-                                            </Button>
-                                        )}
+                                        selectCategory &&
+                                        selectTitle &&
+                                        // selectTag &&
+                                        
+                                        selectPrice >= 0 &&
+                                        note ? (
+                                        <Button
+                                            onClick={() => handleClickNextBtn()}
+                                        >
+                                            Tiếp tục
+                                        </Button>
+                                    ) : (
+                                        <Button
+                                            onClick={() => handleClickNextBtn()}
+                                            disabled
+                                        >
+                                            Tiếp tục
+                                        </Button>
+                                    )}
                                 </motion.div>
                             </div>
                         )}
@@ -520,7 +514,7 @@ const UploadSketch = () => {
                                     <div className="description">
                                         Vui lòng nhập các thông tin chung
                                     </div> */}
-
+                                    
                                     <div className="image">
                                         <Form.Item
                                             className="thumbnail"
@@ -534,7 +528,7 @@ const UploadSketch = () => {
                                                     "https://localhost:3000/"
                                                 }
                                                 multiple
-                                                onRemove={(file) => {
+                                                onRemove={(file)=>{
                                                     return true
                                                 }}
                                                 listType="picture-card"
@@ -652,7 +646,7 @@ const UploadSketch = () => {
                                     {
                                         // selectStyle &&
                                         imageUploadLst &&
-                                            fileUploadLst &&
+                                        fileUploadLst &&
                                             isCheckedRules ? (
                                             <Button
                                                 onClick={() => handleUploadSketch()}
