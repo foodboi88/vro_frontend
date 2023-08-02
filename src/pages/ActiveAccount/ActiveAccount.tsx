@@ -27,7 +27,7 @@ const ActiveAccount = () => {
         if (emailUser && activeCode) {
             const req: ActiveAccountRequest = {
                 email: emailUser,
-                activeCode: activeCode.slice(0, -1),
+                activeCode: activeCode,
             }
             setTimeout(() => {
                 dispatch(checkActiveAccountRequest(req));
