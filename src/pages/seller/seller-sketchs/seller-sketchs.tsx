@@ -8,12 +8,13 @@ import { IGetWithdrawRequest } from '../../../common/user.interface';
 import Utils from '../../../common/utils';
 import CTable from '../../../components/CTable/CTable';
 import { QUERY_PARAM } from '../../../constants/get-api.constants';
-import { IFilteredSketch, ISketch } from '../../../common/sketch.interface';
+import { IFilteredSketch, ISketch, IUploadSketchRequest } from '../../../common/sketch.interface';
 import TotalBox from '../../../components/TotalBox/TotalBox';
 import SketchCancel from '../../../images/seller-product/document-cancel.png'
 import Sketch from '../../../images/seller-product/document-text.png'
 
 import './seller-sketchs.styles.scss'
+import CModalEditSketch from '../../../components/ModalEditSketch/CModalEditSketch';
 
 const SellerSketchs = () => {
     const {
@@ -27,6 +28,8 @@ const SellerSketchs = () => {
     const [endDate, setEndDate] = useState('');
     const [openModalDelete, setOpenModalDelete] = useState(false);
     const [idSketch, setIdSketch] = useState('');
+    const [openModalEdit, setOpenModalEdit] = useState(false);
+    const [editSketch, setEditSketch] = useState<any>()
 
     const [currentSearchValue, setCurrentSearchValue] = useState<IGetWithdrawRequest>(
         {
@@ -86,7 +89,7 @@ const SellerSketchs = () => {
             )
         },
         {
-            title: 'Lượng bán được',
+            title: 'Kiến trúc',
             dataIndex: 'typeOfArchitecture',
             key: 'typeOfArchitecture',
 
@@ -114,6 +117,7 @@ const SellerSketchs = () => {
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
+                    <a onClick={(event) => handleOpenEdit(record)}>Sửa</a>
                     <a onClick={(event) => handleOpenDelete(record)}>Xóa</a>
                 </Space>
             ),
@@ -139,6 +143,20 @@ const SellerSketchs = () => {
     const handleOpenDelete = (record: any) => {
         setOpenModalDelete(true);
         setIdSketch(record.id)
+    }
+
+    const handleOpenEdit = (record: any) => {
+        setOpenModalEdit(true);
+        console.log(record)
+        const selectedSketch: IUploadSketchRequest =  {
+            title: record.title,
+            price: record.price,
+            content: record.content,
+            productDesignTools: record.designTools[0].id,
+            productTypeOfArchitecture: record.typeOfArchitecture.id,
+            id: record.id
+        };
+        setEditSketch(selectedSketch);
     }
 
     const handleDelete = () => {
@@ -196,6 +214,15 @@ const SellerSketchs = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}>
 
+            {
+                openModalEdit && editSketch &&
+                <CModalEditSketch
+                    open={openModalEdit}
+                    data={editSketch}
+                    setOpenModalEdit = {setOpenModalEdit}
+                />
+
+            }
             {
                 openModalDelete &&
                 <div className='approve-request-modal'>

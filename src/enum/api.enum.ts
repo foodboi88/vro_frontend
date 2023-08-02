@@ -41,6 +41,7 @@ export enum API_URL {
     GET_BILL_DETAIL = "architect/order",
     SKETCH_MANAGEMENT = "architect/product-management",
     DELETE_PRODUCT = "products/delete-product-by-id",
+    EDIT_PRODUCT = "products/edit-product",
     STATISTIC_PRODUCT = "architect/statistic-product-management",
 
     OVERVIEW_STATISTIC = "Admin/overview-statistic",

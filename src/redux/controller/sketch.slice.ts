@@ -41,6 +41,7 @@ import ProfileAPI from "../../api/profile/profile.api";
 import UserApi from "../../api/user/user.api";
 import { IOverViewStatictis, IOverViewStatictisDay, IOverViewStatictisMonth, IOverViewStatictisQuarter, IOverViewStatictisYear, IStatictisSellerDay, IStatictisUserDay } from "../../common/statistic.interface";
 import StatisticAPI from "../../api/statistic/statistic.api";
+import { QUERY_PARAM } from "../../constants/get-api.constants";
 
 type MessageLogin = {
     content: string;
@@ -1166,6 +1167,37 @@ const sketchSlice = createSlice({
             });
 
         },
+
+        editSketchRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+            
+        },
+
+        editSketchSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            // state.checkWhetherSketchUploaded += 1;
+            // if (state.checkWhetherSketchUploaded % 2 === 0) {
+            // Cu chia het cho 2 thi la up file thanh cong
+            notification.open({
+                message: "Thành công",
+                description: "Cập nhật bản vẽ thành công",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+            // }
+        },
+
+        editSketchFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            notification.open({
+                message: "Thất bại",
+                description: "Cập nhật bản vẽ thất bại",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+        },
     },
 });
 
@@ -1560,12 +1592,14 @@ const uploadContentSketch$: RootEpic = (action$) =>
                 price: re.payload.price,
                 content: re.payload.content,
                 productDesignStyles: re.payload.productDesignStyles,
-                productDesignTools: re.payload.productDesignTools,
-                productTypeOfArchitecture: re.payload.productTypeOfArchitecture,
+                productDesignTools: re.payload.productDesignTools[0].value,
+                productTypeOfArchitecture: re.payload.productTypeOfArchitecture[0].value,
             };
 
+            
+
             return SketchsApi.uploadSketchContent(bodyrequest).pipe(
-                mergeMap((res: any) => {
+                switchMap((res: any) => {
                     console.log(res);
                     res = { ...res.data, ...re.payload };
                     return [
@@ -2133,6 +2167,29 @@ const getSellerProfile$: RootEpic = (action$) =>
             );
         })
     );
+
+const editSketch$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(editSketchRequest.match),
+        mergeMap((re) => {
+            const bodyrequest = {
+                size: QUERY_PARAM.size,
+                offset: 0
+            }
+
+            return SketchsApi.editSketchOfArchitect(re.payload).pipe(
+                mergeMap((res: any) => {
+                    console.log(re.payload)
+                    return [
+                        sketchSlice.actions.editSketchSuccess(res.data),
+                        sketchSlice.actions.getSketchByArchitectRequest(bodyrequest)
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.editSketchFail(err)])
+            );
+        })
+    );
+
 export const SketchEpics = [
     // uploadSketch$,
     getHomeListSketch$,
@@ -2186,7 +2243,8 @@ export const SketchEpics = [
     getLstBank$,
     getAccountBankName$,
     getPurchasedSketchs$,
-    getSellerProfile$
+    getSellerProfile$,
+    editSketch$
 ];
 export const {
     getLatestSketchRequest,
@@ -2241,7 +2299,8 @@ export const {
     getLstBankRequest,
     getAccountBankNameRequest,
     getPurchasedSketchsRequest,
-    getSellerProfileRequest
+    getSellerProfileRequest,
+    editSketchRequest,
 
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;
