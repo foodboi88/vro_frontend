@@ -3,3 +3,4 @@ export interface IPaymentRequest {
     bankCodeIn: string;
     additionalProp1?: {};
 }
+
