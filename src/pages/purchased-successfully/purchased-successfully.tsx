@@ -2,38 +2,31 @@ import React, { useEffect } from 'react'
 import './purchased-successfully.styles.scss'
 import { Button } from 'antd'
 import { useNavigate } from 'react-router-dom'
-import { useDispatchRoot } from '../../redux/store'
+import { useDispatchRoot, useSelectorRoot } from '../../redux/store'
 import { confirmPurchasedRequest } from '../../redux/controller'
 
 const PurchaseSuccessfully = () => {
+    const {
+        userRole
+      } = useSelectorRoot((state) => state.login);
     const navigate = useNavigate()
-    const dispatch = useDispatchRoot()
-    const searchParams = new URLSearchParams(document.location.search)
+    // const dispatch = useDispatchRoot()
+    // const searchParams = new URLSearchParams(document.location.search)
 
     useEffect(()=>{
-        const bodyrequest = {
-            vnp_Amount: searchParams.get('vnp_Amount'),
-            vnp_BankCode: searchParams.get('vnp_BankCode'),
-            vnp_BankTranNo: searchParams.get('vnp_BankTranNo'),
-            vnp_CardType: searchParams.get('vnp_CardType'),
-            vnp_OrderInfo: searchParams.get('vnp_OrderInfo'),
-            vnp_PayDate: searchParams.get('vnp_PayDate'),
-            vnp_ResponseCode: searchParams.get('vnp_ResponseCode'),
-            vnp_TmnCode: searchParams.get('vnp_TmnCode'),
-            vnp_TransactionNo: searchParams.get('vnp_TransactionNo'),
-            vnp_TransactionStatus: searchParams.get('vnp_TransactionStatus'),
-            vnp_TxnRef: searchParams.get('vnp_TxnRef'),
-            vnp_SecureHash: searchParams.get('vnp_SecureHash')
-        }
-        
-        dispatch(confirmPurchasedRequest(bodyrequest))
+        handleConfirmPurchased()
         
     },[])
 
 
     const handleConfirmPurchased = () => {
-       
-        navigate('/')
+        setInterval(()=>{
+            if(userRole === "user") navigate('/buyer/purchased-sketchs')
+            else if(userRole === "seller") 	navigate('/seller/purchased-sketchs')
+            else navigate('/')
+        },5000)
+
+
     }
 
 
@@ -47,11 +40,12 @@ const PurchaseSuccessfully = () => {
 					<div className='title'>Đã thanh toán thành công</div>
 					<div className='button'>
                         <Button
-                            onClick={()=>{
-                                handleConfirmPurchased()
-                            }}
+                            // onClick={()=>{
+                            //     handleConfirmPurchased()
+                            // }}
+                            disabled={true}
                         >
-                            Quay lại trang chủ
+                            Đang quay lại trang sản phẩm đã mua của bạn
                         </Button>
                     </div>
 				</div>
