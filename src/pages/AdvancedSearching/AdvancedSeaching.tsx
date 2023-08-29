@@ -26,6 +26,8 @@ import DrawHomeImage16 from "../../images/homepage/home_img_16.png";
 import Meta from "antd/lib/card/Meta";
 import { useNavigate } from "react-router-dom";
 import { useSelectorRoot } from "../../redux/store";
+import CPagination from "../../components/Pagination/CPagination";
+import { IFilteredSketch } from "../../common/sketch.interface";
 
 interface CardData {
     id: number;
@@ -169,6 +171,16 @@ const AdvancedSeaching = () => {
         currentSearchValue,
     } = useSelectorRoot((state) => state.sketch);
 
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [pageSize, setPageSize] = useState<number>(12);
+    const [newfilteredSketchs, setNewFilteredSketchs] = useState<IFilteredSketch[]>();
+    useEffect(() => {
+        document.body.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }, [navigate]);
+
     useEffect(() => {
         const handleWindowResize = () => {
             setWindowSize([window.innerWidth, window.innerHeight]);
@@ -198,22 +210,35 @@ const AdvancedSeaching = () => {
         navigate(`/detail-sketch/${id}`);
     };
 
+    const onChangePage = (page: number) => {
+        setCurrentPage(page);
+        document.body.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
+    useEffect(() => {
+        if (!filteredSketchs) return;
+        const startIndex = (currentPage - 1) * pageSize;
+        const endIndex = startIndex + pageSize;
+        const currentItems = filteredSketchs?.slice(startIndex, endIndex);
+        setNewFilteredSketchs(currentItems);
+    }, [currentPage, filteredSketchs]);
+
     return (
         <div className="main">
             <CFilter />
             <div className="filtered-items">
                 <div className="author-introduction">
-                    
+
                 </div>
                 <div className="sketch-list">
-                    <div className="searched-sketch-title">
-                        <SearchOutlined /> Bản vẽ liên quan tới{" "}
-                        <strong>{currentSearchValue.name}</strong>
-                    </div>
+
                     <CArrangeBar />
                     <Row className="detail-list" gutter={[16, 24]}>
-                        {filteredSketchs &&
-                            filteredSketchs.map((card) => (
+                        {newfilteredSketchs &&
+                            newfilteredSketchs.map((card) => (
                                 <Col
                                     onClick={() => {
                                         goToDetailPageHandle(card.id);
@@ -226,12 +251,17 @@ const AdvancedSeaching = () => {
                                         title={card.title}
                                         view={card.views}
                                         price={card.price}
-                                        // type={card.}
+                                    // type={card.}
                                     />
                                 </Col>
                             ))}
                     </Row>
                 </div>
+                <CPagination
+                    total={filteredSketchs?.length}
+                    currentPage={currentPage}
+                    onChange={onChangePage}
+                />
             </div>
         </div>
     );

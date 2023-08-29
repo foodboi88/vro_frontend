@@ -10,6 +10,7 @@ import {
 import { Observable } from "rxjs/internal/Observable";
 import { catchError, map } from "rxjs/operators";
 import { API_URL } from "../../enum/api.enum";
+import { ActiveAccountRequest } from "../../common/user.interface";
 
 export default class IdentityApi {
     static apiURL = API_URL;
@@ -44,6 +45,16 @@ export default class IdentityApi {
         );
     }
 
+    static getSellerInformation(): Observable<any> {
+        const api = `${IdentityApi.apiURL.HOST}/${this.apiURL.GET_SELLER_INFO}`;
+        return HttpClient.get(api).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
+
     static handleRefreshToken(bodyrequest: any): Observable<any> {
         const api = `${IdentityApi.apiURL.HOST}/${this.apiURL.REFRESH_TOKEN}`;
         return HttpClient.post(api, bodyrequest).pipe(
@@ -52,5 +63,11 @@ export default class IdentityApi {
                 catchError((error) => new Observable())
             )
         );
+    }
+
+    static checkActiveAccount(body: ActiveAccountRequest): Observable<any> {
+        const api = `${IdentityApi.apiURL.HOST}/${SYSTEM_CONSTANTS.API.IDENTITY.ACTIVE_ACCOUNT}?email=${body.email}&activeCode=${body.activeCode}`;
+        return HttpClient.get(api).pipe(
+            map((res) => res as any || null, catchError((error) => new Observable)));
     }
 }

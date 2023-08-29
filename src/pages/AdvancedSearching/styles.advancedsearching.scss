@@ -85,6 +85,14 @@
     }
 }
 
+.ant-pagination-options {
+    display: none;
+}
+
+.ant-pagination {
+    text-align: end;
+}
+
 @media (max-width: 900px) {
     .main {
         flex-direction: column;

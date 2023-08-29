@@ -30,15 +30,15 @@ const PurchaseSuccessfully = () => {
     }
 
 
-  return (
-    <div
-        className='main-container'
-    >
-        <div className='content-area'>
-				<div className='container'>
+    return (
+        <div
+            className='main-container'
+        >
+            <div className='content-area'>
+                <div className='container'>
 
-					<div className='title'>Đã thanh toán thành công</div>
-					<div className='button'>
+                    <div className='title'>Đã thanh toán thành công</div>
+                    <div className='button'>
                         <Button
                             // onClick={()=>{
                             //     handleConfirmPurchased()
@@ -48,10 +48,10 @@ const PurchaseSuccessfully = () => {
                             Đang quay lại trang sản phẩm đã mua của bạn
                         </Button>
                     </div>
-				</div>
-			</div>
-    </div>
-  )
+                </div>
+            </div>
+        </div>
+    )
 }
 
 export default PurchaseSuccessfully

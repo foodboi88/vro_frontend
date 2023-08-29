@@ -66,6 +66,16 @@ export const CHeader = (props: MyProps) => {
     const { currentSearchValue } = useSelectorRoot((state) => state.sketch);
     const dispatch = useDispatchRoot();
     const { userRole } = useSelectorRoot((state) => state.login); // Biến kiểm tra xem user có phải là admin hay không
+
+    useEffect(() => {
+        document.body.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }, [navigate]);
+
+
+
     useEffect(() => {
         if (window.location.pathname === "/test") setCurrent("2");
         if (window.location.pathname === "/news") setCurrent("3");
@@ -151,15 +161,19 @@ export const CHeader = (props: MyProps) => {
 
     // Hàm chuyển đổi trạng thái đóng mở modal login
     const toggleLoginModal = () => {
-        setIsOpenLoginModal(false);
-        setIsOpenRegisterModal(false);
+        setIsOpenLoginModal(!isOpenLoginModal);
+        setIsOpenRegisterModal(!isOpenRegisterModal);
     };
     // Hàm chuyển đổi trạng thái đóng mở modal registration
     const toggleRegisterModal = () => {
-        setIsOpenLoginModal(false);
+        setIsOpenLoginModal(!isOpenLoginModal);
         setIsOpenRegisterModal(!isOpenRegisterModal);
     };
 
+    const handleCancelModal = () => {
+        setIsOpenLoginModal(false);
+        setIsOpenRegisterModal(false);
+    }
     const handleSearching = (event: any) => {
         console.log(event);
         const bodyrequest: ICurrentSearchValue = {
@@ -180,13 +194,22 @@ export const CHeader = (props: MyProps) => {
     };
     const handleClickCart = () => {
         dispatch(getAllSketchInCartRequest());
-        navigate("/cart");
+        if (userRole === 'seller') {
+
+            navigate("/seller/cart");
+        } else if (userRole === 'user') {
+            navigate("/buyer/cart");
+
+        }
+        else {
+            navigate("/");
+
+        }
     };
 
     // Hàm xử lý khi click vào avatar
     const onClickAvatar = () => {
-        userRole === ROLE.BUYER ? navigate('/buyer/profile') : navigate('/seller')
-        
+        userRole === ROLE.BUYER ? navigate('/buyer') : navigate('/seller')
     }
 
     return (
@@ -258,12 +281,12 @@ export const CHeader = (props: MyProps) => {
                                     </Button>
                                 </motion.div> */}
                                 <div className="icon-group">
-                                    <Badge count={10} size="default">
+                                    {/* <Badge count={10} size="default">
                                         <BellOutlined />
                                     </Badge>
                                     <Badge count={10} size="default">
                                         <MessageOutlined />
-                                    </Badge>
+                                    </Badge> */}
                                     <Badge
                                         count={sketchsQuantityInCart}
                                         size="default"
@@ -297,11 +320,13 @@ export const CHeader = (props: MyProps) => {
                             isOpenModal={isOpenLoginModal}
                             toggleLoginModal={toggleLoginModal}
                             toggleRegisterModal={toggleRegisterModal}
+                            handleCancelModal={handleCancelModal}
                         />
                         <Register
                             isOpenModal={isOpenRegisterModal}
                             toggleLoginModal={toggleLoginModal}
                             toggleRegisterModal={toggleRegisterModal}
+                            handleCancelModal={handleCancelModal}
                         />
                     </div>
                     <>

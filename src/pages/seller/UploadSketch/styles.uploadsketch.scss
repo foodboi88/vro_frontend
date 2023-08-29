@@ -11,7 +11,7 @@
 
 
         .upload-step {
- 
+
             width: 50%;
             margin: 0px auto;
 
@@ -468,6 +468,15 @@ input::-webkit-inner-spin-button {
     a {
         display: none;
     }
+}
+
+.ant-radio-checked .ant-radio-inner {
+    border-color: var(--main-color) !important;
+
+}
+
+.ant-radio-inner::after {
+    background-color: var(--main-color) !important;
 }
 
 @media(min-width: 700px) {

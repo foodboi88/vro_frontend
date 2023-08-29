@@ -19,6 +19,7 @@ interface CTableProps {
     onChangeRangePicker?: (event: any) => void;
     onSearch?: () => void;
     onChangePagination: (event: any) => void;
+    visiblePagination?: boolean;
 
 }
 
@@ -36,11 +37,14 @@ const CTable = (props: CTableProps) => {
                 <div className='search-area'>
                     {
                         props.allowTextSearch &&
-                        <Input onChange={
-                            (event) => {
-                                if (props.onChangeInput) props.onChangeInput(event)
+                        <Input
+                            onChange={
+                                (event) => {
+                                    if (props.onChangeInput) props.onChangeInput(event)
+                                }
                             }
-                        } />
+                            placeholder='Nhập từ khóa tìm kiếm'
+                        />
                     }
                     {
                         props.allowDateRangeSearch &&
@@ -48,6 +52,7 @@ const CTable = (props: CTableProps) => {
                             onChange={(event) => {
                                 if (props.onChangeRangePicker) props.onChangeRangePicker(event)
                             }}
+                            placeholder={['Từ ngày', 'Đến ngày']}
                         />
                     }
                     {
@@ -62,6 +67,7 @@ const CTable = (props: CTableProps) => {
                 </div>
             </div>
             <div className='table'>
+
                 <Table
                     columns={props.titleOfColumnList}
                     dataSource={props.data}

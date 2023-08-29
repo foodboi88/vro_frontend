@@ -38,7 +38,7 @@ const CProductCard = (props: props) => {
                             <div className="h-c-t-view-point">
                                 <EyeOutlined />
                                 <div className="number-of-view">
-                                    {props.view}
+                                    {Math.round(props.view)}
                                 </div>
                             </div>
                         </div>
@@ -49,7 +49,7 @@ const CProductCard = (props: props) => {
             {props.price === 0 ? (
                 <div className="home-card-price free">Miễn Phí</div>
             ) : (
-                <div className="home-card-price">{Utils.formatMoney(props.price)}</div>
+                <div className="home-card-price">{Utils.formatMoney(props.price) + ' VND'}</div>
             )}
         </Card>
     );

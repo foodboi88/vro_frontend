@@ -8,6 +8,7 @@ import { catchError, filter, map, mergeMap, switchMap } from "rxjs/operators";
 import { RootEpic } from "../../common/define-type";
 import Utils from "../../common/utils";
 import IdentityApi from "../../api/identity/identity.api";
+import UserApi from "../../api/user/user.api";
 
 type MessageLogin = {
     content: string;
@@ -67,8 +68,9 @@ const loginSlice = createSlice({
             Utils.setLocalStorage("token", action.payload.accessToken);
             Utils.setLocalStorage("refresh_token", action.payload.refreshToken);
             Utils.setLocalStorage("role", action.payload.role);
-            
-            state.tokenLogin = action.payload.accessToken;
+            console.log(action.payload.accessToken);
+
+            state.tokenLogin = action?.payload?.accessToken;
             state.loading = false;
             state.isSuccess = true;
             state.accesstokenExpỉred = false;
@@ -85,18 +87,15 @@ const loginSlice = createSlice({
             });
         },
         loginFail(state, action: any) {
-            console.log(action);
+            console.log(action.payload.response);
             state.loading = false;
             state.accesstokenExpỉred = true;
 
             notification.open({
                 message: "Đăng nhập không thành công",
-                description: "Hãy kiểm tra lại thông tin đăng nhập.",
+                description: action.payload.response.message.message,
                 onClick: () => {
                     console.log("Notification Clicked!");
-                },
-                style: {
-                    paddingTop: 40,
                 },
             });
             state.message = action.payload.message;
@@ -271,13 +270,11 @@ const loginSlice = createSlice({
         },
 
         registerSuccess(state, action: PayloadAction<any>) {
-            console.log(action);
+            console.log(action.payload.data.message);
             state.loading = false;
 
             notification.open({
-                message: "Đăng ký tài khoản thành công",
-                // description:
-                //     action.payload.response.message,
+                message: action.payload.data.message,
                 onClick: () => {
                     console.log("Notification Clicked!");
                 },
@@ -292,7 +289,7 @@ const loginSlice = createSlice({
             console.log(action);
 
             notification.open({
-                message: "Đăng ký không thành công",
+                message: action.payload.response?.message ? action.payload.response?.message : "Đăng ký không thành công!",
                 // description:
                 //     action.payload.response.message,
                 onClick: () => {
@@ -302,6 +299,36 @@ const loginSlice = createSlice({
             state.loading = false;
             state.registerSuccess = false;
         },
+
+        changePasswordRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        changePasswordSuccess(state, action: PayloadAction<any>) {
+            console.log(action.payload);
+            state.loading = false;
+
+            notification.open({
+                message: 'Đổi mật khẩu thành công!',
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+        },
+
+        changePasswordFail(state, action: PayloadAction<any>) {
+            console.log(action);
+
+            notification.open({
+                message: action.payload.response?.message ? action.payload.response?.message : "Đổi mật khẩu không thành công!",
+                // description:
+                //     action.payload.response.message,
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+            state.loading = false;
+        }
     },
 });
 
@@ -416,12 +443,50 @@ const getUserInfo$: RootEpic = (action$) =>
             );
         })
     );
+
+const checkActiveAccount$: RootEpic = (action$) => action$.pipe(
+    filter(checkActiveAccountRequest.match),
+    switchMap((re) => {
+        console.log(re);
+        return IdentityApi.checkActiveAccount(re.payload).pipe(
+            mergeMap((res: any) => {
+                console.log(res);
+                return [
+                    loginSlice.actions.checkActiveAccountSuccess(res),
+                ];
+            }),
+            catchError(err =>
+                [loginSlice.actions.checkActiveAccountFailed(err)]
+            )
+        )
+    })
+)
+
+const changePassword$: RootEpic = (action$) => action$.pipe(
+    filter(changePasswordRequest.match),
+    switchMap((re) => {
+        console.log(re.payload);
+        return UserApi.changePassword(re.payload).pipe(
+            mergeMap((res: any) => {
+                console.log(res);
+                return [
+                    loginSlice.actions.changePasswordSuccess(res),
+                ];
+            }),
+            catchError(err =>
+                [loginSlice.actions.changePasswordFail(err)]
+            )
+        )
+    })
+)
 export const LoginEpics = [
     login$,
     clearMessage$,
     logOut$,
     register$,
     getUserInfo$,
+    checkActiveAccount$,
+    changePassword$,
 ];
 export const {
     getUserInfoRequest,
@@ -433,5 +498,6 @@ export const {
     registerRequest,
     checkAbleToLogin,
     checkActiveAccountRequest,
+    changePasswordRequest,
 } = loginSlice.actions;
 export const loginReducer = loginSlice.reducer;

@@ -5,17 +5,19 @@ import { useEffect, useState } from "react";
 import "./login.scss";
 import { Rule } from "antd/lib/form";
 import { motion } from "framer-motion";
-import { useDispatchRoot } from "../../redux/store";
+import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
 import { registerRequest } from "../../redux/controller";
+import { CheckboxChangeEvent } from "antd/lib/checkbox";
 interface MyProps {
     isOpenModal: boolean;
     toggleRegisterModal: () => void;
     toggleLoginModal: () => void;
+    handleCancelModal: () => void;
 }
 const regexPhoneNumber = /^0(1\d{9}|3\d{8}|5\d{8}|7\d{8}|8\d{8}|9\d{8})$/;
 const regexEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 const regexPass =
-    /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*()_+]).{6,}$/;
+    /^.{6,}$/;
 
 const Register = (props: MyProps) => {
     const [userNameReq, setUserNameReq] = useState<string>("");
@@ -23,16 +25,18 @@ const Register = (props: MyProps) => {
     const [userEmailReq, setUserEmailReq] = useState<string>("");
     const [userPassReq, setUserPassReq] = useState<string>("");
     const [userConfirmPassReq, setUserConfirmPassReq] = useState<string>("");
-
     const [checkReqBtn, setCheckReqBtn] = useState<boolean>(false);
     const dispatch = useDispatchRoot();
+    const [checked, setChecked] = useState<boolean>(false);
+    const { registerSuccess } = useSelectorRoot((state) => state.login);
 
     useEffect(() => {
         userNameReq &&
             regexPhoneNumber.test(userNumberPhoneReq) &&
             regexEmail.test(userEmailReq) &&
             regexPass.test(userPassReq) &&
-            userConfirmPassReq === userPassReq
+            userConfirmPassReq === userPassReq &&
+            checked
             ? setCheckReqBtn(true)
             : setCheckReqBtn(false);
     }, [
@@ -41,6 +45,7 @@ const Register = (props: MyProps) => {
         userEmailReq,
         userPassReq,
         userConfirmPassReq,
+        checked,
     ]);
 
     const handleInputNameReqChange = (event: { target: { value: any } }) => {
@@ -119,16 +124,26 @@ const Register = (props: MyProps) => {
             additionalProp1: {}
         };
         dispatch(registerRequest(bodyrequest));
-        checkReqBtn && props.toggleLoginModal();
     };
+
+    const handleChangeCheckBox = (event: CheckboxChangeEvent) => {
+        console.log(`checked = ${event.target.checked}`);
+        setChecked(event.target.checked);
+    }
+
+    useEffect(() => {
+        if (registerSuccess) {
+            props.toggleLoginModal()
+        }
+    }, [registerSuccess]);
 
     return (
         <>
             <Modal
                 title="Đăng ký"
                 open={props.isOpenModal}
-                onOk={props.toggleRegisterModal}
-                onCancel={props.toggleRegisterModal}
+                onOk={props.handleCancelModal}
+                onCancel={props.handleCancelModal}
                 footer={false}
             >
                 <Form
@@ -201,7 +216,7 @@ const Register = (props: MyProps) => {
                                 {
                                     validator: passwordValidator,
                                     message:
-                                        "Mật khẩu vừa nhập của bạn không chính xác. Hãy thử lại hoặc chọn “Quên mật khẩu” để đặt lại mật khẩu mới!",
+                                        "Mật khẩu chưa đủ mạnh. Vui lòng nhập lại.",
                                 },
                             ]}
                         >
@@ -220,8 +235,7 @@ const Register = (props: MyProps) => {
                             />
                         </Form.Item>
                         <div className="check-label">
-                            Mật khẩu phải lớn hơn 6 ký tự, có chữ hoa, chữ
-                            thường, số và ký tự đặc biệt.
+                            Mật khẩu phải lớn hơn 6 ký tự.
                         </div>
                     </div>
                     <div>
@@ -268,7 +282,7 @@ const Register = (props: MyProps) => {
                         valuePropName="checked"
                     >
                         <label className="label-login">
-                            <Checkbox className="checkbox-login" />
+                            <Checkbox className="checkbox-login" onChange={handleChangeCheckBox} />
                             <div>
                                 Tôi đồng ý với <strong>Điều khoản</strong>và
                                 <strong>Chính sách bảo mật.</strong>
