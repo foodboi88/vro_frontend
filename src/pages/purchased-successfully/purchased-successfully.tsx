@@ -28,22 +28,15 @@ const PurchaseSuccessfully = () => {
                     console.log("Notification Clicked!");
                 },
             });
-            handleConfirmPurchased()
         }
         
     },[])
 
-
     const handleConfirmPurchased = () => {
-        setInterval(()=>{
-            if(userRole === "user") navigate('/buyer/purchased-sketchs')
-            else if(userRole === "seller") 	navigate('/seller/purchased-sketchs')
-            else navigate('/')
-        },5000)
-
-
+        if(userRole === "user") navigate('/buyer/purchased-sketchs')
+        else if(userRole === "seller") 	navigate('/seller/purchased-sketchs')
+        else navigate('/')
     }
-
 
     return (
         <div
@@ -55,12 +48,11 @@ const PurchaseSuccessfully = () => {
                     <div className='title'>{purchaseStatus}</div>
                     <div className='button'>
                         <Button
-                            // onClick={()=>{
-                            //     handleConfirmPurchased()
-                            // }}
-                            disabled={true}
+                            onClick={()=>{
+                                handleConfirmPurchased()
+                            }}
                         >
-                            Đang quay lại trang sản phẩm đã mua của bạn
+                            Quay lại trang sản phẩm đã mua của bạn
                         </Button>
                     </div>
                 </div>
