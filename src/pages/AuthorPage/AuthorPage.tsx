@@ -81,8 +81,11 @@ const AuthorPage = () => {
         setCurrentPage(page);
     }
 
+
     useEffect(() => {
         if (!filteredSketchs) return;
+        console.log("filteredSketchs", filteredSketchs);
+
         const startIndex = (currentPage - 1) * pageSize;
         const endIndex = startIndex + pageSize;
         const currentItems = filteredSketchs?.slice(startIndex, endIndex);
@@ -137,6 +140,7 @@ const AuthorPage = () => {
                     </Row>
                 </div>
                 <CPagination
+                    pageSize={pageSize}
                     total={filteredSketchs?.length}
                     currentPage={currentPage}
                     onChange={onChangePage}
