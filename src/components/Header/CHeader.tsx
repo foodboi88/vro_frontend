@@ -224,22 +224,34 @@ export const CHeader = (props: MyProps) => {
                         </Link>
                     </div>
 
+                </div>
+
+                <div className="header-action-type">
+                    <div className="header-action-item">
+                        Danh mục công trình
+                    </div>
+                    <div className="header-action-item">
+                        Về chúng tôi
+                    </div>
+                    <div className="header-action-item">
+                        Sứ mệnh
+                    </div>
+                    <div className="header-action-item">
+                        Sự kết nối
+                    </div>
+                    <div className="header-action-item">
+                        Liên hệ
+                    </div>
+                </div>
+
+                <div className="header-right">
                     <div className={`header-content-input ${isLogin && "login"}`}>
                         <Input
                             className="search-input"
                             placeholder="Tìm kiếm bản vẽ"
                             onPressEnter={handleSearching}
                         />
-                        <img src={SearchIcon} className="icon-search"></img>
-                        {/* <SearchOutlined className='icon-search' /> */}
                     </div>
-                </div>
-                {/* {!tokenLogin && */}
-
-                {/* } */}
-
-                {/* {tokenLogin && */}
-                <div className="header-right">
                     <div className="user-infor">
                         {accesstokenExpỉred === true ? (
                             <>
@@ -267,26 +279,7 @@ export const CHeader = (props: MyProps) => {
                             </>
                         ) : (
                             <>
-                                {/* <motion.div
-                                    className={`header-button post ${isLogin && "login"}`}
-                                    whileHover={{ scale: 1.1 }}
-                                    whileTap={{ scale: 0.95 }}
-                                >
-                                    <Button
-                                        className="btn-upload-sketch"
-                                        onClick={handleUpload}
-                                        icon={<AiOutlineFileAdd />}
-                                    >
-                                        Đăng bản vẽ
-                                    </Button>
-                                </motion.div> */}
                                 <div className="icon-group">
-                                    {/* <Badge count={10} size="default">
-                                        <BellOutlined />
-                                    </Badge>
-                                    <Badge count={10} size="default">
-                                        <MessageOutlined />
-                                    </Badge> */}
                                     <Badge
                                         count={sketchsQuantityInCart}
                                         size="default"
@@ -300,9 +293,6 @@ export const CHeader = (props: MyProps) => {
                                     <Avatar className="avatar" src={UserIcon} />
                                     <div className="name-and-balance">
                                         <div className="name">{userName}</div>
-                                        {/* <div className="balance">
-                                        Số dư: {"1.500.000Đ"}
-                                    </div> */}
                                     </div>
                                     <Dropdown
                                         className="drop-down"
@@ -384,7 +374,6 @@ export const CHeader = (props: MyProps) => {
                                         placeholder="Tìm kiếm bản vẽ"
                                         onPressEnter={handleSearching}
                                     />
-                                    {/* <SearchOutlined className='icon-search' /> */}
                                 </div>
                             </div>
                         </Drawer>
@@ -393,41 +382,7 @@ export const CHeader = (props: MyProps) => {
 
                 {/* } */}
             </div >
-            <div className="header-action">
-                <div className="header-action-content">
-                    <div className="header-action-item">
-                        <GoLocation className="header-aciton-item-icon" />
-                        <div className="header-action-item-text">Mộ Lao, Hà Đông, Hà Nội</div>
-                    </div>
-                    <div className="header-action-type">
-                        <div className="header-action-item">
-                            Thư viện bản vẽ
-                        </div>
-                        <div className="header-action-item">
-                            Hội kiến trúc sư
-                        </div>
-                        <div className="header-action-item">
-                            Đăng ký bán bản vẽ
-                        </div>
-                        <div className="header-action-item">
-                            Bản vẽ chất lượng
-                        </div>
-                        <div className="header-action-item">
-                            Blog
-                        </div>
-                    </div>
-                </div>
-                <div className="header-action-content">
-                    <div className="header-action-item">
-                        <FaPhoneVolume />
-                        <div className="header-action-item-text">Hotline: 19008198</div>
-                    </div>
-                    <div className="header-action-item">
-                        <BsQuestionCircle />
-                        <div className="header-action-item-text">Trung tâm hỗ trợ VRO</div>
-                    </div>
-                </div>
-            </div>
+
         </div>
     );
 };
