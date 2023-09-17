@@ -16,6 +16,7 @@ export interface ISketch {
     quantityPurchased: number;
     id: string;
     images: string[];
+    designTools: string[];
 }
 
 export interface IFilteredSketch {
@@ -26,6 +27,8 @@ export interface IFilteredSketch {
     quantityPurchased: number;
     id: string;
     image: string;
+    designTools: string[];
+
 }
 
 export interface ICurrentSearchValue {

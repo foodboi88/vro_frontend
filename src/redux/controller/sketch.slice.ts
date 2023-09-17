@@ -63,6 +63,7 @@ interface SketchState {
     isExistEmail: boolean;
     registerSuccess: boolean;
     toolList: CheckboxOptionType[];
+    cloneToolList: ITool[];
     architectureList: CheckboxOptionType[];
     styleList: CheckboxOptionType[];
     latestSketchsList: ISketch[];
@@ -131,6 +132,7 @@ const initState: SketchState = {
     isExistEmail: true,
     registerSuccess: false,
     toolList: [],
+    cloneToolList: [],
     architectureList: [],
     styleList: [],
     latestSketchsList: [],
@@ -220,7 +222,7 @@ const sketchSlice = createSlice({
 
         getLatestSketchSuccess(state, action: PayloadAction<any>) {
             console.log(action);
-            state.latestSketchsList = action.payload.data;
+            state.latestSketchsList = action.payload.data.items;
             // notification.open({
             //     message: "Load success",
             //     // description:
@@ -297,7 +299,7 @@ const sketchSlice = createSlice({
 
         getMostViewdSketchsSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
-            state.mostViewedSketchList = action.payload.data;
+            state.mostViewedSketchList = action.payload.data.items;
 
             console.log("Da chui vao voi action: ", action);
         },
@@ -320,6 +322,7 @@ const sketchSlice = createSlice({
                     value: item.id,
                 } as CheckboxOptionType)
             );
+            state.cloneToolList = action.payload.data;
             console.log(state.toolList);
             console.log("Da chui vao voi action: ", action);
         },
@@ -1235,7 +1238,10 @@ const getLatestSketchs$: RootEpic = (action$) =>
             // IdentityApi.login(re.payload) ?
             console.log(re);
 
-            return SketchsApi.getLatestSketchs(re.payload).pipe(
+            const type = 'latest';
+
+
+            return SketchsApi.getSketchsByType(type).pipe(
                 mergeMap((res: any) => {
                     console.log(res);
 
@@ -1278,7 +1284,10 @@ const getMostViewdSketchs$: RootEpic = (action$) =>
             // IdentityApi.login(re.payload) ?
             console.log(re);
 
-            return SketchsApi.getMostViewsSketchs(re.payload).pipe(
+            const type = 'mostView';
+
+
+            return SketchsApi.getSketchsByType(type).pipe(
                 mergeMap((res: any) => {
                     console.log(res);
 
@@ -1324,7 +1333,7 @@ const getAllFitlerCriterias$: RootEpic = (action$) =>
         filter(getAllFilterCriteriasRequest.match),
         switchMap((re) => {
             const bodyrequest: IReqGetLatestSketchs = {
-                size: 10,
+                size: 50,
                 offset: 0,
             };
 

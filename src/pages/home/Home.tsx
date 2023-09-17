@@ -4,40 +4,30 @@ import {
     ArrowRightOutlined,
     RightOutlined
 } from "@ant-design/icons";
-import { Button, Col, Row } from "antd";
+import { Button, Col, Image, Row } from "antd";
 import { Variants, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
 import "./styles.home.scss";
 import CProductCard from "../../components/ProductCard/CProductCard";
-import Adsvertisement1 from '../../images/homepage/adsvertisement1.png';
-import Adsvertisement2 from '../../images/homepage/adsvertisement2.png';
-import CarouselImage from '../../images/homepage/carousel.png';
-import Cate1 from '../../images/homepage/cate1.png';
-import Cate2 from '../../images/homepage/cate2.png';
-import Cate3 from '../../images/homepage/cate3.png';
-import Cate4 from '../../images/homepage/cate4.png';
-import Cate5 from '../../images/homepage/cate5.png';
-import Cate7 from '../../images/homepage/cate7.png';
-import Cate8 from '../../images/homepage/cate8.png';
-import CategoryIcon from '../../images/homepage/category_icon.png';
 import Declare1 from '../../images/homepage/declare2.jpg';
-import DrawHomeImage10 from "../../images/homepage/home_img_10.png";
-import DrawHomeImage11 from "../../images/homepage/home_img_11.png";
-import DrawHomeImage12 from "../../images/homepage/home_img_12.png";
-import DrawHomeImage13 from "../../images/homepage/home_img_13.png";
-import DrawHomeImage14 from "../../images/homepage/home_img_14.png";
-import DrawHomeImage15 from "../../images/homepage/home_img_15.png";
-import DrawHomeImage16 from "../../images/homepage/home_img_16.png";
-import DrawHomeImage9 from "../../images/homepage/home_img_9.png";
+import Company1 from '../../images/homepage/company.png'
+import CEO from '../../images/homepage/CEO.png'
+import HomepageFooter from '../../images/homepage/homepage-footer.png'
+
+
 import { Carousel } from 'antd';
-import { ICurrentSearchValue } from "../../common/sketch.interface";
+import { ICurrentSearchValue, IReqGetLatestSketchs } from "../../common/sketch.interface";
 import CDeclare from "../../components/Declare/CDeclare";
 import {
     advancedSearchingRequest,
+    getAllToolsRequest,
     getHomeListSketchRequest
 } from "../../redux/controller";
+import IntroImage from "../../images/homepage/Vector 16.png";
+import CArchitectCard from "../../components/CArchitectCard/CArchitectCard";
+
 interface CardData {
     id: number;
     title: string;
@@ -46,156 +36,6 @@ interface CardData {
     view: number;
     imageUrl: string;
 }
-
-const suggestLst: CardData[] = [
-    {
-        id: 1,
-        title: "Bản vẽ biệt thự 3 tầng cổ điển",
-        type: "File 3D Max",
-        price: 0,
-        view: 265,
-        imageUrl: DrawHomeImage9,
-    },
-    {
-        id: 2,
-        title: "Bản vẽ nhà xưởng",
-        type: "File Revit",
-        price: 0,
-        view: 500,
-        imageUrl: DrawHomeImage10,
-    },
-    {
-        id: 3,
-        title: "Bản vẽ biệt thự phong cách Nhật",
-        type: "File Revit",
-        price: 3500000,
-        view: 65,
-        imageUrl: DrawHomeImage11,
-    },
-    {
-        id: 4,
-        title: "Biệt thự phong cách Roman",
-        type: "File 3D Max",
-        price: 10000000,
-        view: 152,
-        imageUrl: DrawHomeImage12,
-    },
-];
-const webSuggestLst: CardData[] = [
-    {
-        id: 1,
-        title: "Biệt thự mái thái",
-        type: "File Revit",
-        price: 700000,
-        view: 65,
-        imageUrl: DrawHomeImage13,
-    },
-    {
-        id: 2,
-        title: "Biệt thự Tân cổ điển",
-        type: "File Auto cad",
-        price: 670000,
-        view: 98,
-        imageUrl: DrawHomeImage14,
-    },
-    {
-        id: 3,
-        title: "Bản vẽ biệt thự mái thái",
-        type: "File Sketchup",
-        price: 0,
-        view: 32,
-        imageUrl: DrawHomeImage15,
-    },
-    {
-        id: 4,
-        title: "Bản vẽ quán ăn",
-        type: "File Auto cad",
-        price: 0,
-        view: 75,
-        imageUrl: DrawHomeImage16,
-    },
-];
-const imageVariants: Variants = {
-    offscreen: {
-        y: 100,
-        opacity: 0,
-    },
-    onscreen: {
-        y: 0,
-        opacity: 1,
-        transition: {
-            type: "spring",
-            bounce: 0.4,
-            duration: 2,
-        },
-    },
-};
-
-const hoverVariants = {
-    hover: {
-        scale: 1.1,
-        opacity: 0.8,
-        borderRadius: "30px",
-    },
-    tap: {
-        scale: 0.8,
-    },
-};
-
-const categoryList = [
-    {
-        id: "64231026edf9dd11e488c250",
-        content: 'Bản vẽ biệt thự',
-        link: '',
-        icon: Cate1
-    },
-    {
-        id: "64231030edf9dd11e488c252",
-        content: 'Bản vẽ nhà phố',
-        link: '',
-        icon: Cate2,
-
-    },
-    {
-        id: "642ce3895de07140c4f4cd61",
-        content: 'Bản vẽ nhà xưởng',
-        link: '',
-        icon: Cate3,
-
-    },
-    {
-        id: "642ce3965de07140c4f4cd62",
-        content: 'Bản vẽ nội thất',
-        link: '',
-        icon: Cate4,
-
-
-    },
-    {
-        id: "642ce3a35de07140c4f4cd63",
-        content: 'Bản vẽ ngoại thất',
-        link: '',
-        icon: Cate5,
-
-    },
-
-    {
-        id: "7",
-        content: 'Bản vẽ nhà thờ',
-        link: '',
-        icon: Cate7,
-
-    },
-    {
-        id: " 8",
-        content: 'Bản vẽ cửa hàng',
-        link: '',
-        icon: Cate8,
-
-    },
-
-
-]
 
 // Phần trang chủ của trang web
 const Home = () => {
@@ -212,16 +52,57 @@ const Home = () => {
 
     const [currentIndexMostViewedSketch, setCurrentIndexMostViewedSketch] = useState(0);
     const [currentIndexLatestSketch, setCurrentIndexLatestSketch] = useState(0);
-    const [currentIndexVillaSketch, setCurrentIndexVillaSketch] = useState(0);
-    const [currentIndexStreetHouseSketch, setCurrentIndexStreetHouseSketch] = useState(0);
-    const [currentIndexFactorySketch, setCurrentIndexFactorySketch] = useState(0);
-    const [currentIndexInteriorSketch, setCurrentIndexInteriorSketch] = useState(0);
+    const [currentIndexArchitect,setCurrentIndexArchitect] = useState(0);
+    const [currentIndexCompany,setCurrentIndexCompany] = useState(0);
+
     const [currentIndexFreeSketch, setCurrentIndexFreeSketch] = useState(0);
 
     const [windowSize, setWindowSize] = useState([
         window.innerWidth,
         window.innerHeight,
     ]);
+
+    const excellentArchitect = [
+        {
+            imageUrl: '',
+            name: 'Đỗ Trung Hiếu',
+            email: 'austindo01@gmail.com'
+        },
+        {
+            imageUrl: '',
+            name: 'Đỗ Trung Hiếu',
+            email: 'austindo01@gmail.com'
+        },
+        {
+            imageUrl: '',
+            name: 'Đỗ Trung Hiếu',
+            email: 'austindo01@gmail.com'
+        },
+        {
+            imageUrl: '',
+            name: 'Đỗ Trung Hiếu',
+            email: 'austindo01@gmail.com'
+        },
+    ]
+
+    const companyList = [
+        {
+            imageUrl: Company1,
+
+        },
+        {
+            imageUrl: Company1,
+
+        },
+        {
+            imageUrl: Company1,
+
+        },
+        {
+            imageUrl: Company1,
+
+        },
+    ]
 
     useEffect(() => {
         document.body.scrollTo({
@@ -262,65 +143,54 @@ const Home = () => {
     });
 
     useEffect(() => {
+        const bodyrequest: IReqGetLatestSketchs = {
+            size: 50,
+            offset: 0,
+        };
         dispatch(getHomeListSketchRequest());
+        dispatch(getAllToolsRequest(bodyrequest));
 
     }, []);
 
-    // Handle pagination most view sketch
-    const handleNextCardMostViewedSketch = () => {
-        setCurrentIndexMostViewedSketch(currentIndexMostViewedSketch + 1);
-    };
-    const handlePrevCardMostViewedSketch = () => {
-        setCurrentIndexMostViewedSketch(currentIndexMostViewedSketch - 1);
-    };
+    const handlePagination = (direction: string, type: string) => {
+        if (direction === 'prev') {
+            switch (type) {
+                case 'mostView':
+                    setCurrentIndexMostViewedSketch(currentIndexMostViewedSketch - 1);
 
-    // Handle pagination latest sketch
-    const handleNextCardLatestSketch = () => {
-        setCurrentIndexLatestSketch(currentIndexLatestSketch + 1);
-    };
-    const handlePrevCardLatestSketch = () => {
-        setCurrentIndexLatestSketch(currentIndexLatestSketch - 1);
-    };
+                    break;
+                case 'free':
+                    setCurrentIndexFreeSketch(currentIndexFreeSketch - 1);
 
-    // Handle pagination villa sketch
-    const handleNextCardVillaSketch = () => {
-        setCurrentIndexVillaSketch(currentIndexVillaSketch + 1);
-    };
-    const handlePrevCardVillaSketch = () => {
-        setCurrentIndexVillaSketch(currentIndexVillaSketch - 1);
-    };
+                    break;
+                case 'latest':
+                    setCurrentIndexLatestSketch(currentIndexLatestSketch - 1);
 
-    // Handle pagination latest sketch
-    const handleNextCardStreetHouseSketch = () => {
-        setCurrentIndexStreetHouseSketch(currentIndexStreetHouseSketch + 1);
-    };
-    const handlePrevCardStreetHouseSketch = () => {
-        setCurrentIndexStreetHouseSketch(currentIndexStreetHouseSketch - 1);
-    };
+                    break;
 
-    // Handle pagination factory sketch
-    const handleNextCardFactorySketch = () => {
-        setCurrentIndexFactorySketch(currentIndexFactorySketch + 1);
-    };
-    const handlePrevCardFactorySketch = () => {
-        setCurrentIndexFactorySketch(currentIndexFactorySketch - 1);
-    };
+                default:
+                    break;
+            }
+        } else {
+            switch (type) {
+                case 'mostView':
+                    setCurrentIndexMostViewedSketch(currentIndexMostViewedSketch + 1);
 
-    // Handle pagination interior sketch
-    const handleNextCardInteriorSketch = () => {
-        setCurrentIndexInteriorSketch(currentIndexInteriorSketch + 1);
-    };
-    const handlePrevCardInteriorSketch = () => {
-        setCurrentIndexInteriorSketch(currentIndexInteriorSketch - 1);
-    };
+                    break;
+                case 'free':
+                    setCurrentIndexFreeSketch(currentIndexFreeSketch + 1);
 
-    // Handle pagination interior sketch
-    const handleNextCardFreeSketch = () => {
-        setCurrentIndexFreeSketch(currentIndexFreeSketch + 1);
-    };
-    const handlePrevCardFreeSketch = () => {
-        setCurrentIndexFreeSketch(currentIndexFreeSketch - 1);
-    };
+                    break;
+                case 'latest':
+                    setCurrentIndexLatestSketch(currentIndexLatestSketch + 1);
+
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
 
     const handleClickCard = (sketchId: string) => {
         console.log("sketchId", sketchId);
@@ -351,66 +221,22 @@ const Home = () => {
         >
             {/* <div className="main-notification"> */}
             <div className='header-homepage'>
-                <div className='category-list'>
-                    <div className="category-title">
-                        <img className="category-icon" src={CategoryIcon} />
-                        <div className="text">TẤT CẢ DANH MỤC SẢN PHẨM</div>
+                <div className="left-header">
+                    <div className="slogan">
+                        <div>Ngôi nhà của tôi,</div>
+                        <div>Phong cách của tôi.</div>
                     </div>
-                    <div className="divider">
-                    </div>
-                    {
-                        categoryList.map(item => {
-                            return (
-                                <div className="category-item" onClick={() => onClickCategory(item.id)}>
-                                    <div className="cate-content">
-
-                                        <img className="cate-image" src={item.icon} />
-                                        <div className="cate-item-text">
-                                            {item.content}
-                                        </div>
-                                    </div>
-                                    <div className="arrow-icon">
-                                        <RightOutlined />
-                                    </div>
-                                </div>
-                            )
-                        })
-                    }
-                    <div>
-
+                    <div>Kho bản vẽ với đa dạng chủng loại, cập nhật xu thế mới. Vro luôn là sự lựa chọn tin cậy của khách hàng trong việc cung cấp các giải pháp tư vấn bản vẽ thiết kế</div>
+                    <div className="button-group">
+                        <Button>Đăng ký ngay</Button>
+                        <div className="more">
+                            <div>Xem sản phẩm</div>
+                            <RightOutlined />
+                        </div>
                     </div>
                 </div>
-                <div className="category-content">
-                    <div className="carousel">
-                        <Carousel autoplay>
-                            <div>
-                                <img
-                                    className="image"
-                                    src={CarouselImage}
-                                    alt="main notification"
-                                />
-                            </div>
-                            <div>
-                                <img
-                                    className="image"
-                                    src={CarouselImage}
-                                    alt="main notification"
-                                />
-                            </div>
-                            <div>
-                                <img
-                                    className="image"
-                                    src={CarouselImage}
-                                    alt="main notification"
-                                />
-                            </div>
-
-                        </Carousel>
-                    </div>
-                    <div className="advertisement">
-                        <img className="ad-image" src={Adsvertisement1} alt="" />
-                        <img className="ad-image" src={Adsvertisement2} alt="" />
-                    </div>
+                <div className="right-header">
+                    <img src={IntroImage} />
                 </div>
             </div>
 
@@ -419,18 +245,30 @@ const Home = () => {
 
             <div className="tool-of-web">
                 <div className="title">
-                    <div>Bản vẽ được nhiều người lựa chọn</div>
-                    <div className="sub-title">{"Xem thêm"}</div>
+                    <div>Bản vẽ nổi bật</div>
+                    <div className="sub-title">
+                        <Col>
+                            <Button
+                                icon={<ArrowLeftOutlined />}
+                                className="btn-icon"
+                                onClick={() => handlePagination('prev', 'mostView')}
+                                disabled={currentIndexMostViewedSketch === 0 && true}
+                            />
+                        </Col>
+                        <Col>
+                            <Button
+                                icon={<ArrowRightOutlined />}
+                                className="btn-icon"
+                                onClick={() => handlePagination('next', 'mostView')}
+                                disabled={
+                                    currentIndexMostViewedSketch >= mostViewedSketchList.length - numberOfCardShow && true
+                                }
+                            />
+                        </Col>
+                    </div>
                 </div>
                 <div className="lst-tool">
-                    <Col>
-                        <Button
-                            icon={<ArrowLeftOutlined />}
-                            className="btn-icon"
-                            onClick={handlePrevCardMostViewedSketch}
-                            disabled={currentIndexMostViewedSketch === 0 && true}
-                        />
-                    </Col>
+
                     <Row gutter={[16, 16]}>
                         {mostViewedSketchList
                             .slice(
@@ -450,41 +288,148 @@ const Home = () => {
                                         title={card.title}
                                         view={card.views}
                                         price={card.price}
+                                        idTool={card.designTools[0] || ''}
                                     // type={card.type}
                                     />
                                 </Col>
                             ))}
                     </Row>
-                    <Col>
-                        <Button
-                            icon={<ArrowRightOutlined />}
-                            className="btn-icon"
-                            onClick={handleNextCardMostViewedSketch}
-                            disabled={
-                                currentIndexMostViewedSketch >= mostViewedSketchList.length - numberOfCardShow && true
-                            }
-                        />
-                    </Col>
+
                 </div>
             </div>
+
+            <div className="tool-of-web">
+                <div className="title">
+                    <div>Top 10 kiến trúc sư xuất sắc nhất</div>
+                    <div className="sub-title">
+                        <Col>
+                            <Button
+                                icon={<ArrowLeftOutlined />}
+                                className="btn-icon"
+                                onClick={() => handlePagination('prev', '')}
+                                disabled={currentIndexArchitect === 0 && true}
+                            />
+                        </Col>
+                        <Col>
+                            <Button
+                                icon={<ArrowRightOutlined />}
+                                className="btn-icon"
+                                onClick={() => handlePagination('next', '')}
+                                disabled={
+                                    currentIndexArchitect >= excellentArchitect.length - numberOfCardShow && true
+                                }
+                            />
+                        </Col>
+                    </div>
+                </div>
+                <div className="lst-tool">
+
+                    <Row gutter={[16, 16]}>
+                        {excellentArchitect
+                            .slice(
+                                currentIndexArchitect,
+                                currentIndexArchitect + numberOfCardShow
+                            )
+                            .map((card) => (
+                                <Col
+                                    // onClick={() => {
+                                    //     handleClickCard(card.id);
+                                    // }}
+                                    span={spanCol}
+                                    key={card.name}
+                                >
+                                    <CArchitectCard
+                                        imageUrl={card.imageUrl}
+                                        name={card.name}
+                                        email={card.name}
+                                    />
+                                </Col>
+                            ))}
+                    </Row>
+
+                </div>
+            </div>
+
             <CDeclare
                 content="Chỉnh sửa thiết kế theo yêu cầu"
                 imageUrl={Declare1}
             />
+
             <div className="tool-of-web">
                 <div className="title">
-                    <div>Bản vẽ mới nhất</div>
-                    <div className="sub-title">{"Xem thêm"}</div>
+                    <div>Công ty bán bản vẽ</div>
+                    <div className="sub-title">
+                        <Col>
+                            <Button
+                                icon={<ArrowLeftOutlined />}
+                                className="btn-icon"
+                                onClick={() => handlePagination('prev', '')}
+                                disabled={currentIndexCompany === 0 && true}
+                            />
+                        </Col>
+                        <Col>
+                            <Button
+                                icon={<ArrowRightOutlined />}
+                                className="btn-icon"
+                                onClick={() => handlePagination('next', '')}
+                                disabled={
+                                    currentIndexCompany >= companyList.length - numberOfCardShow && true
+                                }
+                            />
+                        </Col>
+                    </div>
                 </div>
                 <div className="lst-tool">
-                    <Col>
-                        <Button
-                            icon={<ArrowLeftOutlined />}
-                            className="btn-icon"
-                            onClick={handlePrevCardLatestSketch}
-                            disabled={currentIndexLatestSketch === 0 && true}
-                        />
-                    </Col>
+
+                    <Row gutter={[16, 16]}>
+                        {companyList
+                            .slice(
+                                currentIndexCompany,
+                                currentIndexCompany + numberOfCardShow
+                            )
+                            .map((card) => (
+                                <Col
+                                    // onClick={() => {
+                                    //     handleClickCard(card.id);
+                                    // }}
+                                    span={spanCol}
+                                >
+                                    <img
+                                        src={card.imageUrl}
+                                    />
+                                </Col>
+                            ))}
+                    </Row>
+
+                </div>
+            </div>
+
+            <div className="tool-of-web">
+                <div className="title">
+                    <div>Bản vẽ mới hôm nay</div>
+                    <div className="sub-title">
+                        <Col>
+                            <Button
+                                icon={<ArrowLeftOutlined />}
+                                className="btn-icon"
+                                onClick={() => handlePagination('prev', 'latest')}
+                                disabled={currentIndexLatestSketch === 0 && true}
+                            />
+                        </Col>
+                        <Col>
+                            <Button
+                                icon={<ArrowRightOutlined />}
+                                className="btn-icon"
+                                onClick={() => handlePagination('next', 'latest')}
+                                disabled={
+                                    currentIndexLatestSketch >= latestSketchsList.length - numberOfCardShow && true
+                                }
+                            />
+                        </Col>
+                    </div>
+                </div>
+                <div className="lst-tool">
+
                     <Row gutter={[16, 16]}>
                         {latestSketchsList
                             .slice(
@@ -504,21 +449,14 @@ const Home = () => {
                                         title={card.title}
                                         view={card.views}
                                         price={card.price}
+                                        idTool={card.designTools[0] || ''}
+
                                     // type={card.type}
                                     />
                                 </Col>
                             ))}
                     </Row>
-                    <Col>
-                        <Button
-                            icon={<ArrowRightOutlined />}
-                            className="btn-icon"
-                            onClick={handleNextCardLatestSketch}
-                            disabled={
-                                currentIndexLatestSketch >= latestSketchsList.length - numberOfCardShow && true
-                            }
-                        />
-                    </Col>
+
                 </div>
             </div>
             <CDeclare
@@ -529,18 +467,30 @@ const Home = () => {
             <div className="tool-of-web">
                 <div className="title">
                     <div>Bản vẽ miễn phí</div>
-                    <div className="sub-title">{"Xem thêm"}</div>
-                </div>
-                {freeSketchList.length > 0 &&
-                    <div className="lst-tool">
+                    <div className="sub-title">
                         <Col>
                             <Button
                                 icon={<ArrowLeftOutlined />}
                                 className="btn-icon"
-                                onClick={handlePrevCardFreeSketch}
+                                onClick={() => handlePagination('prev', 'free')}
                                 disabled={currentIndexFreeSketch === 0 && true}
                             />
                         </Col>
+
+                        <Col>
+                            <Button
+                                icon={<ArrowRightOutlined />}
+                                className="btn-icon"
+                                onClick={() => handlePagination('next', 'free')}
+                                disabled={
+                                    currentIndexFreeSketch >= freeSketchList.length - numberOfCardShow && true
+                                }
+                            />
+                        </Col>
+                    </div>
+                </div>
+                {freeSketchList.length > 0 &&
+                    <div className="lst-tool">
                         <Row gutter={[16, 16]}>
                             {freeSketchList
                                 .slice(
@@ -560,25 +510,34 @@ const Home = () => {
                                             title={card.title}
                                             view={card.views}
                                             price={card.price}
+                                            idTool={card.designTools[0] || ''}
+
                                         // type={card.type}
                                         />
                                     </Col>
                                 ))}
                         </Row>
-                        <Col>
-                            <Button
-                                icon={<ArrowRightOutlined />}
-                                className="btn-icon"
-                                onClick={handleNextCardFreeSketch}
-                                disabled={
-                                    currentIndexFreeSketch >= freeSketchList.length - numberOfCardShow && true
-                                }
-                            />
-                        </Col>
                     </div>
                 }
             </div>
-
+            <div className='homepage-footer'>
+                <div className="left-footer">
+                    <div className="slogan">
+                        <div>Lời chào từ VRO "</div>
+                    </div>
+                    <div>Gửi các Quý khách hàng những người luôn quan tâm tới ngôi nhà thân yêu. Gửi tới các bạn Kiến trúc sư, Quý công ty Xây dựng Với sứ mệnh kết nối để đem lại những công trình tuyệt vời, Vro đã tạo nên sàn Thương mại điện tử nhằm kết nối khách hàng Với tiêu chí chuyên nghiệp, tạo mọi điều kiện tốt nhất cho khách hàng, chúng tôi sẽ.</div>
+                    <div className="info">
+                        <img src={CEO}/>
+                        <div className="more">
+                            <div>Hoàng Đức Thắng</div>
+                            <div>Chủ tịch Công ty VRO</div>
+                        </div>
+                    </div>
+                </div>
+                <div className="right-footer">
+                    <img src={HomepageFooter} />
+                </div>
+            </div>
 
         </motion.div>
     );

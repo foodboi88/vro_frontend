@@ -251,6 +251,8 @@ const AdvancedSeaching = () => {
                                         title={card.title}
                                         view={card.views}
                                         price={card.price}
+                                        idTool={card.designTools[0] || ''}
+
                                     // type={card.}
                                     />
                                 </Col>
