@@ -5,10 +5,11 @@
     font-style: normal;
     user-select: none;
 
+    
+
     .header-homepage {
         display: flex;
         justify-content: space-between;
-        padding: .8em 3em;
         border-radius: 16px;
         margin: 8em 3em 1em 3em;
         .left-header{
@@ -92,6 +93,13 @@
             width: 100%;
             margin-bottom: 1em;
             align-items: center;
+            .category-list{
+                display: flex;
+                padding: .8em 3em;
+                margin: 1em 3em 1em -1em;
+                gap: 19px;
+        
+            }
 
             .sub-title {
                 font-weight: 400;

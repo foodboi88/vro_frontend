@@ -3,17 +3,17 @@ import { Card } from "antd";
 import Meta from "antd/lib/card/Meta";
 
 import { useNavigate } from "react-router-dom";
-import "./styles.architectcard.scss";
+import "./styles.stylecard.scss";
 import Utils from "../../common/utils";
 import ImageNotFound from "../../images/Image_not_available.png";
 import { useSelectorRoot } from "../../redux/store";
 interface props {
     imageUrl?: string;
     name: string;
-    email?: string;
+    email: string;
 }
 
-const CArchitectCard = (props: props) => {
+const CStyleCard = (props: props) => {
     const { cloneToolList } = useSelectorRoot(
         (state) => state.sketch
     ); // Lst cac ban ve
@@ -43,8 +43,9 @@ const CArchitectCard = (props: props) => {
                     }
                 />
             </div>
+            <div className="home-card-price">{Utils.formatMoney(props.email)}</div>
         </Card>
     );
 };
 
-export default CArchitectCard;
+export default CStyleCard;

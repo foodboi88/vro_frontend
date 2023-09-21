@@ -133,7 +133,7 @@ const AuthorPage = () => {
                                         title={card.title}
                                         view={card.views}
                                         price={card.price}
-                                        idTool={card.designTools[0] || ''}
+                                        idTool={card.typeOfArchitectureId || ''}
 
                                     // type={card.}
                                     />

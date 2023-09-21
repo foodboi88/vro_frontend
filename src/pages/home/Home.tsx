@@ -22,11 +22,13 @@ import { ICurrentSearchValue, IReqGetLatestSketchs } from "../../common/sketch.i
 import CDeclare from "../../components/Declare/CDeclare";
 import {
     advancedSearchingRequest,
+    getAllArchitecturesRequest,
     getAllToolsRequest,
     getHomeListSketchRequest
 } from "../../redux/controller";
 import IntroImage from "../../images/homepage/Vector 16.png";
 import CArchitectCard from "../../components/CArchitectCard/CArchitectCard";
+import CStyleCard from "../../components/CStyleCard/CStyleCard";
 
 interface CardData {
     id: number;
@@ -39,7 +41,7 @@ interface CardData {
 
 // Phần trang chủ của trang web
 const Home = () => {
-    const { latestSketchsList, mostViewedSketchList, freeSketchList } = useSelectorRoot(
+    const { latestSketchsList, mostViewedSketchList, freeSketchList, cloneArchitecturelist, filteredSketchs } = useSelectorRoot(
         (state) => state.sketch
     ); // Lst cac ban ve
 
@@ -52,8 +54,10 @@ const Home = () => {
 
     const [currentIndexMostViewedSketch, setCurrentIndexMostViewedSketch] = useState(0);
     const [currentIndexLatestSketch, setCurrentIndexLatestSketch] = useState(0);
-    const [currentIndexArchitect,setCurrentIndexArchitect] = useState(0);
-    const [currentIndexCompany,setCurrentIndexCompany] = useState(0);
+    const [currentIndexArchitect, setCurrentIndexArchitect] = useState(0);
+    const [currentIndexCompany, setCurrentIndexCompany] = useState(0);
+    const [currentIndexFilteredSketch, setCurrentIndexFilteredSketch] = useState(0);
+
 
     const [currentIndexFreeSketch, setCurrentIndexFreeSketch] = useState(0);
 
@@ -149,7 +153,8 @@ const Home = () => {
         };
         dispatch(getHomeListSketchRequest());
         dispatch(getAllToolsRequest(bodyrequest));
-
+        dispatch(getAllArchitecturesRequest(bodyrequest));
+        handleSearch('64231026edf9dd11e488c250');
     }, []);
 
     const handlePagination = (direction: string, type: string) => {
@@ -165,9 +170,10 @@ const Home = () => {
                     break;
                 case 'latest':
                     setCurrentIndexLatestSketch(currentIndexLatestSketch - 1);
-
                     break;
-
+                case 'filtered':
+                    setCurrentIndexFilteredSketch(currentIndexFilteredSketch-1);
+                    break;
                 default:
                     break;
             }
@@ -185,11 +191,17 @@ const Home = () => {
                     setCurrentIndexLatestSketch(currentIndexLatestSketch + 1);
 
                     break;
-
+                    case 'filtered':
+                        setCurrentIndexFilteredSketch(currentIndexFilteredSketch+1);
+                        break;
                 default:
                     break;
             }
         }
+    }
+
+    const handleClickCategory = () => {
+
     }
 
     const handleClickCard = (sketchId: string) => {
@@ -212,6 +224,17 @@ const Home = () => {
         navigate("/searching");
     }
 
+    const handleSearch = (param: string) => {
+        console.log(param);
+        const bodyrequest = {
+            architecture: param,
+            name: '', // Lay ra gia tri text luu trong redux
+        };
+        console.log(bodyrequest);
+
+        dispatch(advancedSearchingRequest(bodyrequest));
+    };
+
     return (
         <motion.div
             className="main-home"
@@ -219,7 +242,8 @@ const Home = () => {
             animate={{ width: "100%" }}
             exit={{ x: window.innerWidth, transition: { duration: 0.5 } }}
         >
-            {/* <div className="main-notification"> */}
+
+
             <div className='header-homepage'>
                 <div className="left-header">
                     <div className="slogan">
@@ -240,40 +264,56 @@ const Home = () => {
                 </div>
             </div>
 
-            {/* </div> */}
-            {/* <Slider /> */}
 
+            {/* Filter bản vẽ đầu trang */}
             <div className="tool-of-web">
                 <div className="title">
-                    <div>Bản vẽ nổi bật</div>
+                    <div className="category-list">
+                        {
+                            cloneArchitecturelist &&
+                            cloneArchitecturelist.map(item => (
+                                <Button
+                                    onClick={() => {
+                                        handleSearch(item.id)
+                                    }}
+                                >
+                                    {item.name}
+                                </Button>
+                            ))
+                        }
+                    </div>
                     <div className="sub-title">
-                        <Col>
-                            <Button
-                                icon={<ArrowLeftOutlined />}
-                                className="btn-icon"
-                                onClick={() => handlePagination('prev', 'mostView')}
-                                disabled={currentIndexMostViewedSketch === 0 && true}
-                            />
-                        </Col>
-                        <Col>
-                            <Button
-                                icon={<ArrowRightOutlined />}
-                                className="btn-icon"
-                                onClick={() => handlePagination('next', 'mostView')}
-                                disabled={
-                                    currentIndexMostViewedSketch >= mostViewedSketchList.length - numberOfCardShow && true
-                                }
-                            />
-                        </Col>
+                        {
+                            filteredSketchs &&
+                            <>
+                                <Col>
+                                    <Button
+                                        icon={<ArrowLeftOutlined />}
+                                        className="btn-icon"
+                                        onClick={() => handlePagination('prev', 'filtered')}
+                                        disabled={currentIndexFilteredSketch === 0 && true}
+                                    />
+                                </Col>
+                                <Col>
+                                    <Button
+                                        icon={<ArrowRightOutlined />}
+                                        className="btn-icon"
+                                        onClick={() => handlePagination('next', 'filtered')}
+                                        disabled={
+                                            currentIndexFilteredSketch >= filteredSketchs.length - numberOfCardShow && true 
+                                        }
+                                    />
+                                </Col>
+                            </>
+                        }
                     </div>
                 </div>
                 <div className="lst-tool">
-
                     <Row gutter={[16, 16]}>
-                        {mostViewedSketchList
+                        {filteredSketchs && filteredSketchs
                             .slice(
-                                currentIndexMostViewedSketch,
-                                currentIndexMostViewedSketch + numberOfCardShow
+                                currentIndexFilteredSketch,
+                                currentIndexFilteredSketch + numberOfCardShow
                             )
                             .map((card) => (
                                 <Col
@@ -284,11 +324,11 @@ const Home = () => {
                                     key={card.id}
                                 >
                                     <CProductCard
-                                        imageUrl={card.images[0]}
+                                        imageUrl={card.image}
                                         title={card.title}
                                         view={card.views}
                                         price={card.price}
-                                        idTool={card.designTools[0] || ''}
+                                        idTool={card.typeOfArchitectureId}
                                     // type={card.type}
                                     />
                                 </Col>
@@ -298,6 +338,65 @@ const Home = () => {
                 </div>
             </div>
 
+            {/* Danh sách phong cách */}
+            <div className="tool-of-web">
+                <div className="title">
+                    <div>Phong cách</div>
+                    <div className="sub-title">
+                        <Col>
+                            <Button
+                                icon={<ArrowLeftOutlined />}
+                                className="btn-icon"
+                                onClick={() => handlePagination('prev', '')}
+                                disabled={currentIndexArchitect === 0 && true}
+                            />
+                        </Col>
+                        <Col>
+                            <Button
+                                icon={<ArrowRightOutlined />}
+                                className="btn-icon"
+                                onClick={() => handlePagination('next', '')}
+                                disabled={
+                                    currentIndexArchitect >= excellentArchitect.length - numberOfCardShow && true
+                                }
+                            />
+                        </Col>
+                    </div>
+                </div>
+                <div className="lst-tool">
+
+                    <Row gutter={[16, 16]}>
+                        {excellentArchitect
+                            .slice(
+                                currentIndexArchitect,
+                                currentIndexArchitect + numberOfCardShow
+                            )
+                            .map((card) => (
+                                <Col
+                                    // onClick={() => {
+                                    //     handleClickCard(card.id);
+                                    // }}
+                                    span={spanCol}
+                                    key={card.name}
+                                >
+                                    <CStyleCard
+                                        imageUrl={card.imageUrl}
+                                        name={card.name}
+                                        email={card.email}
+                                    />
+                                </Col>
+                            ))}
+                    </Row>
+
+                </div>
+            </div>
+
+            <CDeclare
+                content="Chỉnh sửa thiết kế theo yêu cầu"
+                imageUrl={Declare1}
+            />
+
+            {/* Top kiến trúc sư */}
             <div className="tool-of-web">
                 <div className="title">
                     <div>Top 10 kiến trúc sư xuất sắc nhất</div>
@@ -341,7 +440,6 @@ const Home = () => {
                                     <CArchitectCard
                                         imageUrl={card.imageUrl}
                                         name={card.name}
-                                        email={card.name}
                                     />
                                 </Col>
                             ))}
@@ -350,11 +448,7 @@ const Home = () => {
                 </div>
             </div>
 
-            <CDeclare
-                content="Chỉnh sửa thiết kế theo yêu cầu"
-                imageUrl={Declare1}
-            />
-
+            {/* Công ty bán bản vẽ */}
             <div className="tool-of-web">
                 <div className="title">
                     <div>Công ty bán bản vẽ</div>
@@ -404,37 +498,43 @@ const Home = () => {
                 </div>
             </div>
 
+            <CDeclare
+                content="Bản vẽ miễn phí cho bạn"
+                imageUrl={Declare1}
+
+            />
+
+            {/* Bản vẽ bán chạy */}
             <div className="tool-of-web">
-                <div className="title">
-                    <div>Bản vẽ mới hôm nay</div>
+            <div className="title">
+                    <div>Bản vẽ bán chạy</div>
                     <div className="sub-title">
                         <Col>
                             <Button
                                 icon={<ArrowLeftOutlined />}
                                 className="btn-icon"
-                                onClick={() => handlePagination('prev', 'latest')}
-                                disabled={currentIndexLatestSketch === 0 && true}
+                                onClick={() => handlePagination('prev', 'mostView')}
+                                disabled={currentIndexMostViewedSketch === 0 && true}
                             />
                         </Col>
                         <Col>
                             <Button
                                 icon={<ArrowRightOutlined />}
                                 className="btn-icon"
-                                onClick={() => handlePagination('next', 'latest')}
+                                onClick={() => handlePagination('next', 'mostView')}
                                 disabled={
-                                    currentIndexLatestSketch >= latestSketchsList.length - numberOfCardShow && true
+                                    currentIndexMostViewedSketch >= mostViewedSketchList.length - numberOfCardShow && true
                                 }
                             />
                         </Col>
                     </div>
                 </div>
                 <div className="lst-tool">
-
                     <Row gutter={[16, 16]}>
-                        {latestSketchsList
+                        {mostViewedSketchList
                             .slice(
-                                currentIndexLatestSketch,
-                                currentIndexLatestSketch + numberOfCardShow
+                                currentIndexMostViewedSketch,
+                                currentIndexMostViewedSketch + numberOfCardShow
                             )
                             .map((card) => (
                                 <Col
@@ -450,7 +550,6 @@ const Home = () => {
                                         view={card.views}
                                         price={card.price}
                                         idTool={card.designTools[0] || ''}
-
                                     // type={card.type}
                                     />
                                 </Col>
@@ -459,11 +558,8 @@ const Home = () => {
 
                 </div>
             </div>
-            <CDeclare
-                content="Bản vẽ miễn phí cho bạn"
-                imageUrl={Declare1}
 
-            />
+            {/* Bản vẽ miễn phí */}
             <div className="tool-of-web">
                 <div className="title">
                     <div>Bản vẽ miễn phí</div>
@@ -527,7 +623,7 @@ const Home = () => {
                     </div>
                     <div>Gửi các Quý khách hàng những người luôn quan tâm tới ngôi nhà thân yêu. Gửi tới các bạn Kiến trúc sư, Quý công ty Xây dựng Với sứ mệnh kết nối để đem lại những công trình tuyệt vời, Vro đã tạo nên sàn Thương mại điện tử nhằm kết nối khách hàng Với tiêu chí chuyên nghiệp, tạo mọi điều kiện tốt nhất cho khách hàng, chúng tôi sẽ.</div>
                     <div className="info">
-                        <img src={CEO}/>
+                        <img src={CEO} />
                         <div className="more">
                             <div>Hoàng Đức Thắng</div>
                             <div>Chủ tịch Công ty VRO</div>

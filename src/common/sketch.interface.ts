@@ -27,7 +27,7 @@ export interface IFilteredSketch {
     quantityPurchased: number;
     id: string;
     image: string;
-    designTools: string[];
+    typeOfArchitectureId: string;
 
 }
 
