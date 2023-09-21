@@ -1,5 +1,5 @@
 .footer {
-    background-color: white;
+    background-color: var(--black-color-v2-700);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -49,17 +49,19 @@
     }
 
     .title-content {
+        display: flex;
+        align-items: center;
         font-weight: 700;
         font-size: 16px;
         line-height: 24px;
-        color: #696969;
+        color: var(--white-color-v2-900);
     }
 
     .content {
         font-weight: 300;
         font-size: 12px;
         line-height: 24px;
-        color: #696969;
+        color: var(--white-color-v2-900);
         cursor: pointer;
         transition: all 0.3s ease-in-out;
     }

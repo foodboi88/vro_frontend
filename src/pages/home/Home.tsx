@@ -26,7 +26,7 @@ import {
     getAllToolsRequest,
     getHomeListSketchRequest
 } from "../../redux/controller";
-import IntroImage from "../../images/homepage/Vector 16.png";
+import IntroImage from "../../images/homepage/introImage.png";
 import CArchitectCard from "../../components/CArchitectCard/CArchitectCard";
 import CStyleCard from "../../components/CStyleCard/CStyleCard";
 
@@ -54,8 +54,8 @@ const Home = () => {
 
     const [currentIndexMostViewedSketch, setCurrentIndexMostViewedSketch] = useState(0);
     const [currentIndexLatestSketch, setCurrentIndexLatestSketch] = useState(0);
-    const [currentIndexArchitect, setCurrentIndexArchitect] = useState(0);
-    const [currentIndexCompany, setCurrentIndexCompany] = useState(0);
+    const [currentIndexArchitect,  setCurrentIndexArchitect] = useState(0);
+    const [currentIndexCompany,  setCurrentIndexCompany] = useState(0);
     const [currentIndexFilteredSketch, setCurrentIndexFilteredSketch] = useState(0);
 
 
@@ -250,9 +250,9 @@ const Home = () => {
                         <div>Ngôi nhà của tôi,</div>
                         <div>Phong cách của tôi.</div>
                     </div>
-                    <div>Kho bản vẽ với đa dạng chủng loại, cập nhật xu thế mới. Vro luôn là sự lựa chọn tin cậy của khách hàng trong việc cung cấp các giải pháp tư vấn bản vẽ thiết kế</div>
+                    <div className="sub-slogan">Kho bản vẽ với đa dạng chủng loại, cập nhật xu thế mới. Vro luôn là sự lựa chọn tin cậy của khách hàng trong việc cung cấp các giải pháp tư vấn bản vẽ thiết kế</div>
                     <div className="button-group">
-                        <Button>Đăng ký ngay</Button>
+                        <Button className="login-button">Đăng ký ngay</Button>
                         <div className="more">
                             <div>Xem sản phẩm</div>
                             <RightOutlined />
@@ -619,14 +619,14 @@ const Home = () => {
             <div className='homepage-footer'>
                 <div className="left-footer">
                     <div className="slogan">
-                        <div>Lời chào từ VRO "</div>
+                        <div>Lời chào từ VRO <strong>”</strong></div>
                     </div>
-                    <div>Gửi các Quý khách hàng những người luôn quan tâm tới ngôi nhà thân yêu. Gửi tới các bạn Kiến trúc sư, Quý công ty Xây dựng Với sứ mệnh kết nối để đem lại những công trình tuyệt vời, Vro đã tạo nên sàn Thương mại điện tử nhằm kết nối khách hàng Với tiêu chí chuyên nghiệp, tạo mọi điều kiện tốt nhất cho khách hàng, chúng tôi sẽ.</div>
+                    <div className="wellcome">Gửi các Quý khách hàng những người luôn quan tâm tới ngôi nhà thân yêu. Gửi tới các bạn Kiến trúc sư, Quý công ty Xây dựng Với sứ mệnh kết nối để đem lại những công trình tuyệt vời, Vro đã tạo nên sàn Thương mại điện tử nhằm kết nối khách hàng Với tiêu chí chuyên nghiệp, tạo mọi điều kiện tốt nhất cho khách hàng, chúng tôi sẽ.</div>
                     <div className="info">
                         <img src={CEO} />
                         <div className="more">
-                            <div>Hoàng Đức Thắng</div>
-                            <div>Chủ tịch Công ty VRO</div>
+                            <div className="name-more">Hoàng Đức Thắng</div>
+                            <div className="content-more">Chủ tịch Công ty VRO</div>
                         </div>
                     </div>
                 </div>
