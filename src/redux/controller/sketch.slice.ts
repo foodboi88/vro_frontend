@@ -66,7 +66,8 @@ interface SketchState {
     cloneToolList: ITool[];
     architectureList: CheckboxOptionType[];
     cloneArchitecturelist: ITool[];
-    styleList: CheckboxOptionType[];
+    styleList: CheckboxOptionType[]; 
+    cloneStyleList: ITool[];
     latestSketchsList: ISketch[];
     mostViewedSketchList: ISketch[];
     villaSketchList: ISketch[];
@@ -137,6 +138,7 @@ const initState: SketchState = {
     architectureList: [],
     cloneArchitecturelist: [],
     styleList: [],
+    cloneStyleList: [],
     latestSketchsList: [],
     mostViewedSketchList: [],
     villaSketchList: [],
@@ -343,6 +345,7 @@ const sketchSlice = createSlice({
                     value: item.id,
                 } as CheckboxOptionType)
             );
+            state.cloneStyleList = action.payload.data
             console.log(state.toolList);
             console.log("Da chui vao voi action: ", action);
         },
@@ -417,9 +420,9 @@ const sketchSlice = createSlice({
                 architecture: action.payload.architecture
                     ? action.payload.architecture
                     : state.currentSearchValue.architecture,
-                // style: action.payload.style
-                //     ? action.payload.style
-                //     : state.currentSearchValue.style,
+                style: action.payload.style
+                    ? action.payload.style
+                    : state.currentSearchValue.style,
                 name: action.payload.name
                     ? action.payload.name
                     : state.currentSearchValue.name,

@@ -6,45 +6,46 @@ import { useNavigate } from "react-router-dom";
 import "./styles.stylecard.scss";
 import Utils from "../../common/utils";
 import ImageNotFound from "../../images/Image_not_available.png";
-import { useSelectorRoot } from "../../redux/store";
+import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
+import { dispatch } from "rxjs/internal/observable/pairs";
+import { advancedSearchingRequest } from "../../redux/controller";
 interface props {
     imageUrl?: string;
     name: string;
-    email: string;
+    id: string
 }
+
+interface DATA_TRANFER {
+    target: string;
+    value: string;
+}
+
 
 const CStyleCard = (props: props) => {
     const { cloneToolList } = useSelectorRoot(
         (state) => state.sketch
     ); // Lst cac ban ve
     const navigate = useNavigate();
+    const dispatch = useDispatchRoot();
+
+    const handleClick = () => {
+        console.log(props.id);
+        const bodyrequest = {
+            style: props.id
+        };
+
+        dispatch(advancedSearchingRequest(bodyrequest));
+        navigate('/searching')
+    };
     
     return (
-        <Card
-            className="card"
-            hoverable
-            cover={<img className="image-card" alt="example" src={props.imageUrl ? props.imageUrl : ImageNotFound} />}
-        >
-            <div className="title-and-price">
-                <Meta
-                    title={
-                        <div className="home-card-title">
-                                <div className="h-c-t-title">
-
-                                    {props.name}
-                                </div>
-                            <div className="h-c-t-view-point">
-                                {/* <EyeOutlined />
-                                <div className="number-of-view">
-                                    {Math.round(props.view)}
-                                </div> */}
-                            </div>
-                        </div>
-                    }
-                />
-            </div>
-            <div className="home-card-price">{Utils.formatMoney(props.email)}</div>
-        </Card>
+        <div
+            style={{backgroundImage: props.imageUrl}}
+            onClick={() => {handleClick()}}
+            
+        >   
+            <div>{props.name}</div>
+        </div>
     );
 };
 

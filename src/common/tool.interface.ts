@@ -7,6 +7,7 @@ export interface ITool {
     name: string;
     description: string;
     id: string;
+    imageUrl?: string;
 }
 
 export interface IArchitecture {

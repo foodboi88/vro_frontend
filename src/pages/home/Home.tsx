@@ -15,6 +15,7 @@ import Declare1 from '../../images/homepage/declare2.jpg';
 import Company1 from '../../images/homepage/company.png'
 import CEO from '../../images/homepage/CEO.png'
 import HomepageFooter from '../../images/homepage/homepage-footer.png'
+import Style1 from '../../images/homepage/Roma-1.1.jpg';
 
 
 import { Carousel } from 'antd';
@@ -23,6 +24,7 @@ import CDeclare from "../../components/Declare/CDeclare";
 import {
     advancedSearchingRequest,
     getAllArchitecturesRequest,
+    getAllStylesRequest,
     getAllToolsRequest,
     getHomeListSketchRequest
 } from "../../redux/controller";
@@ -41,7 +43,7 @@ interface CardData {
 
 // Phần trang chủ của trang web
 const Home = () => {
-    const { latestSketchsList, mostViewedSketchList, freeSketchList, cloneArchitecturelist, filteredSketchs } = useSelectorRoot(
+    const { latestSketchsList, mostViewedSketchList, freeSketchList, cloneArchitecturelist, filteredSketchs, cloneStyleList } = useSelectorRoot(
         (state) => state.sketch
     ); // Lst cac ban ve
 
@@ -54,9 +56,11 @@ const Home = () => {
 
     const [currentIndexMostViewedSketch, setCurrentIndexMostViewedSketch] = useState(0);
     const [currentIndexLatestSketch, setCurrentIndexLatestSketch] = useState(0);
-    const [currentIndexArchitect,  setCurrentIndexArchitect] = useState(0);
-    const [currentIndexCompany,  setCurrentIndexCompany] = useState(0);
+    const [currentIndexArchitect, setCurrentIndexArchitect] = useState(0);
+    const [currentIndexCompany, setCurrentIndexCompany] = useState(0);
     const [currentIndexFilteredSketch, setCurrentIndexFilteredSketch] = useState(0);
+    const [currentIndexStyle, setCurrentIndexStyle] = useState(0);
+
 
 
     const [currentIndexFreeSketch, setCurrentIndexFreeSketch] = useState(0);
@@ -154,6 +158,7 @@ const Home = () => {
         dispatch(getHomeListSketchRequest());
         dispatch(getAllToolsRequest(bodyrequest));
         dispatch(getAllArchitecturesRequest(bodyrequest));
+        dispatch(getAllStylesRequest(bodyrequest));
         handleSearch('64231026edf9dd11e488c250');
     }, []);
 
@@ -172,7 +177,16 @@ const Home = () => {
                     setCurrentIndexLatestSketch(currentIndexLatestSketch - 1);
                     break;
                 case 'filtered':
-                    setCurrentIndexFilteredSketch(currentIndexFilteredSketch-1);
+                    setCurrentIndexFilteredSketch(currentIndexFilteredSketch - 1);
+                    break;
+                case 'style':
+                    setCurrentIndexStyle(currentIndexStyle - 1);
+                    break;
+                case 'architect':
+                    setCurrentIndexArchitect(currentIndexArchitect - 1);
+                    break;
+                case 'company':
+                    setCurrentIndexCompany(currentIndexCompany - 1);
                     break;
                 default:
                     break;
@@ -191,9 +205,18 @@ const Home = () => {
                     setCurrentIndexLatestSketch(currentIndexLatestSketch + 1);
 
                     break;
-                    case 'filtered':
-                        setCurrentIndexFilteredSketch(currentIndexFilteredSketch+1);
-                        break;
+                case 'filtered':
+                    setCurrentIndexFilteredSketch(currentIndexFilteredSketch + 1);
+                    break;
+                case 'style':
+                    setCurrentIndexStyle(currentIndexStyle + 1);
+                    break;
+                case 'architect':
+                    setCurrentIndexArchitect(currentIndexArchitect + 1);
+                    break;
+                case 'company':
+                    setCurrentIndexCompany(currentIndexCompany + 1);
+                    break;
                 default:
                     break;
             }
@@ -300,7 +323,7 @@ const Home = () => {
                                         className="btn-icon"
                                         onClick={() => handlePagination('next', 'filtered')}
                                         disabled={
-                                            currentIndexFilteredSketch >= filteredSketchs.length - numberOfCardShow && true 
+                                            currentIndexFilteredSketch >= filteredSketchs.length - numberOfCardShow && true
                                         }
                                     />
                                 </Col>
@@ -347,17 +370,17 @@ const Home = () => {
                             <Button
                                 icon={<ArrowLeftOutlined />}
                                 className="btn-icon"
-                                onClick={() => handlePagination('prev', '')}
-                                disabled={currentIndexArchitect === 0 && true}
+                                onClick={() => handlePagination('prev', 'style')}
+                                disabled={currentIndexStyle === 0 && true}
                             />
                         </Col>
                         <Col>
                             <Button
                                 icon={<ArrowRightOutlined />}
                                 className="btn-icon"
-                                onClick={() => handlePagination('next', '')}
+                                onClick={() => handlePagination('next', 'style')}
                                 disabled={
-                                    currentIndexArchitect >= excellentArchitect.length - numberOfCardShow && true
+                                    currentIndexStyle >= cloneStyleList.length - numberOfCardShow && true
                                 }
                             />
                         </Col>
@@ -366,23 +389,20 @@ const Home = () => {
                 <div className="lst-tool">
 
                     <Row gutter={[16, 16]}>
-                        {excellentArchitect
+                        {cloneStyleList
                             .slice(
-                                currentIndexArchitect,
-                                currentIndexArchitect + numberOfCardShow
+                                currentIndexStyle,
+                                currentIndexStyle + numberOfCardShow
                             )
                             .map((card) => (
                                 <Col
-                                    // onClick={() => {
-                                    //     handleClickCard(card.id);
-                                    // }}
                                     span={spanCol}
                                     key={card.name}
                                 >
                                     <CStyleCard
                                         imageUrl={card.imageUrl}
                                         name={card.name}
-                                        email={card.email}
+                                        id={card.id}
                                     />
                                 </Col>
                             ))}
@@ -405,7 +425,7 @@ const Home = () => {
                             <Button
                                 icon={<ArrowLeftOutlined />}
                                 className="btn-icon"
-                                onClick={() => handlePagination('prev', '')}
+                                onClick={() => handlePagination('prev', 'architect')}
                                 disabled={currentIndexArchitect === 0 && true}
                             />
                         </Col>
@@ -413,7 +433,7 @@ const Home = () => {
                             <Button
                                 icon={<ArrowRightOutlined />}
                                 className="btn-icon"
-                                onClick={() => handlePagination('next', '')}
+                                onClick={() => handlePagination('next', 'architect')}
                                 disabled={
                                     currentIndexArchitect >= excellentArchitect.length - numberOfCardShow && true
                                 }
@@ -457,7 +477,7 @@ const Home = () => {
                             <Button
                                 icon={<ArrowLeftOutlined />}
                                 className="btn-icon"
-                                onClick={() => handlePagination('prev', '')}
+                                onClick={() => handlePagination('prev', 'company')}
                                 disabled={currentIndexCompany === 0 && true}
                             />
                         </Col>
@@ -465,7 +485,7 @@ const Home = () => {
                             <Button
                                 icon={<ArrowRightOutlined />}
                                 className="btn-icon"
-                                onClick={() => handlePagination('next', '')}
+                                onClick={() => handlePagination('next', 'company')}
                                 disabled={
                                     currentIndexCompany >= companyList.length - numberOfCardShow && true
                                 }
@@ -506,7 +526,7 @@ const Home = () => {
 
             {/* Bản vẽ bán chạy */}
             <div className="tool-of-web">
-            <div className="title">
+                <div className="title">
                     <div>Bản vẽ bán chạy</div>
                     <div className="sub-title">
                         <Col>
