@@ -43,7 +43,11 @@ interface CardData {
 
 // Phần trang chủ của trang web
 const Home = () => {
+<<<<<<< HEAD
     const { latestSketchsList, mostViewedSketchList, freeSketchList, cloneArchitecturelist, filteredSketchs, cloneStyleList } = useSelectorRoot(
+=======
+    const { latestSketchsList, mostViewedSketchList, freeSketchList, cloneArchitecturelist, filteredSketchs, currentSearchValue } = useSelectorRoot(
+>>>>>>> 390db90d7bceab9030191e31a817e74e089a8d56
         (state) => state.sketch
     ); // Lst cac ban ve
 
@@ -178,6 +182,7 @@ const Home = () => {
                     break;
                 case 'filtered':
                     setCurrentIndexFilteredSketch(currentIndexFilteredSketch - 1);
+<<<<<<< HEAD
                     break;
                 case 'style':
                     setCurrentIndexStyle(currentIndexStyle - 1);
@@ -187,6 +192,8 @@ const Home = () => {
                     break;
                 case 'company':
                     setCurrentIndexCompany(currentIndexCompany - 1);
+=======
+>>>>>>> 390db90d7bceab9030191e31a817e74e089a8d56
                     break;
                 default:
                     break;
@@ -208,6 +215,7 @@ const Home = () => {
                 case 'filtered':
                     setCurrentIndexFilteredSketch(currentIndexFilteredSketch + 1);
                     break;
+<<<<<<< HEAD
                 case 'style':
                     setCurrentIndexStyle(currentIndexStyle + 1);
                     break;
@@ -217,6 +225,8 @@ const Home = () => {
                 case 'company':
                     setCurrentIndexCompany(currentIndexCompany + 1);
                     break;
+=======
+>>>>>>> 390db90d7bceab9030191e31a817e74e089a8d56
                 default:
                     break;
             }
@@ -258,6 +268,11 @@ const Home = () => {
         dispatch(advancedSearchingRequest(bodyrequest));
     };
 
+    useEffect(() => {
+        console.log("currentSearchValue", currentSearchValue);
+
+    }, [currentSearchValue]);
+
     return (
         <motion.div
             className="main-home"
@@ -296,6 +311,7 @@ const Home = () => {
                             cloneArchitecturelist &&
                             cloneArchitecturelist.map(item => (
                                 <Button
+                                    className={'category-item ' + (currentSearchValue.architecture === item.id ? 'active' : '')}
                                     onClick={() => {
                                         handleSearch(item.id)
                                     }}
