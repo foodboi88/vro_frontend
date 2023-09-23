@@ -41,7 +41,7 @@ interface CardData {
 
 // Phần trang chủ của trang web
 const Home = () => {
-    const { latestSketchsList, mostViewedSketchList, freeSketchList, cloneArchitecturelist, filteredSketchs } = useSelectorRoot(
+    const { latestSketchsList, mostViewedSketchList, freeSketchList, cloneArchitecturelist, filteredSketchs, currentSearchValue } = useSelectorRoot(
         (state) => state.sketch
     ); // Lst cac ban ve
 
@@ -54,8 +54,8 @@ const Home = () => {
 
     const [currentIndexMostViewedSketch, setCurrentIndexMostViewedSketch] = useState(0);
     const [currentIndexLatestSketch, setCurrentIndexLatestSketch] = useState(0);
-    const [currentIndexArchitect,  setCurrentIndexArchitect] = useState(0);
-    const [currentIndexCompany,  setCurrentIndexCompany] = useState(0);
+    const [currentIndexArchitect, setCurrentIndexArchitect] = useState(0);
+    const [currentIndexCompany, setCurrentIndexCompany] = useState(0);
     const [currentIndexFilteredSketch, setCurrentIndexFilteredSketch] = useState(0);
 
 
@@ -172,7 +172,7 @@ const Home = () => {
                     setCurrentIndexLatestSketch(currentIndexLatestSketch - 1);
                     break;
                 case 'filtered':
-                    setCurrentIndexFilteredSketch(currentIndexFilteredSketch-1);
+                    setCurrentIndexFilteredSketch(currentIndexFilteredSketch - 1);
                     break;
                 default:
                     break;
@@ -191,9 +191,9 @@ const Home = () => {
                     setCurrentIndexLatestSketch(currentIndexLatestSketch + 1);
 
                     break;
-                    case 'filtered':
-                        setCurrentIndexFilteredSketch(currentIndexFilteredSketch+1);
-                        break;
+                case 'filtered':
+                    setCurrentIndexFilteredSketch(currentIndexFilteredSketch + 1);
+                    break;
                 default:
                     break;
             }
@@ -235,6 +235,11 @@ const Home = () => {
         dispatch(advancedSearchingRequest(bodyrequest));
     };
 
+    useEffect(() => {
+        console.log("currentSearchValue", currentSearchValue);
+
+    }, [currentSearchValue]);
+
     return (
         <motion.div
             className="main-home"
@@ -273,6 +278,7 @@ const Home = () => {
                             cloneArchitecturelist &&
                             cloneArchitecturelist.map(item => (
                                 <Button
+                                    className={'category-item ' + (currentSearchValue.architecture === item.id ? 'active' : '')}
                                     onClick={() => {
                                         handleSearch(item.id)
                                     }}
@@ -300,7 +306,7 @@ const Home = () => {
                                         className="btn-icon"
                                         onClick={() => handlePagination('next', 'filtered')}
                                         disabled={
-                                            currentIndexFilteredSketch >= filteredSketchs.length - numberOfCardShow && true 
+                                            currentIndexFilteredSketch >= filteredSketchs.length - numberOfCardShow && true
                                         }
                                     />
                                 </Col>
@@ -506,7 +512,7 @@ const Home = () => {
 
             {/* Bản vẽ bán chạy */}
             <div className="tool-of-web">
-            <div className="title">
+                <div className="title">
                     <div>Bản vẽ bán chạy</div>
                     <div className="sub-title">
                         <Col>

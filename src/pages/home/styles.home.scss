@@ -6,7 +6,7 @@
     user-select: none;
     background-color: var(--black-color-v2) !important;
 
-    
+
 
     .header-homepage {
         display: flex;
@@ -146,12 +146,26 @@
             width: 100%;
             margin-bottom: 1em;
             align-items: center;
-            .category-list{
+
+            .category-list {
                 display: flex;
-                padding: .8em 3em;
-                margin: 1em 3em 1em -1em;
-                gap: 19px;
-        
+                margin-left: -.3em;
+                // padding: .8em 3em;
+                // margin: 1em 3em 1em -1em;
+                gap: 1em;
+
+                .category-item {
+                    background-color: var(--black-color-v2);
+                    color: var(--white-color-v2);
+                    border: 1px solid var(--white-color-v2);
+                }
+
+                .category-item.active {
+                    background-color: var(--white-color-v2);
+                    color: var(--black-color-v2);
+                    border: 1px solid var(--white-color-v2);
+                }
+
             }
 
             .sub-title {
