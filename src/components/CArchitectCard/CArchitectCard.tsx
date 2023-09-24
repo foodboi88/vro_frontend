@@ -11,6 +11,8 @@ interface props {
     imageUrl?: string;
     name: string;
     email?: string;
+    type?: string;
+    index?: number;
 }
 
 const CArchitectCard = (props: props) => {
@@ -18,32 +20,58 @@ const CArchitectCard = (props: props) => {
         (state) => state.sketch
     ); // Lst cac ban ve
     const navigate = useNavigate();
-    
-    return (
-        <Card
-            className="card"
-            hoverable
-            cover={<img className="image-card" alt="example" src={props.imageUrl ? props.imageUrl : ImageNotFound} />}
-        >
-            <div className="title-and-price">
-                <Meta
-                    title={
-                        <div className="home-card-title">
-                                <div className="h-c-t-title">
+    function padNumberWithZero(number: any, width: any) {
+        // Convert the number to a string
+        let numberStr = number.toString();
 
+        // Calculate the number of zeros to add
+        let zerosToAdd = width - numberStr.length;
+
+        // Add leading zeros
+        if (zerosToAdd > 0) {
+            numberStr = '0'.repeat(zerosToAdd) + numberStr;
+        }
+
+        return numberStr;
+    }
+    return (
+        <div className="card-main">
+            <Card
+                className="card"
+                hoverable
+                cover={
+                    <div className="image-main">
+                        {(props.type === 'excellentArchitect' && props.index) &&
+                            <div className="excellent-architect">
+                                <div className="excellent-architect-title">
+                                    {padNumberWithZero(props.index, 2)}
+                                </div>
+                            </div>
+                        }
+                        <img className="image-card" alt="example" src={props.imageUrl ? props.imageUrl : ImageNotFound} />
+                    </div>
+                }
+            >
+                <div className="title-and-price">
+                    <Meta
+                        title={
+                            <div className="home-card-title">
+                                <div className="h-c-t-title">
                                     {props.name}
                                 </div>
-                            <div className="h-c-t-view-point">
-                                {/* <EyeOutlined />
+                                <div className="h-c-t-view-point">
+                                    {/* <EyeOutlined />
                                 <div className="number-of-view">
                                     {Math.round(props.view)}
                                 </div> */}
+                                </div>
                             </div>
-                        </div>
-                    }
-                />
-            </div>
-        </Card>
+                        }
+                    />
+                </div>
+            </Card>
+
+        </div>
     );
 };
 

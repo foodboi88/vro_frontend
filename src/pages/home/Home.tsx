@@ -31,7 +31,13 @@ import {
 import IntroImage from "../../images/homepage/introImage.png";
 import CArchitectCard from "../../components/CArchitectCard/CArchitectCard";
 import CStyleCard from "../../components/CStyleCard/CStyleCard";
-
+import ExcellentArchitect1 from "../../images/homepage/excellentArchitect1.png";
+import ExcellentArchitect2 from "../../images/homepage/excellentArchitect2.png";
+import ExcellentArchitect3 from "../../images/homepage/excellentArchitect3.png";
+import ExcellentArchitect4 from "../../images/homepage/excellentArchitect4.png";
+import StyleList1 from "../../images/homepage/styleList1.png";
+import StyleList2 from "../../images/homepage/styleList2.png";
+import StyleList3 from "../../images/homepage/styleList3.png";
 interface CardData {
     id: number;
     title: string;
@@ -43,11 +49,7 @@ interface CardData {
 
 // Phần trang chủ của trang web
 const Home = () => {
-<<<<<<< HEAD
-    const { latestSketchsList, mostViewedSketchList, freeSketchList, cloneArchitecturelist, filteredSketchs, cloneStyleList } = useSelectorRoot(
-=======
-    const { latestSketchsList, mostViewedSketchList, freeSketchList, cloneArchitecturelist, filteredSketchs, currentSearchValue } = useSelectorRoot(
->>>>>>> 390db90d7bceab9030191e31a817e74e089a8d56
+    const { latestSketchsList, mostViewedSketchList, freeSketchList, cloneArchitecturelist, filteredSketchs, cloneStyleList, currentSearchValue } = useSelectorRoot(
         (state) => state.sketch
     ); // Lst cac ban ve
 
@@ -76,25 +78,58 @@ const Home = () => {
 
     const excellentArchitect = [
         {
-            imageUrl: '',
-            name: 'Đỗ Trung Hiếu',
+            imageUrl: ExcellentArchitect1,
+            name: 'Nguyễn Hồ Tân',
             email: 'austindo01@gmail.com'
         },
         {
-            imageUrl: '',
-            name: 'Đỗ Trung Hiếu',
+            imageUrl: ExcellentArchitect2,
+            name: 'Bùi Thị Hương',
             email: 'austindo01@gmail.com'
         },
         {
-            imageUrl: '',
-            name: 'Đỗ Trung Hiếu',
+            imageUrl: ExcellentArchitect3,
+            name: 'Phan Tuấn Anh',
             email: 'austindo01@gmail.com'
         },
         {
-            imageUrl: '',
-            name: 'Đỗ Trung Hiếu',
+            imageUrl: ExcellentArchitect4,
+            name: 'Vũ Thảo Nhi',
             email: 'austindo01@gmail.com'
         },
+    ]
+
+    const styleList = [
+        {
+            imageUrl: StyleList1,
+            name: 'Phong cách hiện đại',
+            id: '64231026edf9dd11e488c250'
+        },
+        {
+            imageUrl: StyleList2,
+            name: 'Phong cách cổ điển',
+            id: '64231026edf9dd11e488c251'
+        },
+        {
+            imageUrl: StyleList3,
+            name: 'Phong cách hiện đại',
+            id: '64231026edf9dd11e488c252'
+        },
+        {
+            imageUrl: StyleList1,
+            name: 'Phong cách hiện đại',
+            id: '64231026edf9dd11e488c253'
+        },
+        {
+            imageUrl: StyleList2,
+            name: 'Phong cách cổ điển',
+            id: '64231026edf9dd11e488c254'
+        },
+        {
+            imageUrl: StyleList3,
+            name: 'Phong cách hiện đại',
+            id: '64231026edf9dd11e488c255'
+        }
     ]
 
     const companyList = [
@@ -182,7 +217,6 @@ const Home = () => {
                     break;
                 case 'filtered':
                     setCurrentIndexFilteredSketch(currentIndexFilteredSketch - 1);
-<<<<<<< HEAD
                     break;
                 case 'style':
                     setCurrentIndexStyle(currentIndexStyle - 1);
@@ -192,8 +226,6 @@ const Home = () => {
                     break;
                 case 'company':
                     setCurrentIndexCompany(currentIndexCompany - 1);
-=======
->>>>>>> 390db90d7bceab9030191e31a817e74e089a8d56
                     break;
                 default:
                     break;
@@ -215,7 +247,6 @@ const Home = () => {
                 case 'filtered':
                     setCurrentIndexFilteredSketch(currentIndexFilteredSketch + 1);
                     break;
-<<<<<<< HEAD
                 case 'style':
                     setCurrentIndexStyle(currentIndexStyle + 1);
                     break;
@@ -225,8 +256,6 @@ const Home = () => {
                 case 'company':
                     setCurrentIndexCompany(currentIndexCompany + 1);
                     break;
-=======
->>>>>>> 390db90d7bceab9030191e31a817e74e089a8d56
                 default:
                     break;
             }
@@ -396,7 +425,8 @@ const Home = () => {
                                 className="btn-icon"
                                 onClick={() => handlePagination('next', 'style')}
                                 disabled={
-                                    currentIndexStyle >= cloneStyleList.length - numberOfCardShow && true
+                                    // currentIndexStyle >= cloneStyleList.length - numberOfCardShow && true
+                                    currentIndexStyle >= styleList.length - numberOfCardShow && true
                                 }
                             />
                         </Col>
@@ -405,7 +435,7 @@ const Home = () => {
                 <div className="lst-tool">
 
                     <Row gutter={[16, 16]}>
-                        {cloneStyleList
+                        {/* {cloneStyleList
                             .slice(
                                 currentIndexStyle,
                                 currentIndexStyle + numberOfCardShow
@@ -414,6 +444,23 @@ const Home = () => {
                                 <Col
                                     span={spanCol}
                                     key={card.name}
+                                >
+                                    <CStyleCard
+                                        imageUrl={card.imageUrl}
+                                        name={card.name}
+                                        id={card.id}
+                                    />
+                                </Col>
+                            ))} */}
+                        {styleList
+                            .slice(
+                                currentIndexStyle,
+                                currentIndexStyle + numberOfCardShow
+                            )
+                            .map((card) => (
+                                <Col
+                                    span={spanCol}
+                                    key={card.id}
                                 >
                                     <CStyleCard
                                         imageUrl={card.imageUrl}
@@ -458,14 +505,13 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="lst-tool">
-
                     <Row gutter={[16, 16]}>
                         {excellentArchitect
                             .slice(
                                 currentIndexArchitect,
                                 currentIndexArchitect + numberOfCardShow
                             )
-                            .map((card) => (
+                            .map((card, index) => (
                                 <Col
                                     // onClick={() => {
                                     //     handleClickCard(card.id);
@@ -476,6 +522,8 @@ const Home = () => {
                                     <CArchitectCard
                                         imageUrl={card.imageUrl}
                                         name={card.name}
+                                        type="excellentArchitect"
+                                        index={index + 1}
                                     />
                                 </Col>
                             ))}

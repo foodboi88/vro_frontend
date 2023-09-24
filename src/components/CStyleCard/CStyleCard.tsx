@@ -9,6 +9,7 @@ import ImageNotFound from "../../images/Image_not_available.png";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
 import { dispatch } from "rxjs/internal/observable/pairs";
 import { advancedSearchingRequest } from "../../redux/controller";
+import { useEffect } from "react";
 interface props {
     imageUrl?: string;
     name: string;
@@ -37,14 +38,19 @@ const CStyleCard = (props: props) => {
         dispatch(advancedSearchingRequest(bodyrequest));
         navigate('/searching')
     };
-    
+
+    useEffect(() => {
+        console.log(props);
+
+    }, [props]);
+
     return (
         <div
-            style={{backgroundImage: props.imageUrl}}
-            onClick={() => {handleClick()}}
-            
-        >   
-            <div>{props.name}</div>
+            style={{ backgroundImage: props.imageUrl ? `url(${props.imageUrl})` : `url(${ImageNotFound})` }}
+            onClick={() => { handleClick() }}
+            className="style-card-main"
+        >
+            <div className="style-card-title">{props.name}</div>
         </div>
     );
 };
