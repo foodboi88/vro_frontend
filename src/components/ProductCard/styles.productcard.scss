@@ -77,11 +77,11 @@
             // font-size: 16px;
             font-size: 1em;
             line-height: 24px;
-            color: #C30200;
+            color: var(--white-color-v2);
         }
 
         .home-card-price.free {
-            color: #27CA40;
+            color: var(--white-color-v2);
         }
     }
 }

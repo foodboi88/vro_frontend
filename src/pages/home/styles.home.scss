@@ -6,8 +6,6 @@
     user-select: none;
     background-color: var(--black-color-v2) !important;
 
-
-
     .header-homepage {
         display: flex;
         justify-content: space-between;
@@ -322,6 +320,28 @@
             border-radius: 16px;
             margin: 8em 3em 1em 3em;
 
+            .left-header {
+                .slogan {
+                    font-size: 3em;
+                }
+
+                .sub-slogan {}
+
+                .button-group {
+                    .login-button {}
+
+                    .more {
+                        .anticon {}
+                    }
+                }
+            }
+
+            .right-header {
+                img {
+                    width: 30vw;
+                }
+            }
+
             .category-list {
                 margin-top: 1em;
 
@@ -419,6 +439,9 @@
                 .ant-row {
 
                     .ant-col {
+                        .style-card-main {
+                            width: 265px;
+                        }
 
                         .ant-card {
                             width: 265px;
@@ -557,6 +580,9 @@
                 .ant-row {
 
                     .ant-col {
+                        .style-card-main {
+                            width: 200px;
+                        }
 
                         .ant-card {
                             width: 200px;
@@ -585,6 +611,57 @@
                 padding: 1em;
             }
         }
+
+        .homepage-footer {
+            gap: 1em;
+
+            .left-footer {
+                margin-right: 0;
+
+                .slogan {
+                    color: var(--white-color-v2);
+                    font-size: 3em;
+                    font-weight: 550;
+
+                    strong {
+                        color: var(--main-color);
+                    }
+                }
+
+                .wellcome {
+                    color: var(--white-color-v2-300);
+                }
+
+                .info {
+                    display: flex;
+                    margin-top: 20px;
+
+
+                    .more {
+                        margin-left: 20px;
+                        padding: 3px;
+
+                        .name-more {
+                            color: var(--white-color-v2);
+                        }
+
+                        .content-more {
+                            color: var(--white-color-v2-300);
+                        }
+                    }
+                }
+            }
+
+            .right-footer {
+                display: flex;
+                align-items: center;
+
+                img {
+                    width: 25vw;
+                }
+            }
+
+        }
     }
 }
 
@@ -597,6 +674,29 @@
             background: #FFFFFF;
             border-radius: 16px;
             margin: 8em 3em 1em 3em;
+
+            .left-header {
+                .slogan {
+                    font-size: 2.5em;
+                    line-height: normal;
+                }
+
+                .sub-slogan {}
+
+                .button-group {
+                    .login-button {}
+
+                    .more {
+                        .anticon {}
+                    }
+                }
+            }
+
+            .right-header {
+                img {
+                    width: 30vw;
+                }
+            }
 
             .category-list {
                 margin-top: 0em;
@@ -711,6 +811,9 @@
                 .ant-row {
 
                     .ant-col {
+                        .style-card-main {
+                            width: 210px;
+                        }
 
                         .ant-card {
                             width: 210px;
@@ -742,13 +845,45 @@
 
 @media (max-width: 800px) {
     .main-home {
+
+
         .header-homepage {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
+            gap: 1em;
             padding: .8em 1em;
             background: none;
             border-radius: 16px;
             margin: 8em 3em 1em 3em;
+
+            .left-header {
+                margin-right: 0;
+
+                .slogan {
+                    font-size: 1.5em;
+                }
+
+                .sub-slogan {
+                    font-size: .8em;
+                }
+
+                .button-group {
+                    .login-button {}
+
+                    .more {
+                        .anticon {}
+                    }
+                }
+            }
+
+            .right-header {
+                display: flex;
+                align-items: center;
+
+                img {
+                    width: 30vw;
+                }
+            }
 
             .category-list {
                 margin-top: 0em;
@@ -864,6 +999,9 @@
                 .ant-row {
 
                     .ant-col {
+                        .style-card-main {
+                            width: 220px;
+                        }
 
                         .ant-card {
                             width: 220px;
@@ -910,7 +1048,34 @@
             padding: .8em 1em;
             background: none;
             border-radius: 16px;
-            margin: 6em 3em 1em 3em;
+            margin: 6em 0em 0em 0em;
+
+            .left-header {
+                .slogan {
+                    font-size: 1.5em;
+                }
+
+                .sub-slogan {}
+
+                .button-group {
+                    .login-button {}
+
+                    .more {
+                        .anticon {}
+                    }
+                }
+            }
+
+            .right-header {
+                // display: flex;
+                // align-items: center;
+                display: none;
+
+                img {
+
+                    width: 30vw;
+                }
+            }
 
             .category-list {
                 margin-top: 0em;
@@ -1041,6 +1206,11 @@
                     .ant-col {
                         padding: 0 !important;
 
+                        .style-card-main {
+                            // width: 300px;
+                            width: clamp(200px, 60vw, 300px);
+                        }
+
                         .ant-card {
                             width: 80%;
                         }
@@ -1079,6 +1249,60 @@
             max-width: 100%;
 
             .content {}
+        }
+
+        .homepage-footer {
+            gap: 1em;
+            margin: 0 0 3em 0;
+            padding: 0 1em;
+
+            .left-footer {
+                margin-right: 0;
+
+                .slogan {
+                    color: var(--white-color-v2);
+                    font-size: 2.5em;
+                    font-weight: 550;
+
+                    strong {
+                        color: var(--main-color);
+                    }
+                }
+
+                .wellcome {
+                    font-size: 1em;
+                    color: var(--white-color-v2-300);
+                }
+
+                .info {
+                    display: flex;
+                    margin-top: 20px;
+
+
+                    .more {
+                        margin-left: 20px;
+                        padding: 3px;
+
+                        .name-more {
+                            color: var(--white-color-v2);
+                        }
+
+                        .content-more {
+                            color: var(--white-color-v2-300);
+                        }
+                    }
+                }
+            }
+
+            .right-footer {
+                display: none;
+                // align-items: center;
+
+                img {
+                    width: 25vw;
+                }
+            }
+
         }
     }
 
@@ -1123,7 +1347,7 @@
             padding: .8em 1em;
             background: none;
             border-radius: 16px;
-            margin: 6em 3em 0 3em;
+            margin: 6em 0em 0 0em;
 
             .category-list {
                 margin-top: 0em;
@@ -1255,6 +1479,10 @@
 
                     .ant-col {
                         padding: 0 !important;
+
+                        .style-card-main {
+                            width: clamp(100px, 40vw, 200px);
+                        }
 
                         .ant-card {
                             width: 80%;

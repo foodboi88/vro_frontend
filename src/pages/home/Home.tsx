@@ -425,8 +425,8 @@ const Home = () => {
                                 className="btn-icon"
                                 onClick={() => handlePagination('next', 'style')}
                                 disabled={
-                                    // currentIndexStyle >= cloneStyleList.length - numberOfCardShow && true
-                                    currentIndexStyle >= styleList.length - numberOfCardShow && true
+                                    currentIndexStyle >= cloneStyleList.length - numberOfCardShow && true
+                                    // currentIndexStyle >= styleList.length - numberOfCardShow && true
                                 }
                             />
                         </Col>
@@ -435,7 +435,7 @@ const Home = () => {
                 <div className="lst-tool">
 
                     <Row gutter={[16, 16]}>
-                        {/* {cloneStyleList
+                        {cloneStyleList
                             .slice(
                                 currentIndexStyle,
                                 currentIndexStyle + numberOfCardShow
@@ -451,8 +451,8 @@ const Home = () => {
                                         id={card.id}
                                     />
                                 </Col>
-                            ))} */}
-                        {styleList
+                            ))}
+                        {/* {styleList
                             .slice(
                                 currentIndexStyle,
                                 currentIndexStyle + numberOfCardShow
@@ -468,7 +468,7 @@ const Home = () => {
                                         id={card.id}
                                     />
                                 </Col>
-                            ))}
+                            ))} */}
                     </Row>
 
                 </div>
@@ -572,9 +572,14 @@ const Home = () => {
                                     // }}
                                     span={spanCol}
                                 >
-                                    <img
-                                        src={card.imageUrl}
+                                    <CStyleCard
+                                        imageUrl={card.imageUrl}
+                                        name={''}
+                                        id={''}
                                     />
+                                    {/* <img */}
+                                    {/* src={card.imageUrl} */}
+                                    {/* /> */}
                                 </Col>
                             ))}
                     </Row>

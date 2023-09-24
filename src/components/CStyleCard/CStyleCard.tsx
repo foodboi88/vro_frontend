@@ -12,8 +12,8 @@ import { advancedSearchingRequest } from "../../redux/controller";
 import { useEffect } from "react";
 interface props {
     imageUrl?: string;
-    name: string;
-    id: string
+    name?: string;
+    id?: string
 }
 
 interface DATA_TRANFER {
@@ -31,10 +31,10 @@ const CStyleCard = (props: props) => {
 
     const handleClick = () => {
         console.log(props.id);
+        if (!props.id) return;
         const bodyrequest = {
             style: props.id
         };
-
         dispatch(advancedSearchingRequest(bodyrequest));
         navigate('/searching')
     };
