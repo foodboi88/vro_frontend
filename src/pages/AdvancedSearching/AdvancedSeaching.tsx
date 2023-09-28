@@ -231,7 +231,6 @@ const AdvancedSeaching = () => {
             <CFilter />
             <div className="filtered-items">
                 <div className="author-introduction">
-
                 </div>
                 <div className="sketch-list">
 

@@ -66,7 +66,7 @@ interface SketchState {
     cloneToolList: ITool[];
     architectureList: CheckboxOptionType[];
     cloneArchitecturelist: ITool[];
-    styleList: CheckboxOptionType[]; 
+    styleList: CheckboxOptionType[];
     cloneStyleList: ITool[];
     latestSketchsList: ISketch[];
     mostViewedSketchList: ISketch[];
@@ -410,6 +410,29 @@ const sketchSlice = createSlice({
             state.loading = false;
         },
 
+        sortFilteredSketchRequest(state, action: PayloadAction<any>) {
+            // objs.sort((a,b) => a.last_nom - b.last_nom);
+            switch (action.payload) {
+                case 'view':
+                    // code block
+                    state.filteredSketchs?.sort((a, b) => a.views - b.views)
+                    break;
+                case 'purchase':
+                    // code block
+                    state.filteredSketchs?.sort((a, b) => a.quantityPurchased - b.quantityPurchased)
+                    break;
+                case 'minToMaxPrice':
+                    state.filteredSketchs?.sort((a, b) => a.price - b.price)
+                    break;
+                case 'maxToMaxPrice':
+                    state.filteredSketchs?.sort((a, b) => b.price - a.price)
+                    break;
+                default:
+                // code block
+            }
+
+        },
+
         advancedSearchingRequest(
             state,
             action: PayloadAction<ICurrentSearchValue>
@@ -426,9 +449,9 @@ const sketchSlice = createSlice({
                 name: action.payload.name
                     ? action.payload.name
                     : state.currentSearchValue.name,
-                // tool: action.payload.tool
-                //     ? action.payload.tool
-                //     : state.currentSearchValue.tool,
+                tool: action.payload.tool
+                    ? action.payload.tool
+                    : state.currentSearchValue.tool,
             };
         },
 
@@ -1179,7 +1202,7 @@ const sketchSlice = createSlice({
 
         editSketchRequest(state, action: PayloadAction<any>) {
             state.loading = true;
-            
+
         },
 
         editSketchSuccess(state, action: PayloadAction<any>) {
@@ -1611,7 +1634,7 @@ const uploadContentSketch$: RootEpic = (action$) =>
                 productTypeOfArchitecture: re.payload.productTypeOfArchitecture[0].value,
             };
 
-            
+
 
             return SketchsApi.uploadSketchContent(bodyrequest).pipe(
                 switchMap((res: any) => {
@@ -2316,6 +2339,8 @@ export const {
     getPurchasedSketchsRequest,
     getSellerProfileRequest,
     editSketchRequest,
+
+    sortFilteredSketchRequest
 
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;
