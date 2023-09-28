@@ -192,44 +192,22 @@
 
     }
 
-    .header-action {
-        position: fixed !important;
-        justify-content: space-between;
-        width: 100%;
-        background: #B80505;
-        z-index: 100;
-        font-family: 'Lexend Deca';
-        font-style: normal;
+    .header-action-type {
         display: flex;
         align-items: center;
-        padding: .5em 3em;
-        margin-top: 60px;
-
-        .header-action-content {
+        gap: 2em;
+        .header-action-item {
             display: flex;
             align-items: center;
-
-            gap: 1.5em;
-
-            .header-action-type {
-                display: flex;
-                align-items: center;
-                gap: 1em;
-            }
-
-            .header-action-item {
-                display: flex;
-                align-items: center;
-                gap: 1em;
-                font-size: 1em;
-                color: white;
-                cursor: pointer;
-            }
-
-            .header-action-item:first-child {}
+            gap: 1em;
+            font-size: 1em;
+            color: white;
+            cursor: pointer;
         }
+        .header-action-item:first-child {}
     }
 }
+
 
 .ant-drawer {
     .ant-drawer-header {
