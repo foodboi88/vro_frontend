@@ -92,6 +92,37 @@
 
 .ant-pagination {
     text-align: end;
+
+    .ant-pagination-prev,
+    .ant-pagination-next,
+    .ant-pagination-jump-prev,
+    .ant-pagination-jump-next {
+        background-color: var(--second-black-color-v2);
+        border: 1px solid var(--white-color-v2-300);
+        color: var(--white-color-v2-300);
+    }
+
+    .ant-pagination-prev .ant-pagination-item-link,
+    .ant-pagination-next .ant-pagination-item-link {
+        background-color: var(--second-black-color-v2);
+        border: 1px solid var(--white-color-v2-300);
+        color: var(--white-color-v2-300);
+        align-items: center;
+        display: flex;
+        justify-content: center;
+    }
+
+    .ant-pagination-item {
+        background-color: var(--second-black-color-v2);
+        border: 1px solid var(--white-color-v2-300);
+        color: var(--white-color-v2-300);
+    }
+
+    .ant-pagination-item-active {
+        background-color: var(--white-color-v2);
+        border: 1px solid var(--black-color-v2);
+        color: var(--black-color-v2);
+    }
 }
 
 @media (max-width: 900px) {
