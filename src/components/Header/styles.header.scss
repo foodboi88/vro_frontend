@@ -128,7 +128,7 @@
                 display: flex;
                 align-items: center;
                 // justify-content: space-around;
-                gap: 2em;
+                gap: 0em;
 
                 .icon-group {
                     display: flex;
@@ -618,7 +618,7 @@
         }
 
         .menubtn.login {
-            display: block;
+            display: none;
         }
     }
 
@@ -658,6 +658,12 @@
 
         .drawer-button.login {
             display: none;
+        }
+    }
+
+    .header {
+        .header-action-type {
+            gap: 1em;
         }
     }
 }
@@ -823,7 +829,7 @@
 //     }
 // }
 
-@media (max-width: 700px) {
+@media (max-width: 800px) {
     .header {
         .main-header {
             .header-left {
