@@ -2,22 +2,18 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 import {
-    BellOutlined,
     DownOutlined,
-    MessageOutlined,
     SearchOutlined,
-    ShoppingCartOutlined,
+    ShoppingCartOutlined
 } from "@ant-design/icons";
 import {
     Avatar,
+    Badge,
     Button,
     Drawer,
     Dropdown,
     Input,
-    Menu,
-    MenuProps,
-    Badge,
-    notification,
+    MenuProps
 } from "antd";
 import { useEffect, useState } from "react";
 import "./styles.header.scss";
@@ -26,25 +22,19 @@ import { Link, useNavigate } from "react-router-dom";
 // import CRegisterModal from './CRegisterModal';
 import { MenuOutlined } from "@ant-design/icons";
 import { motion } from "framer-motion";
+import { ICurrentSearchValue } from "../../common/sketch.interface";
 import Utils from "../../common/utils";
-import UserIcon from "../../images/user_icon.png";
-import SearchIcon from "../../images/Search_Icon.png";
-import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
+import { ROLE } from "../../enum/role.enum";
 import Logo from "../../images/header/logo.png";
+import UserIcon from "../../images/user_icon.png";
 import Login from "../../pages/login/Login";
 import Register from "../../pages/login/Register";
-import HeaderIcon from "../../images/header/header-icon.png";
 import {
     advancedSearchingRequest,
     getAllSketchInCartRequest,
     getSketchQuantityInCartRequest,
 } from "../../redux/controller";
-import { ICurrentSearchValue } from "../../common/sketch.interface";
-import { GoLocation } from "react-icons/go";
-import { FaPhoneVolume } from "react-icons/fa";
-import { BsQuestionCircle } from "react-icons/bs";
-import { AiOutlineFileAdd } from "react-icons/ai";
-import { ROLE } from "../../enum/role.enum";
+import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
 
 interface MyProps {
     // setIsLogout: React.Dispatch<React.SetStateAction<boolean>>
@@ -54,7 +44,7 @@ interface MyProps {
 export const CHeader = (props: MyProps) => {
     const [visible, setVisible] = useState(false); // Biến thể hiện nút thu gọn menu có đang mở hay không
     const [current, setCurrent] = useState<string>("1"); // Biến thể hiện giá trị cho nút hiện tại
-    const { tokenLogin, accesstokenExpỉred, userName } = useSelectorRoot((state) => state.login);
+    const { accesstokenExpỉred, userName } = useSelectorRoot((state) => state.login);
     const { sketchsQuantityInCart } = useSelectorRoot((state) => state.sketch);
 
 
@@ -66,6 +56,39 @@ export const CHeader = (props: MyProps) => {
     const { currentSearchValue } = useSelectorRoot((state) => state.sketch);
     const dispatch = useDispatchRoot();
     const { userRole } = useSelectorRoot((state) => state.login); // Biến kiểm tra xem user có phải là admin hay không
+    const [windowSize, setWindowSize] = useState([
+        window.innerWidth,
+        window.innerHeight,
+    ]);
+    const [isShowLogin, setIsShowLogin] = useState<boolean>(false); // Biến kiểm tra xem user có phải là admin hay không
+    const [isShowSearch, setIsShowSearch] = useState<boolean>(false); // Biến kiểm tra xem user có phải là admin hay không
+    const [isShowNavibar, setIsShowNavibar] = useState<boolean>(false); // Biến kiểm tra xem user có phải là admin hay không
+    useEffect(() => {
+        const handleWindowResize = () => {
+            setWindowSize([window.innerWidth, window.innerHeight]);
+        };
+
+        window.addEventListener("resize", handleWindowResize);
+        if (window.innerWidth > 1000) {
+            setIsShowLogin(false);
+            setIsShowSearch(false);
+            setIsShowNavibar(false);
+        }
+        if (window.innerWidth <= 1000) {
+            setIsShowLogin(true);
+            setIsShowSearch(true);
+            setIsShowNavibar(false);
+        }
+        if (window.innerWidth <= 700) {
+            setIsShowLogin(true);
+            setIsShowSearch(true);
+            setIsShowNavibar(true);
+        }
+
+        return () => {
+            window.removeEventListener("resize", handleWindowResize);
+        };
+    });
 
     useEffect(() => {
         document.body.scrollTo({
@@ -73,8 +96,6 @@ export const CHeader = (props: MyProps) => {
             behavior: "smooth"
         });
     }, [navigate]);
-
-
 
     useEffect(() => {
         if (window.location.pathname === "/test") setCurrent("2");
@@ -111,11 +132,6 @@ export const CHeader = (props: MyProps) => {
     const onClose = () => {
         setVisible(false);
     };
-
-    // Gán giá trị cho biến nút hiện tại
-    const handleClick = (e: { key: any }) => {
-        setCurrent(e.key);
-    };
     const onClickLogout = () => {
         Utils.removeItemLocalStorage("token");
         Utils.removeItemLocalStorage("userMail");
@@ -129,22 +145,6 @@ export const CHeader = (props: MyProps) => {
         window.location.reload();
     };
     const items: MenuProps["items"] = [
-        // {
-        //     key: '1',
-        //     label: (
-        //         <div >
-        //             Tên: {userName}
-        //         </div>
-        //     ),
-        // },
-        // {
-        //     key: '2',
-        //     label: (
-        //         <div >
-        //             Email: {userEmail}
-        //         </div>
-        //     ),
-        // },
         {
             key: "4",
             label: (
@@ -186,9 +186,6 @@ export const CHeader = (props: MyProps) => {
         navigate("/searching");
         onClose();
     };
-    const handleUpload = () => {
-        navigate("/upload-sketch");
-    };
     const checkIsLogin = (val: boolean) => {
         setIsLogin(val);
     };
@@ -220,7 +217,6 @@ export const CHeader = (props: MyProps) => {
                         <Link to={"/"} className="logo-text">
                             <img src={Logo} />
                             <div className="text-logo">Vro Group</div>
-
                         </Link>
                     </div>
 
@@ -228,7 +224,7 @@ export const CHeader = (props: MyProps) => {
 
                 <div className="header-action-type">
                     <div className="header-action-item">
-                        Danh mục công trình
+                        Trang chủ
                     </div>
                     <div className="header-action-item">
                         Về chúng tôi
@@ -255,7 +251,7 @@ export const CHeader = (props: MyProps) => {
                     <div className="user-infor">
                         {accesstokenExpỉred === true ? (
                             <>
-                                <motion.div
+                                {/* <motion.div
                                     className="header-button login"
                                     whileHover={{ scale: 1.1 }}
                                     whileTap={{ scale: 0.95 }}
@@ -264,7 +260,7 @@ export const CHeader = (props: MyProps) => {
                                         onClick={() => setIsOpenLoginModal(true)}>
                                         Đăng nhập
                                     </Button>
-                                </motion.div>
+                                </motion.div> */}
                                 <motion.div
                                     className="header-button login"
                                     whileHover={{ scale: 1.1 }}
@@ -341,40 +337,45 @@ export const CHeader = (props: MyProps) => {
                             <div
                                 style={{ display: "flex", flexDirection: "column" }}
                             >
-                                {!isLogin
-                                    && (
-
-                                        <Button className="drawer-button notlogin"
-                                            onClick={() => {
-                                                setIsOpenLoginModal(true)
-                                                onClose()
-                                            }}>
-                                            Đăng nhập
-                                        </Button>
-                                    )}
-                                {!isLogin
-                                    && (
-                                        <Button className="drawer-button notlogin"
-                                            onClick={() => {
-                                                setIsOpenRegisterModal(true)
-                                                onClose()
-                                            }}
-                                        >
-                                            Đăng ký
-                                        </Button>
-                                    )}
-                                {isLogin && (
-                                    <Button className={'drawer-button login'}>
-                                        Đăng bản vẽ
+                                {(!isLogin && isShowLogin) && (
+                                    <Button className="drawer-button"
+                                        onClick={() => {
+                                            setIsOpenRegisterModal(true)
+                                            onClose()
+                                        }}
+                                    >
+                                        Đăng ký
                                     </Button>
                                 )}
-                                <div className={`header-content-input draw ${isLogin && "login"}`}>
-                                    <Input
-                                        className="search-input"
-                                        placeholder="Tìm kiếm bản vẽ"
-                                        onPressEnter={handleSearching}
-                                    />
-                                </div>
+                                {isShowSearch &&
+                                    <div className={`header-content-input draw `}>
+                                        <Input
+                                            className="search-input"
+                                            placeholder="Tìm kiếm bản vẽ"
+                                            onPressEnter={handleSearching}
+                                        />
+                                    </div>
+                                }
+                                {
+                                    isShowNavibar &&
+                                    <div className="header-action-type">
+                                        <div className="header-action-item">
+                                            Trang chủ
+                                        </div>
+                                        <div className="header-action-item">
+                                            Về chúng tôi
+                                        </div>
+                                        <div className="header-action-item">
+                                            Sứ mệnh
+                                        </div>
+                                        <div className="header-action-item">
+                                            Sự kết nối
+                                        </div>
+                                        <div className="header-action-item">
+                                            Liên hệ
+                                        </div>
+                                    </div>
+                                }
                             </div>
                         </Drawer>
                     </>
