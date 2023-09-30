@@ -107,6 +107,7 @@ const Login = (props: MyProps) => {
                 onOk={props.handleCancelModal}
                 onCancel={props.handleCancelModal}
                 footer={false}
+                className="modal-login"
             >
                 <Form
                     name="normal_login"
