@@ -496,9 +496,9 @@ const sketchSlice = createSlice({
         getRatesBySketchIdRequest(state, action: PayloadAction<any>) {
             state.loading = true;
         },
-        getRatesBySketchIdSuccess(state, action: PayloadAction<IRates>) {
+        getRatesBySketchIdSuccess(state, action: PayloadAction<any>) {
             state.loading = false;
-            state.ratesLst = action.payload;
+            state.ratesLst = action.payload.data;
         },
         getRatesBySketchIdFail(state, action: PayloadAction<any>) {
             state.loading = false;

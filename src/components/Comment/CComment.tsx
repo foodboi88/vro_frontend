@@ -46,11 +46,25 @@ const commentList = [
 ]
 
 const CComment = () => {
-    const [activeButton, setActiveButton] = useState<number>(1);
+    const [activeButton, setActiveButton] = useState<number>(0);
     const { ratesLst } = useSelectorRoot((state) => state.sketch); // Lấy ra dữ liệu detail sketch và danh sách comment từ redux
+    const [currentCommentList, setCurrentCommentList] = useState(ratesLst?.items ? ratesLst?.items : []);
+
+    const filterCommentByStar = (buttonNumber: number) => {
+        if (ratesLst) {
+
+            if (buttonNumber === 0) {
+                setCurrentCommentList(ratesLst?.items ? ratesLst?.items : [])
+            } else {
+                const cloneRateList = ratesLst
+                setCurrentCommentList(cloneRateList?.items.filter(item => item.rate === buttonNumber));
+            }
+        }
+    }
 
     const handleButtonClick = (buttonNumber: number) => {
         setActiveButton(buttonNumber);
+        filterCommentByStar(buttonNumber)
     };
     return (
         <div className='main-comment'>
@@ -61,40 +75,10 @@ const CComment = () => {
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}>
                         <Button
-                            type={activeButton === 1 ? 'primary' : 'default'}
-                            onClick={() => handleButtonClick(1)}
+                            type={activeButton === 0 ? 'primary' : 'default'}
+                            onClick={() => handleButtonClick(0)}
                         >
                             Tất cả
-                        </Button>
-                    </motion.div>
-                    <motion.div
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}>
-                        <Button
-                            type={activeButton === 2 ? 'primary' : 'default'}
-                            onClick={() => handleButtonClick(2)}
-                        >
-                            5 sao (0)
-                        </Button>
-                    </motion.div>
-                    <motion.div
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}>
-                        <Button
-                            type={activeButton === 3 ? 'primary' : 'default'}
-                            onClick={() => handleButtonClick(3)}
-                        >
-                            4 sao (0)
-                        </Button>
-                    </motion.div>
-                    <motion.div
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}>
-                        <Button
-                            type={activeButton === 4 ? 'primary' : 'default'}
-                            onClick={() => handleButtonClick(4)}
-                        >
-                            3 sao (0)
                         </Button>
                     </motion.div>
                     <motion.div
@@ -104,17 +88,47 @@ const CComment = () => {
                             type={activeButton === 5 ? 'primary' : 'default'}
                             onClick={() => handleButtonClick(5)}
                         >
-                            2 sao (56)
+                            5 sao
                         </Button>
                     </motion.div>
                     <motion.div
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}>
                         <Button
-                            type={activeButton === 6 ? 'primary' : 'default'}
-                            onClick={() => handleButtonClick(6)}
+                            type={activeButton === 4 ? 'primary' : 'default'}
+                            onClick={() => handleButtonClick(4)}
                         >
-                            1 sao (32)
+                            4 sao
+                        </Button>
+                    </motion.div>
+                    <motion.div
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}>
+                        <Button
+                            type={activeButton === 3 ? 'primary' : 'default'}
+                            onClick={() => handleButtonClick(3)}
+                        >
+                            3 sao
+                        </Button>
+                    </motion.div>
+                    <motion.div
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}>
+                        <Button
+                            type={activeButton === 2 ? 'primary' : 'default'}
+                            onClick={() => handleButtonClick(2)}
+                        >
+                            2 sao
+                        </Button>
+                    </motion.div>
+                    <motion.div
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}>
+                        <Button
+                            type={activeButton === 1 ? 'primary' : 'default'}
+                            onClick={() => handleButtonClick(1)}
+                        >
+                            1 sao
                         </Button>
                     </motion.div>
                 </Button.Group>
@@ -122,32 +136,33 @@ const CComment = () => {
                     className='total-rate'
                 >
 
-                    <div className='number'>{ratesLst?.TotalStar}</div>
+                    <div className='number'>{ratesLst?.rateProduct}</div>
                     <Rate
                         allowHalf
-                        defaultValue={ratesLst?.TotalStar}
+                        // defaultValue={ratesLst?.rateProduct}
                         count={5}
                         disabled
+                        value={ratesLst?.rateProduct}
                     />
                 </div>
             </div>
             <div className='comment-list'>
                 {
-                    (ratesLst?.RateUser && ratesLst?.RateUser.length === 0)
+                    (currentCommentList && currentCommentList.length > 0)
                         ?
-                        ratesLst?.RateUser.map((item) => (
+                        currentCommentList.map((item) => (
                             <div className='comment'>
                                 <div className='avatar'>
                                     <img src={Avatar} />
                                 </div>
                                 <div className='content'>
-                                    <div className='name'>{item.nameUser}</div>
+                                    <div className='name'>{item.userName}</div>
                                     <div>
                                         <Rate
                                             allowHalf
-                                            defaultValue={item.rate}
                                             count={5}
                                             disabled
+                                            value={item.rate}
                                         />
                                     </div>
                                     <div className='comment-content'>{item.description}</div>

@@ -20,7 +20,7 @@ export enum API_URL {
     CHANGE_PASSWORD = "users/changepassword",
 
     GET_SELLER_INFO = "sellers/profile",
-    GET_RATES_BY_SKETCH_ID = "rates/by-id-product",
+    GET_RATES_BY_SKETCH_ID = "rates/get-all-rate",
     GET_PRODUCT_FILE_BY_ID = "product-files/by-id-product",
     ADD_SKETCH_TO_CART = "Carts/add-product-to-cart", // Thêm bản vẽ vào giỏ hàng
     GET_SKETCH_QUANTITY_IN_CART = "Carts/get-quantity-product-my-cart",
