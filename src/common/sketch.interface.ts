@@ -38,6 +38,7 @@ export interface ICurrentSearchValue {
     style?: string;
     size?: number;
     offset?: number;
+    authorId?: string;
 }
 export interface ISize {
     width: string;

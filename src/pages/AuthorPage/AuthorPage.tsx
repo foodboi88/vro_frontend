@@ -94,7 +94,7 @@ const AuthorPage = () => {
     return (
         <div className="main-author-page">
             <CFilter
-
+                authorId={authorId}
             />
             <div className="page-content">
                 {authorIntroduction && (

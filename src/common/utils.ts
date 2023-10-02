@@ -337,7 +337,8 @@ class Utils {
     }
 
     static parseObjectToQueryParameter(object: any){
-        let result = '?' + new URLSearchParams(object).toString();
+        const cleanObject = Utils.getRidOfUnusedProperties(object)
+        let result = '?' + new URLSearchParams(cleanObject).toString();
         return result;
     }
 

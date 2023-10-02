@@ -1504,15 +1504,17 @@ const advancedSearchSketch$: RootEpic = (action$) =>
         switchMap((re) => {
             // IdentityApi.login(re.payload) ?
             console.log(re);
-            const bodyrequest: ICurrentSearchValue = {
+            const bodyrequest = {
                 size: 1000,
                 offset: 0,
                 name: re.payload.name ? re.payload.name : "",
-                tool: re.payload.tool ? re.payload.tool : "",
-                architecture: re.payload.architecture
+                designToolId: re.payload.tool ? re.payload.tool : "",
+                typeOfArchitectureId: re.payload.architecture
                     ? re.payload.architecture
                     : "",
-                style: re.payload.style ? re.payload.style : "",
+                designStyleId: re.payload.style ? re.payload.style : "",
+                authorId: re.payload.authorId ? re.payload.authorId : ''
+
             };
 
             return SketchsApi.advancedSearching(bodyrequest).pipe(
