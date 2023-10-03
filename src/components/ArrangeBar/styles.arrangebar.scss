@@ -4,7 +4,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    background: #E5E5E5;
+    background: var(--second-black-color-v2);
     border-radius: 20px;
     font-size: 1em;
     line-height: 24px;
@@ -32,8 +32,10 @@
         }
 
         .ant-btn.ant-btn-default {
-            background: #FFFFFF;
-            color: #858585;
+            border-radius: 4px;
+            border: 1px solid var(--white-color-v2-300);
+            background: var(--second-black-color-v2);
+            color: var(--white-color-v2-300);
         }
     }
 
@@ -42,7 +44,10 @@
             width: 15em;
 
             .ant-select-selector {
-                border-radius: 10px;
+                border-radius: 4px !important;
+                background-color: var(--second-black-color-v2) !important;
+                border: 1px solid var(--white-color-v2-300) !important;
+                color: var(--white-color-v2-300) !important;
 
                 .ant-select-selection-item {
                     font-weight: 700;
@@ -71,6 +76,11 @@
 
         }
     }
+}
+
+.ant-select-dropdown {
+    background-color: var(--second-black-color-v2) !important;
+    padding: 0px !important;
 }
 
 .ant-select-arrow {

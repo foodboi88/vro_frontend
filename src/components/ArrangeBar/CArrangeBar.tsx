@@ -5,14 +5,18 @@ import { motion } from 'framer-motion';
 import {
     CaretDownOutlined,
 } from '@ant-design/icons';
+import { useDispatchRoot } from '../../redux/store';
+import { sortFilteredSketchRequest } from '../../redux/controller';
 
 const { Option } = Select;
 
 const CArrangeBar = () => {
-    const [activeButton, setActiveButton] = useState<number>(1);
+    const [activeButton, setActiveButton] = useState<string>('');
+    const dispatch = useDispatchRoot()
 
-    const handleButtonClick = (buttonNumber: number) => {
-        setActiveButton(buttonNumber);
+    const handleButtonClick = (sortType: string) => {
+        setActiveButton(sortType);
+        dispatch(sortFilteredSketchRequest(sortType))
     };
     return (
         <div className='main-arrange'>
@@ -22,20 +26,20 @@ const CArrangeBar = () => {
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}>
                     <Button
-                        type={activeButton === 1 ? 'primary' : 'default'}
-                        onClick={() => handleButtonClick(1)}
+                        type={activeButton === 'view' ? 'primary' : 'default'}
+                        onClick={() => handleButtonClick('view')}
                     >
-                        Mới nhất
+                        Xem nhiều nhất
                     </Button>
                 </motion.div>
                 <motion.div
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}>
                     <Button
-                        type={activeButton === 2 ? 'primary' : 'default'}
-                        onClick={() => handleButtonClick(2)}
+                        type={activeButton === 'purchase' ? 'primary' : 'default'}
+                        onClick={() => handleButtonClick('purchase')}
                     >
-                        Thuê nhiều nhất
+                        Mua nhiều nhất
                     </Button>
                 </motion.div>
             </Button.Group>
@@ -46,9 +50,10 @@ const CArrangeBar = () => {
                     <Select
                         suffixIcon={<CaretDownOutlined />}
                         placeholder="Chọn cách sắp xếp"
+                        onChange={handleButtonClick}
                     >
-                        <Option value='1'>Từ cao đến thấp</Option>
-                        <Option value='2'>Từ thấp đến cao</Option>
+                        <Option value='maxToMinPrice'>Giá từ cao đến thấp</Option>
+                        <Option value='minToMaxPrice'>Giá từ thấp đến cao</Option>
                     </Select>
 
                 </motion.div>

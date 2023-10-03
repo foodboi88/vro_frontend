@@ -56,11 +56,9 @@ const CFilter = (props: props) => {
         currentSearchValue,
     } = useSelectorRoot((state) => state.sketch);
     const [form] = Form.useForm();
-    const [selectedTool, setSelectedTool] = useState<string[]>([]);
-    const [selectedArchitecture, setSelectedArchitecture] = useState<string[]>(
-        []
-    );
-    const [selectedStyle, setSelectedStyle] = useState<string[]>([]);
+    const [selectedTool, setSelectedTool] = useState<string>('');
+    const [selectedArchitecture, setSelectedArchitecture] = useState<string>('');
+    const [selectedStyle, setSelectedStyle] = useState<string>('');
 
     useEffect(() => {
         dispatch(getAllFilterCriteriasRequest());
@@ -69,22 +67,18 @@ const CFilter = (props: props) => {
     const handleSearch = (param: DATA_TRANFER) => {
         console.log(param);
         const bodyrequest = {
-            // tool: param.target === "tool" ? param.value : selectedTool,
+            tool: param.target === "tool" ? param.value : selectedTool,
             architecture:
-                // param.target === "architecture"
-                // ? 
-                param.value,
-            // : selectedArchitecture,
-            // style: param.target === "style" ? param.value : selectedStyle,
+                param.target === "architecture"
+                ? param.value
+                : selectedArchitecture,
+            style: param.target === "style" ? param.value : selectedStyle,
             name: currentSearchValue.name, // Lay ra gia tri text luu trong redux
         };
 
-        // if (param.target === "tool") setSelectedTool(param.value);
-        // if (param.target === "architecture")
-        //     setSelectedArchitecture(param.value);
-        // if (param.target === "style") setSelectedStyle(param.value);
-        // console.log(bodyrequest);
-
+        if (param.target === "tool") setSelectedTool(param.value);
+        if (param.target === "architecture") setSelectedArchitecture(param.value);
+        if (param.target === "style") setSelectedStyle(param.value);
         console.log(bodyrequest);
 
         dispatch(advancedSearchingRequest(bodyrequest));
@@ -98,23 +92,23 @@ const CFilter = (props: props) => {
             transition={{ duration: 0.5 }}
         >
             <Form form={form}>
-                {/* <Form.Item className="form-item" name="tool">
+                <Form.Item className="form-item" name="tool">
                     <div className="title">
                         <div className="icon">
                             <ToolOutlined />
                         </div>
                         <div className="text">Công cụ</div>
                     </div>
-                    <Checkbox.Group
+                    <Radio.Group
                         onChange={(event) =>
                             handleSearch({
                                 target: "tool",
-                                value: event as string[],
+                                value: event.target.value,
                             })
                         }
                         options={toolList}
                     />
-                </Form.Item> */}
+                </Form.Item>
                 <Form.Item className="form-item" name="architecture">
                     <div className="title">
                         <div className="icon">
@@ -132,23 +126,23 @@ const CFilter = (props: props) => {
                         options={architectureList}
                     />
                 </Form.Item>
-                {/* <Form.Item className="form-item" name="style">
+                <Form.Item className="form-item" name="style">
                     <div className="title">
                         <div className="icon">
                             <FormatPainterOutlined />
                         </div>
                         <div className="text">Phong cách</div>
                     </div>
-                    <Checkbox.Group
+                    <Radio.Group
                         onChange={(event) =>
                             handleSearch({
                                 target: "style",
-                                value: event as string[],
+                                value: event.target.value,
                             })
                         }
                         options={styleList}
                     />
-                </Form.Item> */}
+                </Form.Item>
             </Form>
         </motion.div>
     );
