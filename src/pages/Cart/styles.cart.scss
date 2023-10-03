@@ -3,7 +3,7 @@
     font-style: normal;
     user-select: none;
     padding: 1em 3em;
-    background-color: #f6f6f6;
+    background-color: var(--black-color-v2);
     display: flex;
     flex-direction: column;
     gap: 1em;
@@ -11,7 +11,7 @@
     .title {
         font-weight: 700;
         font-size: 1.5em;
-        color: #1E1E1E;
+        color: var(--white-color-v2);
     }
 
     .content-cart {
@@ -22,11 +22,15 @@
 
         .left-content-cart {
             .ant-table {
-                border-radius: 1em;
+                border-radius: 4px;
+                background-color: var(--black-color-v2-300);
 
                 .ant-table-thead {
+
                     tr {
+
                         th {
+                            background-color: var(--black-color-v2-300) !important;
                             border: none;
                         }
 
@@ -43,8 +47,8 @@
                     .ant-table-cell {
                         font-weight: 400;
                         font-size: 1.2em;
-                        color: #4E4E4E;
-                        background-color: white;
+                        color: var(--white-color-v2);
+                        // background-color: white;
                         border: none;
 
                         .sketch-cart-action-title {
@@ -54,7 +58,7 @@
                             gap: .5em;
                             font-weight: 400;
                             font-size: 1em;
-                            color: #696969;
+                            color: var(--white-color-v2);
                             cursor: pointer;
                         }
 
@@ -65,6 +69,7 @@
 
                 .ant-table-tbody>tr>td {
                     border: none;
+                    background-color: var(--black-color-v2-300);
                 }
 
                 .sketch-cart-info {
@@ -85,7 +90,7 @@
                         .sketch-cart-content-title {
                             font-weight: 700;
                             font-size: 1em;
-                            color: #4E4E4E;
+                            color: var(--white-color-v2);
                         }
 
                         .sketch-cart-content-info {
@@ -141,7 +146,7 @@
                         gap: .5em;
                         font-weight: 400;
                         font-size: 1em;
-                        color: #696969;
+                        color: var(--white-color-v2);
                         cursor: pointer;
                     }
                 }
@@ -158,8 +163,8 @@
                 display: flex;
                 flex-direction: column;
                 gap: 1em;
-                background-color: white;
-                border-radius: 1em;
+                background-color: var(--black-color-v2-300);
+                border-radius: 4px;
                 padding: 1em 1.5em;
 
                 .title {
@@ -168,7 +173,7 @@
                     align-items: center;
                     font-weight: 500;
                     font-size: 1em;
-                    color: #4E4E4E;
+                    color: var(--white-color-v2);
                     padding-bottom: .5em;
                     border-bottom: 1.7px solid #DFDFDF;
 
@@ -193,13 +198,13 @@
                     .label-info-user {
                         font-weight: 500;
                         font-size: .8em;
-                        color: #C0C0C0;
+                        color: var(--white-color-v2);
                     }
 
                     .value-info-user {
                         font-weight: 400;
                         font-size: .8em;
-                        color: #4E4E4E;
+                        color: var(--white-color-v2-300);
                         text-align: end;
                     }
                 }
@@ -212,16 +217,16 @@
                         // width: 21vw;
 
                         .ant-select-selector {
-                            background: #F5F5F5 !important;
-                            border-radius: 12px;
+                            background: var(--black-color-v2) !important;
+                            border-radius: 4px !important;
 
                         }
                     }
 
                     .ant-btn {
                         padding: 0 1.5em;
-                        background: #27CA40;
-                        border-radius: 12px;
+                        background: var(--main-color);
+                        border-radius: 4px;
                         font-weight: 700;
                         font-size: .8em;
                         display: flex;
@@ -252,7 +257,8 @@
 
             .to-payment {
                 background: linear-gradient(180deg, #E60200 0%, #C30200 100%);
-                border-radius: 16px;
+                border-radius: 4px;
+                border: none;
                 font-weight: 700;
                 font-size: .8em;
                 display: flex;
@@ -261,6 +267,10 @@
                 text-align: center;
                 padding: 1.5em 0;
                 color: #FFFFFF;
+            }
+
+            .to-payment:hover {
+                color: var(--white-color-v2) !important;
             }
         }
     }
@@ -271,6 +281,15 @@
     }
 }
 
+.ant-radio-inner {
+    border-radius: 4px;
+    background-color: var(--black-color-v2-300);
+}
+
+.ant-checkbox-inner {
+    background-color: var(--black-color-v2);
+}
+
 .ant-checkbox-indeterminate .ant-checkbox-inner::after {
     border-color: var(--main-color) !important;
     background-color: var(--main-color) !important;
@@ -278,6 +297,14 @@
 
 .ant-table-thead>tr>th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
     display: none;
+}
+
+.ant-table-cell-row-hover {
+    background-color: var(--black-color-v2-300) !important;
+}
+
+.ant-table-row.ant-table-row-level-0.ant-table-row-selected {
+    background-color: var(--black-color-v2-300) !important;
 }
 
 @media (max-width: 1150px) {
@@ -989,4 +1016,8 @@
     .ant-table tfoot>tr>td {
         padding: .5em !important;
     }
+}
+
+.ant-empty-normal {
+    color: var(--white-color-v2) !important;
 }

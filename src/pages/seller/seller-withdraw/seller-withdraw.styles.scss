@@ -6,10 +6,12 @@
     .create-request {
         display: flex;
         justify-content: space-between;
+
         .infor-cards {
+            color: var(--white-color-v2) !important;
             display: flex;
             align-items: center;
-            justify-content: space-around   ;
+            justify-content: space-around;
             gap: 3em;
         }
     }
@@ -17,7 +19,6 @@
     .table-area {
         padding: 1em;
         margin-top: 1em;
-        background-color: white;
     }
 
     .ant-table-thead {

@@ -69,20 +69,20 @@ const CFilter = (props: props) => {
         const bodyrequest = {
             tool: param.target === "tool" ? param.value : selectedTool,
             architecture:
-                param.target === "architecture"
-                ? 
-                param.value
-                : selectedArchitecture,
-            style: param.target === "style" ? param.value : selectedStyle,
+                // param.target === "architecture"
+                // ? 
+                param.value,
+            // : selectedArchitecture,
+            // style: param.target === "style" ? param.value : selectedStyle,
             name: currentSearchValue.name, // Lay ra gia tri text luu trong redux
             authorId: props.authorId ? props.authorId : ''
         };
 
-        if (param.target === "tool") setSelectedTool(param.value);
-        if (param.target === "architecture")
-            setSelectedArchitecture(param.value);
-        if (param.target === "style") setSelectedStyle(param.value);
-        console.log(bodyrequest);
+        // if (param.target === "tool") setSelectedTool(param.value);
+        // if (param.target === "architecture")
+        //     setSelectedArchitecture(param.value);
+        // if (param.target === "style") setSelectedStyle(param.value);
+        // console.log(bodyrequest);
 
         console.log(bodyrequest);
 
@@ -108,7 +108,7 @@ const CFilter = (props: props) => {
                         onChange={(event) =>
                             handleSearch({
                                 target: "tool",
-                                value: event.target.value
+                                value: event as string[],
                             })
                         }
                         options={toolList}
@@ -142,7 +142,7 @@ const CFilter = (props: props) => {
                         onChange={(event) =>
                             handleSearch({
                                 target: "style",
-                                value: event.target.value
+                                value: event as string[],
                             })
                         }
                         options={styleList}
