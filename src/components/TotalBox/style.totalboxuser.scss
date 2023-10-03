@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     gap: 1em;
-    background-color: white;
+    background-color: var(--black-color-v2) !important;
     border-radius: 10px;
     padding: 1em;
     user-select: none;
@@ -13,16 +13,16 @@
         align-items: start;
         padding-left: .5em;
         border-left: 5px solid #858585;
-
+        color: var(--white-color-v2) !important;
 
         .number {
-            color: #1E1E1E;
+            color: var(--white-color-v2);
             font-size: 1.25em;
             font-weight: 700;
         }
 
         .title {
-            color: #858585;
+            color: var(--black-color-v2-300);
             font-size: 12px;
             font-weight: 400;
             text-align: start;

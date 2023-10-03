@@ -58,7 +58,7 @@
                         font-weight: 500;
                         font-size: 14px;
                         line-height: 20px;
-                        color: #858585;
+                        color: var(--white-color-v2) !important;
                     }
 
                     .ant-checkbox:focus .ant-checkbox-inner {
