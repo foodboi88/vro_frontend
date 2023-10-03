@@ -1,6 +1,7 @@
 export interface IRates {
-    rateProduct: number,
+    rateProduct?: number,
     items: IRateUser[],
+    total?: number;
 }
 export interface IRateUser {
     productId: string,
