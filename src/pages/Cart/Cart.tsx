@@ -289,7 +289,7 @@ const Cart = () => {
                                         {item.label}
                                     </div>
                                     <div className="value-info-user">
-                                        {item.value.toLocaleString().replace(/,/g, '.') }
+                                        {item.value.toLocaleString().replace(/,/g, '.')}
                                     </div>
                                 </div>
                             ))}
@@ -333,7 +333,7 @@ const Cart = () => {
                                 </Option>
                             </Select>
 
-                            <Button>Áp dụng</Button>
+                            <Button type="primary">Áp dụng</Button>
                         </div>
                         <Radio.Group onChange={handleChangePaymentMethod}>
                             <Space direction="vertical">

@@ -3,10 +3,10 @@
     justify-content: center;
     font-family: Arial, Helvetica, sans-serif;
     font-style: normal;
-    background: #F5F5F5;
+    background: var(--black-color-v2) !important;
 
     .upload-area {
-        background: white;
+        background: var(--black-color-v2) !important;
         width: 860px;
 
 
@@ -74,7 +74,7 @@
                             font-weight: 700;
                             font-size: 1.5em;
                             line-height: 32px;
-                            color: #4E4E4E;
+                            color: var(--white-color-v2);
                         }
 
                         .description {
@@ -90,7 +90,7 @@
                                 font-weight: 400;
                                 font-size: 1em;
                                 line-height: 24px;
-                                color: #4E4E4E;
+                                color: var(--white-color-v2);
                                 margin-bottom: .5em;
 
                                 strong {
@@ -111,23 +111,17 @@
                                     font-weight: 500;
                                     display: flex;
                                     align-items: center;
-                                    color: var(--text-color);
-                                    background: #F5F5F5;
+                                    background: var(--black-color-v2-300);
                                     border-radius: 13px;
                                     border: none;
                                     height: 3em;
                                     padding-left: 1.3em;
                                     padding-right: 4em;
-                                }
-
-                                .search-input:hover {
-                                    // border: 1px solid var(--main-color) !important;
+                                    color: var(--white-color-v2);
                                 }
 
                                 .search-input:focus,
                                 textarea.ant-input:focus {
-                                    // border: 1px solid var(--main-color) !important;
-                                    // border-color: var(--main-color);
                                     box-shadow: 0 0 0 1px var(--main-color);
                                     caret-color: var(--main-color);
                                 }
@@ -146,8 +140,7 @@
                                     font-weight: 500;
                                     display: flex;
                                     align-items: center;
-                                    color: var(--text-color);
-                                    background: #F5F5F5;
+                                    background: var(--black-color-v2-300);
                                     border-radius: 13px;
                                     border: none;
                                     padding-left: 1.3em;
@@ -259,7 +252,7 @@
                                         font-weight: 400;
                                         font-size: 1em;
                                         line-height: 24px;
-                                        color: #696969;
+                                        color: var(--white-color-v2) !important;
                                         white-space: nowrap
                                     }
 
@@ -310,12 +303,12 @@
 
                             .rule-list {
                                 padding: 1em;
-                                background: #F0FFF2;
-                                border-radius: 16px;
+                                background: var(--black-color-v2-300);
+                                border-radius: 4px;
                                 font-weight: 400;
                                 font-size: 1em;
                                 line-height: 24px;
-                                color: #27CA40;
+                                color: var(--black-color-v2-500);
                             }
                         }
                     }
@@ -353,7 +346,7 @@
 
                         .ant-btn[disabled] {
                             color: #C0C0C0;
-                            background: #DFDFDF;
+                            background: var(--black-color-v2-300) !important;
                         }
 
                         .ant-btn:hover {
@@ -413,7 +406,7 @@ span:nth-child(2) {
     font-weight: 400;
     font-size: 1em;
     line-height: 24px;
-    color: #696969;
+    color: var(--white-color-v2) !important;
 }
 
 .ant-checkbox:focus .ant-checkbox-inner {

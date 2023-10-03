@@ -1,14 +1,14 @@
 .main-profile {
     font-family: 'Lexend Deca';
     font-style: normal;
-    margin: 3em;
-    background-color: white;
-    margin-top: 8em;
+    margin: 0;
+    background-color: var(--black-color-v2);
     padding: 2em;
+    padding-top: 8em;
     display: flex;
     justify-content: space-between;
     gap: 3em;
-    border-radius: 10px;
+    border-radius: 0;
 
     .profile-navbar {
         display: flex;
@@ -87,7 +87,7 @@
         width: 80%;
 
         .profile-content-title {
-            color: #4E4E4E;
+            color: var(--white-color-v2) !important;
             font-size: 24px;
             font-weight: 700;
         }
@@ -140,7 +140,7 @@
         gap: 0em;
 
         .profile-content-title {
-            color: #4E4E4E;
+            color: var(--white-color-v2) !important;
             font-size: 1.25em;
             font-weight: 700;
         }
