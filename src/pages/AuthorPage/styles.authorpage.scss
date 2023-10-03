@@ -1,7 +1,8 @@
 .main-author-page {
     font-family: Arial, Helvetica, sans-serif;
-    margin-top: 84px;
+    padding-top: 60px;
     display: flex;
+    background-color: var(--black-color-v2);
 
     .page-content {
         width: 100%;
@@ -12,7 +13,27 @@
             margin-bottom: 35px;
 
             .ant-menu-horizontal {
-                border-radius: 0px 0px 20px 20px;
+                background-color: var(--black-color-v2);
+                border-radius: 0px 0px 4px 4px;
+                border-bottom: 0px !important;
+
+                .ant-menu-item {
+                    color: var(--white-color-v2);
+                    text-align: center;
+                    align-items: center;
+                    display: flex;
+                    justify-content: center;
+                    margin-top: .5em;
+
+                    .anticon {
+                        color: var(--white-color-v2);
+                    }
+                }
+
+                .ant-menu-item-active {
+                    border-bottom: 0px !important;
+                }
+
             }
         }
 
