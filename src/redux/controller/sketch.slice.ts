@@ -157,7 +157,11 @@ const initState: SketchState = {
         tool: '',
     },
     checkWhetherSketchUploaded: 0,
-    ratesLst: undefined,
+    ratesLst: {
+        rateProduct: 0,
+        items: [],
+        total: 0
+    },
     productsFile: undefined,
     checkProductsFile: false,
     lstSketchsInCart: [],

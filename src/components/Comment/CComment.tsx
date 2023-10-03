@@ -1,6 +1,6 @@
 import { DownOutlined } from '@ant-design/icons'
 import { Button, Rate } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Avatar from '../../images/detail/avatar.png'
 import Avatar2 from '../../images/detail/avata-comment-2.png'
 import Avatar3 from '../../images/detail/avata-comment-3.png'
@@ -8,6 +8,7 @@ import Avatar3 from '../../images/detail/avata-comment-3.png'
 import './styles.comment.scss'
 import { motion } from 'framer-motion'
 import { useSelectorRoot } from '../../redux/store'
+import { ppid } from 'process'
 
 const commentList = [
     {
@@ -48,7 +49,11 @@ const commentList = [
 const CComment = () => {
     const [activeButton, setActiveButton] = useState<number>(0);
     const { ratesLst } = useSelectorRoot((state) => state.sketch); // Lấy ra dữ liệu detail sketch và danh sách comment từ redux
-    const [currentCommentList, setCurrentCommentList] = useState(ratesLst?.items ? ratesLst?.items : []);
+    const [currentCommentList, setCurrentCommentList] = useState(ratesLst?.items);
+
+    useEffect(()=> {
+        filterCommentByStar(activeButton);
+    },[ratesLst])
 
     const filterCommentByStar = (buttonNumber: number) => {
         if (ratesLst) {
@@ -68,7 +73,7 @@ const CComment = () => {
     };
     return (
         <div className='main-comment'>
-            <div className='title'>Bình luận (3)</div>
+            <div className='title'>Bình luận ({ratesLst?.total ? ratesLst?.total: 0})</div>
             <div className='btn-group-and-total-rate'>
                 <Button.Group>
                     <motion.div
