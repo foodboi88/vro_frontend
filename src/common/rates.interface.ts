@@ -1,14 +1,15 @@
 export interface IRates {
-    TotalStar: number,
-    RateUser: IRateUser[],
+    rateProduct: number,
+    items: IRateUser[],
 }
 export interface IRateUser {
-    userId: string,
     productId: string,
     rate: number,
     description: string,
-    nameUser: string,
-    createdAt: Date,
-    updatedAt: Date,
+    createdAt: string,
+    updatedAt: string,
     id: string,
+    userName: string
 }
+
+

@@ -148,10 +148,6 @@ const DetailSketch = () => {
         }
     }, [productsFile]);
 
-    useEffect(() => {
-        // console.log(ratesLst);
-    }, [ratesLst]);
-
     // Kiểm tra xem có chi tiết bản vẽ hay không
     useEffect(() => {
         if (detailSketch) {
