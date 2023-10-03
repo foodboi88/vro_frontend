@@ -32,12 +32,11 @@
 
                 .login-button {
                     border-radius: 4px;
-                    background: #FF8686;
+                    background: var(--main-color) !important;
                     border: none;
                     color: var(--black-color-v2);
                     padding: 0 1.5em;
                     font-weight: 600;
-
                     // font-size: 16px;
                     // font-style: normal;
                     // font-weight: 700;
@@ -153,15 +152,15 @@
                 gap: 1em;
 
                 .category-item {
-                    background-color: var(--black-color-v2);
-                    color: var(--white-color-v2);
-                    border: 1px solid var(--white-color-v2);
+                    background-color: var(--black-color-v2) !important;
+                    color: var(--white-color-v2) !important;
+                    border: 1px solid var(--white-color-v2) !important;
                 }
 
                 .category-item.active {
-                    background-color: var(--white-color-v2);
-                    color: var(--black-color-v2);
-                    border: 1px solid var(--white-color-v2);
+                    background-color: var(--white-color-v2) !important;
+                    color: var(--black-color-v2) !important;
+                    border: 1px solid var(--white-color-v2) !important;
                 }
 
             }
@@ -174,15 +173,15 @@
 
                 .ant-col {
                     .ant-btn {
-                        background-color: var(--white-color-v2);
-                        color: var(--black-color-v2);
-                        border-radius: 50%;
+                        background-color: var(--white-color-v2) !important;
+                        color: var(--black-color-v2) !important;
+                        border-radius: 50% !important;
                     }
 
                     .ant-btn:disabled {
-                        color: var(--white-color-v2);
-                        border: 1px solid var(--white-color-v2);
-                        background-color: var(--black-color-v2);
+                        color: var(--white-color-v2) !important;
+                        border: 1px solid var(--white-color-v2) !important;
+                        background-color: var(--black-color-v2) !important;
                     }
                 }
 

@@ -2,7 +2,8 @@
     padding: 5em 3em;
     font-family: Arial, Helvetica, sans-serif;
     font-style: normal;
-    padding-top: 7em;
+    padding-top: 4em;
+    background-color: var(--black-color-v2);
 
     .breadcrumb {
         margin: 0px;
@@ -83,7 +84,7 @@
                 font-weight: 500;
                 font-size: clamp(1em, 4vw, 2em);
                 line-height: 48px;
-                color: #4E4E4E;
+                color: var(--white-color-v2);
             }
 
             .price {
@@ -137,14 +138,14 @@
                     font-weight: 700;
                     font-size: clamp(.8em, 4vw, 1em);
                     line-height: 24px;
-                    color: #4E4E4E;
+                    color: var(--white-color-v2);
                 }
 
                 .des-text {
                     font-weight: 400;
                     font-size: clamp(.6em, 3vw, .8em);
                     line-height: 24px;
-                    color: #858585;
+                    color: var(--white-color-v2-300);
                 }
             }
 
@@ -166,7 +167,7 @@
 
                 .add-to-card {
                     border: 2px solid #858585;
-                    border-radius: 10px;
+                    border-radius: 4px;
                     font-size: .8em;
                     display: flex;
                     align-items: center;
