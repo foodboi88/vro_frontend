@@ -6,14 +6,13 @@
         position: fixed !important;
         justify-content: space-between;
         width: 100%;
-        background: #1B1725;
+        background: #231F20;
         z-index: 100;
         font-family: 'Lexend Deca';
         font-style: normal;
         display: flex;
         align-items: center;
         padding: .8em 3em;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
         .header-left {
             display: flex;
@@ -232,7 +231,9 @@
             color: #E60200;
         }
 
-        .header-action-item:first-child {}
+        .header-action-item:first-child {
+            color: #E60200;
+        }
     }
 }
 

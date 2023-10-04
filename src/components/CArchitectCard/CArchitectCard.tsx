@@ -36,23 +36,19 @@ const CArchitectCard = (props: props) => {
     }
     return (
         <div className="card-main">
-            <Card
+            <img className="image-card" alt="example" src={props.imageUrl ? props.imageUrl : ImageNotFound} />
+
+            {/* <Card
                 className="card"
                 hoverable
                 cover={
                     <div className="image-main">
-                        {(props.type === 'excellentArchitect' && props.index) &&
-                            <div className="excellent-architect">
-                                <div className="excellent-architect-title">
-                                    {padNumberWithZero(props.index, 2)}
-                                </div>
-                            </div>
-                        }
+                        
                         <img className="image-card" alt="example" src={props.imageUrl ? props.imageUrl : ImageNotFound} />
                     </div>
                 }
-            >
-                <div className="title-and-price">
+            > */}
+            {/* <div className="title-and-price">
                     <Meta
                         title={
                             <div className="home-card-title">
@@ -60,18 +56,15 @@ const CArchitectCard = (props: props) => {
                                     {props.name}
                                 </div>
                                 <div className="h-c-t-view-point">
-                                    {/* <EyeOutlined />
-                                <div className="number-of-view">
-                                    {Math.round(props.view)}
-                                </div> */}
+                                 
                                 </div>
                             </div>
                         }
                     />
-                </div>
-            </Card>
+                </div> */}
+            {/* </Card> */}
 
-        </div>
+        </div >
     );
 };
 

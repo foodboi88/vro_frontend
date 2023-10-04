@@ -16,8 +16,6 @@ import Company1 from '../../images/homepage/company.png'
 import CEO from '../../images/homepage/CEO.png'
 import HomepageFooter from '../../images/homepage/homepage-footer.png'
 import Style1 from '../../images/homepage/Roma-1.1.jpg';
-
-
 import { Carousel } from 'antd';
 import { ICurrentSearchValue, IReqGetLatestSketchs } from "../../common/sketch.interface";
 import CDeclare from "../../components/Declare/CDeclare";
@@ -79,23 +77,15 @@ const Home = () => {
     const excellentArchitect = [
         {
             imageUrl: ExcellentArchitect1,
-            name: 'Nguyễn Hồ Tân',
-            email: 'austindo01@gmail.com'
         },
         {
             imageUrl: ExcellentArchitect2,
-            name: 'Bùi Thị Hương',
-            email: 'austindo01@gmail.com'
         },
         {
             imageUrl: ExcellentArchitect3,
-            name: 'Phan Tuấn Anh',
-            email: 'austindo01@gmail.com'
         },
         {
             imageUrl: ExcellentArchitect4,
-            name: 'Vũ Thảo Nhi',
-            email: 'austindo01@gmail.com'
         },
     ]
 
@@ -504,7 +494,7 @@ const Home = () => {
                         </Col>
                     </div>
                 </div>
-                <div className="lst-tool">
+                <div className="lst-tool architect-card">
                     <Row gutter={[16, 16]}>
                         {excellentArchitect
                             .slice(
@@ -517,11 +507,11 @@ const Home = () => {
                                     //     handleClickCard(card.id);
                                     // }}
                                     span={spanCol}
-                                    key={card.name}
+                                    key={index}
                                 >
                                     <CArchitectCard
                                         imageUrl={card.imageUrl}
-                                        name={card.name}
+                                        name={''}
                                         type="excellentArchitect"
                                         index={index + 1}
                                     />

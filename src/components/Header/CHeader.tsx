@@ -223,7 +223,7 @@ export const CHeader = (props: MyProps) => {
                 </div>
 
                 <div className="header-action-type">
-                    <div className="header-action-item">
+                    <div className="header-action-item active">
                         Trang chủ
                     </div>
                     <div className="header-action-item">
@@ -251,16 +251,17 @@ export const CHeader = (props: MyProps) => {
                     <div className="user-infor">
                         {accesstokenExpỉred === true ? (
                             <>
-                                {/* <motion.div
+                                <motion.div
                                     className="header-button login"
                                     whileHover={{ scale: 1.1 }}
                                     whileTap={{ scale: 0.95 }}
+                                    style={{ marginRight: "10px" }}
                                 >
                                     <Button
                                         onClick={() => setIsOpenLoginModal(true)}>
                                         Đăng nhập
                                     </Button>
-                                </motion.div> */}
+                                </motion.div>
                                 <motion.div
                                     className="header-button login"
                                     whileHover={{ scale: 1.1 }}
@@ -271,6 +272,7 @@ export const CHeader = (props: MyProps) => {
                                     >
                                         Đăng ký
                                     </Button>
+
                                 </motion.div>
                             </>
                         ) : (
@@ -384,6 +386,6 @@ export const CHeader = (props: MyProps) => {
                 {/* } */}
             </div >
 
-        </div>
+        </div >
     );
 };

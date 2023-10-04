@@ -5,6 +5,7 @@
     font-style: normal;
     user-select: none;
     background-color: var(--black-color-v2) !important;
+    background-image: url('../../images/header/image-bg-1.png') !important;
 
     .header-homepage {
         display: flex;
@@ -56,7 +57,14 @@
             }
         }
 
-        .right-header {}
+        .right-header {
+            display: flex;
+            align-items: center;
+
+            img {
+                width: 30vw;
+            }
+        }
 
     }
 
@@ -131,6 +139,11 @@
         align-items: center;
         padding-bottom: -8px;
         border-radius: 30px;
+
+        .architect-card {
+            display: flex;
+            gap: 2em;
+        }
 
         .title {
             margin-top: 50px;
