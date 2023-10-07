@@ -1,5 +1,5 @@
 .total-box {
-    background-color: aquamarine;
+    background-color: var(--black-color-v2);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -48,19 +48,19 @@
 
 
 .total-box:nth-child(1) {
-    background: linear-gradient(134deg, #7274DC 0%, #DBB0FC 100%);
+    border: 1px solid #DBB0FC;
 }
 
 .total-box:nth-child(2) {
-    background: linear-gradient(134deg, #FF7975 0%, #FFD3AA 100%);
+    border: 1px solid #FF7975;
 }
 
 .total-box:nth-child(3) {
-    background: linear-gradient(134deg, #F984CA 0%, #FD9AB2 100%);
+    border: 1px solid #FD9AB2;
 }
 
 .total-box:nth-child(4) {
-    background: linear-gradient(134deg, #54CE9C 0%, #A4E05F 100%);
+    border: 1px solid #A4E05F;
 }
 
 @media (max-width: 1200px) {

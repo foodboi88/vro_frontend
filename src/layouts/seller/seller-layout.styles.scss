@@ -1,5 +1,5 @@
 .main-profile {
-    font-family: 'Lexend Deca';
+    font-family: Arial, Helvetica, sans-serif;
     font-style: normal;
     margin: 0;
     background-color: var(--black-color-v2);
@@ -26,13 +26,19 @@
             border-radius: 10px;
             cursor: pointer;
             transition: all .3s ease-in-out;
+
+            .profile-navbar-item-text {
+                font-weight: 700;
+            }
         }
+
 
         .profile-navbar-item.active {
             background-color: #CF0201;
             color: white;
 
             .profile-navbar-item-text {
+                font-weight: 700;
                 color: white;
                 transition: all .3s ease-in-out;
             }
