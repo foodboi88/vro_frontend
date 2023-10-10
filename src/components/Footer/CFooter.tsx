@@ -47,16 +47,17 @@ export default function CFooter() {
         };
     });
     return (
-        <>
+        <div>
             <footer className="footer">
                 <div className="row-1">
                     {!isReponsive &&
                         <div className="column-1">
                             <div className="title-content"><img src={Logo} alt="" width={30} />CÔNG TY CỔ PHẦN XÂY DỰNG VRO</div>
                             <div className="content">Giấy phép ĐKKD số: 123466 do Sở KH&ĐT Hà Nội cấp lần đầu ngày 01/01/1900</div>
-                            <div className="content">Trụ sở: Lô 40 liền kề 7 Khu đô thị Tổng cục 5, Bộ Công an - Tân Triều - Thanh Trì - Hà Nội</div>
-                            <div className="content">Điện thoại: 0866045577</div>
-                            <div className="content">Email: mailto:sale@vro.vn</div>
+                            <div style={{ display: 'flex', gap: 10 }}>
+                                <img src={Image1} alt="" width={150} />
+                                <img src={Image2} alt="" width={150} />
+                            </div>
                         </div>
                     }
                     <div className="column-2">
@@ -94,8 +95,11 @@ export default function CFooter() {
                 </div>
                 <div className="row-2">
                     <div className="column-1">
-                        <img src={Image1} alt="" width={150} />
-                        <img src={Image2} alt="" width={150} />
+                        <div className="title-content">Trụ sở</div>
+                        <div className="content">Lô 40 liền kề 7 Khu đô thị Tổng cục 5, Bộ Công an - Tân Triều - Thanh Trì - Hà Nội</div>
+                        <div className="content">Điện thoại: 0866045577</div>
+                        <div className="content">Email: mailto:sale@vro.vn</div>
+
                     </div>
                     <div className="column-2">
                         <div className="title-content">Miền Trung</div>
@@ -122,7 +126,18 @@ export default function CFooter() {
 
 
             </footer>
+            <div className="row-3">
+                <div className="content-1">
+                    Điều khoản sử dụng
+                </div>
+                <div className="content-2">
+                    Chính sách bảo mật
+                </div>
+                <div className="content-3">
+                    Quyền lợi người bán
+                </div>
+            </div>
 
-        </>
+        </div>
     );
 }
