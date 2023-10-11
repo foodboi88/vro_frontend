@@ -25,135 +25,14 @@ import DrawHomeImage15 from "../../images/homepage/home_img_15.png";
 import DrawHomeImage16 from "../../images/homepage/home_img_16.png";
 import Meta from "antd/lib/card/Meta";
 import { useNavigate } from "react-router-dom";
-import { useSelectorRoot } from "../../redux/store";
+import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
 import CPagination from "../../components/Pagination/CPagination";
 import { IFilteredSketch } from "../../common/sketch.interface";
-
-interface CardData {
-    id: number;
-    title: string;
-    type: string;
-    price: number;
-    view: number;
-    imageUrl: string;
-}
-const data: CardData[] = [
-    {
-        id: 1,
-        title: "Bản vẽ biệt thự 2 tầng",
-        type: "File Sketchup",
-        price: 500000,
-        view: 96,
-        imageUrl: DrawHomeImage1,
-    },
-    {
-        id: 2,
-        title: "Bản vẽ biệt thự 4 tầng",
-        type: "File 3D Max",
-        price: 1500000,
-        view: 105,
-        imageUrl: DrawHomeImage2,
-    },
-    {
-        id: 3,
-        title: "Bản vẽ biệt thự 3 tầng",
-        type: "File Sketchup",
-        price: 0,
-        view: 365,
-        imageUrl: DrawHomeImage3,
-    },
-    {
-        id: 4,
-        title: "Thiết kế nhà gác lửng hiện đại",
-        type: "File Auto Cad",
-        price: 0,
-        view: 25,
-        imageUrl: DrawHomeImage4,
-    },
-    {
-        id: 5,
-        title: "Dựng ngoại cảnh căn biệt thự",
-        type: "File Auto cad",
-        price: 0,
-        view: 245,
-        imageUrl: DrawHomeImage5,
-    },
-    {
-        id: 6,
-        title: "Thiết kế biệt thự 2 tầng",
-        type: "File Sketchup",
-        price: 0,
-        view: 32,
-        imageUrl: DrawHomeImage6,
-    },
-    {
-        id: 7,
-        title: "Bản vẽ biệt thự 2 tầng",
-        type: "File Sketchup",
-        price: 0,
-        view: 26,
-        imageUrl: DrawHomeImage7,
-    },
-    {
-        id: 8,
-        title: "Bản vẽ biệt thự 2 tầng",
-        type: "File Sketchup",
-        price: 0,
-        view: 85,
-        imageUrl: DrawHomeImage8,
-    },
-    {
-        id: 9,
-        title: "Bản vẽ biệt thự 3 tầng cổ điển",
-        type: "File 3D Max",
-        price: 0,
-        view: 265,
-        imageUrl: DrawHomeImage9,
-    },
-    {
-        id: 10,
-        title: "Bản vẽ nhà xưởng",
-        type: "File Revit",
-        price: 0,
-        view: 500,
-        imageUrl: DrawHomeImage10,
-    },
-    {
-        id: 11,
-        title: "Bản vẽ biệt thự phong cách Nhật",
-        type: "File Revit",
-        price: 0,
-        view: 65,
-        imageUrl: DrawHomeImage11,
-    },
-    {
-        id: 12,
-        title: "Biệt thự phong cách Roman",
-        type: "File 3D Max",
-        price: 0,
-        view: 152,
-        imageUrl: DrawHomeImage12,
-    },
-    {
-        id: 13,
-        title: "Biệt thự mái thái",
-        type: "File Revit",
-        price: 0,
-        view: 65,
-        imageUrl: DrawHomeImage13,
-    },
-    {
-        id: 14,
-        title: "Biệt thự Tân cổ điển",
-        type: "File Auto cad",
-        price: 0,
-        view: 98,
-        imageUrl: DrawHomeImage14,
-    },
-];
+import { resetCurrentSearchValueRequest } from "../../redux/controller";
 
 const AdvancedSeaching = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatchRoot();
     const [spanCol, setSpanCol] = useState<number>(6);
     const [windowSize, setWindowSize] = useState([
         window.innerWidth,
@@ -163,17 +42,13 @@ const AdvancedSeaching = () => {
         useState<boolean>(false);
 
     const {
-        toolList,
-        architectureList,
-        styleList,
         filteredSketchs,
-        filteredAuthors,
-        currentSearchValue,
     } = useSelectorRoot((state) => state.sketch);
 
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [pageSize, setPageSize] = useState<number>(12);
     const [newfilteredSketchs, setNewFilteredSketchs] = useState<IFilteredSketch[]>();
+
     useEffect(() => {
         document.body.scrollTo({
             top: 0,

@@ -33,6 +33,7 @@ import {
     advancedSearchingRequest,
     getAllSketchInCartRequest,
     getSketchQuantityInCartRequest,
+    resetCurrentSearchValueRequest,
 } from "../../redux/controller";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
 
@@ -182,10 +183,16 @@ export const CHeader = (props: MyProps) => {
             tool: currentSearchValue.tool,
             style: currentSearchValue.style,
         };
-        dispatch(advancedSearchingRequest(bodyrequest));
+        if(window.location.pathname === '/'){ // Nếu đang ở trang chủ thì reset biến lưu thông tin tìm kiếm
+
+            dispatch(resetCurrentSearchValueRequest(bodyrequest))
+        }else{
+            dispatch(advancedSearchingRequest(bodyrequest));
+        }
         navigate("/searching");
         onClose();
     };
+    
     const checkIsLogin = (val: boolean) => {
         setIsLogin(val);
     };
