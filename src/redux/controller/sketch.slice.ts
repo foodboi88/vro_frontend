@@ -433,6 +433,18 @@ const sketchSlice = createSlice({
 
         },
 
+        // Dùng để reset lại biến currentSearchValue (biến lưu lại các lựa chọn tìm kiếm nâng cao) mỗi khi chuyển qua chuyển lại giữa
+        // trang home và trang tìm kiếm nâng cao
+        // action.payload bây giờ sẽ là thông tin mà bạn muốn tìm kiếm sau khi clear giá trị tìm kiếm cũ
+        resetCurrentSearchValueRequest(state, action: PayloadAction<any>){
+            state.currentSearchValue = {
+                architecture: '',
+                style: '',
+                name: "",
+                tool: '',
+            }
+        },
+
         advancedSearchingRequest(
             state,
             action: PayloadAction<ICurrentSearchValue>
@@ -2228,8 +2240,25 @@ const editSketch$: RootEpic = (action$) =>
         })
     );
 
+const resetCurrentSearchValue$: RootEpic = (action$) => 
+    action$.pipe(
+        filter(resetCurrentSearchValueRequest.match),
+        mergeMap((re) => {
+            const bodyrequest: ICurrentSearchValue = {
+                name: re.payload.name,
+                architecture: '',
+                tool: '',
+                style: '',
+            };
+            return [
+                sketchSlice.actions.advancedSearchingRequest(bodyrequest),
+            ];
+        })
+    )
+
 export const SketchEpics = [
     // uploadSketch$,
+    resetCurrentSearchValue$,
     getHomeListSketch$,
     getFreeSketch$,
     getLatestSketchs$,
@@ -2340,7 +2369,9 @@ export const {
     getSellerProfileRequest,
     editSketchRequest,
 
-    sortFilteredSketchRequest
+    sortFilteredSketchRequest,
+
+    resetCurrentSearchValueRequest,
 
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;
