@@ -166,8 +166,10 @@ const UploadSketch = () => {
     const [selectedType, setSelectedType] = useState<number>(); // Biến lưu giá trị loại bản vẽ
     const [selectTitle, setSelectTitle] = useState(""); // Biến lưu giá trị tiêu đề bản vẽ
     const [selectTag, setSelectTag] = useState(""); // Biến lưu giá trị tag bản vẽ
-    const [imageUploadLst, setImageUpload] = useState<UploadFile[]>([]); // Biến lưu giá trị ảnh bản vẽ đã upload
-    const [fileUploadLst, setFileUploadList] = useState<RcFile[]>([]); // Biến lưu giá trị file bản vẽ đã upload
+    const [imageUploadLst, setImageUploadLst] = useState<UploadFile[]>([]); // Biến lưu giá trị ảnh bản vẽ đã upload
+    const [fileUploadLst, setFileUploadLst] = useState<RcFile[]>([]); // Biến lưu giá trị file bản vẽ đã upload
+    const [checkLstImageUploadLst, setCheckLstImageUploadLst] = useState<UploadFile[]>([]); // Biến lưu giá trị ảnh bản vẽ đã upload
+    const [checkLstFileUploadLst, setCheckLstFileUploadLst] = useState<RcFile[]>([]); // Biến lưu giá trị file bản vẽ đã upload
     const [selectPrice, setSelectPrice] = useState(0); // Biến lưu giá trị giá bản vẽ
     const [note, setNote] = useState(""); // Biến lưu giá trị ghi chú bản vẽ
     const [selectStyle, setSelectStyle] = useState(""); // Biến lưu giá trị kiểu bản vẽ
@@ -183,6 +185,11 @@ const UploadSketch = () => {
     const { checkProductsFile, toolList, architectureList, styleList } = useSelectorRoot((state) => state.sketch); // Lst cac ban ve        
     const dispatch = useDispatchRoot();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        console.log('imageUploadLst', imageUploadLst);
+        console.log('fileUploadLst', fileUploadLst);
+    }, [imageUploadLst, fileUploadLst]);
 
     const handleCancelPreview = () => setPreviewOpen(false); // Hàm xử lý khi click hủy xem ảnh
 
@@ -221,8 +228,9 @@ const UploadSketch = () => {
     const handleChangeFileLst: UploadProps["onChange"] = ({
         fileList: newFileList,
     }) => {
+        setCheckLstImageUploadLst(newFileList);
         // Hàm xử lý khi thay đổi file upload
-        // setImageUpload(newFileList);
+        // setImageUploadLst(newFileList);
         // console.log(newFileList);
     };
 
@@ -411,14 +419,12 @@ const UploadSketch = () => {
                                             <Radio.Group
                                                 className="lst-tool"
                                                 options={toolList}
-                                                
-                                                onChange={(e) =>
-                                                    
-                                                    {
-                                                        const selectValue =[e.target]
-                                                        setSelectTool(selectValue)
 
-                                                    }
+                                                onChange={(e) => {
+                                                    const selectValue = [e.target]
+                                                    setSelectTool(selectValue)
+
+                                                }
                                                 }
                                             />
                                         </div>
@@ -431,13 +437,11 @@ const UploadSketch = () => {
                                             <Radio.Group
                                                 className="lst-category"
                                                 options={architectureList}
-                                                onChange={(e) =>
-                                                    
-                                                    {
-                                                        const selectValue =[e.target]
-                                                        setSelectCategory(selectValue)
+                                                onChange={(e) => {
+                                                    const selectValue = [e.target]
+                                                    setSelectCategory(selectValue)
 
-                                                    }
+                                                }
                                                 }
                                             />
                                         </div>
@@ -483,25 +487,25 @@ const UploadSketch = () => {
                                 <motion.div className="btn-submit-upload">
                                     {
                                         selectTool &&
-                                        selectCategory &&
-                                        selectTitle &&
-                                        // selectTag &&
-                                        
-                                        selectPrice >= 0 &&
-                                        note ? (
-                                        <Button
-                                            onClick={() => handleClickNextBtn()}
-                                        >
-                                            Tiếp tục
-                                        </Button>
-                                    ) : (
-                                        <Button
-                                            onClick={() => handleClickNextBtn()}
-                                            disabled
-                                        >
-                                            Tiếp tục
-                                        </Button>
-                                    )}
+                                            selectCategory &&
+                                            selectTitle &&
+                                            // selectTag &&
+
+                                            selectPrice >= 0 &&
+                                            note ? (
+                                            <Button
+                                                onClick={() => handleClickNextBtn()}
+                                            >
+                                                Tiếp tục
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                onClick={() => handleClickNextBtn()}
+                                                disabled
+                                            >
+                                                Tiếp tục
+                                            </Button>
+                                        )}
                                 </motion.div>
                             </div>
                         )}
@@ -514,7 +518,7 @@ const UploadSketch = () => {
                                     <div className="description">
                                         Vui lòng nhập các thông tin chung
                                     </div> */}
-                                    
+
                                     <div className="image">
                                         <Form.Item
                                             className="thumbnail"
@@ -528,7 +532,7 @@ const UploadSketch = () => {
                                                     "https://localhost:3000/"
                                                 }
                                                 multiple
-                                                onRemove={(file)=>{
+                                                onRemove={(file) => {
                                                     return true
                                                 }}
                                                 listType="picture-card"
@@ -542,7 +546,7 @@ const UploadSketch = () => {
                                                 beforeUpload={(file) => {
                                                     let tmplst = imageUploadLst;
                                                     tmplst.push(file);
-                                                    setImageUpload(tmplst);
+                                                    setImageUploadLst(tmplst);
                                                     return false;
                                                 }}
                                                 progress={{
@@ -588,12 +592,15 @@ const UploadSketch = () => {
                                                 showUploadList={{
                                                     showRemoveIcon: true,
                                                 }}
+                                                onChange={(info) => {
+                                                    setCheckLstFileUploadLst(info.fileList as RcFile[])
+                                                }}
                                                 accept=".zip, .rar"
                                                 beforeUpload={(file) => {
                                                     console.log(file)
                                                     let tmplst = fileUploadLst;
                                                     tmplst.push(file);
-                                                    setFileUploadList(tmplst);
+                                                    setFileUploadLst(tmplst);
                                                     return false;
                                                 }}
                                                 progress={{
@@ -645,9 +652,12 @@ const UploadSketch = () => {
                                     </Button>
                                     {
                                         // selectStyle &&
-                                        imageUploadLst &&
-                                        fileUploadLst &&
-                                            isCheckedRules ? (
+                                        (checkLstImageUploadLst &&
+                                            checkLstImageUploadLst.length > 0 &&
+                                            checkLstFileUploadLst &&
+                                            checkLstFileUploadLst.length > 0 &&
+                                            isCheckedRules
+                                        ) ? (
                                             <Button
                                                 onClick={() => handleUploadSketch()}
                                             >
