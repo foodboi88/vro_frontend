@@ -287,7 +287,7 @@ const UploadSketch = () => {
             size: "40m*40m",
             price: selectPrice,
             content: note,
-            productDesignStyles: ["64230fdaedf9dd11e488c249"], // Set default value
+            productDesignStyles: selectStyle,
             productDesignTools: selectTool,
             productTypeOfArchitecture: selectCategory,
         };
@@ -379,7 +379,7 @@ const UploadSketch = () => {
                                             options={options}
                                         />
                                     </Form.Item> */}
-                                    {/* <Form.Item>
+                                    <Form.Item>
                                         <div className="title-input">
                                             Phong cách <strong>*</strong>
                                         </div>
@@ -392,17 +392,18 @@ const UploadSketch = () => {
                                                             ? "active"
                                                             : ""
                                                     }
-                                                    onClick={() => {}
-                                                        // handleClickBtnStyle(
-                                                        //     item.value
-                                                        // )
+                                                    onClick={() => {
+                                                            handleClickBtnStyle(
+                                                                item.value as string
+                                                            )
+                                                        }
                                                     }
                                                 >
                                                     {item.label}
                                                 </Button>
                                             ))}
                                         </div>
-                                    </Form.Item> */}
+                                    </Form.Item> 
                                     <Form.Item>
                                         <div className="title-input">
                                             Công cụ <strong>*</strong>
