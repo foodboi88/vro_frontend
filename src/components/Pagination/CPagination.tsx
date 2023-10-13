@@ -11,7 +11,7 @@ interface MyProps {
 const CPagination = (props: MyProps) => {
     return (
         <Pagination
-            pageSize={props.pageSize ? props.pageSize : 10}
+            pageSize={props.pageSize ? props.pageSize : 12}
             current={props.currentPage}
             onChange={props.onChange}
             total={props.total}
