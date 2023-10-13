@@ -207,16 +207,16 @@
                                     align-items: center;
                                     text-align: center;
                                     justify-content: center;
-                                    color: #696969;
+                                    color: white;
                                     height: 3em;
                                     border-radius: 0px;
-                                    background: #F5F5F5;
+                                    background: black;
                                     transition: all .3s ease-in-out;
                                 }
 
                                 .ant-btn.active {
-                                    color: white;
-                                    background: #27CA40;
+                                    background-color: white;
+                                    color: black;
                                 }
 
                                 .ant-btn:first-child {
