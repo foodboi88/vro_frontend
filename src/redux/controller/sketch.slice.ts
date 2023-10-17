@@ -1543,7 +1543,7 @@ const advancedSearchSketch$: RootEpic = (action$) =>
         switchMap((re) => {
             // IdentityApi.login(re.payload) ?
             console.log(re);
-            const bodyrequest: ICurrentSearchValue = {
+            const bodyrequest = {
                 size: re.payload.size || 1000,
                 offset: 0,
                 name: re.payload.name ? re.payload.name : "",
