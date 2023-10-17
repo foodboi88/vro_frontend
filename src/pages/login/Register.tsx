@@ -34,7 +34,7 @@ const Register = (props: MyProps) => {
         userNameReq &&
             regexPhoneNumber.test(userNumberPhoneReq) &&
             regexEmail.test(userEmailReq) &&
-            regexPass.test(userPassReq) &&
+            userPassReq.length >= 6 &&
             userConfirmPassReq === userPassReq &&
             checked
             ? setCheckReqBtn(true)
@@ -103,8 +103,8 @@ const Register = (props: MyProps) => {
     ) => {
         if (!value) {
             callback("Vui lòng nhập mật khẩu.");
-        } else if (!regexPass.test(value)) {
-            callback("Mật khẩu không hợp lệ.");
+        } else if (value.length < 6) {
+            callback("Mật khẩu phải lớn hơn 6 ký tự.");
         } else {
             callback();
         }
