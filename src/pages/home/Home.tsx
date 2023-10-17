@@ -65,7 +65,6 @@ const Home = () => {
     const [currentIndexFilteredSketch, setCurrentIndexFilteredSketch] = useState(0);
     const [currentIndexStyle, setCurrentIndexStyle] = useState(0);
     const [currentIndexFreeSketch, setCurrentIndexFreeSketch] = useState(0);
-
     const [windowSize, setWindowSize] = useState([
         window.innerWidth,
         window.innerHeight,
@@ -397,7 +396,7 @@ const Home = () => {
                         }
                     </div>
                 </div>
-                <div className="lst-tool">
+                <div className={"lst-tool " + ((filteredSketchs && filteredSketchs.length < numberOfCardShow) && 'less-card')}>
                     <Row gutter={[16, 16]}>
                         {filteredSketchs && filteredSketchs
                             .slice(
@@ -430,7 +429,7 @@ const Home = () => {
             {/* Danh sách phong cách */}
             <div className="tool-of-web">
                 <div className="title">
-                    <div>Phong cách</div>
+                    <div>PHONG CÁCH</div>
                     <div className="sub-title">
                         <Col>
                             <Button
@@ -453,8 +452,7 @@ const Home = () => {
                         </Col>
                     </div>
                 </div>
-                <div className="lst-tool">
-
+                <div className={"lst-tool " + ((cloneStyleList && cloneStyleList.length < numberOfCardShow) && 'less-lst')}>
                     <Row gutter={[16, 16]}>
                         {cloneStyleList
                             .slice(
@@ -473,26 +471,9 @@ const Home = () => {
                                     />
                                 </Col>
                             ))}
-                        {/* {styleList
-                            .slice(
-                                currentIndexStyle,
-                                currentIndexStyle + numberOfCardShow
-                            )
-                            .map((card) => (
-                                <Col
-                                    span={spanCol}
-                                    key={card.id}
-                                >
-                                    <CStyleCard
-                                        imageUrl={card.imageUrl}
-                                        name={card.name}
-                                        id={card.id}
-                                    />
-                                </Col>
-                            ))} */}
                     </Row>
-
                 </div>
+
             </div>
 
             <CDeclare
@@ -579,7 +560,7 @@ const Home = () => {
                         </Col>
                     </div>
                 </div>
-                <div className="lst-tool">
+                <div className="lst-tool architect-card">
 
                     <Row gutter={[16, 16]}>
                         {companyList
@@ -618,7 +599,7 @@ const Home = () => {
             {/* Bản vẽ bán chạy */}
             <div className="tool-of-web">
                 <div className="title">
-                    <div>Bản vẽ bán chạy</div>
+                    <div>BẢN VẼ BÁN CHẠY</div>
                     <div className="sub-title">
                         <Col>
                             <Button
@@ -640,7 +621,7 @@ const Home = () => {
                         </Col>
                     </div>
                 </div>
-                <div className="lst-tool">
+                <div className={"lst-tool " + ((mostViewedSketchList && mostViewedSketchList.length < numberOfCardShow) && 'less-card')}>
                     <Row gutter={[16, 16]}>
                         {mostViewedSketchList
                             .slice(
@@ -673,7 +654,7 @@ const Home = () => {
             {/* Bản vẽ miễn phí */}
             <div className="tool-of-web">
                 <div className="title">
-                    <div>Bản vẽ miễn phí</div>
+                    <div>BẢN VẼ MIỄN PHÍ</div>
                     <div className="sub-title">
                         <Col>
                             <Button
@@ -697,7 +678,8 @@ const Home = () => {
                     </div>
                 </div>
                 {freeSketchList.length > 0 &&
-                    <div className="lst-tool">
+                    <div className={"lst-tool " + ((freeSketchList && freeSketchList.length < numberOfCardShow) && 'less-card')}>
+
                         <Row gutter={[16, 16]}>
                             {freeSketchList
                                 .slice(

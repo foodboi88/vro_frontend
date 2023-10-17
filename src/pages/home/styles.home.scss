@@ -235,6 +235,22 @@
                 border-radius: 50%;
             }
         }
+
+        .lst-tool.less-lst {
+            .ant-row {
+                .ant-col {
+                    padding-right: 7.5vw !important;
+                }
+            }
+        }
+
+        .lst-tool.less-card {
+            .ant-row {
+                .ant-col {
+                    padding-right: 7.5vw !important;
+                }
+            }
+        }
     }
 }
 
