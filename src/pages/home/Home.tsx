@@ -4,21 +4,27 @@ import {
     ArrowRightOutlined,
     RightOutlined
 } from "@ant-design/icons";
-import { Button, Col, Image, Row } from "antd";
-import { Variants, motion } from "framer-motion";
+import { Button, Col, Row } from "antd";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
-import "./styles.home.scss";
-import CProductCard from "../../components/ProductCard/CProductCard";
-import Declare1 from '../../images/homepage/declare2.jpg';
-import Company1 from '../../images/homepage/company.png'
-import CEO from '../../images/homepage/CEO.png'
-import HomepageFooter from '../../images/homepage/homepage-footer.png'
-import Style1 from '../../images/homepage/Roma-1.1.jpg';
-import { Carousel } from 'antd';
 import { ICurrentSearchValue, IReqGetLatestSketchs } from "../../common/sketch.interface";
+import CArchitectCard from "../../components/CArchitectCard/CArchitectCard";
+import CStyleCard from "../../components/CStyleCard/CStyleCard";
 import CDeclare from "../../components/Declare/CDeclare";
+import CProductCard from "../../components/ProductCard/CProductCard";
+import CEO from '../../images/homepage/CEO.png';
+import Company1 from '../../images/homepage/company.png';
+import Declare1 from '../../images/homepage/declare2.jpg';
+import ExcellentArchitect1 from "../../images/homepage/excellentArchitect1.png";
+import ExcellentArchitect2 from "../../images/homepage/excellentArchitect2.png";
+import ExcellentArchitect3 from "../../images/homepage/excellentArchitect3.png";
+import ExcellentArchitect4 from "../../images/homepage/excellentArchitect4.png";
+import HomepageFooter from '../../images/homepage/homepage-footer.png';
+import IntroImage from "../../images/homepage/introImage.png";
+import StyleList1 from "../../images/homepage/styleList1.png";
+import StyleList2 from "../../images/homepage/styleList2.png";
+import StyleList3 from "../../images/homepage/styleList3.png";
 import {
     advancedSearchingRequest,
     getAllArchitecturesRequest,
@@ -26,16 +32,10 @@ import {
     getAllToolsRequest,
     getHomeListSketchRequest
 } from "../../redux/controller";
-import IntroImage from "../../images/homepage/introImage.png";
-import CArchitectCard from "../../components/CArchitectCard/CArchitectCard";
-import CStyleCard from "../../components/CStyleCard/CStyleCard";
-import ExcellentArchitect1 from "../../images/homepage/excellentArchitect1.png";
-import ExcellentArchitect2 from "../../images/homepage/excellentArchitect2.png";
-import ExcellentArchitect3 from "../../images/homepage/excellentArchitect3.png";
-import ExcellentArchitect4 from "../../images/homepage/excellentArchitect4.png";
-import StyleList1 from "../../images/homepage/styleList1.png";
-import StyleList2 from "../../images/homepage/styleList2.png";
-import StyleList3 from "../../images/homepage/styleList3.png";
+import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
+import Login from "../login/Login";
+import Register from "../login/Register";
+import "./styles.home.scss";
 interface CardData {
     id: number;
     title: string;
@@ -64,9 +64,6 @@ const Home = () => {
     const [currentIndexCompany, setCurrentIndexCompany] = useState(0);
     const [currentIndexFilteredSketch, setCurrentIndexFilteredSketch] = useState(0);
     const [currentIndexStyle, setCurrentIndexStyle] = useState(0);
-
-
-
     const [currentIndexFreeSketch, setCurrentIndexFreeSketch] = useState(0);
 
     const [windowSize, setWindowSize] = useState([
@@ -292,6 +289,28 @@ const Home = () => {
 
     }, [currentSearchValue]);
 
+    const [isOpenLoginModal, setIsOpenLoginModal] = useState<boolean>(false); // Biến kiểm tra đang mở modal login hay chưa
+    const [isOpenRegisterModal, setIsOpenRegisterModal] = useState<boolean>(false); // Biến kiểm tra đang mở modal registration hay chưa
+    const [isLogin, setIsLogin] = useState<boolean>(false);
+
+    const checkIsLogin = (val: boolean) => {
+        setIsLogin(val);
+    };
+    // Hàm chuyển đổi trạng thái đóng mở modal login
+    const toggleLoginModal = () => {
+        setIsOpenLoginModal(!isOpenLoginModal);
+        setIsOpenRegisterModal(!isOpenRegisterModal);
+    };
+    // Hàm chuyển đổi trạng thái đóng mở modal registration
+    const toggleRegisterModal = () => {
+        setIsOpenLoginModal(!isOpenLoginModal);
+        setIsOpenRegisterModal(!isOpenRegisterModal);
+    };
+
+    const handleCancelModal = () => {
+        setIsOpenLoginModal(false);
+        setIsOpenRegisterModal(false);
+    }
     return (
         <motion.div
             className="main-home"
@@ -304,16 +323,28 @@ const Home = () => {
             <div className='header-homepage'>
                 <div className="left-header">
                     <div className="slogan">
-                        <div>Ngôi nhà của tôi,</div>
-                        <div>Phong cách của tôi.</div>
+                        Ngôi nhà của tôi,<br />
+                        Phong cách của tôi.
                     </div>
-                    <div className="sub-slogan">Kho bản vẽ với đa dạng chủng loại, cập nhật xu thế mới. Vro luôn là sự lựa chọn tin cậy của khách hàng trong việc cung cấp các giải pháp tư vấn bản vẽ thiết kế</div>
+                    <div className="sub-slogan">Kho bản vẽ với đa dạng chủng loại, là sản phẩm tâm huyết từ các Công ty xây dựng và Kiến trúc sư trên khắp Việt Nam.
+                    </div>
                     <div className="button-group">
-                        <Button className="login-button">Đăng ký ngay</Button>
-                        <div className="more">
-                            <div>Xem sản phẩm</div>
-                            <RightOutlined />
-                        </div>
+                        {!isLogin &&
+                            <Button className="login-button" onClick={() => setIsOpenRegisterModal(true)}>Đăng ký ngay</Button>
+                        }
+                        <Login
+                            checkIsLogin={checkIsLogin}
+                            isOpenModal={isOpenLoginModal}
+                            toggleLoginModal={toggleLoginModal}
+                            toggleRegisterModal={toggleRegisterModal}
+                            handleCancelModal={handleCancelModal}
+                        />
+                        <Register
+                            isOpenModal={isOpenRegisterModal}
+                            toggleLoginModal={toggleLoginModal}
+                            toggleRegisterModal={toggleRegisterModal}
+                            handleCancelModal={handleCancelModal}
+                        />
                     </div>
                 </div>
                 <div className="right-header">
@@ -472,7 +503,7 @@ const Home = () => {
             {/* Top kiến trúc sư */}
             <div className="tool-of-web">
                 <div className="title">
-                    <div>Top 10 kiến trúc sư xuất sắc nhất</div>
+                    <div>KIẾN TRÚC SƯ</div>
                     <div className="sub-title">
                         <Col>
                             <Button
@@ -525,7 +556,8 @@ const Home = () => {
             {/* Công ty bán bản vẽ */}
             <div className="tool-of-web">
                 <div className="title">
-                    <div>Công ty bán bản vẽ</div>
+                    <div>CÔNG TY X Y DỰNG – KIẾN TRÚC
+                    </div>
                     <div className="sub-title">
                         <Col>
                             <Button
@@ -700,7 +732,8 @@ const Home = () => {
                     <div className="slogan">
                         <div>Lời chào từ VRO <strong>”</strong></div>
                     </div>
-                    <div className="wellcome">Gửi các Quý khách hàng những người luôn quan tâm tới ngôi nhà thân yêu. Gửi tới các bạn Kiến trúc sư, Quý công ty Xây dựng Với sứ mệnh kết nối để đem lại những công trình tuyệt vời, Vro đã tạo nên sàn Thương mại điện tử nhằm kết nối khách hàng Với tiêu chí chuyên nghiệp, tạo mọi điều kiện tốt nhất cho khách hàng, chúng tôi sẽ.</div>
+                    <div className="wellcome">Kính gửi Quý khách hàng – những người luôn muốn đem lại những gì tốt đẹp nhất cho ngôi nhà thân yêu; Gửi các bạn Kiến trúc sư, đối tác Công ty Xây dựng đầy tâm huyết.<br />Với sứ mệnh kết nối để tạo nên những công trình tuyệt vời, VRO đã tạo nên một không gian mở giới thiệu những thiết kế và công ty Xây dựng, KTS tới khách hàng. Hãy cùng nhau xây dựng nên cộng đồng để tôn vinh cái đẹp, sự tối ưu cho những công trình thân yêu.
+                    </div>
                     <div className="info">
                         <img src={CEO} />
                         <div className="more">

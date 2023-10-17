@@ -51,8 +51,7 @@ export const CHeader = (props: MyProps) => {
 
     const navigate = useNavigate();
     const [isOpenLoginModal, setIsOpenLoginModal] = useState<boolean>(false); // Biến kiểm tra đang mở modal login hay chưa
-    const [isOpenRegisterModal, setIsOpenRegisterModal] =
-        useState<boolean>(false); // Biến kiểm tra đang mở modal registration hay chưa
+    const [isOpenRegisterModal, setIsOpenRegisterModal] = useState<boolean>(false); // Biến kiểm tra đang mở modal registration hay chưa
     const [isLogin, setIsLogin] = useState<boolean>(false);
     const { currentSearchValue } = useSelectorRoot((state) => state.sketch);
     const dispatch = useDispatchRoot();
@@ -183,16 +182,16 @@ export const CHeader = (props: MyProps) => {
             tool: currentSearchValue.tool,
             style: currentSearchValue.style,
         };
-        if(window.location.pathname === '/'){ // Nếu đang ở trang chủ thì reset biến lưu thông tin tìm kiếm
+        if (window.location.pathname === '/') { // Nếu đang ở trang chủ thì reset biến lưu thông tin tìm kiếm
 
             dispatch(resetCurrentSearchValueRequest(bodyrequest))
-        }else{
+        } else {
             dispatch(advancedSearchingRequest(bodyrequest));
         }
         navigate("/searching");
         onClose();
     };
-    
+
     const checkIsLogin = (val: boolean) => {
         setIsLogin(val);
     };
