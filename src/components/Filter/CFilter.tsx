@@ -112,6 +112,7 @@ const CFilter = (props: props) => {
                             })
                         }
                         options={toolList}
+                        value={currentSearchValue.tool}
                     />
                 </Form.Item>
                 <Form.Item className="form-item" name="architecture">
@@ -129,6 +130,7 @@ const CFilter = (props: props) => {
                             })
                         }
                         options={architectureList}
+                        value={currentSearchValue.architecture}
                     />
                 </Form.Item>
                 <Form.Item className="form-item" name="style">
@@ -146,6 +148,7 @@ const CFilter = (props: props) => {
                             })
                         }
                         options={styleList}
+                        value={currentSearchValue.style}
                     />
                 </Form.Item>
             </Form>

@@ -79,7 +79,7 @@ interface SketchState {
     commentList?: any[];
     filteredSketchs: IFilteredSketch[];
     filteredAuthors?: IUser[];
-    currentSearchValue: ICurrentSearchValue;
+    currentSearchValue: any;
     checkWhetherSketchUploaded: number; // Là số chẵn thì chắc chắn file đó đã đc up cả ảnh + file + content thành công
     ratesLst: IRates | undefined;
     productsFile: string | undefined;
