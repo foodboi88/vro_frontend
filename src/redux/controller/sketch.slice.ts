@@ -77,7 +77,7 @@ interface SketchState {
     freeSketchList: ISketch[];
     detailSketch?: IDetailSketch;
     commentList?: any[];
-    filteredSketchs?: IFilteredSketch[];
+    filteredSketchs: IFilteredSketch[];
     filteredAuthors?: IUser[];
     currentSearchValue: ICurrentSearchValue;
     checkWhetherSketchUploaded: number; // Là số chẵn thì chắc chắn file đó đã đc up cả ảnh + file + content thành công
@@ -1543,8 +1543,8 @@ const advancedSearchSketch$: RootEpic = (action$) =>
         switchMap((re) => {
             // IdentityApi.login(re.payload) ?
             console.log(re);
-            const bodyrequest = {
-                size: 1000,
+            const bodyrequest: ICurrentSearchValue = {
+                size: re.payload.size || 1000,
                 offset: 0,
                 name: re.payload.name ? re.payload.name : "",
                 designToolId: re.payload.tool ? re.payload.tool : "",
