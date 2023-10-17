@@ -16,10 +16,11 @@ import Company1 from '../../images/homepage/company.png'
 import CEO from '../../images/homepage/CEO.png'
 import HomepageFooter from '../../images/homepage/homepage-footer.png'
 import Style1 from '../../images/homepage/Roma-1.1.jpg';
+import SeeMore from '../../images/homepage/discovermore2.png';
 
 
 import { Carousel } from 'antd';
-import { ICurrentSearchValue, IReqGetLatestSketchs } from "../../common/sketch.interface";
+import { ICurrentSearchValue, IFilteredSketch, IReqGetLatestSketchs } from "../../common/sketch.interface";
 import CDeclare from "../../components/Declare/CDeclare";
 import {
     advancedSearchingRequest,
@@ -67,6 +68,8 @@ const Home = () => {
     const [currentIndexFilteredSketch, setCurrentIndexFilteredSketch] = useState(0);
     const [currentIndexStyle, setCurrentIndexStyle] = useState(0);
 
+    const [cloneFilteredSketchs, setCloneFilteredSketchs] = useState<IFilteredSketch[]>([]);
+
 
 
     const [currentIndexFreeSketch, setCurrentIndexFreeSketch] = useState(0);
@@ -75,6 +78,22 @@ const Home = () => {
         window.innerWidth,
         window.innerHeight,
     ]);
+
+    useEffect(()=> {
+        let lastSketch = 
+            {
+                "id": "last",
+                "title": "",
+                "price": -1,
+                "views": 56,
+                "likes": 0,
+                "quantityPurchased": 0,
+                "typeOfArchitectureId": "",
+                "image": SeeMore
+            }
+        ;
+        setCloneFilteredSketchs([...filteredSketchs,lastSketch])
+    },[filteredSketchs])
 
     const excellentArchitect = [
         {
@@ -268,7 +287,18 @@ const Home = () => {
 
     const handleClickCard = (sketchId: string) => {
         console.log("sketchId", sketchId);
-        navigate(`/detail-sketch/${sketchId}`);
+        if(sketchId === 'last'){
+            const bodyrequest: ICurrentSearchValue = {
+                name: '',
+                architecture: currentSearchValue.architecture,
+                tool: currentSearchValue.tool,
+                style: currentSearchValue.style,
+            };
+            dispatch(advancedSearchingRequest(bodyrequest));
+            navigate("/searching");
+        }else{
+            navigate(`/detail-sketch/${sketchId}`);
+        }
         // setTimeout(() => {
         //     window.location.reload();
         // }, 500);
@@ -289,6 +319,7 @@ const Home = () => {
     const handleSearch = (param: string) => {
         console.log(param);
         const bodyrequest = {
+            size: 7,
             architecture: param,
             name: '', // Lay ra gia tri text luu trong redux
         };
@@ -352,7 +383,7 @@ const Home = () => {
                     </div>
                     <div className="sub-title">
                         {
-                            filteredSketchs &&
+                            cloneFilteredSketchs &&
                             <>
                                 <Col>
                                     <Button
@@ -368,7 +399,7 @@ const Home = () => {
                                         className="btn-icon"
                                         onClick={() => handlePagination('next', 'filtered')}
                                         disabled={
-                                            currentIndexFilteredSketch >= filteredSketchs.length - numberOfCardShow && true
+                                            currentIndexFilteredSketch >= cloneFilteredSketchs.length - numberOfCardShow && true
                                         }
                                     />
                                 </Col>
@@ -378,7 +409,7 @@ const Home = () => {
                 </div>
                 <div className="lst-tool">
                     <Row gutter={[16, 16]}>
-                        {filteredSketchs && filteredSketchs
+                        {cloneFilteredSketchs && cloneFilteredSketchs
                             .slice(
                                 currentIndexFilteredSketch,
                                 currentIndexFilteredSketch + numberOfCardShow
@@ -400,7 +431,8 @@ const Home = () => {
                                     // type={card.type}
                                     />
                                 </Col>
-                            ))}
+                            ))
+                        }
                     </Row>
 
                 </div>
