@@ -18,13 +18,14 @@
             margin-right: 140px;
 
             .slogan {
+                line-height: 65px;
                 font-size: 60px;
                 font-weight: 550;
                 color: var(--white-color-v2);
             }
 
             .sub-slogan {
-                color: #676767;
+                color: var(--black-color-v2-500);
             }
 
             .button-group {
@@ -89,7 +90,12 @@
             }
 
             .wellcome {
-                color: var(--white-color-v2-300);
+                font-weight: 300;
+                font-size: 12px;
+                line-height: 24px;
+                color: var(--white-color-v2-900);
+                cursor: pointer;
+                transition: all 0.3s ease-in-out;
             }
 
             .info {
@@ -140,9 +146,10 @@
         padding-bottom: -8px;
         border-radius: 30px;
 
-        .architect-card {
+        .lst-tool.architect-card {
             display: flex;
             gap: 2em;
+            width: 90%;
         }
 
         .title {
@@ -228,6 +235,22 @@
                 border-radius: 50%;
             }
         }
+
+        .lst-tool.less-lst {
+            .ant-row {
+                .ant-col {
+                    padding-right: 7.5vw !important;
+                }
+            }
+        }
+
+        .lst-tool.less-card {
+            .ant-row {
+                .ant-col {
+                    padding-right: 7.5vw !important;
+                }
+            }
+        }
     }
 }
 
@@ -291,6 +314,7 @@
 
         .container {
             max-width: 1650px;
+            margin-bottom: 1em;
 
             .content {}
         }
@@ -357,6 +381,7 @@
             .left-header {
                 .slogan {
                     font-size: 3em;
+                    line-height: 50px;
                 }
 
                 .sub-slogan {}
@@ -665,9 +690,7 @@
                     }
                 }
 
-                .wellcome {
-                    color: var(--white-color-v2-300);
-                }
+                .wellcome {}
 
                 .info {
                     display: flex;
@@ -711,6 +734,7 @@
                 .slogan {
                     font-size: 2.5em;
                     line-height: normal;
+                    line-height: 40px;
                 }
 
                 .sub-slogan {}
@@ -889,6 +913,7 @@
 
                 .slogan {
                     font-size: 1.5em;
+                    line-height: 30px;
                 }
 
                 .sub-slogan {
@@ -1337,7 +1362,6 @@
 
                 .wellcome {
                     font-size: 1em;
-                    color: var(--white-color-v2-300);
                 }
 
                 .info {

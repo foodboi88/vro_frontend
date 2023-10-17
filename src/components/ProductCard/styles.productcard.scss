@@ -18,7 +18,7 @@
     .ant-card-body {
         background-color: var(--black-color-v2);
         padding: 1em;
-        height: 10em;
+        height: 8em;
         position: relative;
 
         .title-and-price {
@@ -74,8 +74,8 @@
             position: absolute;
             bottom: 1em;
             font-weight: 400;
-            // font-size: 16px;
-            font-size: 18px;
+            font-size: 1em;
+            // font-size: 18px;
             line-height: 24px;
             color: var(--white-color-v2);
         }
