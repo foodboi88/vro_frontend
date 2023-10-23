@@ -448,7 +448,7 @@ const UploadSketch = () => {
                                         </div>
                                     </Form.Item>
 
-                                    <Form.Item>
+                                    {/* <Form.Item>
                                         <div className="title-input">
                                             Phí download (VNĐ){" "}
                                             <strong>*</strong>
@@ -466,7 +466,7 @@ const UploadSketch = () => {
 
                                             />
                                         </div>
-                                    </Form.Item>
+                                    </Form.Item> */}
 
                                     <Form.Item>
                                         <div className="title-input">

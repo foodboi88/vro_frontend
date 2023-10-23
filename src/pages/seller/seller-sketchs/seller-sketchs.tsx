@@ -64,14 +64,14 @@ const SellerSketchs = () => {
             key: 'title',
 
         },
-        {
-            title: 'Giá',
-            dataIndex: 'price',
-            key: 'price',
-            render: (_, record) => (
-                <span style={{ whiteSpace: 'nowrap', display: 'flex', justifyContent: 'end' }}>{Utils.formatMoney(record.price) + ' VND'}</span>
-            )
-        },
+        // {
+        //     title: 'Giá',
+        //     dataIndex: 'price',
+        //     key: 'price',
+        //     render: (_, record) => (
+        //         <span style={{ whiteSpace: 'nowrap', display: 'flex', justifyContent: 'end' }}>{Utils.formatMoney(record.price) + ' VND'}</span>
+        //     )
+        // },
         {
             title: 'Tạo lúc',
             dataIndex: 'createdAt',
