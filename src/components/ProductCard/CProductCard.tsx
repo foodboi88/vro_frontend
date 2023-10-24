@@ -71,11 +71,11 @@ const CProductCard = (props: props) => {
                 />
             </div>
             <div className="home-card-description">{props.type}</div>
-            {/* {  
+            {  
                 props.price === 0 ? <div className="home-card-price free">Miễn Phí</div> : 
                 props.price === -1 ? <></> :
                 <div className="home-card-price">{Utils.formatMoney(props.price) + ' VND'}</div>
-            } */}
+            }
         </Card>
     );
 };

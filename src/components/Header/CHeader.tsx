@@ -283,7 +283,7 @@ export const CHeader = (props: MyProps) => {
                             </>
                         ) : (
                             <>
-                                {/* <div className="icon-group">
+                                <div className="icon-group">
                                     <Badge
                                         count={sketchsQuantityInCart}
                                         size="default"
@@ -292,7 +292,7 @@ export const CHeader = (props: MyProps) => {
                                             onClick={handleClickCart}
                                         />
                                     </Badge>
-                                </div> */}
+                                </div>
                                 <div className="user-info-content" onClick={() => onClickAvatar()}>
                                     <Avatar className="avatar" src={UserIcon} />
                                     <div className="name-and-balance">
