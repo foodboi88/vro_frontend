@@ -113,8 +113,8 @@ const DetailSketch = () => {
         if (sketchId) {
             dispatch(getDetailSketchPageContentRequest(sketchId));
             dispatch(getRatesBySketchIdRequest(sketchId));
-            
-            if(tokenLogin) {
+
+            if (tokenLogin) {
                 dispatch(getProductFilesByIdRequest(sketchId));
             }
 
@@ -253,7 +253,7 @@ const DetailSketch = () => {
                         typeOfArchitectures && (
                             <>
                                 <div className="title">{info.title}</div>
-                                {info.price === 0 ? (
+                                {/* {info.price === 0 ? (
                                     <div
                                         className="price"
                                         style={{ color: "green" }}
@@ -264,7 +264,7 @@ const DetailSketch = () => {
                                     <div className="price">
                                         {Utils.formatMoney(info.price)} VNĐ
                                     </div>
-                                )}
+                                )} */}
                                 <div className="rate">
                                     {detailSketch && detailSketch.star ? (
                                         <Rate
@@ -373,7 +373,7 @@ const DetailSketch = () => {
                                         {info.content}
                                     </div>
                                 </div>
-                                <div className="action">
+                                {/* <div className="action">
                                     {isShowAddToCart &&
                                         <motion.div
                                             whileHover={{ scale: 1.1 }}
@@ -405,7 +405,7 @@ const DetailSketch = () => {
                                             </Button>
                                         </motion.div>
                                     }
-                                </div>
+                                </div> */}
                             </>
                         )}
                 </div>
