@@ -3,7 +3,6 @@
 
 import {
     DownOutlined,
-    SearchOutlined,
     ShoppingCartOutlined
 } from "@ant-design/icons";
 import {
@@ -212,7 +211,7 @@ export const CHeader = (props: MyProps) => {
 
     // Hàm xử lý khi click vào avatar
     const onClickAvatar = () => {
-        userRole === ROLE.BUYER ? navigate('/buyer') : navigate('/seller')
+        userRole === ROLE.BUYER ? navigate('/buyer/become-seller') : navigate('/seller/management-sketch')
     }
 
     return (

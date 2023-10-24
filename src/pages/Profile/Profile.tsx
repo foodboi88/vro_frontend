@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
-import { AiOutlineGift, AiOutlineLock, AiOutlineQuestionCircle, AiOutlineSetting } from 'react-icons/ai'
-import { BiGridAlt } from 'react-icons/bi'
+import { AiOutlineLock, AiOutlineQuestionCircle, AiOutlineSetting } from 'react-icons/ai'
 import { BsShop } from 'react-icons/bs'
 
-import './style.profile.scss'
 import { Outlet, useNavigate } from 'react-router-dom'
+import './style.profile.scss'
 const Profile = () => {
     const [active, setActive] = useState<number>(0)
     const navigate = useNavigate();
@@ -20,15 +19,15 @@ const Profile = () => {
     return (
         <div className="main-profile">
             <div className='profile-navbar'>
-                <div className={'profile-navbar-item' + (active === 1 ? ' active' : '')} onClick={() => {
+                {/* <div className={'profile-navbar-item' + (active === 1 ? ' active' : '')} onClick={() => {
                     setActive(1)
                     navigate('/buyer')
                 }
                 }>
                     <BiGridAlt className='profile-navbar-item-icon' />
                     <span className='profile-navbar-item-text'>Hồ sơ cá nhân</span>
-                </div>
-                <div className={'profile-navbar-item' + (active === 8 ? ' active' : '')} onClick={() => {
+                </div> */}
+                {/* <div className={'profile-navbar-item' + (active === 8 ? ' active' : '')} onClick={() => {
                     setActive(8)
                     navigate('/buyer/cart')
                 }
@@ -49,6 +48,14 @@ const Profile = () => {
                 <div className={'profile-navbar-item' + (active === 6 ? ' active' : '')} onClick={() => setActive(6)}>
                     <AiOutlineGift className='profile-navbar-item-icon' />
                     <span className='profile-navbar-item-text'>Kho Voucher</span>
+                </div> */}
+                <div className={'profile-navbar-item' + (active === 3 ? ' active' : '')} onClick={() => {
+                    setActive(3)
+                    navigate('/buyer/become-seller')
+                }
+                }>
+                    <BsShop className='profile-navbar-item-icon' />
+                    <span className='profile-navbar-item-text'>Trở thành người bán</span>
                 </div>
                 <div className={'profile-navbar-item' + (active === 7 ? ' active' : '')} onClick={() => setActive(7)}>
                     <AiOutlineQuestionCircle className='profile-navbar-item-icon' />
@@ -67,14 +74,6 @@ const Profile = () => {
                 <div className={'profile-navbar-item' + (active === 2 ? ' active' : '')} onClick={() => setActive(2)}>
                     <AiOutlineSetting className='profile-navbar-item-icon' />
                     <span className='profile-navbar-item-text'>Cài đặt chung</span>
-                </div>
-                <div className={'profile-navbar-item' + (active === 3 ? ' active' : '')} onClick={() => {
-                    setActive(3)
-                    navigate('/buyer/become-seller')
-                }
-                }>
-                    <BsShop className='profile-navbar-item-icon' />
-                    <span className='profile-navbar-item-text'>Trở thành người bán</span>
                 </div>
             </div>
             <div className='profile-content'>
