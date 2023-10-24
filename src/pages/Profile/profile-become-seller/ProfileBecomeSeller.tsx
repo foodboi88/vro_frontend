@@ -25,7 +25,7 @@ const ProfileBecomeSeller = () => {
         <>
             {page === 1 &&
                 <div className='profile-content become-seller'>
-                    <div className='profile-content-title'>Vui lòng lựa chọn ... của bạn!</div>
+                    <div className='profile-content-title'>Vui lòng lựa chọn để điền thông tin!</div>
                     <div className='profile-content-option'>
                         <Radio.Group className='profile-content-option-group' name="radiogroup" defaultValue={1} onChange={handleChangeValueRadio}>
                             <div className='profile-content-option-item'>
