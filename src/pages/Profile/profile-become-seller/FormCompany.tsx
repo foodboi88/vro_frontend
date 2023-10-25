@@ -203,7 +203,7 @@ const FormCompany = (props: Props) => {
                     </Form.Item>
                 </div>
                 <Form.Item
-                    label="Mã số thuế cá nhân"
+                    label="Mã số thuế"
                     name="taxCode"
                     rules={[{ required: true, message: 'Vui lòng nhập mã số thuế' }]}
                 >
