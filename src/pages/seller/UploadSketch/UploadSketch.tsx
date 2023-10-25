@@ -401,18 +401,18 @@ const UploadSketch = () => {
                                                             : ""
                                                     }
                                                     onClick={() => {
-                                                            handleClickBtnStyle(
-                                                                item.value as string
-                                                            )
-                                                        }
+                                                        handleClickBtnStyle(
+                                                            item.value as string
+                                                        )
+                                                    }
                                                     }
                                                 >
                                                     {item.label}
                                                 </Button>
                                             ))}
                                         </div>
-                                    </Form.Item> 
-                                    <Form.Item>
+                                    </Form.Item>
+                                    {/* <Form.Item>
                                         <div className="title-input">
                                             Công cụ <strong>*</strong>
                                         </div>
@@ -429,7 +429,7 @@ const UploadSketch = () => {
                                                 }
                                             />
                                         </div>
-                                    </Form.Item>
+                                    </Form.Item> */}
                                     <Form.Item>
                                         <div className="title-input">
                                             Kiến trúc <strong>*</strong>

@@ -82,21 +82,21 @@ const Home = () => {
         window.innerHeight,
     ]);
 
-    useEffect(()=> {
-        let lastSketch = 
-            {
-                "id": "last",
-                "title": "",
-                "price": -1,
-                "views": 56,
-                "likes": 0,
-                "quantityPurchased": 0,
-                "typeOfArchitectureId": "",
-                "image": SeeMore
-            }
-        ;
-        setCloneFilteredSketchs([...filteredSketchs,lastSketch])
-    },[filteredSketchs])
+    useEffect(() => {
+        let lastSketch =
+        {
+            "id": "last",
+            "title": "",
+            "price": -1,
+            "views": 56,
+            "likes": 0,
+            "quantityPurchased": 0,
+            "typeOfArchitectureId": "",
+            "image": SeeMore
+        }
+            ;
+        setCloneFilteredSketchs([...filteredSketchs, lastSketch])
+    }, [filteredSketchs])
 
     const excellentArchitect = [
         {
@@ -282,7 +282,7 @@ const Home = () => {
 
     const handleClickCard = (sketchId: string) => {
         console.log("sketchId", sketchId);
-        if(sketchId === 'last'){
+        if (sketchId === 'last') {
             const bodyrequest: ICurrentSearchValue = {
                 name: '',
                 architecture: currentSearchValue.architecture,
@@ -291,7 +291,7 @@ const Home = () => {
             };
             dispatch(advancedSearchingRequest(bodyrequest));
             navigate("/searching");
-        }else{
+        } else {
             navigate(`/detail-sketch/${sketchId}`);
         }
         // setTimeout(() => {
@@ -695,7 +695,7 @@ const Home = () => {
             {/* Bản vẽ miễn phí */}
             <div className="tool-of-web">
                 <div className="title">
-                    <div>BẢN VẼ MIỄN PHÍ</div>
+                    <div>BẢN VẼ CHÀO MỪNG</div>
                     <div className="sub-title">
                         <Col>
                             <Button
