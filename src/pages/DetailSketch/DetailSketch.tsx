@@ -142,7 +142,7 @@ const DetailSketch = () => {
     useEffect(() => {
         if (detailSketch) {
             setDesignStyles(detailSketch.designStyles);
-            setDesignTools(detailSketch.designTools);
+            // setDesignTools(detailSketch.designTools);
             setImages(detailSketch.images);
             setInfo(detailSketch.info);
             setTypeOfArchitectures(detailSketch.typeOfArchitectures);
@@ -239,7 +239,7 @@ const DetailSketch = () => {
                 <div className="content">
                     {info &&
                         designStyles &&
-                        designTools &&
+                        // designTools &&
                         typeOfArchitectures && (
                             <>
                                 <div className="title">{info.title}</div>
