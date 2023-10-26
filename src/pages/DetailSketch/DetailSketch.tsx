@@ -13,8 +13,6 @@ import { IArchitecture, IStyle, ITool } from "../../common/tool.interface";
 import CComment from "../../components/Comment/CComment";
 import IconDetail1 from "../../images/detail/icon-detail-1.png";
 import IconDetail2 from "../../images/detail/icon-detail-2.png";
-import IconDetail4 from "../../images/detail/icon-detail-4.png";
-import IconDetail5 from "../../images/detail/icon-detail-5.png";
 import IconDetail6 from "../../images/detail/icon-detail-6.png";
 import {
     addSketchToCartRequest,
@@ -322,20 +320,18 @@ const DetailSketch = () => {
                                             )}
                                         </div>
                                     </div> */}
-                                    <div className="content">
+                                    {/* <div className="content">
                                         <img src={IconDetail4} alt="" />
                                         <div className="text">
-                                            {/* Dung lượng file: {info.fileSize} MB */}
                                             Dung lượng file:
                                         </div>
                                     </div>
                                     <div className="content">
                                         <img src={IconDetail5} alt="" />
                                         <div className="text">
-                                            {/* Kích thước: {info.width} x {info.height} cm */}
                                             Kích thước:
                                         </div>
-                                    </div>
+                                    </div> */}
                                     <div className="content">
                                         <img src={IconDetail6} alt="" />
                                         <div className="text">
