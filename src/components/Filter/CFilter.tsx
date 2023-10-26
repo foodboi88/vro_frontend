@@ -1,20 +1,16 @@
-import { Checkbox, Col, Form, Radio, Row, Select } from "antd";
-import { Option } from "antd/lib/mentions";
-import "./styles.filter.scss";
-import React, { useEffect, useState } from "react";
 import {
     FormatPainterOutlined,
-    HomeOutlined,
-    ToolOutlined,
+    HomeOutlined
 } from "@ant-design/icons";
+import { Form, Radio } from "antd";
 import { motion } from "framer-motion";
-import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
+import { useEffect, useState } from "react";
 import {
     advancedSearchingRequest,
-    getAllFilterCriteriasRequest,
-    getAllToolsRequest,
+    getAllFilterCriteriasRequest
 } from "../../redux/controller";
-import { IReqGetAllTools } from "../../common/tool.interface";
+import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
+import "./styles.filter.scss";
 
 interface props {
     authorId?: string;
@@ -97,7 +93,7 @@ const CFilter = (props: props) => {
             transition={{ duration: 0.5 }}
         >
             <Form form={form}>
-                <Form.Item className="form-item" name="tool">
+                {/* <Form.Item className="form-item" name="tool">
                     <div className="title">
                         <div className="icon">
                             <ToolOutlined />
@@ -114,7 +110,7 @@ const CFilter = (props: props) => {
                         options={toolList}
                         value={currentSearchValue.tool}
                     />
-                </Form.Item>
+                </Form.Item> */}
                 <Form.Item className="form-item" name="architecture">
                     <div className="title">
                         <div className="icon">
