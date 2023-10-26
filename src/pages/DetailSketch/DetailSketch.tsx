@@ -1,6 +1,5 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { Breadcrumb, Button, Col, Rate, Row, notification } from "antd";
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
@@ -11,26 +10,19 @@ import "./styles.detailsketch.scss";
 
 import { IImagesSketch, IInFoSketch } from "../../common/sketch.interface";
 import { IArchitecture, IStyle, ITool } from "../../common/tool.interface";
+import CComment from "../../components/Comment/CComment";
 import IconDetail1 from "../../images/detail/icon-detail-1.png";
 import IconDetail2 from "../../images/detail/icon-detail-2.png";
-import IconDetail3 from "../../images/detail/icon-detail-3.png";
 import IconDetail4 from "../../images/detail/icon-detail-4.png";
 import IconDetail5 from "../../images/detail/icon-detail-5.png";
 import IconDetail6 from "../../images/detail/icon-detail-6.png";
-import DrawHomeImage1 from "../../images/homepage/home_img_1.png";
-import DrawHomeImage2 from "../../images/homepage/home_img_2.png";
-import DrawHomeImage3 from "../../images/homepage/home_img_3.png";
-import DrawHomeImage4 from "../../images/homepage/home_img_4.png";
 import {
     addSketchToCartRequest,
-    getAllSketchInCartRequest,
     getDetailSketchPageContentRequest,
     getProductFilesByIdRequest,
-    getRatesBySketchIdRequest,
+    getRatesBySketchIdRequest
 } from "../../redux/controller";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
-import Utils from "../../common/utils";
-import CComment from "../../components/Comment/CComment";
 
 const DetailSketch = () => {
     const navigate = useNavigate();
@@ -310,7 +302,7 @@ const DetailSketch = () => {
                                             )}
                                         </div>
                                     </div>
-                                    <div className="content">
+                                    {/* <div className="content">
                                         <img src={IconDetail3} alt="" />
                                         <div className="text">
                                             Công cụ:
@@ -329,7 +321,7 @@ const DetailSketch = () => {
                                                 )
                                             )}
                                         </div>
-                                    </div>
+                                    </div> */}
                                     <div className="content">
                                         <img src={IconDetail4} alt="" />
                                         <div className="text">
