@@ -313,23 +313,23 @@ const sketchSlice = createSlice({
 
         },
 
-        getAllToolsRequest(state, action: PayloadAction<any>) {
-            console.log("Da chui vao voi action: ", action);
-        },
+        // getAllToolsRequest(state, action: PayloadAction<any>) {
+        //     console.log("Da chui vao voi action: ", action);
+        // },
 
-        getAllToolsSuccess(state, action: PayloadAction<any>) {
-            console.log(action.payload.data);
-            state.toolList = action.payload.data.map(
-                (item: ITool) =>
-                ({
-                    label: item.name,
-                    value: item.id,
-                } as CheckboxOptionType)
-            );
-            state.cloneToolList = action.payload.data;
-            console.log(state.toolList);
-            console.log("Da chui vao voi action: ", action);
-        },
+        // getAllToolsSuccess(state, action: PayloadAction<any>) {
+        //     console.log(action.payload.data);
+        //     state.toolList = action.payload.data.map(
+        //         (item: ITool) =>
+        //         ({
+        //             label: item.name,
+        //             value: item.id,
+        //         } as CheckboxOptionType)
+        //     );
+        //     state.cloneToolList = action.payload.data;
+        //     console.log(state.toolList);
+        //     console.log("Da chui vao voi action: ", action);
+        // },
 
 
         getAllStylesRequest(state, action: PayloadAction<any>) {
@@ -1390,29 +1390,29 @@ const getAllFitlerCriterias$: RootEpic = (action$) =>
             return [
                 sketchSlice.actions.getAllArchitecturesRequest(bodyrequest),
                 sketchSlice.actions.getAllStylesRequest(bodyrequest),
-                sketchSlice.actions.getAllToolsRequest(bodyrequest),
+                // sketchSlice.actions.getAllToolsRequest(bodyrequest),
                 sketchSlice.actions.getAllFilterCriteriasSuccess(),
             ];
         })
     );
 
-const getAllTools$: RootEpic = (action$) =>
-    action$.pipe(
-        filter(getAllToolsRequest.match),
-        switchMap((re) => {
-            // IdentityApi.login(re.payload) ?
-            console.log(re);
+// const getAllTools$: RootEpic = (action$) =>
+//     action$.pipe(
+//         filter(getAllToolsRequest.match),
+//         switchMap((re) => {
+//             // IdentityApi.login(re.payload) ?
+//             console.log(re);
 
-            return FilterCriteriasApi.getTools(re.payload).pipe(
-                mergeMap((res: any) => {
-                    console.log(res);
+//             return FilterCriteriasApi.getTools(re.payload).pipe(
+//                 mergeMap((res: any) => {
+//                     console.log(res);
 
-                    return [sketchSlice.actions.getAllToolsSuccess(res)];
-                }),
-                catchError((err) => [])
-            );
-        })
-    );
+//                     return [sketchSlice.actions.getAllToolsSuccess(res)];
+//                 }),
+//                 catchError((err) => [])
+//             );
+//         })
+//     );
 
 const getAllStyles$: RootEpic = (action$) =>
     action$.pipe(
@@ -2276,7 +2276,7 @@ export const SketchEpics = [
     getLatestSketchs$,
     getMostViewdSketchs$,
     // getMostDownloadedSketchs$,
-    getAllTools$,
+    // getAllTools$,
     getAllStyles$,
     getAllArchitectures$,
     getAllFitlerCriterias$,
@@ -2330,7 +2330,7 @@ export const {
     getFreeSketchRequest,
     getHomeListSketchRequest,
     getMostViewdSketchsRequest,
-    getAllToolsRequest,
+    // getAllToolsRequest,
     getAllArchitecturesRequest,
     getAllStylesRequest,
     getAllFilterCriteriasRequest,

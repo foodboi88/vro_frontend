@@ -335,7 +335,7 @@ const DetailSketch = () => {
                                     <div className="content">
                                         <img src={IconDetail6} alt="" />
                                         <div className="text">
-                                            Hạng mục:{" "}
+                                            Kiến trúc:{" "}
                                             {typeOfArchitectures.map(
                                                 (type, index) =>
                                                     index ===
@@ -446,7 +446,7 @@ const DetailSketch = () => {
                                         title={card.title}
                                         view={card.views}
                                         price={card.price}
-                                        idTool={card.designTools[0] || ''}
+                                        // idTool={card.designTools[0] || ''}
 
                                     // type={card.type}
                                     />

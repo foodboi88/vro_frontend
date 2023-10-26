@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from "react";
-import "./styles.authorpage.scss";
-import CFilter from "../../components/Filter/CFilter";
-import CAuthorIntroduction from "../../components/AuthorIntroduction/CAuthorIntroduction";
-import CArrangeBar from "../../components/ArrangeBar/CArrangeBar";
-import { Col, MenuProps, Row } from "antd";
-import { Menu } from "antd";
 import { WalletOutlined } from "@ant-design/icons";
-import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
+import { Col, Menu, MenuProps, Row } from "antd";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { IFilteredSketch } from "../../common/sketch.interface";
+import CArrangeBar from "../../components/ArrangeBar/CArrangeBar";
+import CAuthorIntroduction from "../../components/AuthorIntroduction/CAuthorIntroduction";
+import CFilter from "../../components/Filter/CFilter";
+import CPagination from "../../components/Pagination/CPagination";
+import CProductCard from "../../components/ProductCard/CProductCard";
 import {
     getAuthorIntroductionByIdRequest,
     getSketchListByAuthorIdRequest,
 } from "../../redux/controller";
-import CProductCard from "../../components/ProductCard/CProductCard";
-import CPagination from "../../components/Pagination/CPagination";
-import { IFilteredSketch } from "../../common/sketch.interface";
+import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
+import "./styles.authorpage.scss";
 
 const items: MenuProps["items"] = [
     {
@@ -133,7 +132,7 @@ const AuthorPage = () => {
                                         title={card.title}
                                         view={card.views}
                                         price={card.price}
-                                        idTool={card.typeOfArchitectureId || ''}
+                                        // idTool={card.typeOfArchitectureId || ''}
 
                                     // type={card.}
                                     />

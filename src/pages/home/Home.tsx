@@ -1,8 +1,7 @@
 /* eslint-disable jsx-a11y/iframe-has-title */
 import {
     ArrowLeftOutlined,
-    ArrowRightOutlined,
-    RightOutlined
+    ArrowRightOutlined
 } from "@ant-design/icons";
 import { Button, Col, Row } from "antd";
 import { motion } from "framer-motion";
@@ -10,11 +9,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./styles.home.scss";
 
-import Style1 from '../../images/homepage/Roma-1.1.jpg';
 import SeeMore from '../../images/homepage/discovermore2.png';
 
 
-import { Carousel } from 'antd';
 import { ICurrentSearchValue, IFilteredSketch, IReqGetLatestSketchs } from "../../common/sketch.interface";
 import CArchitectCard from "../../components/CArchitectCard/CArchitectCard";
 import CStyleCard from "../../components/CStyleCard/CStyleCard";
@@ -36,7 +33,7 @@ import {
     advancedSearchingRequest,
     getAllArchitecturesRequest,
     getAllStylesRequest,
-    getAllToolsRequest,
+    // getAllToolsRequest,
     getHomeListSketchRequest
 } from "../../redux/controller";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
@@ -209,7 +206,7 @@ const Home = () => {
             offset: 0,
         };
         dispatch(getHomeListSketchRequest());
-        dispatch(getAllToolsRequest(bodyrequest));
+        // dispatch(getAllToolsRequest(bodyrequest));
         dispatch(getAllArchitecturesRequest(bodyrequest));
         dispatch(getAllStylesRequest(bodyrequest));
         handleSearch('64231026edf9dd11e488c250');
@@ -456,7 +453,7 @@ const Home = () => {
                                         title={card.title}
                                         view={card.views}
                                         price={card.price}
-                                        idTool={card.typeOfArchitectureId}
+                                        // idTool={card.typeOfArchitectureId}
                                     // type={card.type}
                                     />
                                 </Col>
@@ -682,7 +679,7 @@ const Home = () => {
                                         title={card.title}
                                         view={card.views}
                                         price={card.price}
-                                        idTool={card.designTools[0] || ''}
+                                        // idTool={card.designTools[0] || ''}
                                     // type={card.type}
                                     />
                                 </Col>
@@ -740,7 +737,7 @@ const Home = () => {
                                             title={card.title}
                                             view={card.views}
                                             price={card.price}
-                                            idTool={card.designTools[0] || ''}
+                                            // idTool={card.designTools[0] || ''}
 
                                         // type={card.type}
                                         />

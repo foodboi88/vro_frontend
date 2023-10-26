@@ -1,26 +1,16 @@
-import React, { useEffect, useState } from "react";
-import {
-    Variants,
-    motion,
-    useTransform,
-    useViewportScroll,
-} from "framer-motion";
 import { Card } from "antd";
 import Meta from "antd/lib/card/Meta";
-import { EyeOutlined } from "@ant-design/icons";
-import BietThu from "../../images/homepage/bietthu1.png";
 import { useNavigate } from "react-router-dom";
-import "./styles.productcard.scss";
-import Utils from "../../common/utils";
 import ImageNotFound from "../../images/Image_not_available.png";
 import { useSelectorRoot } from "../../redux/store";
+import "./styles.productcard.scss";
 interface props {
     imageUrl?: string;
     title: string;
     view: number;
     price: number;
     type?: string;
-    idTool?: string;
+    // idTool?: string;
 }
 
 const CProductCard = (props: props) => {
@@ -29,17 +19,17 @@ const CProductCard = (props: props) => {
     ); // Lst cac ban ve
     const navigate = useNavigate();
 
-    const findTool = () => {
-        let toolName = '';
-        cloneToolList.forEach(item => {
-            if (props.idTool === item.id) {
-                toolName = item.name
-            }
-        })
-        return toolName
-    }
+    // const findTool = () => {
+    //     let toolName = '';
+    //     cloneToolList.forEach(item => {
+    //         if (props.idTool === item.id) {
+    //             toolName = item.name
+    //         }
+    //     })
+    //     return toolName
+    // }
 
-    const [toolName, setToolName] = useState(findTool)
+    // const [toolName, setToolName] = useState(findTool)
 
     return (
         <Card
@@ -52,9 +42,9 @@ const CProductCard = (props: props) => {
                     title={
                         <div className="home-card-title">
                             <div >
-                                <div className="h-c-t-file-type">
+                                {/* <div className="h-c-t-file-type">
                                     {toolName}
-                                </div>
+                                </div> */}
                                 <div className="h-c-t-title">
 
                                     {props.title}
