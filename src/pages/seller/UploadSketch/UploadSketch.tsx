@@ -1,42 +1,33 @@
 import {
+    PictureOutlined,
+    PlusOutlined,
+    ProfileOutlined
+} from "@ant-design/icons";
+import {
     Button,
     Checkbox,
     Form,
     Input,
-    List,
     Modal,
-    Select,
+    Radio,
     SelectProps,
     Steps,
-    Upload,
-    Radio
+    Upload
 } from "antd";
-import VirtualList from "rc-virtual-list";
-import React, { useEffect, useState } from "react";
-import {
-    FolderOutlined,
-    PictureOutlined,
-    PlusOutlined,
-    ProfileOutlined,
-} from "@ant-design/icons";
 import type { RcFile, UploadProps } from "antd/es/upload";
 import type { UploadFile } from "antd/es/upload/interface";
 import TextArea from "antd/lib/input/TextArea";
+import { RadioChangeEventTarget } from "antd/lib/radio";
 import { motion } from "framer-motion";
-import SearchIcon from "../../images/Search_Icon.png";
-import "./styles.uploadsketch.scss";
-import { CheckboxValueType } from "antd/lib/checkbox/Group";
-import { CheckboxChangeEvent } from "antd/lib/checkbox";
-import { useDispatchRoot, useSelectorRoot } from "../../../redux/store";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { TEXT_FIELD, TEXT_INPUT } from "../../../enum/common.enum";
 import {
     getAllFilterCriteriasRequest,
-    uploadFileSketchRequest,
-    uploadImageSketchRequest,
-    uploadSketchRequest,
+    uploadSketchRequest
 } from "../../../redux/controller";
-import { useNavigate } from "react-router-dom";
-import { RadioChangeEventTarget } from "antd/lib/radio";
-import { TEXT_FIELD, TEXT_INPUT } from "../../../enum/common.enum";
+import { useDispatchRoot, useSelectorRoot } from "../../../redux/store";
+import "./styles.uploadsketch.scss";
 
 const options: SelectProps["options"] = [];
 
@@ -185,11 +176,6 @@ const UploadSketch = () => {
     const { checkProductsFile, toolList, architectureList, styleList } = useSelectorRoot((state) => state.sketch); // Lst cac ban ve        
     const dispatch = useDispatchRoot();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        console.log('imageUploadLst', imageUploadLst);
-        console.log('fileUploadLst', fileUploadLst);
-    }, [imageUploadLst, fileUploadLst]);
 
     const handleCancelPreview = () => setPreviewOpen(false); // Hàm xử lý khi click hủy xem ảnh
 
@@ -529,34 +515,36 @@ const UploadSketch = () => {
                                                 Hình ảnh <strong>*</strong>
                                             </div>
                                             <Upload
-                                                action={
-                                                    "https://localhost:3000/"
-                                                }
                                                 multiple
                                                 onRemove={(file) => {
+                                                    let tmplst = imageUploadLst;
+                                                    tmplst.filter((value,index,arr) => {
+                                                        if (value.name === file.name) {
+                                                        // Removes the value from the original array
+                                                            arr.splice(index, 1);
+                                                            return true;
+                                                        }
+                                                        return false;
+                                                    })
+                                                    
+
+                                                    setImageUploadLst(tmplst)
                                                     return true
                                                 }}
                                                 listType="picture-card"
                                                 showUploadList={{
                                                     showRemoveIcon: true,
                                                 }}
-                                                fileList={imageUploadLst}
-                                                onPreview={handlePreview}
-                                                onChange={handleChangeFileLst}
+                                                onChange={(file) => {
+                                                    handleChangeFileLst(file)
+                                                    console.log(imageUploadLst)
+                                                }}
                                                 accept=".png, .jpeg, .jpg"
                                                 beforeUpload={(file) => {
                                                     let tmplst = imageUploadLst;
                                                     tmplst.push(file);
                                                     setImageUploadLst(tmplst);
                                                     return false;
-                                                }}
-                                                progress={{
-                                                    strokeWidth: 3,
-                                                    strokeColor: {
-                                                        "0%": "#a9eab3",
-                                                        "100%": "#27CA40",
-                                                    },
-                                                    style: { top: 12 },
                                                 }}
                                             >
                                                 {imageUploadLst.length >= 8
@@ -576,7 +564,7 @@ const UploadSketch = () => {
                                                 />
                                             </Modal>
                                         </Form.Item>
-                                        <Form.Item
+                                        {/* <Form.Item
                                             className="image-list"
                                             valuePropName="fileList"
                                         >
@@ -617,7 +605,7 @@ const UploadSketch = () => {
                                                 đây (file .zip hoặc .zar)
                                                 <br />
                                             </Upload.Dragger>
-                                        </Form.Item>
+                                        </Form.Item> */}
                                     </div>
 
 
@@ -655,8 +643,8 @@ const UploadSketch = () => {
                                         // selectStyle &&
                                         (checkLstImageUploadLst &&
                                             checkLstImageUploadLst.length > 0 &&
-                                            checkLstFileUploadLst &&
-                                            checkLstFileUploadLst.length > 0 &&
+                                            // checkLstFileUploadLst &&
+                                            // checkLstFileUploadLst.length > 0 &&
                                             isCheckedRules
                                         ) ? (
                                             <Button
@@ -666,7 +654,7 @@ const UploadSketch = () => {
                                             </Button>
                                         ) : (
                                             <Button
-                                                onClick={() => handleUploadSketch()}
+                                                // onClick={() => handleUploadSketch()}
                                                 disabled
                                             >
                                                 Đăng bài
