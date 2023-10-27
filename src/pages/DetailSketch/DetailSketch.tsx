@@ -146,7 +146,7 @@ const DetailSketch = () => {
             setImages(detailSketch.images);
             setInfo(detailSketch.info);
             setTypeOfArchitectures(detailSketch.typeOfArchitectures);
-            // console.log(detailSketch);
+            console.log(detailSketch);
         }
     }, [detailSketch]);
 
@@ -229,7 +229,7 @@ const DetailSketch = () => {
                 <div className="image-carousel">
                     <Carousel>
                         {images &&
-                            images.slice(0, 4).map((image, index) => (
+                            images.map((image, index) => (
                                 <div key={index}>
                                     <img alt="" src={image.filePath} />
                                 </div>
@@ -360,6 +360,19 @@ const DetailSketch = () => {
                                     <div className="des-text">
                                         {info.content}
                                     </div>
+                                    <div className="link-zalo">
+                                        <div className="link">
+                                            <a
+                                                href={detailSketch?.info.linkZalo}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                className="link-zalo-content"
+                                            >
+                                                Bạn có thể liên hệ với tác giả qua Zalo
+                                                <img src="https://stc-zaloprofile.zdn.vn/pc/v1/images/zalo_sharelogo.png" alt="" width={50} />
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                                 {/* <div className="action">
                                     {isShowAddToCart &&
@@ -446,7 +459,7 @@ const DetailSketch = () => {
                                         title={card.title}
                                         view={card.views}
                                         price={card.price}
-                                        // idTool={card.designTools[0] || ''}
+                                    // idTool={card.designTools[0] || ''}
 
                                     // type={card.type}
                                     />

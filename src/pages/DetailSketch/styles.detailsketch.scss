@@ -37,10 +37,11 @@
             width: 50%;
 
             .carousel {
+
                 .thumbs.animated {
                     padding: 1em !important;
                     display: flex;
-                    gap: 0.5em;
+                    width: 100%;
                 }
 
                 .thumb {
@@ -51,6 +52,10 @@
 
                 .thumb:hover {
                     transform: scale(1.1);
+                }
+
+                .thumbs.animated::-webkit-scrollbar {
+                    display: none;
                 }
             }
 
@@ -344,6 +349,23 @@
 
                 .btn-icon {}
             }
+        }
+    }
+}
+
+.link-zalo {
+    margin-top: 1em;
+
+    .link {
+        .link-zalo-content {
+            display: flex;
+            align-items: center;
+            gap: 1em;
+            color: var(--white-color-v2);
+            padding: 0 1em;
+            background-color: var(--black-color-v2-300);
+            width: max-content;
+            border-radius: 10px;
         }
     }
 }

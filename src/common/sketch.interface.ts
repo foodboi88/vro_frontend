@@ -61,6 +61,7 @@ export interface IInFoSketch {
     size?: ISize;
     newPrice?: string;
     oldPrice?: string;
+    linkZalo?: string;
 }
 export interface IImagesSketch {
     filePath: string;
@@ -105,7 +106,7 @@ export interface ISellerStatisticSketch {
     totalHiddenProduct: number;
 }
 
-export interface IUploadSketchRequest{
+export interface IUploadSketchRequest {
     title?: string,
     imageUploadLst?: RcFile,
     fileUploadLst?: RcFile,
