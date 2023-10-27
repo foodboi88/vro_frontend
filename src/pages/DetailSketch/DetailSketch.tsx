@@ -368,7 +368,7 @@ const DetailSketch = () => {
                                                 rel="noreferrer"
                                                 className="link-zalo-content"
                                             >
-                                                Bạn có thể liên hệ với tác giả qua Zalo
+                                                Liên hệ với KTS/Công ty XD qua Zalo
                                                 <img src="https://stc-zaloprofile.zdn.vn/pc/v1/images/zalo_sharelogo.png" alt="" width={50} />
                                             </a>
                                         </div>
