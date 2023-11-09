@@ -26,16 +26,16 @@ const items: MenuProps["items"] = [
         key: "2",
         icon: <WalletOutlined />,
     },
-    {
-        label: "Bản vẽ nhiều lượt tải",
-        key: "3",
-        icon: <WalletOutlined />,
-    },
-    {
-        label: "Bản vẽ đánh giá cao",
-        key: "4",
-        icon: <WalletOutlined />,
-    },
+    // {
+    //     label: "Bản vẽ nhiều lượt tải",
+    //     key: "3",
+    //     icon: <WalletOutlined />,
+    // },
+    // {
+    //     label: "Bản vẽ đánh giá cao",
+    //     key: "4",
+    //     icon: <WalletOutlined />,
+    // },
 ];
 
 const AuthorPage = () => {

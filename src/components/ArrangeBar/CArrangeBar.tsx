@@ -43,7 +43,7 @@ const CArrangeBar = () => {
                     </Button>
                 </motion.div> */}
             </Button.Group>
-            <div className='select-box'>
+            {/* <div className='select-box'>
                 <motion.div
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}>
@@ -57,7 +57,7 @@ const CArrangeBar = () => {
                     </Select>
 
                 </motion.div>
-            </div>
+            </div> */}
         </div>
     )
 }

@@ -32,23 +32,23 @@ const CAuthorIntroduction = (props: IAuthor) => {
                         >
                             <Button className="contact">Liên hệ</Button>
                         </motion.div>
-                        <motion.div
+                        {/* <motion.div
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.95 }}
                         >
                             <Button className="view">Xem trang</Button>
-                        </motion.div>
+                        </motion.div> */}
                     </div>
                 </div>
             </div>
             <div className="right-side">
                 <div className="grid-lst">
-                    <div className="grid-item">
+                    {/* <div className="grid-item">
                         Đánh giá: <strong>{props.totalRating}</strong>
                     </div>
                     <div className="grid-item">
                         Tỉ lệ phản hồi: <strong>100%</strong>
-                    </div>
+                    </div> */}
                     <div className="grid-item">
                         Tham gia: <strong>{formatDate(props.createdAt)}</strong>
                     </div>
