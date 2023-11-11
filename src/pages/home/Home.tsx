@@ -453,7 +453,7 @@ const Home = () => {
                                         title={card.title}
                                         view={card.views}
                                         price={card.price}
-                                        // idTool={card.typeOfArchitectureId}
+                                    // idTool={card.typeOfArchitectureId}
                                     // type={card.type}
                                     />
                                 </Col>
@@ -679,7 +679,7 @@ const Home = () => {
                                         title={card.title}
                                         view={card.views}
                                         price={card.price}
-                                        // idTool={card.designTools[0] || ''}
+                                    // idTool={card.designTools[0] || ''}
                                     // type={card.type}
                                     />
                                 </Col>
@@ -737,7 +737,7 @@ const Home = () => {
                                             title={card.title}
                                             view={card.views}
                                             price={card.price}
-                                            // idTool={card.designTools[0] || ''}
+                                        // idTool={card.designTools[0] || ''}
 
                                         // type={card.type}
                                         />

@@ -184,14 +184,14 @@ const Login = (props: MyProps) => {
                                 Nhớ mật khẩu
                             </motion.div>
                         </label>
-                        <motion.div
+                        {/* <motion.div
                             className="forgot-password"
                             whileHover={{ scale: 1.3 }}
                             whileTap={{ scale: 0.95 }}
                             whileFocus={{ scale: 1.3 }}
                         >
                             Quên mật khẩu
-                        </motion.div>
+                        </motion.div> */}
                     </Form.Item>
 
                     <Form.Item className="form-submit">

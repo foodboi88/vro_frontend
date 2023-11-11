@@ -107,7 +107,6 @@ const DetailSketch = () => {
             if (tokenLogin) {
                 dispatch(getProductFilesByIdRequest(sketchId));
             }
-
         }
     }, [sketchId]);
 

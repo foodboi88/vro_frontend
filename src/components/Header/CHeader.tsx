@@ -197,7 +197,6 @@ export const CHeader = (props: MyProps) => {
     const handleClickCart = () => {
         dispatch(getAllSketchInCartRequest());
         if (userRole === 'seller') {
-
             navigate("/seller/cart");
         } else if (userRole === 'user') {
             navigate("/buyer/cart");
@@ -220,7 +219,6 @@ export const CHeader = (props: MyProps) => {
                 <div className="header-left">
                     <div className="header-logo">
                         <Link to={"/"} className="logo-text">
-                            <img src={Logo} />
                             <div className="text-logo">Vro Group</div>
                         </Link>
                     </div>
@@ -228,10 +226,20 @@ export const CHeader = (props: MyProps) => {
                 </div>
 
                 <div className="header-action-type">
-                    <div className="header-action-item active">
+                    <div className="header-action-item active" onClick={
+                        () => {
+                            navigate('/')
+                            setCurrent("1")
+                        }
+                    }>
                         Trang chủ
                     </div>
-                    <div className="header-action-item">
+                    <div className="header-action-item"
+                        onClick={
+                            () =>
+                                onClickAvatar()
+                        }
+                    >
                         Về chúng tôi
                     </div>
                     <div className="header-action-item">

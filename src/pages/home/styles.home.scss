@@ -238,6 +238,10 @@
 
         .lst-tool.less-lst {
             .ant-row {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
                 .ant-col {
                     padding-right: 7.5vw !important;
                 }

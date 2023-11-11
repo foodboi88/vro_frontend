@@ -55,7 +55,7 @@ const Profile = () => {
                 }
                 }>
                     <BsShop className='profile-navbar-item-icon' />
-                    <span className='profile-navbar-item-text'>Trở thành người bán</span>
+                    <span className='profile-navbar-item-text'>Đăng ký để đăng bài</span>
                 </div>
                 <div className={'profile-navbar-item' + (active === 7 ? ' active' : '')} onClick={() => setActive(7)}>
                     <AiOutlineQuestionCircle className='profile-navbar-item-icon' />
@@ -71,10 +71,10 @@ const Profile = () => {
                     <AiOutlineLock className='profile-navbar-item-icon' />
                     <span className='profile-navbar-item-text'>Thay đổi mật khẩu</span>
                 </div>
-                <div className={'profile-navbar-item' + (active === 2 ? ' active' : '')} onClick={() => setActive(2)}>
+                {/* <div className={'profile-navbar-item' + (active === 2 ? ' active' : '')} onClick={() => setActive(2)}>
                     <AiOutlineSetting className='profile-navbar-item-icon' />
                     <span className='profile-navbar-item-text'>Cài đặt chung</span>
-                </div>
+                </div> */}
             </div>
             <div className='profile-content'>
                 <Outlet />

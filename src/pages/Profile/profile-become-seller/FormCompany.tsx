@@ -286,13 +286,13 @@ const FormCompany = (props: Props) => {
                     >
                         <Input placeholder='Nhập số tài khoản' />
                     </Form.Item>
-                    <Form.Item
+                    {/* <Form.Item
                         label="Tên tài khoản"
                         name="accountName"
                         rules={[{ required: true, message: 'Vui lòng nhập tên tài khoản' }]}
                     >
                         <Input placeholder='Nhập tên tài khoản' />
-                    </Form.Item>
+                    </Form.Item> */}
                 </div>
 
 

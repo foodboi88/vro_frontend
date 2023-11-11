@@ -123,10 +123,10 @@ const SellerLayout = () => {
 						<AiOutlineLock className='profile-navbar-item-icon' />
 						<span className='profile-navbar-item-text'>Thay đổi mật khẩu</span>
 					</div>
-					<div className={'profile-navbar-item' + (active === 14 ? ' active' : '')} onClick={() => setActive(14)}>
+					{/* <div className={'profile-navbar-item' + (active === 14 ? ' active' : '')} onClick={() => setActive(14)}>
 						<AiOutlineSetting className='profile-navbar-item-icon' />
 						<span className='profile-navbar-item-text'>Cài đặt chung</span>
-					</div>
+					</div> */}
 				</div>
 				<div className='profile-content'>
 					<Outlet />

@@ -201,13 +201,14 @@
         align-items: center;
         padding-bottom: -8px;
         border-radius: 30px;
+        margin-top: 5em;
 
         .title {
             margin-top: 50px;
             font-weight: 700;
             font-size: 25px;
             text-align: center;
-            color: #1E1E1E;
+            color: var(--white-color-v2);
             display: flex;
             justify-content: space-between;
             width: 100%;
