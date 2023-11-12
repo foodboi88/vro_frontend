@@ -228,13 +228,13 @@
             transition: all 0.3s ease-in-out;
         }
 
-        .header-action-item:hover {
-            color: #E60200;
+        .header-action-item.active {
+            color: var(--main-color);
+            font-weight: bolder;
         }
 
-        .header-action-item:first-child {
-            color: #E60200;
-        }
+        .header-action-item:hover {}
+
     }
 }
 

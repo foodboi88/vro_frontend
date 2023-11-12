@@ -62,6 +62,11 @@ export const CHeader = (props: MyProps) => {
     const [isShowLogin, setIsShowLogin] = useState<boolean>(false); // Biến kiểm tra xem user có phải là admin hay không
     const [isShowSearch, setIsShowSearch] = useState<boolean>(false); // Biến kiểm tra xem user có phải là admin hay không
     const [isShowNavibar, setIsShowNavibar] = useState<boolean>(false); // Biến kiểm tra xem user có phải là admin hay không
+
+    useEffect(() => {
+        console.log(current);
+    }, [current]);
+
     useEffect(() => {
         const handleWindowResize = () => {
             setWindowSize([window.innerWidth, window.innerHeight]);
@@ -97,7 +102,7 @@ export const CHeader = (props: MyProps) => {
     }, [navigate]);
 
     useEffect(() => {
-        if (window.location.pathname === "/test") setCurrent("2");
+        if (window.location.pathname === "/buyer/become-seller" || window.location.pathname === "/seller/management-sketch") setCurrent("2");
         if (window.location.pathname === "/news") setCurrent("3");
         if (window.location.pathname === "/about_us") setCurrent("4");
         if (window.location.pathname === "/") setCurrent("1");
@@ -226,18 +231,23 @@ export const CHeader = (props: MyProps) => {
                 </div>
 
                 <div className="header-action-type">
-                    <div className="header-action-item active" onClick={
-                        () => {
-                            navigate('/')
-                            setCurrent("1")
-                        }
-                    }>
+                    <div
+                        className={"header-action-item " + (current === '1' ? 'active' : '')}
+                        onClick={
+                            () => {
+                                navigate('/')
+                                setCurrent("1")
+                            }
+                        }>
                         Trang chủ
                     </div>
-                    <div className="header-action-item"
+                    <div
+                        className={"header-action-item " + (current === '2' ? 'active' : '')}
                         onClick={
-                            () =>
-                                onClickAvatar()
+                            () => {
+                                onClickAvatar();
+                                setCurrent("2");
+                            }
                         }
                     >
                         Về chúng tôi
