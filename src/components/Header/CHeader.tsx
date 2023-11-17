@@ -250,7 +250,7 @@ export const CHeader = (props: MyProps) => {
                             }
                         }
                     >
-                        Về chúng tôi
+                        Quản lý tài khoản
                     </div>
                     <div className="header-action-item">
                         Sứ mệnh
@@ -388,7 +388,7 @@ export const CHeader = (props: MyProps) => {
                                             Trang chủ
                                         </div>
                                         <div className="header-action-item">
-                                            Về chúng tôi
+                                            Quản lý tài khoản
                                         </div>
                                         <div className="header-action-item">
                                             Sứ mệnh
