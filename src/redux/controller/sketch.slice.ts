@@ -38,6 +38,7 @@ import { ITool } from "../../common/tool.interface";
 import { IAuthor, IBill, IHotProducts, IOverViewStatistic, ISellerProfile, IUser } from "../../common/user.interface";
 import Utils from "../../common/utils";
 import { QUERY_PARAM } from "../../constants/get-api.constants";
+import AuthorApi from "../../api/author/author.api";
 
 type MessageLogin = {
     content: string;
@@ -114,7 +115,7 @@ interface SketchState {
     totalPurchasedSketch: number;
     sellerInformation: ISellerProfile | undefined
 
-
+    architectList: IAuthor[];
 
 }
 
@@ -197,7 +198,7 @@ const initState: SketchState = {
     listPurchasedSketch: [],
     totalPurchasedSketch: 0,
     sellerInformation: undefined,
-
+    architectList: []
 };
 
 const sketchSlice = createSlice({
@@ -1251,6 +1252,35 @@ const sketchSlice = createSlice({
                 },
             });
         },
+
+        getTopArchitectsRequest(state) {
+            state.loading = true;
+        },
+
+        getTopArchitectsSuccess(state, action: PayloadAction<any>) {
+            console.log(action.payload);
+            if (action.payload.data.items)
+                state.architectList = action.payload.data.items;
+
+            state.isSuccess = true;
+            state.loading = false;
+
+            // state.registerSuccess = true;
+        },
+
+        getTopArchitectsFail(state, action: PayloadAction<any>) {
+            console.log(action);
+            notification.open({
+                message: "Load fail",
+                // description:
+                //     action.payload.response.message,
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+            state.loading = false;
+            // state.registerSuccess = false;
+        },
     },
 });
 
@@ -2268,6 +2298,23 @@ const resetCurrentSearchValue$: RootEpic = (action$) =>
         })
     )
 
+const getTopArchitects$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getTopArchitectsRequest.match),
+        switchMap((re) => {
+            return AuthorApi.getTopArchitects().pipe(
+                mergeMap((res: IRates) => {
+                    return [
+                        sketchSlice.actions.getTopArchitectsSuccess(res),
+                    ];
+                }),
+                catchError((err) => [
+                    sketchSlice.actions.getTopArchitectsFail(err),
+                ])
+            );
+        })
+    );
+
 export const SketchEpics = [
     // uploadSketch$,
     resetCurrentSearchValue$,
@@ -2323,7 +2370,8 @@ export const SketchEpics = [
     getAccountBankName$,
     getPurchasedSketchs$,
     getSellerProfile$,
-    editSketch$
+    editSketch$,
+    getTopArchitects$
 ];
 export const {
     getLatestSketchRequest,
@@ -2384,6 +2432,8 @@ export const {
     sortFilteredSketchRequest,
 
     resetCurrentSearchValueRequest,
+
+    getTopArchitectsRequest,
 
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;

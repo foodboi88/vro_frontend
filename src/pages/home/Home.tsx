@@ -34,7 +34,8 @@ import {
     getAllArchitecturesRequest,
     getAllStylesRequest,
     // getAllToolsRequest,
-    getHomeListSketchRequest
+    getHomeListSketchRequest,
+    getTopArchitectsRequest
 } from "../../redux/controller";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
 import Login from "../login/Login";
@@ -51,7 +52,7 @@ interface CardData {
 
 // Phần trang chủ của trang web
 const Home = () => {
-    const { latestSketchsList, mostViewedSketchList, freeSketchList, cloneArchitecturelist, filteredSketchs, cloneStyleList, currentSearchValue } = useSelectorRoot(
+    const { latestSketchsList, mostViewedSketchList, freeSketchList, cloneArchitecturelist, filteredSketchs, cloneStyleList, currentSearchValue, architectList } = useSelectorRoot(
         (state) => state.sketch
     ); // Lst cac ban ve
 
@@ -206,9 +207,10 @@ const Home = () => {
             offset: 0,
         };
         dispatch(getHomeListSketchRequest());
-        // dispatch(getAllToolsRequest(bodyrequest));
+        dispatch(getTopArchitectsRequest());
         dispatch(getAllArchitecturesRequest(bodyrequest));
         dispatch(getAllStylesRequest(bodyrequest));
+        dispatch(getTopArchitectsRequest());
         handleSearch('64231026edf9dd11e488c250');
     }, []);
 
@@ -538,7 +540,7 @@ const Home = () => {
                                 className="btn-icon"
                                 onClick={() => handlePagination('next', 'architect')}
                                 disabled={
-                                    currentIndexArchitect >= excellentArchitect.length - numberOfCardShow && true
+                                    currentIndexArchitect >= architectList.length - numberOfCardShow && true
                                 }
                             />
                         </Col>
@@ -546,7 +548,7 @@ const Home = () => {
                 </div>
                 <div className="lst-tool architect-card">
                     <Row gutter={[16, 16]}>
-                        {excellentArchitect
+                        {architectList
                             .slice(
                                 currentIndexArchitect,
                                 currentIndexArchitect + numberOfCardShow
@@ -559,11 +561,10 @@ const Home = () => {
                                     span={spanCol}
                                     key={index}
                                 >
-                                    <CArchitectCard
-                                        imageUrl={card.imageUrl}
-                                        name={''}
-                                        type="excellentArchitect"
-                                        index={index + 1}
+                                    <CStyleCard
+                                        imageUrl={card.linkImage}
+                                        name={card.name || ''}
+                                        id={card.name}
                                     />
                                 </Col>
                             ))}
@@ -572,8 +573,7 @@ const Home = () => {
                 </div>
             </div>
 
-            {/* Công ty bán bản vẽ */}
-            <div className="tool-of-web">
+            {/* <div className="tool-of-web">
                 <div className="title">
                     <div>CÔNG TY X Y DỰNG – KIẾN TRÚC
                     </div>
@@ -608,9 +608,6 @@ const Home = () => {
                             )
                             .map((card) => (
                                 <Col
-                                    // onClick={() => {
-                                    //     handleClickCard(card.id);
-                                    // }}
                                     span={spanCol}
                                 >
                                     <CStyleCard
@@ -618,15 +615,12 @@ const Home = () => {
                                         name={''}
                                         id={''}
                                     />
-                                    {/* <img */}
-                                    {/* src={card.imageUrl} */}
-                                    {/* /> */}
                                 </Col>
                             ))}
                     </Row>
 
                 </div>
-            </div>
+            </div> */}
 
             <CDeclare
                 content="Bản vẽ miễn phí cho bạn"

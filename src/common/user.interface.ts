@@ -11,6 +11,8 @@ export interface IAuthor {
     totalRating?: number;
     totalProduct?: number;
     createdAt: string;
+    updateAt?: string;
+    linkImage?: string;
 }
 
 export interface IGetWithdrawRequest {
@@ -28,7 +30,6 @@ export interface IOverViewStatistic {
     totalRevenue: number;
     totalProduct: number;
     totalOrder: number;
-
 }
 
 export interface IHotProducts {
