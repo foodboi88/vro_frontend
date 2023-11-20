@@ -13,6 +13,7 @@ export interface IAuthor {
     createdAt: string;
     updateAt?: string;
     linkImage?: string;
+    id?: string;
 }
 
 export interface IGetWithdrawRequest {

@@ -13,7 +13,7 @@ import SeeMore from '../../images/homepage/discovermore2.png';
 
 
 import { ICurrentSearchValue, IFilteredSketch, IReqGetLatestSketchs } from "../../common/sketch.interface";
-import CArchitectCard from "../../components/CArchitectCard/CArchitectCard";
+import { IAuthor } from "../../common/user.interface";
 import CStyleCard from "../../components/CStyleCard/CStyleCard";
 import CDeclare from "../../components/Declare/CDeclare";
 import CProductCard from "../../components/ProductCard/CProductCard";
@@ -71,6 +71,8 @@ const Home = () => {
     const [currentIndexStyle, setCurrentIndexStyle] = useState(0);
 
     const [cloneFilteredSketchs, setCloneFilteredSketchs] = useState<IFilteredSketch[]>([]);
+    const [cloneArchitects, setCloneArchitects] = useState<IAuthor[]>([]);
+
 
 
 
@@ -81,8 +83,7 @@ const Home = () => {
     ]);
 
     useEffect(() => {
-        let lastSketch =
-        {
+        let lastSketch = {
             "id": "last",
             "title": "",
             "price": -1,
@@ -91,10 +92,22 @@ const Home = () => {
             "quantityPurchased": 0,
             "typeOfArchitectureId": "",
             "image": SeeMore
-        }
-            ;
+        };
         setCloneFilteredSketchs([...filteredSketchs, lastSketch])
-    }, [filteredSketchs])
+
+        let lastArchitect = {
+            name: '',
+            phone: '',
+            address: '',
+            totalRating: 0,
+            totalProduct: 0,
+            createdAt: '',
+            updateAt: '',
+            linkImage: SeeMore,
+            id: 'last',
+        }
+        setCloneArchitects([...architectList,lastArchitect])
+    }, [filteredSketchs, architectList])
 
     const excellentArchitect = [
         {
@@ -298,6 +311,21 @@ const Home = () => {
         // }, 500);
 
     };
+
+    const handleClickArchitect = (architectId: string) => {
+        if (architectId === 'last') {
+            // const bodyrequest: ICurrentSearchValue = {
+            //     name: '',
+            //     architecture: currentSearchValue.architecture,
+            //     tool: currentSearchValue.tool,
+            //     style: currentSearchValue.style,
+            // };
+            // dispatch(advancedSearchingRequest(bodyrequest));
+            // navigate("/searching");
+        } else {
+            navigate(`/author-page/${architectId}`);
+        }
+    }
 
     const onClickCategory = (architectureId: string) => {
         const bodyrequest: ICurrentSearchValue = {
@@ -540,7 +568,7 @@ const Home = () => {
                                 className="btn-icon"
                                 onClick={() => handlePagination('next', 'architect')}
                                 disabled={
-                                    currentIndexArchitect >= architectList.length - numberOfCardShow && true
+                                    currentIndexArchitect >= cloneArchitects.length - numberOfCardShow && true
                                 }
                             />
                         </Col>
@@ -548,16 +576,16 @@ const Home = () => {
                 </div>
                 <div className="lst-tool architect-card">
                     <Row gutter={[16, 16]}>
-                        {architectList
+                        {cloneArchitects
                             .slice(
                                 currentIndexArchitect,
                                 currentIndexArchitect + numberOfCardShow
                             )
                             .map((card, index) => (
                                 <Col
-                                    // onClick={() => {
-                                    //     handleClickCard(card.id);
-                                    // }}
+                                    onClick={() => {
+                                        handleClickArchitect(card.id || '');
+                                    }}
                                     span={spanCol}
                                     key={index}
                                 >

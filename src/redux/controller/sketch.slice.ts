@@ -10,6 +10,7 @@ import {
     switchMap
 } from "rxjs/operators";
 // import IdentityApi from "../../api/identity.api";
+import AuthorApi from "../../api/author/author.api";
 import CommentsApi from "../../api/comment/comment.api";
 import FilterCriteriasApi from "../../api/filter-criterias/filter-criterias.api";
 import IdentityApi from "../../api/identity/identity.api";
@@ -38,7 +39,6 @@ import { ITool } from "../../common/tool.interface";
 import { IAuthor, IBill, IHotProducts, IOverViewStatistic, ISellerProfile, IUser } from "../../common/user.interface";
 import Utils from "../../common/utils";
 import { QUERY_PARAM } from "../../constants/get-api.constants";
-import AuthorApi from "../../api/author/author.api";
 
 type MessageLogin = {
     content: string;
@@ -396,6 +396,10 @@ const sketchSlice = createSlice({
             state.commentList = action.payload.data[0].items;
         },
 
+        getCommentBySketchIdFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+        },
+
         getDetailSketchPageContentRequest(
             state,
             action: PayloadAction<string>
@@ -477,7 +481,6 @@ const sketchSlice = createSlice({
 
         advancedSearchingFail(state, action: PayloadAction<any>) {
             state.loading = false;
-            state.filteredSketchs = action.payload.data.items;
         },
 
         uploadSketchRequest(state, action: PayloadAction<any>) {
