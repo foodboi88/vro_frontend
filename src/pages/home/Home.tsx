@@ -29,6 +29,13 @@ import IntroImage from "../../images/homepage/introImage.png";
 import StyleList1 from "../../images/homepage/styleList1.png";
 import StyleList2 from "../../images/homepage/styleList2.png";
 import StyleList3 from "../../images/homepage/styleList3.png";
+import CustomerRequirementImage1 from '../../images/homepage/customer-requirement-1.svg';
+import CustomerRequirementImage2 from '../../images/homepage/customer-requirement-2.svg';
+import CustomerRequirementImage3 from '../../images/homepage/customer-requirement-3.svg';
+import CustomerRequirementImage4 from '../../images/homepage/customer-requirement-4.svg';
+import CustomerRequirementImage5 from '../../images/homepage/customer-requirement-5.svg';
+import CustomerRequirementImage6 from '../../images/homepage/customer-requirement-6.svg';
+
 import {
     advancedSearchingRequest,
     getAllArchitecturesRequest,
@@ -41,6 +48,8 @@ import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
 import Login from "../login/Login";
 import Register from "../login/Register";
 import "./styles.home.scss";
+import { FaRegClock } from "react-icons/fa";
+
 interface CardData {
     id: number;
     title: string;
@@ -49,7 +58,50 @@ interface CardData {
     view: number;
     imageUrl: string;
 }
-
+const CustomerRequirementsList = [
+    {
+        avatar: CustomerRequirementImage1,
+        name: 'Phạm Thảo Mai',
+        time: '16:00 - 24/11/2023',
+        title: 'Cần tìm KTS thiết kế biệt thự tân cổ điển 3 tầng ở khu vực Hà Đông',
+        content: 'Mình cần tìm KTS thiết kế trọn gói và thi công biệt thự 3 tầng, bao gồm cả sân..'
+    },
+    {
+        avatar: CustomerRequirementImage2,
+        name: 'Phạm Thảo Mai',
+        time: '16:00 - 24/11/2023',
+        title: 'Cần tìm KTS thiết kế biệt thự tân cổ điển 3 tầng ở khu vực Hà Đông',
+        content: 'Mình cần tìm KTS thiết kế trọn gói và thi công biệt thự 3 tầng, bao gồm cả sân..'
+    },
+    {
+        avatar: CustomerRequirementImage3,
+        name: 'Lương Bá Sơn',
+        time: '16:00 - 24/11/2023',
+        title: 'Cần tìm KTS thiết kế biệt thự tân cổ điển 3 tầng ở khu vực Hà Đông',
+        content: 'Mình cần tìm KTS thiết kế trọn gói và thi công biệt thự 3 tầng, bao gồm cả sân..'
+    },
+    {
+        avatar: CustomerRequirementImage4,
+        name: 'Lương Bá Sơn',
+        time: '16:00 - 24/11/2023',
+        title: 'Cần tìm KTS thiết kế biệt thự tân cổ điển 3 tầng ở khu vực Hà Đông',
+        content: 'Mình cần tìm KTS thiết kế trọn gói và thi công biệt thự 3 tầng, bao gồm cả sân..'
+    },
+    {
+        avatar: CustomerRequirementImage5,
+        name: 'Lương Bá Sơn',
+        time: '16:00 - 24/11/2023',
+        title: 'Cần tìm KTS thiết kế biệt thự tân cổ điển 3 tầng ở khu vực Hà Đông',
+        content: 'Mình cần tìm KTS thiết kế trọn gói và thi công biệt thự 3 tầng, bao gồm cả sân..'
+    },
+    {
+        avatar: CustomerRequirementImage6,
+        name: 'Lương Bá Sơn',
+        time: '16:00 - 24/11/2023',
+        title: 'Cần tìm KTS thiết kế biệt thự tân cổ điển 3 tầng ở khu vực Hà Đông',
+        content: 'Mình cần tìm KTS thiết kế trọn gói và thi công biệt thự 3 tầng, bao gồm cả sân..'
+    }
+]
 // Phần trang chủ của trang web
 const Home = () => {
     const { latestSketchsList, mostViewedSketchList, freeSketchList, cloneArchitecturelist, filteredSketchs, cloneStyleList, currentSearchValue, architectList } = useSelectorRoot(
@@ -106,7 +158,7 @@ const Home = () => {
             linkImage: SeeMore,
             id: 'last',
         }
-        setCloneArchitects([...architectList,lastArchitect])
+        setCloneArchitects([...architectList, lastArchitect])
     }, [filteredSketchs, architectList])
 
     const excellentArchitect = [
@@ -587,7 +639,7 @@ const Home = () => {
                                         handleClickArchitect(card.id || '');
                                     }}
                                     span={spanCol}
-                                    key={index}
+                                    key={card.id}
                                 >
                                     <CStyleCard
                                         imageUrl={card.linkImage}
@@ -693,7 +745,7 @@ const Home = () => {
                                     onClick={() => {
                                         handleClickCard(card.id);
                                     }}
-                                    span={spanCol}
+                                    span={mostViewedSketchList.length < numberOfCardShow - 1 ? (spanCol * (mostViewedSketchList.length)) : spanCol}
                                     key={card.id}
                                 >
                                     <CProductCard
@@ -751,7 +803,7 @@ const Home = () => {
                                         onClick={() => {
                                             handleClickCard(card.id);
                                         }}
-                                        span={spanCol}
+                                        span={(freeSketchList.length < numberOfCardShow - 1) ? (spanCol * (freeSketchList.length)) : spanCol}
                                         key={card.id}
                                     >
                                         <CProductCard
@@ -768,6 +820,115 @@ const Home = () => {
                         </Row>
                     </div>
                 }
+            </div>
+            {/* Bản vẽ miễn phí */}
+            <div className="tool-of-web">
+                <div className="title">
+                    <div>NHU CẦU KHÁCH HÀNG</div>
+                    {/* <div className="sub-title">
+                        <Col>
+                            <Button
+                                icon={<ArrowLeftOutlined />}
+                                className="btn-icon"
+                                onClick={() => handlePagination('prev', 'free')}
+                                disabled={currentIndexFreeSketch === 0 && true}
+                            />
+                        </Col>
+
+                        <Col>
+                            <Button
+                                icon={<ArrowRightOutlined />}
+                                className="btn-icon"
+                                onClick={() => handlePagination('next', 'free')}
+                                disabled={
+                                    currentIndexFreeSketch >= freeSketchList.length - numberOfCardShow && true
+                                }
+                            />
+                        </Col>
+                    </div> */}
+                </div>
+                {/* {freeSketchList.length > 0 &&
+                    <div className={"lst-tool " + ((freeSketchList && freeSketchList.length < numberOfCardShow) && 'less-card')}>
+
+                        <Row gutter={[16, 16]}>
+                            {freeSketchList
+                                .slice(
+                                    currentIndexFreeSketch,
+                                    currentIndexFreeSketch + numberOfCardShow
+                                )
+                                .map((card) => (
+                                    <Col
+                                        onClick={() => {
+                                            handleClickCard(card.id);
+                                        }}
+                                        span={(freeSketchList.length < numberOfCardShow - 1) ? (spanCol * (freeSketchList.length)) : spanCol}
+                                        key={card.id}
+                                    >
+                                        <CProductCard
+                                            imageUrl={card.images[0]}
+                                            title={card.title}
+                                            view={card.views}
+                                            price={card.price}
+                                        // idTool={card.designTools[0] || ''}
+
+                                        // type={card.type}
+                                        />
+                                    </Col>
+                                ))}
+                        </Row>
+                    </div>
+                } */}
+                <div className="customer-requirement-lst">
+                    <div className="customer-requirement-lst-left">
+                        {(CustomerRequirementsList && CustomerRequirementsList.length > 0) && CustomerRequirementsList.slice(0, 3).map((item, index) => (
+                            <div className="customer-requirement">
+                                <div className="customer-requirement-header">
+                                    <div className="avatar">
+                                        <div className="customer-requirement-avatar">
+                                            <img src={item.avatar} />
+                                        </div>
+                                        <div className="customer-requirement-info">
+                                            <div className="customer-requirement-name">{item.name}</div>
+                                            <div className="customer-requirement-time"><FaRegClock />{item.time}</div>
+                                        </div>
+                                    </div>
+
+                                    <div className="info">
+                                        Liên hệ
+                                    </div>
+                                </div>
+                                <div className="customer-requirement-title">{item.title}</div>
+                                <div className="customer-requirement-content">{item.content}</div>
+                                <div className="line-break"></div>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="customer-requirement-lst-left">
+                        {(CustomerRequirementsList && CustomerRequirementsList.length > 0) && CustomerRequirementsList.slice(3, 6).map((item, index) => (
+                            <div className="customer-requirement">
+                                <div className="customer-requirement-header">
+                                    <div className="avatar">
+                                        <div className="customer-requirement-avatar">
+                                            <img src={item.avatar} />
+                                        </div>
+                                        <div className="customer-requirement-info">
+                                            <div className="customer-requirement-name">{item.name}</div>
+                                            <div className="customer-requirement-time"><FaRegClock />{item.time}</div>
+                                        </div>
+                                    </div>
+
+                                    <div className="info">
+                                        Liên hệ
+                                    </div>
+                                </div>
+                                <div className="customer-requirement-title">{item.title}</div>
+                                <div className="customer-requirement-content">{item.content}</div>
+                                <div className="line-break"></div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
             </div>
             <div className='homepage-footer'>
                 <div className="left-footer">

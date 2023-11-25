@@ -284,12 +284,115 @@
             }
         }
 
-        .lst-tool.less-card {
-            .ant-row {
-                .ant-col {
-                    padding-right: 7.5vw !important;
+
+    }
+
+    .customer-requirement-lst {
+        display: flex;
+        gap: 1vw;
+
+        .customer-requirement {
+            display: flex;
+            flex-direction: column;
+            border-radius: 4px;
+            background: #30282A;
+            padding: 1vw 2vw;
+            gap: .5em;
+
+            .customer-requirement-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .avatar {
+                    display: flex;
+                    gap: 1vw;
+
+                    .customer-requirement-avatar {
+                        img {
+                            width: 5vw;
+                            height: 5vw;
+                            border-radius: 50%;
+                        }
+                    }
+
+                    .customer-requirement-info {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+
+                        .customer-requirement-name {
+                            color: #FFF;
+                            font-size: 1vw;
+                            font-style: normal;
+                            font-weight: 700;
+                            /* 140% */
+                        }
+
+                        .customer-requirement-time {
+                            display: flex;
+                            align-items: center;
+                            gap: 4px;
+                            color: var(--content-content-value-in-box, #D0D0D0);
+                            font-size: .8vw;
+                            font-style: normal;
+                            font-weight: 400;
+                        }
+                    }
+                }
+
+                .info {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 4px;
+                    border: 2px solid #FFF5E0;
+                    gap: 8px;
+                    color: #FFF5E0;
+                    text-align: center;
+                    padding: .25em 1em;
+                    font-family: Helvetica Neue;
+                    font-size: 1vw;
+                    font-style: normal;
+                    height: fit-content;
+                    cursor: pointer;
+                    transition: all 0.3s ease-in-out;
+
+                    &:hover {
+                        background-color: #FFF5E0;
+                        color: #30282A;
+                    }
                 }
             }
+
+            .customer-requirement-title {
+                color: var(--Secondary-2, #FF8686);
+                font-size: 1vw;
+                font-style: normal;
+            }
+
+            .customer-requirement-content {
+                color: var(--content-content-value-in-box, #D0D0D0);
+                font-size: .8vw;
+                font-style: normal;
+
+            }
+
+            .line-break {
+                width: 100%;
+                height: 1px;
+                background-color: #545454;
+                margin: 1em 0;
+
+            }
+        }
+    }
+}
+
+.lst-tool.less-card {
+    .ant-row {
+        .ant-col {
+            padding-right: 7.5vw !important;
         }
     }
 }
