@@ -36,6 +36,19 @@ import CustomerRequirementImage4 from '../../images/homepage/customer-requiremen
 import CustomerRequirementImage5 from '../../images/homepage/customer-requirement-5.svg';
 import CustomerRequirementImage6 from '../../images/homepage/customer-requirement-6.svg';
 
+import CategoryImage1 from '../../images/homepage/category-image-1.png';
+import CategoryImage2 from '../../images/homepage/category-image-2.png';
+import CategoryImage3 from '../../images/homepage/category-image-3.png';
+import CategoryImage4 from '../../images/homepage/category-image-4.png';
+import CategoryImage5 from '../../images/homepage/category-image-5.png';
+import CategoryImage6 from '../../images/homepage/category-image-6.png';
+import CategoryImage7 from '../../images/homepage/category-image-7.png';
+import CategoryImage8 from '../../images/homepage/category-image-8.png';
+import CategoryImage9 from '../../images/homepage/category-image-9.png';
+import CategoryImage10 from '../../images/homepage/category-image-10.png';
+import CategoryImage11 from '../../images/homepage/category-image-11.png';
+import CategoryImage12 from '../../images/homepage/category-image-12.png';
+
 import {
     advancedSearchingRequest,
     getAllArchitecturesRequest,
@@ -102,6 +115,69 @@ const CustomerRequirementsList = [
         content: 'Mình cần tìm KTS thiết kế trọn gói và thi công biệt thự 3 tầng, bao gồm cả sân..'
     }
 ]
+
+const CategoryList = [
+    {
+        imageUrl: CategoryImage1,
+        name: 'Phòng khách',
+        id: '64231026edf9dd11e488c250'
+    },
+    {
+        imageUrl: CategoryImage2,
+        name: 'Phòng bếp',
+        id: '64231026edf9dd11e488c251'
+    },
+    {
+        imageUrl: CategoryImage3,
+        name: 'Phòng ngủ',
+        id: '64231026edf9dd11e488c252'
+    },
+    {
+        imageUrl: CategoryImage4,
+        name: 'Phòng tắm',
+        id: '64231026edf9dd11e488c253'
+    },
+    {
+        imageUrl: CategoryImage5,
+        name: 'Phòng làm việc',
+        id: '64231026edf9dd11e488c254'
+    },
+    {
+        imageUrl: CategoryImage6,
+        name: 'Phòng thờ',
+        id: '64231026edf9dd11e488c255'
+    },
+    {
+        imageUrl: CategoryImage7,
+        name: 'Phòng khách',
+        id: '64231026edf9dd11e488c256'
+    },
+    {
+        imageUrl: CategoryImage8,
+        name: 'Phòng bếp',
+        id: '64231026edf9dd11e488c257'
+    },
+    {
+        imageUrl: CategoryImage9,
+        name: 'Phòng ngủ',
+        id: '64231026edf9dd11e488c258'
+    },
+    {
+        imageUrl: CategoryImage10,
+        name: 'Phòng tắm',
+        id: '64231026edf9dd11e488c259'
+    },
+    {
+        imageUrl: CategoryImage11,
+        name: 'Phòng làm việc',
+        id: '64231026edf9dd11e488c260'
+    },
+    {
+        imageUrl: CategoryImage12,
+        name: 'Phòng thờ',
+        id: '64231026edf9dd11e488c261'
+    },
+]
 // Phần trang chủ của trang web
 const Home = () => {
     const { latestSketchsList, mostViewedSketchList, freeSketchList, cloneArchitecturelist, filteredSketchs, cloneStyleList, currentSearchValue, architectList } = useSelectorRoot(
@@ -121,18 +197,27 @@ const Home = () => {
     const [currentIndexCompany, setCurrentIndexCompany] = useState(0);
     const [currentIndexFilteredSketch, setCurrentIndexFilteredSketch] = useState(0);
     const [currentIndexStyle, setCurrentIndexStyle] = useState(0);
-
+    const [currentIndexCategory, setCurrentIndexCategory] = useState(0);
     const [cloneFilteredSketchs, setCloneFilteredSketchs] = useState<IFilteredSketch[]>([]);
     const [cloneArchitects, setCloneArchitects] = useState<IAuthor[]>([]);
-
-
-
-
+    const [categoryLst, setCategoryLst] = useState<any[]>([]);
     const [currentIndexFreeSketch, setCurrentIndexFreeSketch] = useState(0);
     const [windowSize, setWindowSize] = useState([
         window.innerWidth,
         window.innerHeight,
     ]);
+
+    useEffect(() => {
+        console.log(cloneArchitecturelist);
+        let tmp: any[] = []
+        cloneArchitecturelist && cloneArchitecturelist.length > 0 && cloneArchitecturelist.map((item, index) => {
+            tmp.push({
+                ...item,
+                imageUrl: CategoryList[index].imageUrl,
+            })
+        })
+        setCategoryLst(tmp);
+    }, [cloneArchitecturelist])
 
     useEffect(() => {
         let lastSketch = {
@@ -161,72 +246,6 @@ const Home = () => {
         setCloneArchitects([...architectList, lastArchitect])
     }, [filteredSketchs, architectList])
 
-    const excellentArchitect = [
-        {
-            imageUrl: ExcellentArchitect1,
-        },
-        {
-            imageUrl: ExcellentArchitect2,
-        },
-        {
-            imageUrl: ExcellentArchitect3,
-        },
-        {
-            imageUrl: ExcellentArchitect4,
-        },
-    ]
-
-    const styleList = [
-        {
-            imageUrl: StyleList1,
-            name: 'Phong cách hiện đại',
-            id: '64231026edf9dd11e488c250'
-        },
-        {
-            imageUrl: StyleList2,
-            name: 'Phong cách cổ điển',
-            id: '64231026edf9dd11e488c251'
-        },
-        {
-            imageUrl: StyleList3,
-            name: 'Phong cách hiện đại',
-            id: '64231026edf9dd11e488c252'
-        },
-        {
-            imageUrl: StyleList1,
-            name: 'Phong cách hiện đại',
-            id: '64231026edf9dd11e488c253'
-        },
-        {
-            imageUrl: StyleList2,
-            name: 'Phong cách cổ điển',
-            id: '64231026edf9dd11e488c254'
-        },
-        {
-            imageUrl: StyleList3,
-            name: 'Phong cách hiện đại',
-            id: '64231026edf9dd11e488c255'
-        }
-    ]
-
-    const companyList = [
-        {
-            imageUrl: Company1,
-
-        },
-        {
-            imageUrl: Company1,
-
-        },
-        {
-            imageUrl: Company1,
-
-        },
-        {
-            imageUrl: Company1,
-
-        },
-    ]
 
     useEffect(() => {
         document.body.scrollTo({
@@ -305,6 +324,9 @@ const Home = () => {
                 case 'company':
                     setCurrentIndexCompany(currentIndexCompany - 1);
                     break;
+                case 'category':
+                    setCurrentIndexCategory(currentIndexCategory - 1);
+                    break;
                 default:
                     break;
             }
@@ -334,14 +356,13 @@ const Home = () => {
                 case 'company':
                     setCurrentIndexCompany(currentIndexCompany + 1);
                     break;
+                case 'category':
+                    setCurrentIndexCategory(currentIndexCategory + 1);
+                    break;
                 default:
                     break;
             }
         }
-    }
-
-    const handleClickCategory = () => {
-
     }
 
     const handleClickCard = (sketchId: string) => {
@@ -474,40 +495,26 @@ const Home = () => {
             {/* Filter bản vẽ đầu trang */}
             <div className="tool-of-web">
                 <div className="title">
-                    <div className="category-list">
-                        {
-                            cloneArchitecturelist &&
-                            cloneArchitecturelist.map(item => (
-                                <Button
-                                    className={'category-item ' + (currentSearchValue.architecture === item.id ? 'active' : '')}
-                                    onClick={() => {
-                                        handleSearch(item.id)
-                                    }}
-                                >
-                                    {item.name}
-                                </Button>
-                            ))
-                        }
-                    </div>
+                    <div>Danh mục</div>
                     <div className="sub-title">
                         {
-                            cloneFilteredSketchs &&
+                            categoryLst &&
                             <>
                                 <Col>
                                     <Button
                                         icon={<ArrowLeftOutlined />}
                                         className="btn-icon"
-                                        onClick={() => handlePagination('prev', 'filtered')}
-                                        disabled={currentIndexFilteredSketch === 0 && true}
+                                        onClick={() => handlePagination('prev', 'category')}
+                                        disabled={currentIndexCategory === 0 && true}
                                     />
                                 </Col>
                                 <Col>
                                     <Button
                                         icon={<ArrowRightOutlined />}
                                         className="btn-icon"
-                                        onClick={() => handlePagination('next', 'filtered')}
+                                        onClick={() => handlePagination('next', 'category')}
                                         disabled={
-                                            currentIndexFilteredSketch >= cloneFilteredSketchs.length - numberOfCardShow && true
+                                            currentIndexCategory >= categoryLst.length - numberOfCardShow && true
                                         }
                                     />
                                 </Col>
@@ -515,34 +522,27 @@ const Home = () => {
                         }
                     </div>
                 </div>
-                <div className={"lst-tool " + ((filteredSketchs && filteredSketchs.length < numberOfCardShow) && 'less-card')}>
+                <div className={"lst-tool " + ((categoryLst && categoryLst.length < numberOfCardShow) && 'less-lst')}>
                     <Row gutter={[16, 16]}>
-                        {cloneFilteredSketchs && cloneFilteredSketchs
+                        {categoryLst
                             .slice(
-                                currentIndexFilteredSketch,
-                                currentIndexFilteredSketch + numberOfCardShow
+                                currentIndexCategory,
+                                currentIndexCategory + numberOfCardShow
                             )
                             .map((card) => (
                                 <Col
-                                    onClick={() => {
-                                        handleClickCard(card.id);
-                                    }}
                                     span={spanCol}
-                                    key={card.id}
+                                    key={card.name}
+                                    onClick={() => onClickCategory(card.id)}
                                 >
-                                    <CProductCard
-                                        imageUrl={card.image}
-                                        title={card.title}
-                                        view={card.views}
-                                        price={card.price}
-                                    // idTool={card.typeOfArchitectureId}
-                                    // type={card.type}
+                                    <CStyleCard
+                                        imageUrl={card.imageUrl}
+                                        name={''}
+                                        id={''}
                                     />
                                 </Col>
-                            ))
-                        }
+                            ))}
                     </Row>
-
                 </div>
             </div>
 

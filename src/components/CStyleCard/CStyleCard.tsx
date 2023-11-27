@@ -47,7 +47,10 @@ const CStyleCard = (props: props) => {
     return (
         <div
             style={{ backgroundImage: props.imageUrl ? `url(${props.imageUrl})` : `url(${ImageNotFound})` }}
-            onClick={() => { handleClick() }}
+            onClick={() => {
+                if (!props.id) return;
+                handleClick()
+            }}
             className="style-card-main"
         >
             <div className="style-card-title">{props.name}</div>
