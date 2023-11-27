@@ -54,13 +54,32 @@ export default function CFooter() {
                         <div className="column-1">
                             <div className="title-content"><img src={Logo} alt="" width={30} />CÔNG TY CỔ PHẦN XÂY DỰNG VRO</div>
                             <div className="content">Giấy phép ĐKKD số: 123466 do Sở KH&ĐT Hà Nội cấp lần đầu ngày 01/01/1900</div>
-                            <div style={{ display: 'flex', gap: 10 }}>
+                            {/* <div style={{ display: 'flex', gap: 10 }}>
                                 <img src={Image1} alt="" width={150} />
                                 <img src={Image2} alt="" width={150} />
-                            </div>
+                            </div> */}
                         </div>
                     }
                     <div className="column-2">
+                        <div className="title-content">Trụ sở</div>
+                        <div className="content">Lô 40 liền kề 7 Khu đô thị Tổng cục 5, Bộ Công an - Tân Triều - Thanh Trì - Hà Nội</div>
+                        <div className="content">Điện thoại: 0866045577</div>
+                        <div className="content">Email: mailto:sale@vro.vn</div>
+
+                    </div>
+                    <div className="column-3">
+                        <div className="title-content">Miền Trung</div>
+                        <div className="content">Chi nhánh: Số 129, Hoàng Đức Lương, TP. Đà Nẵng</div>
+                        <div className="content">Điện thoại: 0866045577</div>
+                        <div className="content">Email: mailto:sale@vro.vn</div>
+                    </div>
+                    <div className="column-4">
+                        <div className="title-content">Miền Nam</div>
+                        <div className="content">Chi nhánh: 34 Xuân Quỳnh, KDC Gia Hòa 523A Đỗ Xuân Hợp, P. Phước Long B, Quận 9, TP.HCM</div>
+                        <div className="content">Điện thoại: 0866045577</div>
+                        <div className="content">Email: mailto:sale@vro.vn</div>
+                    </div>
+                    {/* <div className="column-2">
                         <div className="title-content">Về Chúng tôi</div>
                         <div className="content">Tư vấn mua hàng</div>
                         <div className="content">Giới thiệu về VRO Group</div>
@@ -91,28 +110,10 @@ export default function CFooter() {
                         <div className="content">Khách hàng thân thiết</div>
                         <div className="content">Đăng ký mở gian hàng</div>
                         <div className="content">Hỗ trợ người bán</div>
-                    </div>
+                    </div> */}
                 </div>
-                <div className="row-2">
-                    <div className="column-1">
-                        <div className="title-content">Trụ sở</div>
-                        <div className="content">Lô 40 liền kề 7 Khu đô thị Tổng cục 5, Bộ Công an - Tân Triều - Thanh Trì - Hà Nội</div>
-                        <div className="content">Điện thoại: 0866045577</div>
-                        <div className="content">Email: mailto:sale@vro.vn</div>
-
-                    </div>
-                    <div className="column-2">
-                        <div className="title-content">Miền Trung</div>
-                        <div className="content">Chi nhánh: Số 129, Hoàng Đức Lương, TP. Đà Nẵng</div>
-                        <div className="content">Điện thoại: 0866045577</div>
-                        <div className="content">Email: mailto:sale@vro.vn</div>
-                    </div>
-                    <div className="column-3">
-                        <div className="title-content">Miền Nam</div>
-                        <div className="content">Chi nhánh: 34 Xuân Quỳnh, KDC Gia Hòa 523A Đỗ Xuân Hợp, P. Phước Long B, Quận 9, TP.HCM</div>
-                        <div className="content">Điện thoại: 0866045577</div>
-                        <div className="content">Email: mailto:sale@vro.vn</div>
-                    </div>
+                {/* <div className="row-2">
+                   
                     {isReponsive &&
                         <div className="column-4">
                             <div className="title-content">CÔNG TY CỔ PHẦN XÂY DỰNG VRO</div>
@@ -122,7 +123,7 @@ export default function CFooter() {
                             <div className="content">Email: mailto:sale@vro.vn</div>
                         </div>
                     }
-                </div>
+                </div> */}
 
 
             </footer>
