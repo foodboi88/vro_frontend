@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatchRoot, useSelectorRoot } from '../../../redux/store';
-import { createWithdrawRequest, deleteSketchRequest, getSketchByArchitectRequest, getSketchStatisticRequest } from '../../../redux/controller';
-import { Space, Modal, Input, Button } from 'antd';
+import { Modal, Space } from 'antd';
 import { ColumnType } from 'antd/lib/table';
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { IUploadSketchRequest } from '../../../common/sketch.interface';
 import { IGetWithdrawRequest } from '../../../common/user.interface';
 import Utils from '../../../common/utils';
 import CTable from '../../../components/CTable/CTable';
-import { QUERY_PARAM } from '../../../constants/get-api.constants';
-import { IFilteredSketch, ISketch, IUploadSketchRequest } from '../../../common/sketch.interface';
 import TotalBox from '../../../components/TotalBox/TotalBox';
-import SketchCancel from '../../../images/seller-product/document-cancel.png'
-import Sketch from '../../../images/seller-product/document-text.png'
+import { QUERY_PARAM } from '../../../constants/get-api.constants';
+import SketchCancel from '../../../images/seller-product/document-cancel.png';
+import Sketch from '../../../images/seller-product/document-text.png';
+import { deleteSketchRequest, getSketchByArchitectRequest, getSketchStatisticRequest } from '../../../redux/controller';
+import { useDispatchRoot, useSelectorRoot } from '../../../redux/store';
 
-import './seller-sketchs.styles.scss'
 import CModalEditSketch from '../../../components/ModalEditSketch/CModalEditSketch';
+import './seller-sketchs.styles.scss';
 
 const SellerSketchs = () => {
     const {
@@ -152,7 +152,6 @@ const SellerSketchs = () => {
             title: record.title,
             price: record.price,
             content: record.content,
-            productDesignTools: record.designTools[0].id,
             productTypeOfArchitecture: record.typeOfArchitecture.id,
             id: record.id
         };
