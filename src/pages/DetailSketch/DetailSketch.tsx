@@ -428,17 +428,27 @@ const DetailSketch = () => {
             <div className="similar-sketch">
                 <div className="title">
                     <div>Bản vẽ tương tự</div>
-                    <div className="sub-title">{"Xem thêm"}</div>
-                </div>
-                <div className="lst-tool">
-                    <Col>
-                        <Button
-                            icon={<ArrowLeftOutlined />}
-                            className="btn-icon"
-                            onClick={handlePrevCardLatestSketch}
-                            disabled={currentIndexLatestSketch === 0 && true}
-                        />
-                    </Col>
+                    <div className="sub-title">
+                        <Col>
+                            <Button
+                                icon={<ArrowLeftOutlined />}
+                                className="btn-icon"
+                                onClick={handlePrevCardLatestSketch}
+                                disabled={currentIndexLatestSketch === 0 && true}
+                            />
+                        </Col>
+                        <Col>
+                            <Button
+                                icon={<ArrowRightOutlined />}
+                                className="btn-icon"
+                                onClick={handleNextCardLatestSketch}
+                                disabled={
+                                    currentIndexLatestSketch >= latestSketchsList.length - numberOfCardShow && true
+                                }
+                            />
+                        </Col>
+                    </div>                </div>
+                <div className={"lst-tool " + ((latestSketchsList && latestSketchsList.length < numberOfCardShow) && 'less-lst')}>
                     <Row gutter={[16, 16]}>
                         {latestSketchsList
                             .slice(
@@ -465,16 +475,7 @@ const DetailSketch = () => {
                                 </Col>
                             ))}
                     </Row>
-                    <Col>
-                        <Button
-                            icon={<ArrowRightOutlined />}
-                            className="btn-icon"
-                            onClick={handleNextCardLatestSketch}
-                            disabled={
-                                currentIndexLatestSketch >= latestSketchsList.length - numberOfCardShow && true
-                            }
-                        />
-                    </Col>
+
                 </div>
             </div>
         </div>

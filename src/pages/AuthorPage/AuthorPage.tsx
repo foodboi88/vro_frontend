@@ -80,6 +80,8 @@ const AuthorPage = () => {
         setCurrentPage(page);
     }
 
+    console.log("authorIntroduction", authorIntroduction);
+
 
     useEffect(() => {
         if (!filteredSketchs) return;
@@ -104,6 +106,7 @@ const AuthorPage = () => {
                         phone={authorIntroduction.phone}
                         totalProduct={authorIntroduction.totalProduct}
                         totalRating={authorIntroduction.totalRating}
+                        zalo={authorIntroduction.zalo}
                     />
                 )}
                 <div className="horizontal-navbar">
@@ -132,7 +135,7 @@ const AuthorPage = () => {
                                         title={card.title}
                                         view={card.views}
                                         price={card.price}
-                                        // idTool={card.typeOfArchitectureId || ''}
+                                    // idTool={card.typeOfArchitectureId || ''}
 
                                     // type={card.}
                                     />

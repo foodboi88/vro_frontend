@@ -227,14 +227,27 @@
             }
         }
 
-        .subtitle {
-            font-weight: 500;
+        .sub-title {
+            font-weight: 400;
             font-size: 14px;
-            line-height: 24px;
-            text-align: center;
-            color: #858585;
-            padding: 0px 150px;
-            margin-bottom: 20px;
+            display: flex;
+            gap: 8px;
+
+            .ant-col {
+                .ant-btn {
+                    background-color: var(--white-color-v2) !important;
+                    color: var(--black-color-v2) !important;
+                    border-radius: 50% !important;
+                }
+
+                .ant-btn:disabled {
+                    color: var(--white-color-v2) !important;
+                    border: 1px solid var(--white-color-v2) !important;
+                    background-color: var(--black-color-v2) !important;
+                }
+            }
+
+            // transition: 0.3s ease-in-out all;
         }
 
         .lst-tool {
@@ -247,6 +260,14 @@
             .btn-icon {
                 border-radius: 50%;
             }
+        }
+    }
+}
+
+.lst-tool.less-card {
+    .ant-row {
+        .ant-col {
+            padding-right: 7.5vw !important;
         }
     }
 }
@@ -342,9 +363,7 @@
 
                     .ant-col {
 
-                        .ant-card {
-                            width: 375px;
-                        }
+                        .ant-card {}
                     }
                 }
 
@@ -462,9 +481,7 @@
 
                     .ant-col {
 
-                        .ant-card {
-                            width: 315px;
-                        }
+                        .ant-card {}
                     }
                 }
 
@@ -565,9 +582,7 @@
 
                     .ant-col {
 
-                        .ant-card {
-                            width: 265px;
-                        }
+                        .ant-card {}
                     }
                 }
 
@@ -670,9 +685,7 @@
 
                     .ant-col {
 
-                        .ant-card {
-                            width: 200px;
-                        }
+                        .ant-card {}
                     }
                 }
 
@@ -785,9 +798,7 @@
 
                     .ant-col {
 
-                        .ant-card {
-                            width: 210px;
-                        }
+                        .ant-card {}
                     }
                 }
 
