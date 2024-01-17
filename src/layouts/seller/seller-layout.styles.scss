@@ -223,13 +223,13 @@
 
 .ant-input:hover,
 .ant-input-affix-wrapper.ant-input-password.form-input:hover {
-    border: 1.5px solid var(--border-color);
+    border: .15vw solid var(--border-color);
 }
 
 .ant-input:focus,
 .ant-input-affix-wrapper.ant-input-password.form-input:focus {
     border-color: var(--border-color);
-    box-shadow: 0 0 0 1px var(--border-color);
+    box-shadow: 0 0 0 .1vw var(--border-color);
     caret-color: var(--border-color);
 }
 
@@ -240,7 +240,7 @@
 
 .ant-input-affix-wrapper-focused {
     border: var(--border-color);
-    box-shadow: 0 0 0 1px var(--border-color);
+    box-shadow: 0 0 0 .1vw var(--border-color);
     caret-color: var(--border-color);
 }
 
@@ -259,7 +259,7 @@
 
 .ant-picker.ant-picker-focused {
     border-color: var(--border-color);
-    box-shadow: 0 0 0 1px var(--border-color);
+    box-shadow: 0 0 0 .1vw var(--border-color);
     caret-color: var(--border-color);
 }
 

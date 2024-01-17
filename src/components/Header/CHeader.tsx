@@ -103,7 +103,7 @@ export const CHeader = (props: MyProps) => {
 
     useEffect(() => {
         if (window.location.pathname === "/buyer/become-seller" || window.location.pathname === "/seller/management-sketch") setCurrent("2");
-        if (window.location.pathname === "/news") setCurrent("3");
+        if (window.location.pathname === "/mission") setCurrent("3");
         if (window.location.pathname === "/about_us") setCurrent("4");
         if (window.location.pathname === "/") setCurrent("1");
     }, []);
@@ -252,7 +252,12 @@ export const CHeader = (props: MyProps) => {
                     >
                         Quản lý tài khoản
                     </div>
-                    <div className="header-action-item">
+                    <div className={"header-action-item " + (current === '3' ? 'active' : '')}
+                        onClick={() => {
+                            navigate('/mission');
+                            setCurrent("3");
+                        }}
+                    >
                         Sứ mệnh
                     </div>
                     <div className="header-action-item">

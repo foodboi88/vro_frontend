@@ -57,7 +57,7 @@
                             justify-content: flex-end;
                             gap: .5em;
                             font-weight: 400;
-                            font-size: 1em;
+                            font-size: 16px;
                             color: var(--white-color-v2);
                             cursor: pointer;
                         }
@@ -89,7 +89,7 @@
 
                         .sketch-cart-content-title {
                             font-weight: 700;
-                            font-size: 1em;
+                            font-size: 16px;
                             color: var(--white-color-v2);
                         }
 
@@ -133,7 +133,7 @@
 
                     .sketch-cart-action-old-price {
                         font-weight: 400;
-                        font-size: 1em;
+                        font-size: 16px;
                         text-align: right;
                         text-decoration-line: line-through;
                         color: #C0C0C0;
@@ -145,7 +145,7 @@
                         justify-content: flex-end;
                         gap: .5em;
                         font-weight: 400;
-                        font-size: 1em;
+                        font-size: 16px;
                         color: var(--white-color-v2);
                         cursor: pointer;
                     }
@@ -172,7 +172,7 @@
                     justify-content: space-between;
                     align-items: center;
                     font-weight: 500;
-                    font-size: 1em;
+                    font-size: 16px;
                     color: var(--white-color-v2);
                     padding-bottom: .5em;
                     border-bottom: 1.7px solid #DFDFDF;
@@ -244,7 +244,7 @@
 
                 .total-price {
                     font-weight: 700;
-                    font-size: 1em;
+                    font-size: 16px;
                     color: #4E4E4E;
 
                     .total-price-title {}
@@ -360,7 +360,7 @@
 
                     .sketch-cart-action {
                         .sketch-cart-action-new-price {
-                            font-size: 1em;
+                            font-size: 16px;
                         }
 
                         .sketch-cart-action-new-price.free {}
@@ -495,7 +495,7 @@
 
                     .sketch-cart-action {
                         .sketch-cart-action-new-price {
-                            font-size: 1em;
+                            font-size: 16px;
                         }
 
                         .sketch-cart-action-new-price.free {}
@@ -636,7 +636,7 @@
 
                     .sketch-cart-action {
                         .sketch-cart-action-new-price {
-                            font-size: 1em;
+                            font-size: 16px;
                         }
 
                         .sketch-cart-action-new-price.free {}
@@ -781,7 +781,7 @@
 
                     .sketch-cart-action {
                         .sketch-cart-action-new-price {
-                            font-size: 1em;
+                            font-size: 16px;
                         }
 
                         .sketch-cart-action-new-price.free {}
@@ -867,7 +867,7 @@
         padding: 5em 1em;
 
         .title {
-            font-size: 1em;
+            font-size: 16px;
         }
 
         .content-cart {

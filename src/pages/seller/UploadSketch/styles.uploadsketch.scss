@@ -79,7 +79,7 @@
 
                         .description {
                             font-weight: 400;
-                            font-size: 1em;
+                            font-size: 16px;
                             line-height: 20px;
                             color: #858585;
                             margin-bottom: 2em;
@@ -88,7 +88,7 @@
                         .ant-form-item {
                             .title-input {
                                 font-weight: 400;
-                                font-size: 1em;
+                                font-size: 16px;
                                 line-height: 24px;
                                 color: var(--white-color-v2);
                                 margin-bottom: .5em;
@@ -156,7 +156,7 @@
 
                                 .ant-select-selection-overflow {
                                     font-weight: 400;
-                                    font-size: 1em;
+                                    font-size: 16px;
                                     line-height: 24px;
                                     display: flex;
                                     align-items: center;
@@ -176,7 +176,7 @@
 
                                     .ant-list-item-meta-title {
                                         font-weight: 400;
-                                        font-size: 1em;
+                                        font-size: 16px;
                                         line-height: 24px;
                                         display: flex;
                                         align-items: center;
@@ -202,7 +202,7 @@
                                 .ant-btn {
                                     border: none;
                                     font-weight: 600;
-                                    font-size: 1em;
+                                    font-size: 16px;
                                     display: flex;
                                     align-items: center;
                                     text-align: center;
@@ -246,7 +246,7 @@
 
                                     span:nth-child(2) {
                                         font-weight: 400;
-                                        font-size: 1em;
+                                        font-size: 16px;
                                         line-height: 24px;
                                         color: var(--white-color-v2) !important;
                                         white-space: nowrap
@@ -302,7 +302,7 @@
                                 background: var(--black-color-v2-300);
                                 border-radius: 4px;
                                 font-weight: 400;
-                                font-size: 1em;
+                                font-size: 16px;
                                 line-height: 24px;
                                 color: var(--black-color-v2-500);
                             }
@@ -321,7 +321,7 @@
                         .ant-btn {
                             border: none;
                             font-weight: 600;
-                            font-size: 1em;
+                            font-size: 16px;
                             display: flex;
                             align-items: center;
                             text-align: center;
@@ -400,7 +400,7 @@
 
 span:nth-child(2) {
     font-weight: 400;
-    font-size: 1em;
+    font-size: 16px;
     line-height: 24px;
     color: var(--white-color-v2) !important;
 }
@@ -685,7 +685,7 @@ input::-webkit-inner-spin-button {
 
 
                                     .search-input::placeholder {
-                                        font-size: 1em;
+                                        font-size: 16px;
                                         overflow: hidden;
                                         text-overflow: ellipsis;
                                         white-space: nowrap;

@@ -28,7 +28,7 @@ function App() {
         }
     }, []);
     return (
-        <Spin spinning={loading} delay={500} tip="Đang lấy dữ liệu..." size="large">
+        <Spin spinning={false} delay={500} tip="Đang lấy dữ liệu..." size="large">
             <Layout>
                 <CHeader />
                 <AnimationRouter />

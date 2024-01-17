@@ -1,0 +1,340 @@
+.main-mission {
+    background-color: #231F20;
+    padding-top: 8vw;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 2vw;
+
+    .mission-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.8em 3em;
+        position: relative;
+
+        .mission-item-left {
+            display: flex;
+            flex-direction: column;
+            gap: 1vw;
+
+            .title {
+                color: #FFF5E0;
+                font-size: 3vw;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 3.5vw;
+
+                strong {
+                    color: #ED3237;
+                    font-size: 3vw;
+                    font-style: normal;
+                    font-weight: 700;
+                }
+            }
+
+            .sub-title {
+                color: var(--content-content-unval-line-in-box, #939292);
+
+                /* Body 20 */
+                font-size: 1vw;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 1.4vw;
+                /* 140% */
+            }
+        }
+
+        .mission-item-right {
+            display: flex;
+            align-items: center;
+
+            img {
+                width: 40vw;
+                height: 100%;
+            }
+
+            .form-contailer {
+                display: flex;
+                width: 50vw;
+                padding: 3vw;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 2vw;
+
+                border-radius: 4px;
+                background: #1B1415;
+
+                .form-mission {
+                    width: 100%;
+
+                    .ant-form-item-required {
+                        color: var(--White, #FFF);
+
+                        /* Body regular */
+                        font-size: 1vw;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: 1.4vw;
+                        /* 150% */
+                    }
+
+                    strong {
+                        color: red;
+                    }
+
+                    .ant-input {
+                        background-color: #352C2E !important;
+                        height: 2.5vw;
+
+                        color: var(--Content-Content-Unval_line-in-box, #C0C0C0);
+
+                        font-size: 1vw;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: 1.4vw;
+
+                        border-radius: .5vw !important;
+
+                    }
+
+                    // Style ant-input placeholder
+                    .ant-input::placeholder {
+                        color: var(--Content-Content-Unval_line-in-box, #C0C0C0);
+                        font-size: 1vw;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: 1.4vw;
+                    }
+
+                    .ant-btn {
+                        width: 100%;
+                        height: 2.5vw;
+
+                        color: var(--White-color, #FFF);
+                        text-align: center;
+
+                        /* Button bold */
+                        font-size: 1vw;
+                        font-style: normal;
+                        font-weight: 700;
+                        line-height: 0;
+                        /* 150% */
+
+                        transition: all 0.3s ease-in-out;
+
+                        &:hover {
+                            color: var(--White-color, #FFF);
+                            opacity: 0.8;
+                        }
+                    }
+
+                    .ant-form-item-label>label {
+                        height: 1vw;
+                    }
+
+                    .ant-form-item .ant-row .ant-col {
+                        line-height: 0px;
+                        margin-bottom: 1vw;
+                        padding-bottom: 0;
+
+
+                    }
+
+                    .ant-form-item-explain-error {
+                        font-size: 1vw;
+                        line-height: 1vw;
+                        margin-top: 1vw;
+                    }
+
+                    .ant-form-item-control-input {
+                        min-height: 2.5vw;
+                    }
+
+                    .ant-form-item {
+                        margin-bottom: 1vw;
+                    }
+                }
+            }
+        }
+    }
+
+    .mission-banner {
+        padding: 5vw 0;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2vw;
+
+        background-repeat: no-repeat;
+        background-size: cover;
+
+
+        .title {
+            color: #FFF5E0;
+            text-align: center;
+            font-size: 3vw;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 3.5vw;
+            /* 106.25% */
+            max-width: 50vw;
+        }
+
+        .sub-title {
+            color: var(--White, #FFF);
+            text-align: center;
+            /* Body 20 */
+            font-size: 1.1vw;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 1.4vw;
+            max-width: 50vw;
+            /* 140% */
+            // style justify text
+        }
+    }
+
+    .mission-banner.banner-2 {
+        margin-top: 7vw;
+    }
+
+    .mission-item.item-1 {
+        .mission-item-left {
+            max-width: 30vw;
+        }
+    }
+
+    .mission-item.item-2 {
+        display: flex;
+        justify-content: space-between;
+
+        .mission-item-right {
+            display: flex;
+            flex-direction: column;
+
+            gap: 1vw;
+            max-width: 40vw;
+
+            .title {
+                color: #FFF5E0;
+                font-size: 3vw;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 3.5vw;
+                /* 106.25% */
+                width: 100%;
+
+                strong {
+                    color: #ED3237;
+                    font-size: 3vw;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 3.5vw;
+                }
+            }
+
+            .sub-title {
+                color: var(--content-content-unval-line-in-box, #939292);
+
+                /* Body 20 */
+                font-size: 1vw;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 1.4vw;
+                /* 140% */
+            }
+        }
+
+        .mission-item-left {
+            display: flex;
+            align-items: center;
+
+            img {
+                width: 40vw;
+                height: 100%;
+            }
+        }
+    }
+
+    .mission-item.item-3 {
+        flex-direction: column;
+        align-items: baseline;
+        position: relative;
+        width: 100%;
+
+        .title {
+            color: #FFF5E0;
+            font-size: 3vw;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 3.5vw;
+            /* 106.25% */
+
+            strong {
+                color: #ED3237;
+                font-size: 3vw;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 3.5vw;
+            }
+
+            margin-bottom: 10vw;
+        }
+
+        .content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+
+            .text {
+                width: 40%;
+                height: 100%;
+                flex-shrink: 0;
+                fill: #ED3237;
+                stroke-width: 1px;
+                stroke: #000;
+                color: var(--White, #FFF);
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 5vw;
+
+                /* Body 20 */
+                font-size: 1.1vw;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 1.4vw;
+                /* 140% */
+
+                background-repeat: no-repeat;
+                background-size: cover;
+
+                z-index: 1;
+            }
+
+            img {
+                position: absolute;
+                right: 5vw;
+                width: 70%;
+                height: 100%;
+            }
+        }
+    }
+
+}
+
+@media (max-width: 450px) {
+    .main-mission {
+        .mission-item {
+            padding: 0.8em 1em;
+
+
+        }
+    }
+
+}

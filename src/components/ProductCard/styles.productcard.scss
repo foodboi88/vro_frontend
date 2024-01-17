@@ -36,7 +36,7 @@
 
                 .h-c-t-title {
                     font-weight: 700;
-                    font-size: 1em;
+                    font-size: 16px;
                     color: var(--white-color-v2);
                     white-space: break-spaces;
                     display: -webkit-box;
@@ -55,7 +55,7 @@
                     align-items: center;
                     gap: 0.5em;
                     font-weight: 400;
-                    font-size: 1em;
+                    font-size: 16px;
                     color: #858585;
                 }
             }
@@ -63,7 +63,7 @@
 
         .home-card-description {
             font-weight: 400;
-            font-size: 1em;
+            font-size: 16px;
             line-height: 24px;
             color: #858585;
             position: absolute;
@@ -74,7 +74,7 @@
             position: absolute;
             bottom: 1em;
             font-weight: 400;
-            font-size: 1em;
+            font-size: 16px;
             // font-size: 18px;
             line-height: 24px;
             color: var(--white-color-v2);
