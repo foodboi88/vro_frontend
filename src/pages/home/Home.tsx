@@ -779,7 +779,7 @@ const Home = () => {
             {/* Bản vẽ bán chạy */}
             <div className="tool-of-web">
                 <div className="title">
-                    <div>BẢN VẼ BÁN CHẠY</div>
+                    <div>BẢN VẼ NỔI BẬT</div>
                     <div className="sub-title">
                         <Col>
                             <Button
