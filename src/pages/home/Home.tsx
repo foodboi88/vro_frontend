@@ -495,7 +495,7 @@ const Home = () => {
             {/* Filter bản vẽ đầu trang */}
             <div className="tool-of-web">
                 <div className="title">
-                    <div>Danh mục</div>
+                    <div>DANH MỤC</div>
                     <div className="sub-title">
                         {
                             categoryLst &&
@@ -522,8 +522,30 @@ const Home = () => {
                         }
                     </div>
                 </div>
-                <div className={"lst-tool " + ((categoryLst && categoryLst.length < numberOfCardShow) && 'less-lst')}>
-                    <Row gutter={[16, 16]}>
+                <div className={"lst-tool "}>
+
+                    {
+                        categoryLst.length > 0 &&
+                        categoryLst
+                            .slice(
+                                currentIndexCategory,
+                                currentIndexCategory + numberOfCardShow
+                            )
+                            .map((card) => (
+                                <div
+                                    onClick={() => onClickCategory(card.id)}
+                                    key={card.name}
+                                >
+                                    <CStyleCard
+                                        imageUrl={card.imageUrl}
+                                        name={''}
+                                        id={''}
+                                    />
+                                </div>
+                            ))
+                    }
+
+                    {/* <Row gutter={[16, 16]}>
                         {categoryLst
                             .slice(
                                 currentIndexCategory,
@@ -542,7 +564,7 @@ const Home = () => {
                                     />
                                 </Col>
                             ))}
-                    </Row>
+                    </Row> */}
                 </div>
             </div>
 
@@ -572,8 +594,31 @@ const Home = () => {
                         </Col>
                     </div>
                 </div>
-                <div className={"lst-tool " + ((cloneStyleList && cloneStyleList.length < numberOfCardShow) && 'less-lst')}>
-                    <Row gutter={[16, 16]}>
+                <div className={"lst-tool "}>
+                    {cloneStyleList.length > 0 &&
+                        cloneStyleList
+                            .slice(
+                                currentIndexStyle,
+                                currentIndexStyle + numberOfCardShow
+                            )
+                            .map((card) => (
+                                <div
+                                    onClick={() => {
+                                        handleSearch(card.id);
+                                    }}
+                                    key={card.id}
+                                >
+                                    <CStyleCard
+                                        imageUrl={card.imageUrl}
+                                        name={card.name}
+                                        id={card.id}
+                                    />
+                                </div>
+                            ))
+
+                    }
+
+                    {/* <Row gutter={[16, 16]}>
                         {cloneStyleList
                             .slice(
                                 currentIndexStyle,
@@ -591,7 +636,7 @@ const Home = () => {
                                     />
                                 </Col>
                             ))}
-                    </Row>
+                    </Row> */}
                 </div>
 
             </div>
@@ -627,7 +672,30 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="lst-tool architect-card">
-                    <Row gutter={[16, 16]}>
+                    {cloneArchitects.length > 0 &&
+                        cloneArchitects
+                            .slice(
+                                currentIndexArchitect,
+                                currentIndexArchitect + numberOfCardShow
+                            )
+                            .map((card, index) => (
+                                <div
+                                    onClick={() => {
+                                        handleClickArchitect(card.id || '');
+                                    }}
+                                    key={card.id}
+                                >
+                                    <CStyleCard
+                                        imageUrl={card.linkImage}
+                                        name={card.name || ''}
+                                        id={card.name}
+                                    />
+                                </div>
+                            ))
+                    }
+
+
+                    {/* <Row gutter={[16, 16]}>
                         {cloneArchitects
                             .slice(
                                 currentIndexArchitect,
@@ -648,7 +716,7 @@ const Home = () => {
                                     />
                                 </Col>
                             ))}
-                    </Row>
+                    </Row> */}
 
                 </div>
             </div>
@@ -733,8 +801,34 @@ const Home = () => {
                         </Col>
                     </div>
                 </div>
-                <div className={"lst-tool " + ((mostViewedSketchList && mostViewedSketchList.length < numberOfCardShow) && 'less-card')}>
-                    <Row gutter={[16, 16]}>
+                <div className="lst-tool ">
+                    {mostViewedSketchList.length > 0 &&
+                        mostViewedSketchList
+                            .slice(
+                                currentIndexMostViewedSketch,
+                                currentIndexMostViewedSketch + numberOfCardShow
+                            )
+                            .map((card) => (
+                                <div
+                                    onClick={() => {
+                                        handleClickCard(card.id);
+                                    }}
+                                    key={card.id}
+                                >
+                                    <CProductCard
+                                        imageUrl={card.images[0]}
+                                        title={card.title}
+                                        view={card.views}
+                                        price={card.price}
+                                    // idTool={card.designTools[0] || ''}
+
+                                    // type={card.type}
+                                    />
+                                </div>
+                            ))
+                    }
+
+                    {/* <Row gutter={[16, 16]}>
                         {mostViewedSketchList
                             .slice(
                                 currentIndexMostViewedSketch,
@@ -758,7 +852,7 @@ const Home = () => {
                                     />
                                 </Col>
                             ))}
-                    </Row>
+                    </Row> */}
 
                 </div>
             </div>
@@ -790,9 +884,33 @@ const Home = () => {
                     </div>
                 </div>
                 {freeSketchList.length > 0 &&
-                    <div className={"lst-tool " + ((freeSketchList && freeSketchList.length < numberOfCardShow) && 'less-card')}>
+                    <div className="lst-tool">
+                        {freeSketchList
+                            .slice(
+                                currentIndexFreeSketch,
+                                currentIndexFreeSketch + numberOfCardShow
+                            )
+                            .map((card) => (
+                                <div
+                                    onClick={() => {
+                                        handleClickCard(card.id);
+                                    }}
+                                    key={card.id}
+                                >
+                                    <CProductCard
+                                        imageUrl={card.images[0]}
+                                        title={card.title}
+                                        view={card.views}
+                                        price={card.price}
+                                    // idTool={card.designTools[0] || ''}
 
-                        <Row gutter={[16, 16]}>
+                                    // type={card.type}
+                                    />
+                                </div>
+                            ))
+                        }
+
+                        {/* <Row gutter={[16, 16]}>
                             {freeSketchList
                                 .slice(
                                     currentIndexFreeSketch,
@@ -804,6 +922,7 @@ const Home = () => {
                                             handleClickCard(card.id);
                                         }}
                                         span={(freeSketchList.length < numberOfCardShow - 1) ? (spanCol * (freeSketchList.length)) : spanCol}
+                                        // span={8}
                                         key={card.id}
                                     >
                                         <CProductCard
@@ -817,7 +936,7 @@ const Home = () => {
                                         />
                                     </Col>
                                 ))}
-                        </Row>
+                        </Row> */}
                     </div>
                 }
             </div>

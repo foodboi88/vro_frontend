@@ -104,7 +104,7 @@ export const CHeader = (props: MyProps) => {
     useEffect(() => {
         if (window.location.pathname === "/buyer/become-seller" || window.location.pathname === "/seller/management-sketch") setCurrent("2");
         if (window.location.pathname === "/mission") setCurrent("3");
-        if (window.location.pathname === "/about_us") setCurrent("4");
+        if (window.location.pathname === "/contact") setCurrent("4");
         if (window.location.pathname === "/") setCurrent("1");
     }, []);
 
@@ -263,7 +263,14 @@ export const CHeader = (props: MyProps) => {
                     <div className="header-action-item">
                         Sự kết nối
                     </div>
-                    <div className="header-action-item">
+                    <div className={
+                        "header-action-item " + (current === '4' ? 'active' : '')
+                    }
+                        onClick={() => {
+                            navigate('/contact');
+                            setCurrent("4");
+                        }
+                        } >
                         Liên hệ
                     </div>
                 </div>

@@ -72,7 +72,7 @@
     .homepage-footer {
         display: flex;
         justify-content: space-between;
-        padding: .8em 3em;
+        padding: 0;
         border-radius: 16px;
         margin: 8em 3em 1em 3em;
 
@@ -149,7 +149,7 @@
         .lst-tool.architect-card {
             display: flex;
             gap: 2em;
-            width: 90%;
+            width: 100%;
         }
 
         .title {
@@ -262,7 +262,7 @@
 
         .lst-tool {
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
             width: 100%;
             gap: 16px;
@@ -290,6 +290,8 @@
     .customer-requirement-lst {
         display: flex;
         gap: 1vw;
+        width: 100%;
+        justify-content: space-between;
 
         .customer-requirement {
             display: flex;
@@ -400,7 +402,7 @@
 @media (max-width: 1920px) {
     .main-home {
         .header-homepage {
-            width: 1650px;
+            width: 1310px;
             margin: 3em auto;
             margin-top: 5em;
 
@@ -410,7 +412,7 @@
         }
 
         .homepage-footer {
-            width: 1650px;
+            width: 1310px;
             margin: 3em auto;
         }
 
@@ -425,7 +427,7 @@
         }
 
         .tool-of-web {
-            width: 1650px;
+            width: 1310px;
             margin-top: -3em;
 
             .title {
@@ -441,14 +443,10 @@
             .subtitle {}
 
             .lst-tool {
-                .ant-row {
 
-                    .ant-col {
 
-                        .ant-card {
-                            width: 375px;
-                        }
-                    }
+                .ant-card {
+                    width: 375px;
                 }
 
                 .btn-icon {}
@@ -456,7 +454,7 @@
         }
 
         .container {
-            max-width: 1650px;
+            max-width: 1310px;
             margin-bottom: 1em;
 
             .content {}
@@ -467,11 +465,11 @@
 @media (max-width: 1720px) {
     .main-home {
         .header-homepage {
-            width: 1400px;
+            width: 1310px;
         }
 
         .homepage-footer {
-            width: 1400px;
+            width: 1310px;
         }
 
         .ant-carousel {
@@ -483,7 +481,7 @@
         }
 
         .tool-of-web {
-            width: 1400px;
+            width: 1310px;
 
             .title {
                 .sub-title {}
@@ -494,14 +492,9 @@
             .subtitle {}
 
             .lst-tool {
-                .ant-row {
 
-                    .ant-col {
-
-                        .ant-card {
-                            width: 315px;
-                        }
-                    }
+                .ant-card {
+                    width: 315px;
                 }
 
                 .btn-icon {}
@@ -509,7 +502,7 @@
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1310px;
 
             .content {}
         }
@@ -519,7 +512,7 @@
 @media (max-width: 1440px) {
     .main-home {
         .header-homepage {
-            width: 1200px;
+            width: 1100px;
 
             .left-header {
                 .slogan {
@@ -623,7 +616,7 @@
         }
 
         .homepage-footer {
-            width: 1200px;
+            width: 1100px;
         }
 
         .main-notification {
@@ -631,7 +624,7 @@
         }
 
         .tool-of-web {
-            width: 1200px;
+            width: 1100px;
 
             .title {
                 .sub-title {}
@@ -642,17 +635,12 @@
             .subtitle {}
 
             .lst-tool {
-                .ant-row {
+                .style-card-main {
+                    width: 265px;
+                }
 
-                    .ant-col {
-                        .style-card-main {
-                            width: 265px;
-                        }
-
-                        .ant-card {
-                            width: 265px;
-                        }
-                    }
+                .ant-card {
+                    width: 265px;
                 }
 
                 .btn-icon {}
@@ -660,7 +648,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1100px;
 
             .content {}
         }
@@ -670,7 +658,7 @@
 @media (max-width: 1280px) {
     .main-home {
         .header-homepage {
-            width: 950px;
+            width: 850px;
 
             .category-list {
                 margin-top: 1em;
@@ -761,7 +749,7 @@
         }
 
         .homepage-footer {
-            width: 950px;
+            width: 850px;
         }
 
         .main-notification {
@@ -769,7 +757,7 @@
         }
 
         .tool-of-web {
-            width: 950px;
+            width: 850px;
 
             .title {
                 .sub-title {}
@@ -782,17 +770,12 @@
             }
 
             .lst-tool {
-                .ant-row {
+                .style-card-main {
+                    width: 200px;
+                }
 
-                    .ant-col {
-                        .style-card-main {
-                            width: 200px;
-                        }
-
-                        .ant-card {
-                            width: 200px;
-                        }
-                    }
+                .ant-card {
+                    width: 200px;
                 }
 
                 .tool {
@@ -810,7 +793,7 @@
         }
 
         .container {
-            max-width: 950px;
+            max-width: 850px;
 
             .content {
                 padding: 1em;
@@ -871,7 +854,7 @@
 @media (max-width: 1000px) {
     .main-home {
         .header-homepage {
-            width: 750px;
+            width: 660px;
 
             .left-header {
                 .slogan {
@@ -990,7 +973,7 @@
         }
 
         .homepage-footer {
-            width: 750px;
+            width: 660px;
         }
 
         .main-notification {
@@ -998,7 +981,7 @@
         }
 
         .tool-of-web {
-            width: 750px;
+            width: 660px;
 
             .title {
                 .sub-title {}
@@ -1011,17 +994,12 @@
             }
 
             .lst-tool {
-                .ant-row {
+                .style-card-main {
+                    width: 210px;
+                }
 
-                    .ant-col {
-                        .style-card-main {
-                            width: 210px;
-                        }
-
-                        .ant-card {
-                            width: 210px;
-                        }
-                    }
+                .ant-card {
+                    width: 210px;
                 }
 
                 .tool {
@@ -1039,7 +1017,7 @@
         }
 
         .container {
-            max-width: 750px;
+            max-width: 660px;
 
             .content {}
         }
@@ -1049,7 +1027,7 @@
 @media (max-width: 800px) {
     .main-home {
         .header-homepage {
-            width: 550px;
+            width: 460px;
 
             .left-header {
                 margin-right: 0;
@@ -1175,7 +1153,7 @@
         }
 
         .homepage-footer {
-            width: 550px;
+            width: 460px;
         }
 
         .main-notification {
@@ -1183,7 +1161,7 @@
         }
 
         .tool-of-web {
-            width: 550px;
+            width: 460px;
 
             .category-list {
                 width: 380px;
@@ -1224,17 +1202,12 @@
             }
 
             .lst-tool {
-                .ant-row {
+                .style-card-main {
+                    width: 220px;
+                }
 
-                    .ant-col {
-                        .style-card-main {
-                            width: 220px;
-                        }
-
-                        .ant-card {
-                            width: 220px;
-                        }
-                    }
+                .ant-card {
+                    width: 220px;
                 }
 
                 .tool {
@@ -1261,7 +1234,7 @@
         }
 
         .container {
-            max-width: 550px;
+            max-width: 460px;
 
             .content {}
         }
@@ -1418,6 +1391,7 @@
 
                 .sub-title {
                     font-size: .8em;
+                    display: none;
                 }
             }
 
@@ -1427,32 +1401,32 @@
 
             .lst-tool {
                 justify-content: start;
+                display: flex;
+                flex-flow: row;
+                overflow: auto;
+
+                &::-webkit-scrollbar {
+                    display: none;
+                }
 
                 .btn-icon {
                     display: none;
                 }
 
-                .ant-row {
-                    display: flex;
-                    flex-flow: row;
-                    overflow: auto;
 
-                    .ant-col {
-                        padding: 0 !important;
+                .style-card-main {
+                    width: 220px;
+                    // width: clamp(200px, 60vw, 300px);
+                }
 
-                        .style-card-main {
-                            // width: 300px;
-                            width: clamp(200px, 60vw, 300px);
-                        }
+                .ant-card {
+                    width: 220px;
+                }
 
-                        .ant-card {
-                            width: 80%;
-                        }
-                    }
 
-                    .ant-col-24 {
-                        flex: 0 0 80%
-                    }
+
+                .ant-col-24 {
+                    flex: 0 0 80%
                 }
 
                 .ant-row::-webkit-scrollbar {
