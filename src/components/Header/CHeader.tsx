@@ -106,7 +106,7 @@ export const CHeader = (props: MyProps) => {
         if (window.location.pathname === "/mission") setCurrent("3");
         if (window.location.pathname === "/contact") setCurrent("4");
         if (window.location.pathname === "/") setCurrent("1");
-    }, []);
+    }, [window.location.pathname]);
 
     useEffect(() => {
         let checkLogin = localStorage.getItem("token")
