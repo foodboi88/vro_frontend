@@ -1,4 +1,4 @@
-.container  {
+.container {
     // background: #D9D9D9;
     object-fit: none;
     background-size: cover;
@@ -6,8 +6,9 @@
     width: 100%;
     height: fit-content;
     background-position: center;
-    .content{
-        padding: 46px;
+
+    .content {
+        padding: 46px !important;
         text-align: center;
         font-size: 30px;
         font-weight: 700;

@@ -48,6 +48,8 @@ import CategoryImage9 from '../../images/homepage/category-image-9.png';
 import CategoryImage10 from '../../images/homepage/category-image-10.png';
 import CategoryImage11 from '../../images/homepage/category-image-11.png';
 import CategoryImage12 from '../../images/homepage/category-image-12.png';
+import Banner1 from '../../images/homepage/banner1.png';
+import Banner2 from '../../images/homepage/banner2.png';
 
 import {
     advancedSearchingRequest,
@@ -642,8 +644,8 @@ const Home = () => {
             </div>
 
             <CDeclare
-                content="Chỉnh sửa thiết kế theo yêu cầu"
-                imageUrl={Declare1}
+                content=""
+                imageUrl={Banner1}
             />
 
             {/* Top kiến trúc sư */}
@@ -771,8 +773,8 @@ const Home = () => {
             </div> */}
 
             <CDeclare
-                content="Bản vẽ miễn phí cho bạn"
-                imageUrl={Declare1}
+                content=""
+                imageUrl={Banner2}
 
             />
 
@@ -941,62 +943,11 @@ const Home = () => {
                 }
             </div>
             {/* Bản vẽ miễn phí */}
-            <div className="tool-of-web">
+            {/* <div className="tool-of-web">
                 <div className="title">
                     <div>NHU CẦU KHÁCH HÀNG</div>
-                    {/* <div className="sub-title">
-                        <Col>
-                            <Button
-                                icon={<ArrowLeftOutlined />}
-                                className="btn-icon"
-                                onClick={() => handlePagination('prev', 'free')}
-                                disabled={currentIndexFreeSketch === 0 && true}
-                            />
-                        </Col>
 
-                        <Col>
-                            <Button
-                                icon={<ArrowRightOutlined />}
-                                className="btn-icon"
-                                onClick={() => handlePagination('next', 'free')}
-                                disabled={
-                                    currentIndexFreeSketch >= freeSketchList.length - numberOfCardShow && true
-                                }
-                            />
-                        </Col>
-                    </div> */}
                 </div>
-                {/* {freeSketchList.length > 0 &&
-                    <div className={"lst-tool " + ((freeSketchList && freeSketchList.length < numberOfCardShow) && 'less-card')}>
-
-                        <Row gutter={[16, 16]}>
-                            {freeSketchList
-                                .slice(
-                                    currentIndexFreeSketch,
-                                    currentIndexFreeSketch + numberOfCardShow
-                                )
-                                .map((card) => (
-                                    <Col
-                                        onClick={() => {
-                                            handleClickCard(card.id);
-                                        }}
-                                        span={(freeSketchList.length < numberOfCardShow - 1) ? (spanCol * (freeSketchList.length)) : spanCol}
-                                        key={card.id}
-                                    >
-                                        <CProductCard
-                                            imageUrl={card.images[0]}
-                                            title={card.title}
-                                            view={card.views}
-                                            price={card.price}
-                                        // idTool={card.designTools[0] || ''}
-
-                                        // type={card.type}
-                                        />
-                                    </Col>
-                                ))}
-                        </Row>
-                    </div>
-                } */}
                 <div className="customer-requirement-lst">
                     <div className="customer-requirement-lst-left">
                         {(CustomerRequirementsList && CustomerRequirementsList.length > 0) && CustomerRequirementsList.slice(0, 3).map((item, index) => (
@@ -1048,7 +999,7 @@ const Home = () => {
                     </div>
                 </div>
 
-            </div>
+            </div> */}
             <div className='homepage-footer'>
                 <div className="left-footer">
                     <div className="slogan">

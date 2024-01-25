@@ -63,19 +63,24 @@ const Mission = () => {
                     </div>
 
                     <div className="mission-banner"
-                        style={{
-                            backgroundImage: `url(${lstCustomPage[1].images})`
-                        }}
                     >
-                        <div className="title">
-                            {lstCustomPage[1].title.split('\n').map((line: any, index: any) => (
-                                <div key={index}>{line}</div>
-                            ))}
+                        <div className='image-mission-banner'
+                            style={{
+                                backgroundImage: `url(${lstCustomPage[1].images})`
+                            }}
+                        >
                         </div>
-                        <div className="sub-title">
-                            {lstCustomPage[1].text.split('\n').map((line: any, index: any) => (
-                                <div key={index}>{line}</div>
-                            ))}
+                        <div className='text-content-mission'>
+                            <div className="title">
+                                {lstCustomPage[1].title.split('\n').map((line: any, index: any) => (
+                                    <div key={index}>{line}</div>
+                                ))}
+                            </div>
+                            <div className="sub-title">
+                                {lstCustomPage[1].text.split('\n').map((line: any, index: any) => (
+                                    <div key={index}>{line}</div>
+                                ))}
+                            </div>
                         </div>
                     </div>
 
@@ -117,7 +122,7 @@ const Mission = () => {
                         </div>
                     </div>
 
-                    <div className="mission-banner banner-2"
+                    {/* <div className="mission-banner banner-2"
                         style={{
                             backgroundImage: `url(${lstCustomPage[4].images})`
                         }}
@@ -132,6 +137,28 @@ const Mission = () => {
                                 <div key={index}>{line}</div>
                             ))}
                         </div>
+                    </div> */}
+
+                    <div className='mission-banner banner-2'>
+                        <div className='image-mission-banner'
+                            style={{
+                                backgroundImage: `url(${lstCustomPage[4].images})`
+                            }}
+                        >
+                        </div>
+                        <div className='text-content-mission'>
+                            <div className="title">
+                                {lstCustomPage[4].title.split('\n').map((line: any, index: any) => (
+                                    <div key={index}>{line}</div>
+                                ))}
+                            </div>
+                            <div className="sub-title">
+                                {lstCustomPage[4].text.split('\n').map((line: any, index: any) => (
+                                    <div key={index}>{line}</div>
+                                ))}
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>

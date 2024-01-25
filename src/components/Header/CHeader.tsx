@@ -260,9 +260,9 @@ export const CHeader = (props: MyProps) => {
                     >
                         Sứ mệnh
                     </div>
-                    <div className="header-action-item">
+                    {/* <div className="header-action-item">
                         Sự kết nối
-                    </div>
+                    </div> */}
                     <div className={
                         "header-action-item " + (current === '4' ? 'active' : '')
                     }
