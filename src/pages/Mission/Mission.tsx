@@ -18,7 +18,7 @@ const Mission = () => {
     }, [])
 
     const getCustomPage = async () => {
-        await axios.get(`https://api.vroteam.online/custom-pages`)
+        await axios.get(`https://api.banvebank.com.vn/custom-pages`)
             .then(res => {
                 console.log(res.data.data);
 

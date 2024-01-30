@@ -1,5 +1,5 @@
 export enum API_URL {
-    HOST = "https://api.vroteam.online",
+    HOST = "https://api.banvebank.com.vn",
     GET_LATEST_SKETCH = "products/home/latest",
     GET_MOST_VIEWS_SKETCH = "products/home/most-views",
     GET_SKETCHS_BY_ARCHITECTURE = "products/by-type-of-architecture",

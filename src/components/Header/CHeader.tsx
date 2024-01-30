@@ -241,17 +241,21 @@ export const CHeader = (props: MyProps) => {
                         }>
                         Trang chủ
                     </div>
-                    <div
-                        className={"header-action-item " + (current === '2' ? 'active' : '')}
-                        onClick={
-                            () => {
-                                onClickAvatar();
-                                setCurrent("2");
+                    {
+                        // Kiểm tra nếu đã đăng nhập thì hiển thị ra nút quản lý tài khoản
+                        isLogin &&
+                        <div
+                            className={"header-action-item " + (current === '2' ? 'active' : '')}
+                            onClick={
+                                () => {
+                                    onClickAvatar();
+                                    setCurrent("2");
+                                }
                             }
-                        }
-                    >
-                        Quản lý tài khoản
-                    </div>
+                        >
+                            Quản lý tài khoản
+                        </div>
+                    }
                     <div className={"header-action-item " + (current === '3' ? 'active' : '')}
                         onClick={() => {
                             navigate('/mission');
@@ -399,9 +403,12 @@ export const CHeader = (props: MyProps) => {
                                         <div className="header-action-item">
                                             Trang chủ
                                         </div>
-                                        <div className="header-action-item">
-                                            Quản lý tài khoản
-                                        </div>
+                                        {
+                                            isLogin &&
+                                            <div className="header-action-item">
+                                                Quản lý tài khoản
+                                            </div>
+                                        }
                                         <div className="header-action-item">
                                             Sứ mệnh
                                         </div>
