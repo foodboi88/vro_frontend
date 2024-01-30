@@ -18,7 +18,7 @@ const Mission = () => {
     }, [])
 
     const getCustomPage = async () => {
-        await axios.get(`http://vroteam.online:6068/custom-pages`)
+        await axios.get(`https://api.vroteam.online/custom-pages`)
             .then(res => {
                 console.log(res.data.data);
 
