@@ -22,6 +22,7 @@ import ProfileBecomeSeller from "../pages/Profile/profile-become-seller/ProfileB
 import PurchasedSketchs from "../pages/purchased-sketchs/purchased-sketchs";
 import ActiveAccount from "../pages/ActiveAccount/ActiveAccount";
 import ChangePassword from "./ChangePassword/ChangePassword";
+import AdvancedSeachingArchitect from "../pages/AdvancedSearchingArchitect/AdvancedSeachingArchitect";
 
 // Dùng để set animation cho các router với nhau
 const AnimationRouter = () => {
@@ -61,17 +62,20 @@ const AnimationRouter = () => {
 
                 {/* Public route */}
                 <Route path="/" element={<Home />}></Route>
+
                 <Route path="/searching" element={<AdvancedSeaching />}></Route>
                 <Route
                     path="/detail-sketch/:sketchId"
                     element={<DetailSketch />}
                 ></Route>
+
+                <Route path="/searching-architect" element={<AdvancedSeachingArchitect />}></Route>
                 <Route
                     path="/author-page/:authorId"
                     element={<AuthorPage />}
                 ></Route>
-                <Route path="/purchased-successfully" element={<PurchaseSuccessfully />}></Route>
 
+                <Route path="/purchased-successfully" element={<PurchaseSuccessfully />}></Route>
                 <Route path="*" element={<ActiveAccount />} />
             </Routes>
         </AnimatePresence>
@@ -79,18 +83,3 @@ const AnimationRouter = () => {
 };
 
 export default AnimationRouter;
-
-
-// http://vroteam.online:3000/purchased-successfully?
-// vnp_Amount=22000000&
-// vnp_BankCode=NCB&
-// vnp_BankTranNo=VNP14062588&
-// vnp_CardType=ATM&
-// vnp_OrderInfo=Thanh+toan+cho+ma+GD%3A0b0ecaff-b6a8-4ea8-ad86-2e746f0191bb&
-// vnp_PayDate=20230710165116&
-// vnp_ResponseCode=00&
-// vnp_TmnCode=VKCTCEMP&
-// vnp_TransactionNo=14062588&
-// vnp_TransactionStatus=00&
-// vnp_TxnRef=0b0ecaff-b6a8-4ea8-ad86-2e746f0191bb&
-// vnp_SecureHash=b1d165c371892f74362d4dac7cf22117191fa0e28375dc78598ec8c75749eae6a2a7f0b1771f83d12a87ecd1fad9625fdcf35160af6416bacf22c6d4c44fbe7d
