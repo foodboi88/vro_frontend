@@ -389,14 +389,8 @@ const Home = () => {
 
     const handleClickArchitect = (architectId: string) => {
         if (architectId === 'last') {
-            // const bodyrequest: ICurrentSearchValue = {
-            //     name: '',
-            //     architecture: currentSearchValue.architecture,
-            //     tool: currentSearchValue.tool,
-            //     style: currentSearchValue.style,
-            // };
-            // dispatch(advancedSearchingRequest(bodyrequest));
-            // navigate("/searching");
+            dispatch(getTopArchitectsRequest());
+            navigate("/searching-architect");
         } else {
             navigate(`/author-page/${architectId}`);
         }
