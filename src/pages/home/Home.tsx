@@ -943,10 +943,9 @@ const Home = () => {
                 }
             </div>
             {/* Bản vẽ miễn phí */}
-            {/* <div className="tool-of-web">
+            <div className="tool-of-web">
                 <div className="title">
                     <div>NHU CẦU KHÁCH HÀNG</div>
-
                 </div>
                 <div className="customer-requirement-lst">
                     <div className="customer-requirement-lst-left">
@@ -986,7 +985,6 @@ const Home = () => {
                                             <div className="customer-requirement-time"><FaRegClock />{item.time}</div>
                                         </div>
                                     </div>
-
                                     <div className="info">
                                         Liên hệ
                                     </div>
@@ -999,7 +997,7 @@ const Home = () => {
                     </div>
                 </div>
 
-            </div> */}
+            </div>
             <div className='homepage-footer'>
                 <div className="left-footer">
                     <div className="slogan">
