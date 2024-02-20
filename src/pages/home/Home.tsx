@@ -964,7 +964,7 @@ const Home = () => {
             {/* Bản vẽ miễn phí */}
             <div className="tool-of-web">
                 <div className="title">
-                    <div>NHU CẦU KHÁCH HÀNG</div>
+                    <div style={{ cursor: 'pointer' }} onClick={() => navigate('/customer-need')}>NHU CẦU KHÁCH HÀNG</div>
                     <div className="sub-title">
                         <Col>
                             <Button
