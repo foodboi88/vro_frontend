@@ -389,6 +389,53 @@
             }
         }
     }
+
+    .ask-the-architect{
+        display: flex;
+        gap: 1vw;
+        justify-content: space-between;
+        max-width: 1310px;
+        margin: 3em auto;
+
+        .ask-the-architect-left{
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            width: 30%;
+        }
+
+        .ask-the-architect-right{
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            width: 60%;
+
+            .ask-the-architect-title{
+                font-size: 24px;
+                font-weight: 700;
+                color: var(--white-color-v2);
+            }
+
+            .ask-the-architect-form{
+
+                .ant-form-item-required{
+                    font-size: 16px !important;
+
+                    strong{
+                        color: var(--main-color);
+                    }
+                } 
+                .button-submit{
+                    width: 100%;
+                    height: 40px;
+                }
+
+                .text-area-ask-architect{
+                    height: 80px;
+                }
+            }
+        }
+    }
 }
 
 .lst-tool.less-card {
@@ -505,6 +552,10 @@
             max-width: 1310px;
 
             .content {}
+        }
+
+        .ask-the-architect{
+            max-width: 1310px;
         }
     }
 }
@@ -652,6 +703,9 @@
 
             .content {}
         }
+        .ask-the-architect{
+            max-width: 1100px;
+        }
     }
 }
 
@@ -798,6 +852,10 @@
             .content {
                 padding: 1em;
             }
+        }
+
+        .ask-the-architect{
+            max-width: 850px;
         }
 
         .homepage-footer {
@@ -974,6 +1032,25 @@
 
         .homepage-footer {
             width: 660px;
+        }
+
+        .ask-the-architect{
+            max-width: 660px;
+
+            .ask-the-architect-right{
+                .ask-the-architect-title{
+                    font-size: 20px;
+                }
+
+                .ask-the-architect-form{
+                    .ant-form-item-required{
+                        font-size: 14px !important;
+                    } 
+                    .button-submit{
+                        height: 30px;
+                    }
+                }
+            }
         }
 
         .main-notification {
@@ -1156,6 +1233,24 @@
             width: 460px;
         }
 
+        .ask-the-architect{
+            max-width: 460px;
+
+            .ask-the-architect-right{
+                .ask-the-architect-title{
+                    font-size: 20px;
+                }
+
+                .ask-the-architect-form{
+                    .ant-form-item-required{
+                        font-size: 14px !important;
+                    } 
+                    .button-submit{
+                        height: 30px;
+                    }
+                }
+            }
+        }
         .main-notification {
             .image {}
         }
@@ -1372,7 +1467,25 @@
         .homepage-footer {
             width: 100%;
         }
+        .ask-the-architect{
+            max-width: 100%;
+            margin: 7em 1em 1em 1em;
 
+            .ask-the-architect-right{
+                .ask-the-architect-title{
+                    font-size: 16px;
+                }
+
+                .ask-the-architect-form{
+                    .ant-form-item-required{
+                        font-size: 12px !important;
+                    } 
+                    .button-submit{
+                        height: 30px;
+                    }
+                }
+            }
+        }
         .main-notification {
             .image {}
         }

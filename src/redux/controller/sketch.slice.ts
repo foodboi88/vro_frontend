@@ -1284,6 +1284,32 @@ const sketchSlice = createSlice({
             state.loading = false;
             // state.registerSuccess = false;
         },
+
+        postCustomerNeedRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        postCustomerNeedSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            notification.open({
+                message: "Thành công",
+                description: "Gửi yêu cầu thành công",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+        },
+
+        postCustomerNeedFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            notification.open({
+                message: "Thất bại",
+                description: "Gửi yêu cầu không thành công",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+        },
     },
 });
 
@@ -2318,6 +2344,23 @@ const getTopArchitects$: RootEpic = (action$) =>
         })
     );
 
+const postCustomerNeed$: RootEpic = (action$) => 
+    action$.pipe(
+        filter(postCustomerNeedRequest.match),
+        switchMap((re) => {
+            return UserApi.postCustomerNeed(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.postCustomerNeedSuccess(res),
+                    ];
+                }),
+                catchError((err) => [
+                    sketchSlice.actions.postCustomerNeedFail(err),
+                ])
+            );
+        })
+    );
+
 export const SketchEpics = [
     // uploadSketch$,
     resetCurrentSearchValue$,
@@ -2374,7 +2417,8 @@ export const SketchEpics = [
     getPurchasedSketchs$,
     getSellerProfile$,
     editSketch$,
-    getTopArchitects$
+    getTopArchitects$,
+    postCustomerNeed$,
 ];
 export const {
     getLatestSketchRequest,
@@ -2437,6 +2481,7 @@ export const {
     resetCurrentSearchValueRequest,
 
     getTopArchitectsRequest,
+    postCustomerNeedRequest,
 
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;

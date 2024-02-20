@@ -98,4 +98,14 @@ export default class UserApi {
         );
     }
 
+    static postCustomerNeed(body: any): Observable<any> {
+        const api = `${UserApi.apiURL.HOST}/${this.apiURL.CUSTOMER_NEED}`;
+        return HttpClient.post(api, body).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
+
 }

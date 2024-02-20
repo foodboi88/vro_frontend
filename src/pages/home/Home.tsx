@@ -3,7 +3,7 @@ import {
     ArrowLeftOutlined,
     ArrowRightOutlined
 } from "@ant-design/icons";
-import { Button, Col, Row } from "antd";
+import { Button, Col, Form, Input } from "antd";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -18,25 +18,21 @@ import CStyleCard from "../../components/CStyleCard/CStyleCard";
 import CDeclare from "../../components/Declare/CDeclare";
 import CProductCard from "../../components/ProductCard/CProductCard";
 import CEO from '../../images/homepage/CEO.png';
-import Company1 from '../../images/homepage/company.png';
-import Declare1 from '../../images/homepage/declare2.jpg';
-import ExcellentArchitect1 from "../../images/homepage/excellentArchitect1.png";
-import ExcellentArchitect2 from "../../images/homepage/excellentArchitect2.png";
-import ExcellentArchitect3 from "../../images/homepage/excellentArchitect3.png";
-import ExcellentArchitect4 from "../../images/homepage/excellentArchitect4.png";
-import HomepageFooter from '../../images/homepage/homepage-footer.png';
-import IntroImage from "../../images/homepage/introImage.png";
-import StyleList1 from "../../images/homepage/styleList1.png";
-import StyleList2 from "../../images/homepage/styleList2.png";
-import StyleList3 from "../../images/homepage/styleList3.png";
 import CustomerRequirementImage1 from '../../images/homepage/customer-requirement-1.svg';
 import CustomerRequirementImage2 from '../../images/homepage/customer-requirement-2.svg';
 import CustomerRequirementImage3 from '../../images/homepage/customer-requirement-3.svg';
 import CustomerRequirementImage4 from '../../images/homepage/customer-requirement-4.svg';
 import CustomerRequirementImage5 from '../../images/homepage/customer-requirement-5.svg';
 import CustomerRequirementImage6 from '../../images/homepage/customer-requirement-6.svg';
+import HomepageFooter from '../../images/homepage/homepage-footer.png';
+import IntroImage from "../../images/homepage/introImage.png";
 
+import Banner1 from '../../images/homepage/banner1.png';
+import Banner2 from '../../images/homepage/banner2.png';
 import CategoryImage1 from '../../images/homepage/category-image-1.png';
+import CategoryImage10 from '../../images/homepage/category-image-10.png';
+import CategoryImage11 from '../../images/homepage/category-image-11.png';
+import CategoryImage12 from '../../images/homepage/category-image-12.png';
 import CategoryImage2 from '../../images/homepage/category-image-2.png';
 import CategoryImage3 from '../../images/homepage/category-image-3.png';
 import CategoryImage4 from '../../images/homepage/category-image-4.png';
@@ -45,25 +41,22 @@ import CategoryImage6 from '../../images/homepage/category-image-6.png';
 import CategoryImage7 from '../../images/homepage/category-image-7.png';
 import CategoryImage8 from '../../images/homepage/category-image-8.png';
 import CategoryImage9 from '../../images/homepage/category-image-9.png';
-import CategoryImage10 from '../../images/homepage/category-image-10.png';
-import CategoryImage11 from '../../images/homepage/category-image-11.png';
-import CategoryImage12 from '../../images/homepage/category-image-12.png';
-import Banner1 from '../../images/homepage/banner1.png';
-import Banner2 from '../../images/homepage/banner2.png';
 
+import AskArchitectImage from '../../images/homepage/ask-architect-image.svg';
+import { FaRegClock } from "react-icons/fa";
 import {
     advancedSearchingRequest,
     getAllArchitecturesRequest,
     getAllStylesRequest,
     // getAllToolsRequest,
     getHomeListSketchRequest,
-    getTopArchitectsRequest
+    getTopArchitectsRequest,
+	postCustomerNeedRequest
 } from "../../redux/controller";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
 import Login from "../login/Login";
 import Register from "../login/Register";
 import "./styles.home.scss";
-import { FaRegClock } from "react-icons/fa";
 
 interface CardData {
     id: number;
@@ -209,6 +202,11 @@ const Home = () => {
         window.innerHeight,
     ]);
 
+    const [form] = Form.useForm();
+	const [isOpenLoginModal, setIsOpenLoginModal] = useState<boolean>(false); // Biến kiểm tra đang mở modal login hay chưa
+    const [isOpenRegisterModal, setIsOpenRegisterModal] = useState<boolean>(false); // Biến kiểm tra đang mở modal registration hay chưa
+    const [isLogin, setIsLogin] = useState<boolean>(false);
+
     useEffect(() => {
         console.log(cloneArchitecturelist);
         let tmp: any[] = []
@@ -248,14 +246,12 @@ const Home = () => {
         setCloneArchitects([...architectList, lastArchitect])
     }, [filteredSketchs, architectList])
 
-
     useEffect(() => {
         document.body.scrollTo({
             top: 0,
             behavior: "smooth"
         });
     }, [navigate]);
-
 
     useEffect(() => {
         const handleWindowResize = () => {
@@ -299,6 +295,11 @@ const Home = () => {
         dispatch(getTopArchitectsRequest());
         handleSearch('64231026edf9dd11e488c250');
     }, []);
+
+	useEffect(() => {
+        console.log("currentSearchValue", currentSearchValue);
+
+    }, [currentSearchValue]);
 
     const handlePagination = (direction: string, type: string) => {
         if (direction === 'prev') {
@@ -425,15 +426,6 @@ const Home = () => {
         dispatch(advancedSearchingRequest(bodyrequest));
     };
 
-    useEffect(() => {
-        console.log("currentSearchValue", currentSearchValue);
-
-    }, [currentSearchValue]);
-
-    const [isOpenLoginModal, setIsOpenLoginModal] = useState<boolean>(false); // Biến kiểm tra đang mở modal login hay chưa
-    const [isOpenRegisterModal, setIsOpenRegisterModal] = useState<boolean>(false); // Biến kiểm tra đang mở modal registration hay chưa
-    const [isLogin, setIsLogin] = useState<boolean>(false);
-
     const checkIsLogin = (val: boolean) => {
         setIsLogin(val);
     };
@@ -452,6 +444,12 @@ const Home = () => {
         setIsOpenLoginModal(false);
         setIsOpenRegisterModal(false);
     }
+
+	const onFinishAskArchitectForm = (values: any) => {
+		dispatch(postCustomerNeedRequest(values));
+		form.resetFields();
+	}
+	
     return (
         <motion.div
             className="main-home"
@@ -998,6 +996,50 @@ const Home = () => {
                 </div>
 
             </div>
+
+            { isLogin && 
+            <div className="ask-the-architect">
+                <div className="ask-the-architect-left">
+                    <img src={AskArchitectImage} alt="" />
+                </div>
+
+                <div className="ask-the-architect-right">
+                    <div className="ask-the-architect-title">Bạn đang tìm Kiến trúc sư?</div>
+                    <Form 
+						className="ask-the-architect-form"
+						layout="vertical"
+						name="basic"
+						initialValues={{ remember: true }}
+						onFinish={onFinishAskArchitectForm}
+						// onFinishFailed={onFinishFailed}
+						form={form}
+                    >
+                        <Form.Item
+                            label={<div>Tiêu đề <strong>*</strong></div>}
+                            name="title"
+                            rules={[{ required: true, message: 'Vui lòng nhập tiêu đề!' }]}
+                        >
+                            <Input placeholder="Nhập tiêu đề"/>
+                        </Form.Item>
+
+                        <Form.Item
+                            label={<div>Mô tả <strong>*</strong></div>}
+                            name="description"
+                            rules={[{ required: true, message: 'Vui lòng nhập mô tả!' }]}
+                        >
+                            <Input.TextArea className="text-area-ask-architect" placeholder="Nhập mô tả"  minLength={3}/>
+                        </Form.Item>
+
+                        <Form.Item>
+                            <Button className="button-submit" type="primary" htmlType="submit">
+                                Đăng yêu cầu
+                            </Button>
+                        </Form.Item>
+                    </Form>
+                        
+                </div>
+            </div>}
+
             <div className='homepage-footer'>
                 <div className="left-footer">
                     <div className="slogan">
