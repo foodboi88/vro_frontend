@@ -117,6 +117,8 @@ interface SketchState {
 
     architectList: IAuthor[];
 
+    customerNeedLst: any[];
+    totalCustomerNeedRecord: number;
 }
 
 const initState: SketchState = {
@@ -198,7 +200,9 @@ const initState: SketchState = {
     listPurchasedSketch: [],
     totalPurchasedSketch: 0,
     sellerInformation: undefined,
-    architectList: []
+    architectList: [],
+    customerNeedLst: [],
+    totalCustomerNeedRecord: 0,
 };
 
 const sketchSlice = createSlice({
@@ -1310,6 +1314,21 @@ const sketchSlice = createSlice({
                 },
             });
         },
+
+        getCustomerNeedRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        getCustomerNeedSuccess(state, action: PayloadAction<any>) {
+            console.log('customer-need-lst ', action.payload);
+            state.loading = false;
+            state.customerNeedLst = action.payload.data.items;
+            state.totalCustomerNeedRecord = action.payload.data.count;
+        },
+
+        getCustomerNeedFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+        },
     },
 });
 
@@ -2361,6 +2380,23 @@ const postCustomerNeed$: RootEpic = (action$) =>
         })
     );
 
+const getCustomerNeedList$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getCustomerNeedRequest.match),
+        switchMap((re) => {
+            return UserApi.getCustomerNeedList(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getCustomerNeedSuccess(res),
+                    ];
+                }),
+                catchError((err) => [
+                    sketchSlice.actions.getCustomerNeedFail(err),
+                ])
+            );
+        })
+    );
+
 export const SketchEpics = [
     // uploadSketch$,
     resetCurrentSearchValue$,
@@ -2419,6 +2455,7 @@ export const SketchEpics = [
     editSketch$,
     getTopArchitects$,
     postCustomerNeed$,
+    getCustomerNeedList$,
 ];
 export const {
     getLatestSketchRequest,
@@ -2482,6 +2519,7 @@ export const {
 
     getTopArchitectsRequest,
     postCustomerNeedRequest,
+    getCustomerNeedRequest,
 
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;

@@ -108,4 +108,16 @@ export default class UserApi {
         );
     }
 
+    static getCustomerNeedList(body: any): Observable<any> {
+        const queryParam = Utils.parseObjectToQueryParameter(body);
+        console.log(queryParam)
+        const api = `${UserApi.apiURL.HOST}/${this.apiURL.CUSTOMER_NEED}${queryParam}`;
+        return HttpClient.get(api).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
+
 }
