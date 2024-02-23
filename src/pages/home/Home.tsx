@@ -57,6 +57,7 @@ import {
     getAllStylesRequest,
     // getAllToolsRequest,
     getHomeListSketchRequest,
+    getHomepageBannerRequest,
     getTopArchitectsRequest
 } from "../../redux/controller";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
@@ -182,7 +183,7 @@ const CategoryList = [
 ]
 // Phần trang chủ của trang web
 const Home = () => {
-    const { latestSketchsList, mostViewedSketchList, freeSketchList, cloneArchitecturelist, filteredSketchs, cloneStyleList, currentSearchValue, architectList } = useSelectorRoot(
+    const { bannerHomepage, mostViewedSketchList, freeSketchList, cloneArchitecturelist, filteredSketchs, cloneStyleList, currentSearchValue, architectList } = useSelectorRoot(
         (state) => state.sketch
     ); // Lst cac ban ve
 
@@ -297,6 +298,7 @@ const Home = () => {
         dispatch(getAllArchitecturesRequest(bodyrequest));
         dispatch(getAllStylesRequest(bodyrequest));
         dispatch(getTopArchitectsRequest());
+        dispatch(getHomepageBannerRequest());
         handleSearch('64231026edf9dd11e488c250');
     }, []);
 
@@ -637,10 +639,14 @@ const Home = () => {
 
             </div>
 
-            <CDeclare
-                content=""
-                imageUrl={Banner1}
-            />
+            {
+                bannerHomepage[0] && bannerHomepage[0].image &&
+                <CDeclare
+                    content=""
+                    imageUrl={bannerHomepage[0].image}
+
+                />
+            }
 
             {/* Top kiến trúc sư */}
             <div className="tool-of-web">
@@ -766,11 +772,14 @@ const Home = () => {
                 </div>
             </div> */}
 
-            <CDeclare
-                content=""
-                imageUrl={Banner2}
+            {
+                bannerHomepage[1] && bannerHomepage[1].image &&
+                <CDeclare
+                    content=""
+                    imageUrl={bannerHomepage[1].image}
 
-            />
+                />
+            }
 
             {/* Bản vẽ bán chạy */}
             <div className="tool-of-web">

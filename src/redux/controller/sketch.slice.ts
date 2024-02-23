@@ -26,6 +26,7 @@ import { IPaymentRequest } from "../../common/payment.interface";
 import { IBank, IBusiness, IReqFormArchitect, IReqLookUp } from "../../common/profile.interface";
 import { IRates } from "../../common/rates.interface";
 import {
+    IBannerHomepage,
     ICurrentSearchValue,
     IDetailSketch,
     IFilteredSketch,
@@ -116,7 +117,7 @@ interface SketchState {
     sellerInformation: ISellerProfile | undefined
 
     architectList: IAuthor[];
-
+    bannerHomepage: IBannerHomepage[];
 }
 
 const initState: SketchState = {
@@ -198,7 +199,8 @@ const initState: SketchState = {
     listPurchasedSketch: [],
     totalPurchasedSketch: 0,
     sellerInformation: undefined,
-    architectList: []
+    architectList: [],
+    bannerHomepage: []
 };
 
 const sketchSlice = createSlice({
@@ -1284,6 +1286,30 @@ const sketchSlice = createSlice({
             state.loading = false;
             // state.registerSuccess = false;
         },
+
+        getHomepageBannerRequest(state) {
+            state.loading = true;
+        },
+
+        getHomepageBannerSuccess(state, action: PayloadAction<any>) {
+            state.bannerHomepage = action.payload.data
+
+            // state.registerSuccess = true;
+        },
+
+        getHomepageBannerFail(state, action: PayloadAction<any>) {
+            console.log(action);
+            notification.open({
+                message: "Load fail",
+                // description:
+                //     action.payload.response.message,
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+            state.loading = false;
+            // state.registerSuccess = false;
+        },
     },
 });
 
@@ -2318,6 +2344,23 @@ const getTopArchitects$: RootEpic = (action$) =>
         })
     );
 
+const getHomepageBanner$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getHomepageBannerRequest.match),
+        switchMap((re) => {
+            return ImageSketchApi.getBannerHomepage().pipe(
+                mergeMap((res: IRates) => {
+                    return [
+                        sketchSlice.actions.getHomepageBannerSuccess(res),
+                    ];
+                }),
+                catchError((err) => [
+                    sketchSlice.actions.getHomepageBannerFail(err),
+                ])
+            );
+        })
+    );
+
 export const SketchEpics = [
     // uploadSketch$,
     resetCurrentSearchValue$,
@@ -2374,7 +2417,8 @@ export const SketchEpics = [
     getPurchasedSketchs$,
     getSellerProfile$,
     editSketch$,
-    getTopArchitects$
+    getTopArchitects$,
+    getHomepageBanner$
 ];
 export const {
     getLatestSketchRequest,
@@ -2438,6 +2482,7 @@ export const {
 
     getTopArchitectsRequest,
 
+    getHomepageBannerRequest
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;
 

@@ -58,5 +58,7 @@ export enum API_URL {
     GET_PURCHASED_SKETCHS = "orders/product-purchased-product/all-role",
 
     GET_TOP_ARCHITECT = "architect/top-architect-and-company",
+
+    BANNER_HOMEPAGE = "custom-banners"
 }
 

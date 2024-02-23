@@ -23,4 +23,14 @@ export default class ImageSketchApi {
             )
         );
     }
+
+    static getBannerHomepage(): Observable<any> {
+        const api = `${ImageSketchApi.apiURL.HOST}/${this.apiURL.BANNER_HOMEPAGE}`;
+        return HttpClient.get(api).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
 }

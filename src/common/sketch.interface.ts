@@ -119,3 +119,11 @@ export interface IUploadSketchRequest {
     note?: string
     id?: string
 };
+
+export interface IBannerHomepage{
+    type: number
+    image: string
+    createdAt: string
+    updatedAt: string
+    id: string
+  }
