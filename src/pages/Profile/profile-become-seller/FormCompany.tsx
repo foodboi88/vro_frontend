@@ -28,7 +28,7 @@ const FormCompany = (props: Props) => {
             identityCardNumber: values.businessRegistration,
             identityCardDate: date.toISOString(),
             identityCardPlace: values.placeOfIssue,
-            vatCode: values.taxCode,
+            taxCode: values.taxCode,
             bankAccountNumber: values.accountNumber,
             bankAccountName: values.accountName,
             bankName: values.bank,

@@ -9,7 +9,7 @@ export interface IReqFormArchitect {
     identityCardNumber: string,
     identityCardDate: string,
     identityCardPlace: string,
-    vatCode: string,
+    taxCode: string,
     bankAccountNumber: string,
     bankAccountName: string,
     bankName: string,
