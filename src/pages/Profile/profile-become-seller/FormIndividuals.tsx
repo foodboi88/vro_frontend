@@ -38,7 +38,7 @@ const FormIndividuals = (props: Props) => {
             identityCardNumber: values.CCCD,
             identityCardDate: date.toISOString(),
             identityCardPlace: values.placeOfIssue,
-            vatCode: values.taxCode,
+            taxCode: values.taxCode,
             bankAccountNumber: values.accountNumber,
             bankAccountName: values.accountName,
             bankName: values.bank,

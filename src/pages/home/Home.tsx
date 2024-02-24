@@ -3,7 +3,7 @@ import {
     ArrowLeftOutlined,
     ArrowRightOutlined
 } from "@ant-design/icons";
-import { Button, Col, Row } from "antd";
+import { Button, Col, Form, Input } from "antd";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -18,25 +18,21 @@ import CStyleCard from "../../components/CStyleCard/CStyleCard";
 import CDeclare from "../../components/Declare/CDeclare";
 import CProductCard from "../../components/ProductCard/CProductCard";
 import CEO from '../../images/homepage/CEO.png';
-import Company1 from '../../images/homepage/company.png';
-import Declare1 from '../../images/homepage/declare2.jpg';
-import ExcellentArchitect1 from "../../images/homepage/excellentArchitect1.png";
-import ExcellentArchitect2 from "../../images/homepage/excellentArchitect2.png";
-import ExcellentArchitect3 from "../../images/homepage/excellentArchitect3.png";
-import ExcellentArchitect4 from "../../images/homepage/excellentArchitect4.png";
-import HomepageFooter from '../../images/homepage/homepage-footer.png';
-import IntroImage from "../../images/homepage/introImage.png";
-import StyleList1 from "../../images/homepage/styleList1.png";
-import StyleList2 from "../../images/homepage/styleList2.png";
-import StyleList3 from "../../images/homepage/styleList3.png";
 import CustomerRequirementImage1 from '../../images/homepage/customer-requirement-1.svg';
 import CustomerRequirementImage2 from '../../images/homepage/customer-requirement-2.svg';
 import CustomerRequirementImage3 from '../../images/homepage/customer-requirement-3.svg';
 import CustomerRequirementImage4 from '../../images/homepage/customer-requirement-4.svg';
 import CustomerRequirementImage5 from '../../images/homepage/customer-requirement-5.svg';
 import CustomerRequirementImage6 from '../../images/homepage/customer-requirement-6.svg';
+import HomepageFooter from '../../images/homepage/homepage-footer.png';
+import IntroImage from "../../images/homepage/introImage.png";
 
+import Banner1 from '../../images/homepage/banner1.png';
+import Banner2 from '../../images/homepage/banner2.png';
 import CategoryImage1 from '../../images/homepage/category-image-1.png';
+import CategoryImage10 from '../../images/homepage/category-image-10.png';
+import CategoryImage11 from '../../images/homepage/category-image-11.png';
+import CategoryImage12 from '../../images/homepage/category-image-12.png';
 import CategoryImage2 from '../../images/homepage/category-image-2.png';
 import CategoryImage3 from '../../images/homepage/category-image-3.png';
 import CategoryImage4 from '../../images/homepage/category-image-4.png';
@@ -45,26 +41,26 @@ import CategoryImage6 from '../../images/homepage/category-image-6.png';
 import CategoryImage7 from '../../images/homepage/category-image-7.png';
 import CategoryImage8 from '../../images/homepage/category-image-8.png';
 import CategoryImage9 from '../../images/homepage/category-image-9.png';
-import CategoryImage10 from '../../images/homepage/category-image-10.png';
-import CategoryImage11 from '../../images/homepage/category-image-11.png';
-import CategoryImage12 from '../../images/homepage/category-image-12.png';
-import Banner1 from '../../images/homepage/banner1.png';
-import Banner2 from '../../images/homepage/banner2.png';
 
+import AskArchitectImage from '../../images/homepage/ask-architect-image.svg';
+import { FaRegClock } from "react-icons/fa";
 import {
     advancedSearchingRequest,
     getAllArchitecturesRequest,
     getAllStylesRequest,
+    getCustomerNeedRequest,
     // getAllToolsRequest,
     getHomeListSketchRequest,
     getHomepageBannerRequest,
-    getTopArchitectsRequest
+    getTopArchitectsRequest,
+	postCustomerNeedRequest
 } from "../../redux/controller";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
 import Login from "../login/Login";
 import Register from "../login/Register";
 import "./styles.home.scss";
-import { FaRegClock } from "react-icons/fa";
+import UserIcon from "../../images/user_icon.png";
+import moment from "moment";
 
 interface CardData {
     id: number;
@@ -183,7 +179,7 @@ const CategoryList = [
 ]
 // Phần trang chủ của trang web
 const Home = () => {
-    const { bannerHomepage, mostViewedSketchList, freeSketchList, cloneArchitecturelist, filteredSketchs, cloneStyleList, currentSearchValue, architectList } = useSelectorRoot(
+    const { latestSketchsList, mostViewedSketchList, freeSketchList, cloneArchitecturelist, filteredSketchs, cloneStyleList, currentSearchValue, architectList, customerNeedLst, totalCustomerNeedRecord, bannerHomepage } = useSelectorRoot(
         (state) => state.sketch
     ); // Lst cac ban ve
 
@@ -209,6 +205,13 @@ const Home = () => {
         window.innerWidth,
         window.innerHeight,
     ]);
+
+    const [form] = Form.useForm();
+	const [isOpenLoginModal, setIsOpenLoginModal] = useState<boolean>(false); // Biến kiểm tra đang mở modal login hay chưa
+    const [isOpenRegisterModal, setIsOpenRegisterModal] = useState<boolean>(false); // Biến kiểm tra đang mở modal registration hay chưa
+    const [isLogin, setIsLogin] = useState<boolean>(false);
+
+    const [currentCustomerNeedIndex, setCurrentCustomerNeedIndex] = useState<number>(0);
 
     useEffect(() => {
         console.log(cloneArchitecturelist);
@@ -249,14 +252,12 @@ const Home = () => {
         setCloneArchitects([...architectList, lastArchitect])
     }, [filteredSketchs, architectList])
 
-
     useEffect(() => {
         document.body.scrollTo({
             top: 0,
             behavior: "smooth"
         });
     }, [navigate]);
-
 
     useEffect(() => {
         const handleWindowResize = () => {
@@ -293,21 +294,37 @@ const Home = () => {
             size: 50,
             offset: 0,
         };
+
         dispatch(getHomeListSketchRequest());
         dispatch(getTopArchitectsRequest());
         dispatch(getAllArchitecturesRequest(bodyrequest));
         dispatch(getAllStylesRequest(bodyrequest));
         dispatch(getTopArchitectsRequest());
         dispatch(getHomepageBannerRequest());
+		dispatch(getCustomerNeedRequest(bodyrequest));
         handleSearch('64231026edf9dd11e488c250');
     }, []);
+
+	useEffect(() => {
+        console.log("currentSearchValue", currentSearchValue);
+
+    }, [currentSearchValue]);
+
+    useEffect(() => {
+        console.log("customerNeedLst", currentCustomerNeedIndex);
+        const req = {
+            size: 6,
+            offset: currentCustomerNeedIndex,
+        }
+        dispatch(getCustomerNeedRequest(req));
+
+    }, [currentCustomerNeedIndex]);
 
     const handlePagination = (direction: string, type: string) => {
         if (direction === 'prev') {
             switch (type) {
                 case 'mostView':
                     setCurrentIndexMostViewedSketch(currentIndexMostViewedSketch - 1);
-
                     break;
                 case 'free':
                     setCurrentIndexFreeSketch(currentIndexFreeSketch - 1);
@@ -331,6 +348,9 @@ const Home = () => {
                 case 'category':
                     setCurrentIndexCategory(currentIndexCategory - 1);
                     break;
+                case 'customer-need':
+                    setCurrentCustomerNeedIndex(currentCustomerNeedIndex - 6);
+                    break;
                 default:
                     break;
             }
@@ -338,7 +358,6 @@ const Home = () => {
             switch (type) {
                 case 'mostView':
                     setCurrentIndexMostViewedSketch(currentIndexMostViewedSketch + 1);
-
                     break;
                 case 'free':
                     setCurrentIndexFreeSketch(currentIndexFreeSketch + 1);
@@ -362,6 +381,9 @@ const Home = () => {
                     break;
                 case 'category':
                     setCurrentIndexCategory(currentIndexCategory + 1);
+                    break;
+                case 'customer-need':
+                    setCurrentCustomerNeedIndex(currentCustomerNeedIndex + 6);
                     break;
                 default:
                     break;
@@ -421,15 +443,6 @@ const Home = () => {
         dispatch(advancedSearchingRequest(bodyrequest));
     };
 
-    useEffect(() => {
-        console.log("currentSearchValue", currentSearchValue);
-
-    }, [currentSearchValue]);
-
-    const [isOpenLoginModal, setIsOpenLoginModal] = useState<boolean>(false); // Biến kiểm tra đang mở modal login hay chưa
-    const [isOpenRegisterModal, setIsOpenRegisterModal] = useState<boolean>(false); // Biến kiểm tra đang mở modal registration hay chưa
-    const [isLogin, setIsLogin] = useState<boolean>(false);
-
     const checkIsLogin = (val: boolean) => {
         setIsLogin(val);
     };
@@ -448,6 +461,12 @@ const Home = () => {
         setIsOpenLoginModal(false);
         setIsOpenRegisterModal(false);
     }
+
+	const onFinishAskArchitectForm = (values: any) => {
+		dispatch(postCustomerNeedRequest(values));
+		form.resetFields();
+	}
+	
     return (
         <motion.div
             className="main-home"
@@ -946,23 +965,43 @@ const Home = () => {
                 }
             </div>
             {/* Bản vẽ miễn phí */}
-            {/* <div className="tool-of-web">
+            <div className="tool-of-web">
                 <div className="title">
-                    <div>NHU CẦU KHÁCH HÀNG</div>
+                    <div style={{ cursor: 'pointer' }} onClick={() => navigate('/customer-need')}>NHU CẦU KHÁCH HÀNG</div>
+                    <div className="sub-title">
+                        <Col>
+                            <Button
+                                icon={<ArrowLeftOutlined />}
+                                className="btn-icon"
+                                onClick={() => handlePagination('prev', 'customer-need')}
+                                disabled={currentCustomerNeedIndex === 0 && true}
+                            />
+                        </Col>
 
+                        <Col>
+                            <Button
+                                icon={<ArrowRightOutlined />}
+                                className="btn-icon"
+                                onClick={() => handlePagination('next', 'customer-need')}
+                                disabled={
+                                    (currentCustomerNeedIndex + 6 >= totalCustomerNeedRecord || currentCustomerNeedIndex > 1) ? true : false
+                                }
+                            />
+                        </Col>
+                    </div>
                 </div>
                 <div className="customer-requirement-lst">
                     <div className="customer-requirement-lst-left">
-                        {(CustomerRequirementsList && CustomerRequirementsList.length > 0) && CustomerRequirementsList.slice(0, 3).map((item, index) => (
+                        {(customerNeedLst && customerNeedLst.length > 0) && customerNeedLst.slice(0, 3).map((item, index) => (
                             <div className="customer-requirement">
                                 <div className="customer-requirement-header">
                                     <div className="avatar">
                                         <div className="customer-requirement-avatar">
-                                            <img src={item.avatar} />
+                                            <img  src={item.avatar || UserIcon} />
                                         </div>
                                         <div className="customer-requirement-info">
-                                            <div className="customer-requirement-name">{item.name}</div>
-                                            <div className="customer-requirement-time"><FaRegClock />{item.time}</div>
+                                            <div className="customer-requirement-name">{item.userName}</div>
+                                            <div className="customer-requirement-time"><FaRegClock />{moment(item.createdAt).format('HH:mm - DD/MM/YYYY')}</div>
                                         </div>
                                     </div>
 
@@ -971,22 +1010,31 @@ const Home = () => {
                                     </div>
                                 </div>
                                 <div className="customer-requirement-title">{item.title}</div>
-                                <div className="customer-requirement-content">{item.content}</div>
+                                <div className="customer-requirement-content">{item.description}</div>
                                 <div className="line-break"></div>
                             </div>
                         ))}
                     </div>
                     <div className="customer-requirement-lst-left">
-                        {(CustomerRequirementsList && CustomerRequirementsList.length > 0) && CustomerRequirementsList.slice(3, 6).map((item, index) => (
-                            <div className="customer-requirement">
+                        {(customerNeedLst && customerNeedLst.length > 0) && customerNeedLst.slice(3, 6).map((item, index) => (
+                            <>
+                            {(currentCustomerNeedIndex > 0 && totalCustomerNeedRecord > 11 && index === 2)
+                                ? 
+                                <div className="customer-requirement" onClick={() => navigate('/customer-need')}>
+                                    <div className="customer-requirement-header see-more">
+                                        Xem thêm {totalCustomerNeedRecord - 11} kết quả khác
+                                    </div>
+                                </div>
+                                : 
+                                <div className="customer-requirement">
                                 <div className="customer-requirement-header">
                                     <div className="avatar">
                                         <div className="customer-requirement-avatar">
-                                            <img src={item.avatar} />
+                                            <img  src={item.avatar || UserIcon} />
                                         </div>
                                         <div className="customer-requirement-info">
-                                            <div className="customer-requirement-name">{item.name}</div>
-                                            <div className="customer-requirement-time"><FaRegClock />{item.time}</div>
+                                            <div className="customer-requirement-name">{item.userName}</div>
+                                            <div className="customer-requirement-time"><FaRegClock />{moment(item.createdAt).format('HH:mm - DD/MM/YYYY')}</div>
                                         </div>
                                     </div>
 
@@ -995,14 +1043,61 @@ const Home = () => {
                                     </div>
                                 </div>
                                 <div className="customer-requirement-title">{item.title}</div>
-                                <div className="customer-requirement-content">{item.content}</div>
+                                <div className="customer-requirement-content">{item.description}</div>
                                 <div className="line-break"></div>
-                            </div>
+                            </div> 
+                            }
+                            </>
                         ))}
                     </div>
                 </div>
+            </div>
 
-            </div> */}
+           
+
+            { isLogin && 
+            <div className="ask-the-architect">
+                <div className="ask-the-architect-left">
+                    <img src={AskArchitectImage} alt="" />
+                </div>
+
+                <div className="ask-the-architect-right">
+                    <div className="ask-the-architect-title">Bạn đang tìm Kiến trúc sư?</div>
+                    <Form 
+						className="ask-the-architect-form"
+						layout="vertical"
+						name="basic"
+						initialValues={{ remember: true }}
+						onFinish={onFinishAskArchitectForm}
+						// onFinishFailed={onFinishFailed}
+						form={form}
+                    >
+                        <Form.Item
+                            label={<div>Tiêu đề <strong>*</strong></div>}
+                            name="title"
+                            rules={[{ required: true, message: 'Vui lòng nhập tiêu đề!' }]}
+                        >
+                            <Input placeholder="Nhập tiêu đề"/>
+                        </Form.Item>
+
+                        <Form.Item
+                            label={<div>Mô tả <strong>*</strong></div>}
+                            name="description"
+                            rules={[{ required: true, message: 'Vui lòng nhập mô tả!' }]}
+                        >
+                            <Input.TextArea className="text-area-ask-architect" placeholder="Nhập mô tả"  minLength={3}/>
+                        </Form.Item>
+
+                        <Form.Item>
+                            <Button className="button-submit" type="primary" htmlType="submit">
+                                Đăng yêu cầu
+                            </Button>
+                        </Form.Item>
+                    </Form>
+                        
+                </div>
+            </div>}
+
             <div className='homepage-footer'>
                 <div className="left-footer">
                     <div className="slogan">

@@ -118,6 +118,9 @@ interface SketchState {
 
     architectList: IAuthor[];
     bannerHomepage: IBannerHomepage[];
+
+    customerNeedLst: any[];
+    totalCustomerNeedRecord: number;
 }
 
 const initState: SketchState = {
@@ -200,7 +203,9 @@ const initState: SketchState = {
     totalPurchasedSketch: 0,
     sellerInformation: undefined,
     architectList: [],
-    bannerHomepage: []
+    bannerHomepage: [],
+    customerNeedLst: [],
+    totalCustomerNeedRecord: 0,
 };
 
 const sketchSlice = createSlice({
@@ -1310,6 +1315,48 @@ const sketchSlice = createSlice({
             state.loading = false;
             // state.registerSuccess = false;
         },
+        postCustomerNeedRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        postCustomerNeedSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            notification.open({
+                message: "Thành công",
+                description: "Gửi yêu cầu thành công",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+            state.loading = false;
+            // state.registerSuccess = false;
+        },
+
+        postCustomerNeedFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+            notification.open({
+                message: "Thất bại",
+                description: "Gửi yêu cầu không thành công",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+        },
+
+        getCustomerNeedRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        getCustomerNeedSuccess(state, action: PayloadAction<any>) {
+            console.log('customer-need-lst ', action.payload);
+            state.loading = false;
+            state.customerNeedLst = action.payload.data.items;
+            state.totalCustomerNeedRecord = action.payload.data.count;
+        },
+
+        getCustomerNeedFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+        },
     },
 });
 
@@ -2358,6 +2405,41 @@ const getHomepageBanner$: RootEpic = (action$) =>
                     sketchSlice.actions.getHomepageBannerFail(err),
                 ])
             );
+        }
+        )
+    );
+    
+const postCustomerNeed$: RootEpic = (action$) => 
+    action$.pipe(
+        filter(postCustomerNeedRequest.match),
+        switchMap((re) => {
+            return UserApi.postCustomerNeed(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.postCustomerNeedSuccess(res),
+                    ];
+                }),
+                catchError((err) => [
+                    sketchSlice.actions.postCustomerNeedFail(err),
+                ])
+            );
+        })
+    );
+
+const getCustomerNeedList$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(getCustomerNeedRequest.match),
+        switchMap((re) => {
+            return UserApi.getCustomerNeedList(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.getCustomerNeedSuccess(res),
+                    ];
+                }),
+                catchError((err) => [
+                    sketchSlice.actions.getCustomerNeedFail(err),
+                ])
+            );
         })
     );
 
@@ -2418,7 +2500,9 @@ export const SketchEpics = [
     getSellerProfile$,
     editSketch$,
     getTopArchitects$,
-    getHomepageBanner$
+    getHomepageBanner$,
+    postCustomerNeed$,
+    getCustomerNeedList$,
 ];
 export const {
     getLatestSketchRequest,
@@ -2481,6 +2565,8 @@ export const {
     resetCurrentSearchValueRequest,
 
     getTopArchitectsRequest,
+    postCustomerNeedRequest,
+    getCustomerNeedRequest,
 
     getHomepageBannerRequest
 } = sketchSlice.actions;
