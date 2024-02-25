@@ -1,4 +1,4 @@
-import { Breadcrumb, Pagination } from 'antd'
+import { Breadcrumb, Modal, Pagination } from 'antd'
 import React, { useEffect } from 'react'
 import './style.customerneed.scss'
 import { useNavigate } from 'react-router-dom'
@@ -13,6 +13,8 @@ const CustomerNeed = () => {
     const dispatch = useDispatch()
     const { customerNeedLst, totalCustomerNeedRecord } = useSelectorRoot((state) => state.sketch);
     const [currentCustomerNeedIndex, setCurrentCustomerNeedIndex] = React.useState(0)
+    const [isOpenPopupCustomerNeed, setIsOpenPopupCustomerNeed] = React.useState(false)
+    const [itemPopupCustomerNeed, setItemPopupCustomerNeed] = React.useState<any>(null)
     useEffect(() => {
         getCustomerNeedList()
     }, [])
@@ -30,6 +32,8 @@ const CustomerNeed = () => {
     }
 
 
+
+
     return (
         <div className="main-customer-need">
             <Breadcrumb className="breadcrumb">
@@ -40,7 +44,12 @@ const CustomerNeed = () => {
             <div className="customer-requirement-lst">
                 <div className="customer-requirement-lst-left">
                     {(customerNeedLst && customerNeedLst.length > 0) && customerNeedLst.slice(0, 5).map((item, index) => (
-                        <div className="customer-requirement">
+                        <div className="customer-requirement"
+                            onClick={() => {
+                                setIsOpenPopupCustomerNeed(true)
+                                setItemPopupCustomerNeed(item)
+                            }}
+                        >
                             <div className="customer-requirement-header">
                                 <div className="avatar">
                                     <div className="customer-requirement-avatar">
@@ -66,7 +75,12 @@ const CustomerNeed = () => {
                     {(customerNeedLst && customerNeedLst.length > 0) && customerNeedLst.slice(5, 10).map((item, index) => (
                         <>
 
-                            <div className="customer-requirement">
+                            <div className="customer-requirement"
+                                onClick={() => {
+                                    setIsOpenPopupCustomerNeed(true)
+                                    setItemPopupCustomerNeed(item)
+                                }}
+                            >
                                 <div className="customer-requirement-header">
                                     <div className="avatar">
                                         <div className="customer-requirement-avatar">
@@ -107,6 +121,36 @@ const CustomerNeed = () => {
                 current={currentCustomerNeedIndex + 1}
                 className="pagination"
             />
+
+
+            {/* Tạo modal antd cho customer need */}
+            <Modal
+                title="Yêu cầu của khách hàng"
+                visible={isOpenPopupCustomerNeed}
+                onCancel={() => setIsOpenPopupCustomerNeed(false)}
+                footer={null}
+                className="customer-requirement-modal"
+            >
+                <div className="customer-requirement-popup">
+                    <div className="customer-requirement-header">
+                        <div className="avatar">
+                            <div className="customer-requirement-avatar">
+                                <img src={itemPopupCustomerNeed?.avatar || UserIcon} />
+                            </div>
+                            <div className="customer-requirement-info">
+                                <div className="customer-requirement-name">{itemPopupCustomerNeed?.userName}</div>
+                                <div className="customer-requirement-time"><FaRegClock />{moment(itemPopupCustomerNeed?.createdAt).format('HH:mm - DD/MM/YYYY')}</div>
+                            </div>
+                        </div>
+
+                        <div className="info">
+                            Liên hệ
+                        </div>
+                    </div>
+                    <div className="customer-requirement-title">{itemPopupCustomerNeed?.title}</div>
+                    <div className="customer-requirement-content">{itemPopupCustomerNeed?.description}</div>
+                </div>
+            </Modal>
 
         </div>
     )

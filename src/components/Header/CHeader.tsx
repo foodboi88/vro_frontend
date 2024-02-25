@@ -35,6 +35,7 @@ import {
     resetCurrentSearchValueRequest,
 } from "../../redux/controller";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
+import { API_URL } from "../../enum/api.enum";
 
 interface MyProps {
     // setIsLogout: React.Dispatch<React.SetStateAction<boolean>>
@@ -44,7 +45,7 @@ interface MyProps {
 export const CHeader = (props: MyProps) => {
     const [visible, setVisible] = useState(false); // Biến thể hiện nút thu gọn menu có đang mở hay không
     const [current, setCurrent] = useState<string>("1"); // Biến thể hiện giá trị cho nút hiện tại
-    const { accesstokenExpỉred, userName } = useSelectorRoot((state) => state.login);
+    const { accesstokenExpỉred, userName, userId } = useSelectorRoot((state) => state.login);
     const { sketchsQuantityInCart } = useSelectorRoot((state) => state.sketch);
 
 
@@ -205,7 +206,6 @@ export const CHeader = (props: MyProps) => {
             navigate("/seller/cart");
         } else if (userRole === 'user') {
             navigate("/buyer/cart");
-
         }
         else {
             navigate("/");
@@ -327,7 +327,8 @@ export const CHeader = (props: MyProps) => {
                                     </Badge>
                                 </div> */}
                                 <div className="user-info-content" onClick={() => onClickAvatar()}>
-                                    <Avatar className="avatar" src={UserIcon} />
+                                        {/* <img src={`https://api.banvebank.com.vn/users/avatar/${userId}`} alt="" /> */}
+                                        <Avatar className="avatar" src={`https://api.banvebank.com.vn/users/avatar/${userId}`} />
                                     <div className="name-and-balance">
                                         <div className="name">{userName}</div>
                                     </div>

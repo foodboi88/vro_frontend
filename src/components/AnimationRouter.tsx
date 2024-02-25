@@ -26,6 +26,7 @@ import Mission from "../pages/Mission/Mission";
 import Contact from "../pages/Contact/Contact";
 import AdvancedSeachingArchitect from "../pages/AdvancedSearchingArchitect/AdvancedSeachingArchitect";
 import CustomerNeed from "../pages/CustomerNeed/CustomerNeed";
+import ChangeAvatar from "./ChangeAvatar/ChangeAvatar";
 
 // Dùng để set animation cho các router với nhau
 const AnimationRouter = () => {
@@ -47,6 +48,7 @@ const AnimationRouter = () => {
                         <Route path="/seller/cart" element={<Cart />}></Route>
                         <Route path="/seller/profile" element={<ProfileResume />}></Route>
                         <Route path="/seller/change-password" element={<ChangePassword />}></Route>
+                        <Route path="/seller/change-avatar" element={<ChangeAvatar />}></Route>
                     </Route>
                 </Route>
 
@@ -60,6 +62,7 @@ const AnimationRouter = () => {
                         <Route path="/buyer/purchased-sketchs" element={<PurchasedSketchs />}></Route>
                         <Route path="/buyer/cart" element={<Cart />}></Route>
                         <Route path="/buyer/change-password" element={<ChangePassword />}></Route>
+                        <Route path="/buyer/change-avatar" element={<ChangeAvatar />}></Route>
                     </Route>
                 </Route>
 

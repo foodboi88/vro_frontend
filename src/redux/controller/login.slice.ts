@@ -35,6 +35,7 @@ interface LoginState {
     userPhone: string | undefined;
     accesstokenExpỉred: boolean;
     userRole: string;
+    userId: any;
 }
 
 const initState: LoginState = {
@@ -54,6 +55,7 @@ const initState: LoginState = {
     registerSuccess: false,
     accesstokenExpỉred: true,
     userRole: Utils.getValueLocalStorage("role") ? Utils.getValueLocalStorage("role") : 'user',
+    userId: Utils.getValueLocalStorage("userId")
 };
 
 const loginSlice = createSlice({
@@ -111,12 +113,15 @@ const loginSlice = createSlice({
             state,
             action: PayloadAction<{ user: any; token: string }>
         ) {
+            console.log(action.payload.user);
             Utils.setLocalStorage("userName", action.payload.user.name);
             Utils.setLocalStorage("userMail", action.payload.user.email);
             Utils.setLocalStorage("userPhone", action.payload.user.phone);
+            Utils.setLocalStorage("userId", action.payload.user.id);
             state.userName = action.payload.user.name;
             state.userMail = action.payload.user.email;
             state.userPhone = action.payload.user.phone;
+            state.userId = action.payload.user.id;
             state.loading = false;
             state.isSuccess = true;
             state.accesstokenExpỉred = false;
@@ -328,7 +333,40 @@ const loginSlice = createSlice({
                 },
             });
             state.loading = false;
-        }
+        },
+
+        changeAvatarRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        changeAvatarSuccess(state, action: PayloadAction<any>) {
+            console.log(action.payload);
+            state.loading = false;
+
+            notification.open({
+                message: 'Đổi ảnh đại diện thành công!',
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        },
+
+        changeAvatarFail(state, action: PayloadAction<any>) {
+            console.log(action);
+
+            notification.open({
+                message: action.payload.response?.message ? action.payload.response?.message : "Đổi ảnh đại diện không thành công!",
+                // description:
+                //     action.payload.response.message,
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+            state.loading = false;
+        },
     },
 });
 
@@ -422,6 +460,7 @@ const getUserInfo$: RootEpic = (action$) =>
                     console.log(res);
                     const token = res.data.accessToken;
                     const user = {
+                        id: res.data.id,
                         email: res.data.email,
                         name: res.data.name,
                         phone: res.data.phone,
@@ -430,6 +469,7 @@ const getUserInfo$: RootEpic = (action$) =>
                         gender: res.data.gender,
                         createdAt: res.data.createdAt,
                         updatedAt: res.data.updatedAt,
+
                     };
                     console.log(user);
                     return [
@@ -479,6 +519,34 @@ const changePassword$: RootEpic = (action$) => action$.pipe(
         )
     })
 )
+ 
+const changeAvatar$: RootEpic = (action$) => action$.pipe(
+    filter(changeAvatarRequest.match),
+    mergeMap((re) => {
+        // IdentityApi.login(re.payload) ?
+        console.log(re);
+
+        const {  avatar } = re.payload;
+        console.log(avatar);
+        
+        let imageData = new FormData();
+        imageData.append("file", re.payload.avatar); // chinh lai ten file anh sau
+
+        return UserApi.uploadUserAvatar(imageData).pipe(
+            mergeMap((res: any) => {
+                console.log(res);
+                return [
+                    loginSlice.actions.changeAvatarSuccess(res),
+                ];
+            }),
+            catchError(err =>
+                [loginSlice.actions.changeAvatarFail(err)]
+            )
+        );
+    })
+);
+    
+
 export const LoginEpics = [
     login$,
     clearMessage$,
@@ -487,6 +555,7 @@ export const LoginEpics = [
     getUserInfo$,
     checkActiveAccount$,
     changePassword$,
+    changeAvatar$,
 ];
 export const {
     getUserInfoRequest,
@@ -499,5 +568,6 @@ export const {
     checkAbleToLogin,
     checkActiveAccountRequest,
     changePasswordRequest,
+    changeAvatarRequest,
 } = loginSlice.actions;
 export const loginReducer = loginSlice.reducer;

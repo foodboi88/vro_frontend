@@ -13,7 +13,7 @@ const Profile = () => {
         if (window.location.pathname === "/buyer/purchased-sketchs") setActive(5);
         if (window.location.pathname === "/buyer/cart") setActive(8);
         if (window.location.pathname === "/buyer/change-password") setActive(4);
-
+        if (window.location.pathname === "/buyer/change-avatar") setActive(14);
     }, []);
 
     return (
@@ -71,6 +71,18 @@ const Profile = () => {
                     <AiOutlineLock className='profile-navbar-item-icon' />
                     <span className='profile-navbar-item-text'>Thay đổi mật khẩu</span>
                 </div>
+
+                {/* Thay đổi ảnh đại diện */}
+                <div className={'profile-navbar-item' + (active === 14 ? ' active' : '')} onClick={
+                    () => {
+                        setActive(14)
+                        navigate('/buyer/change-avatar')
+                    }
+                }>
+                    <AiOutlineSetting className='profile-navbar-item-icon' />
+                    <span className='profile-navbar-item-text'>Thay đổi ảnh đại diện</span>
+                </div>
+
                 {/* <div className={'profile-navbar-item' + (active === 2 ? ' active' : '')} onClick={() => setActive(2)}>
                     <AiOutlineSetting className='profile-navbar-item-icon' />
                     <span className='profile-navbar-item-text'>Cài đặt chung</span>

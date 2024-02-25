@@ -120,4 +120,15 @@ export default class UserApi {
         );
     }
 
+    static uploadUserAvatar(param: any): Observable<any> {
+        const api = `${UserApi.apiURL.HOST}/${this.apiURL.UPLOAD_USER_AVATAR}`;
+        return HttpClient.put(api, param, 
+            ).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
+
 }

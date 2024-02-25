@@ -61,6 +61,7 @@ export enum API_URL {
 
     GET_TOP_ARCHITECT = "architect/top-architect-and-company",
 
-    BANNER_HOMEPAGE = "custom-banners"
+    BANNER_HOMEPAGE = "custom-banners",
+    UPLOAD_USER_AVATAR = "users/avatar",
 }
 

@@ -10,7 +10,6 @@ const CDeclare = (props: MyProps) => {
   return (
     <div className='container' style={{ backgroundImage: `url(${props.imageUrl})` }}>
       <div className='content'>{props.content}</div>
-
     </div>
   )
 }

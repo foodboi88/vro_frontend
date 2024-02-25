@@ -3,7 +3,7 @@ import {
     ArrowLeftOutlined,
     ArrowRightOutlined
 } from "@ant-design/icons";
-import { Button, Col, Form, Input } from "antd";
+import { Button, Col, Form, Input, Modal } from "antd";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -212,6 +212,9 @@ const Home = () => {
     const [isLogin, setIsLogin] = useState<boolean>(false);
 
     const [currentCustomerNeedIndex, setCurrentCustomerNeedIndex] = useState<number>(0);
+
+    const [isOpenPopupCustomerNeed, setIsOpenPopupCustomerNeed] = useState<boolean>(false);
+    const [itemPopupCustomerNeed, setItemPopupCustomerNeed] = useState<any>(null);
 
     useEffect(() => {
         console.log(cloneArchitecturelist);
@@ -467,12 +470,18 @@ const Home = () => {
 		form.resetFields();
 	}
 	
+    const handleOpenPopupCustomerNeed = (item: any) => {
+        setItemPopupCustomerNeed(item);
+        setIsOpenPopupCustomerNeed(true);
+
+    }
+
     return (
         <motion.div
             className="main-home"
-            initial={{ width: 0 }}
-            animate={{ width: "100%" }}
-            exit={{ x: window.innerWidth, transition: { duration: 0.5 } }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
         >
 
 
@@ -660,11 +669,9 @@ const Home = () => {
 
             {
                 bannerHomepage[0] && bannerHomepage[0].image &&
-                <CDeclare
-                    content=""
-                    imageUrl={bannerHomepage[0].image}
-
-                />
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '20px 0' }}>
+                    <img className="home-banner-image" src={bannerHomepage[0].image} alt="" />
+                </div>
             }
 
             {/* Top kiến trúc sư */}
@@ -793,11 +800,14 @@ const Home = () => {
 
             {
                 bannerHomepage[1] && bannerHomepage[1].image &&
-                <CDeclare
-                    content=""
-                    imageUrl={bannerHomepage[1].image}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '20px 0' }}>
+                    <img className="home-banner-image" src={bannerHomepage[1].image} alt="" />
+                </div>
+                // <CDeclare
+                //     content=""
+                //     imageUrl={bannerHomepage[1].image}
 
-                />
+                // />
             }
 
             {/* Bản vẽ bán chạy */}
@@ -993,7 +1003,10 @@ const Home = () => {
                 <div className="customer-requirement-lst">
                     <div className="customer-requirement-lst-left">
                         {(customerNeedLst && customerNeedLst.length > 0) && customerNeedLst.slice(0, 3).map((item, index) => (
-                            <div className="customer-requirement">
+                            <div className="customer-requirement"
+                                onClick={() => handleOpenPopupCustomerNeed(item)}
+
+                            >
                                 <div className="customer-requirement-header">
                                     <div className="avatar">
                                         <div className="customer-requirement-avatar">
@@ -1026,7 +1039,9 @@ const Home = () => {
                                     </div>
                                 </div>
                                 : 
-                                <div className="customer-requirement">
+                                    <div className="customer-requirement"
+                                        onClick={() => handleOpenPopupCustomerNeed(item)}
+                                    >
                                 <div className="customer-requirement-header">
                                     <div className="avatar">
                                         <div className="customer-requirement-avatar">
@@ -1117,6 +1132,37 @@ const Home = () => {
                     <img src={HomepageFooter} />
                 </div>
             </div>
+
+            {/* Tạo modal antd cho customer need */}
+            <Modal
+                title="Yêu cầu của khách hàng"
+                visible={isOpenPopupCustomerNeed}
+                onCancel={() => setIsOpenPopupCustomerNeed(false)}
+                footer={null}
+                className="customer-requirement-modal"
+            >
+                <div className="customer-requirement-popup">
+                    <div className="customer-requirement-header">
+                        <div className="avatar">
+                            <div className="customer-requirement-avatar">
+                                <img src={itemPopupCustomerNeed?.avatar || UserIcon} />
+                            </div>
+                            <div className="customer-requirement-info">
+                                <div className="customer-requirement-name">{itemPopupCustomerNeed?.userName}</div>
+                                <div className="customer-requirement-time"><FaRegClock />{moment(itemPopupCustomerNeed?.createdAt).format('HH:mm - DD/MM/YYYY')}</div>
+                            </div>
+                        </div>
+
+                        <div className="info">
+                            Liên hệ
+                        </div>
+                    </div>
+                    <div className="customer-requirement-title">{itemPopupCustomerNeed?.title}</div>
+                    <div className="customer-requirement-content">{itemPopupCustomerNeed?.description}</div>
+                </div>
+            </Modal>
+
+
 
         </motion.div>
     );
