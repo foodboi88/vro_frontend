@@ -89,18 +89,18 @@ const loginSlice = createSlice({
             });
         },
         loginFail(state, action: any) {
-            console.log(action.payload.response);
-            state.loading = false;
-            state.accesstokenExpỉred = true;
+          console.log(action.payload.response);
+          state.loading = false;
+          state.accesstokenExpỉred = true;
 
-            notification.open({
-                message: "Đăng nhập không thành công",
-                description: action.payload.response.message.message,
-                onClick: () => {
-                    console.log("Notification Clicked!");
-                },
-            });
-            state.message = action.payload.message;
+          notification.open({
+            message: "Đăng nhập không thành công",
+            // description: action.payload.response.message.message,
+            onClick: () => {
+              console.log("Notification Clicked!");
+            },
+          });
+          // state.message = action.payload.message;
         },
         checkAbleToLogin(state, action: PayloadAction<string>) {
             state.statusCode = action.payload;
@@ -144,7 +144,7 @@ const loginSlice = createSlice({
             Utils.removeItemLocalStorage("userName");
             Utils.removeItemLocalStorage("userMail");
             Utils.removeItemLocalStorage("userPhone");
-            state.message = action.payload.message;
+            // state.message = action.payload.message;
             state.accesstokenExpỉred = true;
             state.loading = false;
 
@@ -236,7 +236,7 @@ const loginSlice = createSlice({
                 message: WritableDraft<MessageLogin> | undefined;
             }>
         ) {
-            state.message = action.payload.message;
+            // state.message = action.payload.message;
             state.loading = false;
             state.isSuccess = true;
         },

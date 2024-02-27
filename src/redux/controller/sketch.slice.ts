@@ -602,14 +602,14 @@ const sketchSlice = createSlice({
             });
         },
         addSketchToCartFail(state, action: PayloadAction<any>) {
-            state.loading = false;
-            notification.open({
-                message: "Thêm sản phẩm không thành công",
-                description: action.payload.response.message === 'Products-already-in-the-cart' ? 'Sản phẩm đã có trong giỏ' : 'Network error',
-                onClick: () => {
-                    console.log(action.payload.message);
-                },
-            });
+          state.loading = false;
+          // notification.open({
+          //     message: "Thêm sản phẩm không thành công",
+          //     description: action.payload.response.message === 'Products-already-in-the-cart' ? 'Sản phẩm đã có trong giỏ' : 'Network error',
+          //     onClick: () => {
+          //         console.log(action.payload.message);
+          //     },
+          // });
         },
 
         //Lấy số lượng sản phẩm trong giỏ
@@ -733,13 +733,13 @@ const sketchSlice = createSlice({
 
         sellerRegisterFail(state, action: PayloadAction<any>) {
             state.loading = false;
-            notification.open({
-                message: "Đăng ký không thành công",
-                description: 'Gửi đơn đăng ký không thành công! Đơn đăng ký của bạn đã tồn tại. Hãy chờ admin phê duyệt',
-                onClick: () => {
-                    console.log(action.payload.message);
-                },
-            });
+            // notification.open({
+            //     message: "Đăng ký không thành công",
+            //     description: 'Gửi đơn đăng ký không thành công! Đơn đăng ký của bạn đã tồn tại. Hãy chờ admin phê duyệt',
+            //     onClick: () => {
+            //         console.log(action.payload.message);
+            //     },
+            // });
         },
 
         // get list withdraw request 
@@ -757,16 +757,16 @@ const sketchSlice = createSlice({
         getWithdrawRequestsFail(state, action: PayloadAction<any>) {
             console.log(action);
             state.loading = false;
-            notification.open({
-                message: action.payload.response.message,
-                onClick: () => {
-                    console.log("Notification Clicked!");
-                },
-                style: {
-                    marginTop: 50,
-                    paddingTop: 40,
-                },
-            });
+            // notification.open({
+            //     message: action.payload.response.message,
+            //     onClick: () => {
+            //         console.log("Notification Clicked!");
+            //     },
+            //     style: {
+            //         marginTop: 50,
+            //         paddingTop: 40,
+            //     },
+            // });
 
         },
 
@@ -865,16 +865,16 @@ const sketchSlice = createSlice({
         getBillListFail(state, action: PayloadAction<any>) {
             console.log(action);
             state.loading = false;
-            notification.open({
-                message: action.payload.response.message,
-                onClick: () => {
-                    console.log("Notification Clicked!");
-                },
-                style: {
-                    marginTop: 50,
-                    paddingTop: 40,
-                },
-            });
+            // notification.open({
+            //     message: action.payload.response.message,
+            //     onClick: () => {
+            //         console.log("Notification Clicked!");
+            //     },
+            //     style: {
+            //         marginTop: 50,
+            //         paddingTop: 40,
+            //     },
+            // });
 
         },
 
@@ -892,16 +892,16 @@ const sketchSlice = createSlice({
         getDetailBillFail(state, action: PayloadAction<any>) {
             console.log(action);
             state.loading = false;
-            notification.open({
-                message: action.payload.response.message,
-                onClick: () => {
-                    console.log("Notification Clicked!");
-                },
-                style: {
-                    marginTop: 50,
-                    paddingTop: 40,
-                },
-            });
+            // notification.open({
+            //     message: action.payload.response.message,
+            //     onClick: () => {
+            //         console.log("Notification Clicked!");
+            //     },
+            //     style: {
+            //         marginTop: 50,
+            //         paddingTop: 40,
+            //     },
+            // });
 
         },
 
@@ -920,16 +920,16 @@ const sketchSlice = createSlice({
         getSketchByArchitectFail(state, action: PayloadAction<any>) {
             console.log(action);
             state.loading = false;
-            notification.open({
-                message: action.payload.response.message === "Not found" ? "Không tìm thấy bản vẽ nào" : action.payload.response.message,
-                onClick: () => {
-                    console.log("Notification Clicked!");
-                },
-                style: {
-                    marginTop: 50,
-                    paddingTop: 40,
-                },
-            });
+            // notification.open({
+            //     message: action.payload.response.message === "Not found" ? "Không tìm thấy bản vẽ nào" : action.payload.response.message,
+            //     onClick: () => {
+            //         console.log("Notification Clicked!");
+            //     },
+            //     style: {
+            //         marginTop: 50,
+            //         paddingTop: 40,
+            //     },
+            // });
 
         },
 
@@ -974,13 +974,13 @@ const sketchSlice = createSlice({
         getOverviewStatisticDayFail(state, action: PayloadAction<any>) {
             state.loading = false;
             if (action.payload.status === 400 || action.payload.status === 404) {
-                notification.open({
-                    message: action.payload.response.message,
-                    onClick: () => {
-                        console.log("Notification Clicked!");
-                    },
+                // notification.open({
+                //     message: action.payload.response.message,
+                //     onClick: () => {
+                //         console.log("Notification Clicked!");
+                //     },
 
-                });
+                // });
             }
         },
 
@@ -999,16 +999,16 @@ const sketchSlice = createSlice({
         getSketchStatisticFail(state, action: PayloadAction<any>) {
             console.log(action);
             state.loading = false;
-            notification.open({
-                message: action.payload.response.message,
-                onClick: () => {
-                    console.log("Notification Clicked!");
-                },
-                style: {
-                    marginTop: 50,
-                    paddingTop: 40,
-                },
-            });
+            // notification.open({
+            //     message: action.payload.response.message,
+            //     onClick: () => {
+            //         console.log("Notification Clicked!");
+            //     },
+            //     style: {
+            //         marginTop: 50,
+            //         paddingTop: 40,
+            //     },
+            // });
 
         },
 
@@ -1027,12 +1027,12 @@ const sketchSlice = createSlice({
         getOverviewStatisticMonthFail(state, action: PayloadAction<any>) {
             state.loading = false;
             if (action.payload.status === 400 || action.payload.status === 404) {
-                notification.open({
-                    message: action.payload.response.message,
-                    onClick: () => {
-                        console.log("Notification Clicked!");
-                    },
-                });
+                // notification.open({
+                //     message: action.payload.response.message,
+                //     onClick: () => {
+                //         console.log("Notification Clicked!");
+                //     },
+                // });
             }
         },
 
@@ -1050,12 +1050,12 @@ const sketchSlice = createSlice({
         getOverviewStatisticQuarterFail(state, action: PayloadAction<any>) {
             state.loading = false;
             if (action.payload.status === 400 || action.payload.status === 404) {
-                notification.open({
-                    message: action.payload.response.message,
-                    onClick: () => {
-                        console.log("Notification Clicked!");
-                    },
-                });
+                // notification.open({
+                //     message: action.payload.response.message,
+                //     onClick: () => {
+                //         console.log("Notification Clicked!");
+                //     },
+                // });
             }
         },
 
@@ -1073,12 +1073,12 @@ const sketchSlice = createSlice({
         getOverviewStatisticYearFail(state, action: PayloadAction<any>) {
             state.loading = false;
             if (action.payload.status === 400 || action.payload.status === 404) {
-                notification.open({
-                    message: action.payload.response.message,
-                    onClick: () => {
-                        console.log("Notification Clicked!");
-                    },
-                });
+                // notification.open({
+                //     message: action.payload.response.message,
+                //     onClick: () => {
+                //         console.log("Notification Clicked!");
+                //     },
+                // });
             }
         },
 
@@ -1095,14 +1095,14 @@ const sketchSlice = createSlice({
 
         getOverviewStatisticUserDayFail(state, action: PayloadAction<any>) {
             state.loading = false;
-            if (action.payload.status === 400 || action.payload.status === 404) {
-                notification.open({
-                    message: action.payload.message,
-                    onClick: () => {
-                        console.log("Notification Clicked!");
-                    },
-                });
-            }
+            // if (action.payload.status === 400 || action.payload.status === 404) {
+            //     notification.open({
+            //         message: action.payload.message,
+            //         onClick: () => {
+            //             console.log("Notification Clicked!");
+            //         },
+            //     });
+            // }
         },
 
         // Get overview statistic seller day
@@ -1119,14 +1119,14 @@ const sketchSlice = createSlice({
 
         getOverviewStatisticSellerDayFail(state, action: PayloadAction<any>) {
             state.loading = false;
-            if (action.payload.status === 400 || action.payload.status === 404) {
-                notification.open({
-                    message: action.payload.message,
-                    onClick: () => {
-                        console.log("Notification Clicked!");
-                    },
-                });
-            }
+            // if (action.payload.status === 400 || action.payload.status === 404) {
+            //     notification.open({
+            //         message: action.payload.message,
+            //         onClick: () => {
+            //             console.log("Notification Clicked!");
+            //         },
+            //     });
+            // }
         },
 
 
@@ -1147,12 +1147,12 @@ const sketchSlice = createSlice({
         getLstBankFail(state, action: PayloadAction<any>) {
             state.loading = false;
             if (action.payload.status === 400 || action.payload.status === 404) {
-                notification.open({
-                    message: action.payload.response.message,
-                    onClick: () => {
-                        console.log("Notification Clicked!");
-                    },
-                });
+                // notification.open({
+                //     message: action.payload.response.message,
+                //     onClick: () => {
+                //         console.log("Notification Clicked!");
+                //     },
+                // });
             }
         },
 
@@ -1170,12 +1170,12 @@ const sketchSlice = createSlice({
         getAccountBankNameFail(state, action: PayloadAction<any>) {
             state.loading = false;
             if (action.payload.status === 400 || action.payload.status === 404) {
-                notification.open({
-                    message: action.payload.response.message,
-                    onClick: () => {
-                        console.log("Notification Clicked!");
-                    },
-                });
+                // notification.open({
+                //     message: action.payload.response.message,
+                //     onClick: () => {
+                //         console.log("Notification Clicked!");
+                //     },
+                // });
             }
         },
 
@@ -1194,13 +1194,13 @@ const sketchSlice = createSlice({
             state.loading = false;
 
             if (action.payload.status === 400 || action.payload.status === 404) {
-                notification.error({
-                    message: 'Lỗi tải dữ liệu',
-                    description: action.payload.response.message,
-                    onClick: () => {
-                        console.log("Notification Clicked!");
-                    },
-                });
+                // notification.error({
+                //     message: 'Lỗi tải dữ liệu',
+                //     description: action.payload.response.message,
+                //     onClick: () => {
+                //         console.log("Notification Clicked!");
+                //     },
+                // });
             }
         },
 
