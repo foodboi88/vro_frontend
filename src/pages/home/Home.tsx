@@ -222,7 +222,7 @@ const Home = () => {
         cloneArchitecturelist && cloneArchitecturelist.length > 0 && cloneArchitecturelist.map((item, index) => {
             tmp.push({
                 ...item,
-                imageUrl: CategoryList[index].imageUrl,
+                imageUrl: CategoryList[index]?.imageUrl,
             })
         })
         setCategoryLst(tmp);
