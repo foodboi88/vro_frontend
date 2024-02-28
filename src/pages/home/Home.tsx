@@ -252,6 +252,10 @@ const Home = () => {
             linkImage: SeeMore,
             id: 'last',
         }
+
+        console.log('architectList', architectList);
+
+
         setCloneArchitects([...architectList, lastArchitect])
     }, [filteredSketchs, architectList])
 
@@ -714,9 +718,10 @@ const Home = () => {
                                     key={card.id}
                                 >
                                     <CStyleCard
-                                        imageUrl={card.linkImage}
+                                        type="architect"
+                                        imageUrl={``}
                                         name={card.name || ''}
-                                        id={card.name}
+                                        id={card.id}
                                     />
                                 </div>
                             ))

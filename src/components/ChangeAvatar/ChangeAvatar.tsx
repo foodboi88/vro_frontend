@@ -57,8 +57,17 @@ const ChangeAvatar = () => {
             >
                 <Form.Item
                     label="Ảnh đại diện cũ"
+                    className='change-avatar-img-item'
                 >
-                    <img src={`https://api.banvebank.com.vn/users/avatar/${userId}`} alt='avatar' className='change-avatar-img' />
+                    <img
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            borderRadius: '50%',
+                            objectFit: 'cover'
+                        }}
+
+                        src={`https://api.banvebank.com.vn/users/avatar/${userId}`} alt='avatar' className='change-avatar-img' />
                 </Form.Item>
 
                 <Form.Item

@@ -65,8 +65,8 @@ export const CHeader = (props: MyProps) => {
     const [isShowNavibar, setIsShowNavibar] = useState<boolean>(false); // Biến kiểm tra xem user có phải là admin hay không
 
     useEffect(() => {
-        console.log(current);
-    }, [current]);
+        console.log('userid', userId);
+    }, [userId]);
 
     useEffect(() => {
         const handleWindowResize = () => {

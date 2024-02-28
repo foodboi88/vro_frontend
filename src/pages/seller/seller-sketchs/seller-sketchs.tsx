@@ -39,17 +39,9 @@ const SellerSketchs = () => {
     )
 
     useEffect(() => {
-        dispatch(
-
-            getSketchByArchitectRequest(currentSearchValue)
-        )
-        dispatch(
-
-            getSketchStatisticRequest()
-        )
+        dispatch(getSketchByArchitectRequest(currentSearchValue))
+        dispatch(getSketchStatisticRequest())
     }, [])
-
-
 
     const columns: ColumnType<any>[] = [
         {

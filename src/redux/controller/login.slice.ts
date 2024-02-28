@@ -67,26 +67,29 @@ const loginSlice = createSlice({
             // console.log("da chui vao",state.loading)
         },
         loginSuccess(state, action: PayloadAction<any>) {
-            Utils.setLocalStorage("token", action.payload.accessToken);
-            Utils.setLocalStorage("refresh_token", action.payload.refreshToken);
-            Utils.setLocalStorage("role", action.payload.role);
-            console.log(action.payload.accessToken);
+          Utils.setLocalStorage("token", action.payload.accessToken);
+          Utils.setLocalStorage("refresh_token", action.payload.refreshToken);
+          Utils.setLocalStorage("role", action.payload.role);
+          console.log(action.payload.accessToken);
 
-            state.tokenLogin = action?.payload?.accessToken;
-            state.loading = false;
-            state.isSuccess = true;
-            state.accesstokenExpỉred = false;
-            state.userRole = action.payload.role
-            notification.open({
-                message: "Đăng nhập thành công",
-                onClick: () => {
-                    console.log("Notification Clicked!");
-                },
-                style: {
-                    marginTop: 50,
-                    paddingTop: 40,
-                },
-            });
+          state.tokenLogin = action?.payload?.accessToken;
+          state.loading = false;
+          state.isSuccess = true;
+          state.accesstokenExpỉred = false;
+          state.userRole = action.payload.role;
+          notification.open({
+            message: "Đăng nhập thành công",
+            onClick: () => {
+              console.log("Notification Clicked!");
+            },
+            style: {
+              marginTop: 50,
+              paddingTop: 40,
+            },
+          });
+          // setTimeout(() => {
+          //   window.location.reload();
+          // }, 1000);
         },
         loginFail(state, action: any) {
           console.log(action.payload.response);

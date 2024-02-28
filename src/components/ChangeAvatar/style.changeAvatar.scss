@@ -59,5 +59,17 @@
             }
 
         }
+
+        .change-avatar-img-item{
+            .change-avatar-img{
+                border-radius: 50%;
+                object-fit: cover;
+                margin-bottom: 1em;
+            }
+
+        }
+
+
     }
+   
 }

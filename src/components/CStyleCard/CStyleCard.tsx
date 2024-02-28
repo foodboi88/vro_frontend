@@ -9,11 +9,13 @@ import ImageNotFound from "../../images/Image_not_available.png";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
 import { dispatch } from "rxjs/internal/observable/pairs";
 import { advancedSearchingRequest } from "../../redux/controller";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 interface props {
     imageUrl?: string;
     name?: string;
     id?: string
+    type?: string;
 }
 
 interface DATA_TRANFER {
@@ -28,7 +30,7 @@ const CStyleCard = (props: props) => {
     ); // Lst cac ban ve
     const navigate = useNavigate();
     const dispatch = useDispatchRoot();
-
+    const [isErrorImage, setIsErrorImage] = useState(false);
     const handleClick = () => {
         console.log(props.id);
         if (!props.id) return;
@@ -40,21 +42,56 @@ const CStyleCard = (props: props) => {
     };
 
     useEffect(() => {
-        console.log(props);
+        if (props.type === 'architect' && props.id) {
+            console.log('useEffect', props);
 
+            getImage(props);
+        }
     }, [props]);
 
+    const getImage = async (props: any) => {
+        console.log('getimageUrl', props.imageUrl);
+
+        await axios.get(`https://api.banvebank.com.vn/users/avatar/${props.id}`)
+            .then((response: any) => {
+                console.log('getimage', response);
+                setIsErrorImage(false);
+            })
+            .catch((error: any) => {
+                console.log('getimageError', error);
+                setIsErrorImage(true);
+            });
+    }
+
     return (
-        <div
-            style={{ backgroundImage: props.imageUrl ? `url(${props.imageUrl})` : `url(${ImageNotFound})` }}
-            onClick={() => {
-                if (!props.id) return;
-                handleClick()
-            }}
-            className="style-card-main"
-        >
-            <div className="style-card-title">{props.name}</div>
-        </div>
+        <>
+            {props.type !== 'architect'
+                ?
+                <div
+                    onClick={() => {
+                        if (!props.id) return;
+                        handleClick()
+                    }}
+                    className="style-card-main"
+                >
+                    <img style={{ objectFit: 'cover' }} src={props.imageUrl ? props.imageUrl : ImageNotFound} alt="" />
+                    <div className="style-card-title">{props.name}</div>
+                </div>
+                :
+                <div
+                    onClick={() => {
+                        if (!props.id) return;
+                        handleClick()
+                    }}
+                    className="style-card-main"
+                >
+                    <img src={!isErrorImage ? `https://api.banvebank.com.vn/users/avatar/${props.id}` : ImageNotFound} alt="" />
+                    <div className="style-card-title">{props.name}</div>
+                </div>
+
+            }
+        </>
+
     );
 };
 
