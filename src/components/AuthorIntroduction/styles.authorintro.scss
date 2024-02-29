@@ -12,7 +12,14 @@
         gap: 1em;
         align-items: center;
 
-        .avatar {}
+        .avatar {
+            img{
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                object-fit: fill;
+            }
+        }
 
         .name-status-contact {
             display: flex;

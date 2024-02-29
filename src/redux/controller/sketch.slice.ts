@@ -1633,7 +1633,7 @@ const getAuthorIntroductionById$: RootEpic = (action$) =>
             return SketchsApi.getAuthorById(re.payload).pipe(
                 mergeMap((res: any) => {
                     console.log(res);
-
+                    res.data = { ...res.data, id: re.payload };
                     return [
                         sketchSlice.actions.getAuthorIntroductionByIdSuccess(
                             res.data

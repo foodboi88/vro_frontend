@@ -53,7 +53,7 @@ const CustomerNeed = () => {
                             <div className="customer-requirement-header">
                                 <div className="avatar">
                                     <div className="customer-requirement-avatar">
-                                        <img src={item.avatar || UserIcon} />
+                                        <img src={`https://api.banvebank.com.vn/users/avatar/${item.userId}`} alt="" />
                                     </div>
                                     <div className="customer-requirement-info">
                                         <div className="customer-requirement-name">{item.userName}</div>
@@ -84,7 +84,7 @@ const CustomerNeed = () => {
                                 <div className="customer-requirement-header">
                                     <div className="avatar">
                                         <div className="customer-requirement-avatar">
-                                            <img src={item.avatar || UserIcon} />
+                                            <img src={`https://api.banvebank.com.vn/users/avatar/${item.userId}`} alt="" />
                                         </div>
                                         <div className="customer-requirement-info">
                                             <div className="customer-requirement-name">{item.userName}</div>
@@ -117,6 +117,11 @@ const CustomerNeed = () => {
                     }
                     dispatch(getCustomerNeedRequest(req))
                     setCurrentCustomerNeedIndex(page - 1)
+                    // Scroll to top
+                    document.body.scrollTo({
+                        top: 0,
+                        behavior: "smooth"
+                    });
                 }}
                 current={currentCustomerNeedIndex + 1}
                 className="pagination"

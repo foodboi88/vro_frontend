@@ -85,7 +85,12 @@ const CStyleCard = (props: props) => {
                     }}
                     className="style-card-main"
                 >
-                    <img src={!isErrorImage ? `https://api.banvebank.com.vn/users/avatar/${props.id}` : ImageNotFound} alt="" />
+                    {props.id === 'last' ?
+                        <img src={props.imageUrl} alt="" />
+                        :
+                        <img src={!isErrorImage ? `https://api.banvebank.com.vn/users/avatar/${props.id}` : ImageNotFound} alt="" />
+
+                    }
                     <div className="style-card-title">{props.name}</div>
                 </div>
 

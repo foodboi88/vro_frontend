@@ -159,6 +159,11 @@ const DetailSketch = () => {
         // console.log(isShowAddToCart);
     }, [isShowAddToCart])
 
+    useEffect(() => {
+        console.log("authorIntroduction ", authorIntroduction);
+
+    }, [authorIntroduction]);
+
     const handleNextCard = () => {
         setCurrentIndex(currentIndex + 1);
     };
@@ -419,6 +424,7 @@ const DetailSketch = () => {
                         phone={authorIntroduction.phone}
                         totalProduct={authorIntroduction.totalProduct}
                         totalRating={authorIntroduction.totalRating}
+                        id={authorIntroduction.id}
                     />
                 </div>
             )}

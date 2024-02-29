@@ -327,6 +327,7 @@ const Home = () => {
 
     }, [currentCustomerNeedIndex]);
 
+
     const handlePagination = (direction: string, type: string) => {
         if (direction === 'prev') {
             switch (type) {
@@ -717,12 +718,20 @@ const Home = () => {
                                     }}
                                     key={card.id}
                                 >
-                                    <CStyleCard
-                                        type="architect"
-                                        imageUrl={``}
-                                        name={card.name || ''}
-                                        id={card.id}
-                                    />
+                                    {card.id === 'last' ?
+                                        <CStyleCard
+                                            type="architect"
+                                            imageUrl={card.linkImage || ''}
+                                            name={card.name || ''}
+                                            id={card.id}
+                                        /> :
+                                        <CStyleCard
+                                            type="architect"
+                                            imageUrl={``}
+                                            name={card.name || ''}
+                                            id={card.id}
+                                        />    
+                                    }
                                 </div>
                             ))
                     }
@@ -1015,7 +1024,7 @@ const Home = () => {
                                 <div className="customer-requirement-header">
                                     <div className="avatar">
                                         <div className="customer-requirement-avatar">
-                                            <img  src={item.avatar || UserIcon} />
+                                            <img src={`https://api.banvebank.com.vn/users/avatar/${item.userId}`} alt="" />
                                         </div>
                                         <div className="customer-requirement-info">
                                             <div className="customer-requirement-name">{item.userName}</div>
@@ -1050,7 +1059,7 @@ const Home = () => {
                                 <div className="customer-requirement-header">
                                     <div className="avatar">
                                         <div className="customer-requirement-avatar">
-                                            <img  src={item.avatar || UserIcon} />
+                                                    <img src={`https://api.banvebank.com.vn/users/avatar/${item.userId}`} alt="" />
                                         </div>
                                         <div className="customer-requirement-info">
                                             <div className="customer-requirement-name">{item.userName}</div>

@@ -18,7 +18,7 @@ const CAuthorIntroduction = (props: IAuthor) => {
         <div className="main-intro">
             <div className="left-side">
                 <div className="avatar">
-                    <img src={Avatar} />
+                    <img src={`https://api.banvebank.com.vn/users/avatar/${props.id}`} alt="" />
                 </div>
                 <div className="name-status-contact">
                     <div className="name">{props.name}</div>

@@ -107,6 +107,7 @@ const AuthorPage = () => {
                         totalProduct={authorIntroduction.totalProduct}
                         totalRating={authorIntroduction.totalRating}
                         zalo={authorIntroduction.zalo}
+                        id={authorIntroduction.id}
                     />
                 )}
                 <div className="horizontal-navbar">
