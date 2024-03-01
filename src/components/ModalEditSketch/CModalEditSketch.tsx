@@ -19,19 +19,11 @@ type LayoutType = Parameters<typeof Form>[0]['layout'];
 
 const CModalEditSketch = (props: MyProps) => {
     const [formLayout, setFormLayout] = useState<LayoutType>('horizontal');
-
-
-    const { toolList, architectureList } = useSelectorRoot((state) => state.sketch); // Lst cac ban ve        
+    const [imageUploadLst, setImageUploadLst] = useState([]); // Biến lưu giá trị ảnh bản vẽ đã upload
+    const { styleList, architectureList } = useSelectorRoot((state) => state.sketch); // Lst cac ban ve        
     const dispatch = useDispatchRoot();
-
     const [form] = Form.useForm();
-
-
-
     const formItemLayout = formLayout === 'horizontal' ? { labelCol: { span: 6 }, wrapperCol: { span: 18 } } : null;
-
-
-
     const [windowSize, setWindowSize] = useState([
         window.innerWidth,
         window.innerHeight,
@@ -99,7 +91,7 @@ const CModalEditSketch = (props: MyProps) => {
                         </Form.Item>
 
                         <Form.Item
-                            label="Kiến trúc"
+                            label="Danh mục"
                             name="productTypeOfArchitecture"
                         >
                             <Radio.Group
@@ -108,19 +100,15 @@ const CModalEditSketch = (props: MyProps) => {
                        
                             />
                         </Form.Item>
-                        
+
                         <Form.Item
-                        label="Giá"
-                            name="price"
+                            label="Phong cách"
+                            name="productDesignStyles"
                         >
-
-                            <Input
-                                type="number"
-                                className="search-input"
-                                placeholder="Nhập phí download"
-                                min={0}
-                                maxLength={TEXT_INPUT.MAX_LENGTH}
-
+                            <Radio.Group
+                                className="lst-category"
+                                options={styleList}
+                       
                             />
                         </Form.Item>
 
