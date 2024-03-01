@@ -17,7 +17,7 @@ import { IAuthor } from "../../common/user.interface";
 import CStyleCard from "../../components/CStyleCard/CStyleCard";
 import CDeclare from "../../components/Declare/CDeclare";
 import CProductCard from "../../components/ProductCard/CProductCard";
-import CEO from '../../images/homepage/CEO.png';
+import CEO from '../../images/homepage/CEO.jpg';
 import CustomerRequirementImage1 from '../../images/homepage/customer-requirement-1.svg';
 import CustomerRequirementImage2 from '../../images/homepage/customer-requirement-2.svg';
 import CustomerRequirementImage3 from '../../images/homepage/customer-requirement-3.svg';

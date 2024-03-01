@@ -102,6 +102,12 @@
                 display: flex;
                 margin-top: 20px;
 
+                img{
+                    width: 80px;
+                    height: 80px;
+                    border-radius: 50%;
+                    object-fit: fill;
+                }
 
                 .more {
                     margin-left: 20px;
