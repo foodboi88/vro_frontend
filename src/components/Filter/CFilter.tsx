@@ -4,7 +4,7 @@ import {
 } from "@ant-design/icons";
 import { Form, Radio } from "antd";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
     advancedSearchingRequest,
     getAllFilterCriteriasRequest
@@ -52,32 +52,26 @@ const CFilter = (props: props) => {
         currentSearchValue,
     } = useSelectorRoot((state) => state.sketch);
     const [form] = Form.useForm();
-    const [selectedTool, setSelectedTool] = useState<string>('');
-    const [selectedArchitecture, setSelectedArchitecture] = useState<string>('');
-    const [selectedStyle, setSelectedStyle] = useState<string>('');
 
     useEffect(() => {
         dispatch(getAllFilterCriteriasRequest());
+        dispatch(advancedSearchingRequest(currentSearchValue));
     }, []);
 
     const handleSearch = (param: DATA_TRANFER) => {
         console.log(param);
         const bodyrequest = {
-            tool: param.target === "tool" ? param.value : selectedTool,
+            tool: param.target === "tool" ? param.value : currentSearchValue.tool,
             architecture:
-                param.target === "architecture"
-                    ?
-                    param.value
-                    : selectedArchitecture,
-            style: param.target === "style" ? param.value : selectedStyle,
+                param.target === "architecture" ?
+                    param.value :
+                    currentSearchValue.architecture,
+            style: param.target === "style" ? param.value : currentSearchValue.style,
             name: currentSearchValue.name, // Lay ra gia tri text luu trong redux
-            authorId: props.authorId ? props.authorId : ''
+            authorId: props.authorId ? props.authorId : currentSearchValue.name
         };
 
-        if (param.target === "tool") setSelectedTool(param.value);
-        if (param.target === "architecture")
-            setSelectedArchitecture(param.value);
-        if (param.target === "style") setSelectedStyle(param.value);
+
         console.log(bodyrequest);
 
         console.log(bodyrequest);
@@ -116,7 +110,7 @@ const CFilter = (props: props) => {
                         <div className="icon">
                             <HomeOutlined />
                         </div>
-                        <div className="text">Kiến trúc</div>
+                        <div className="text">Danh mục</div>
                     </div>
                     <Radio.Group
                         onChange={(event) =>

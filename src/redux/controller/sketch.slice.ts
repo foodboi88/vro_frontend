@@ -77,7 +77,7 @@ interface SketchState {
     commentList?: any[];
     filteredSketchs: IFilteredSketch[];
     filteredAuthors?: IUser[];
-    currentSearchValue: any;
+    currentSearchValue: ICurrentSearchValue;
     checkWhetherSketchUploaded: number; // Là số chẵn thì chắc chắn file đó đã đc up cả ảnh + file + content thành công
     ratesLst: IRates | undefined;
     productsFile: string | undefined;
@@ -470,7 +470,7 @@ const sketchSlice = createSlice({
                 style: action.payload.style
                     ? action.payload.style
                     : state.currentSearchValue.style,
-                name: action.payload.name
+                name: (action.payload.name !== null || action.payload.name !== undefined) // Có thể sẽ truyền giá trị string rỗng, mà string rỗng JS coi là falsy
                     ? action.payload.name
                     : state.currentSearchValue.name,
                 tool: action.payload.tool
@@ -602,14 +602,14 @@ const sketchSlice = createSlice({
             });
         },
         addSketchToCartFail(state, action: PayloadAction<any>) {
-          state.loading = false;
-          // notification.open({
-          //     message: "Thêm sản phẩm không thành công",
-          //     description: action.payload.response.message === 'Products-already-in-the-cart' ? 'Sản phẩm đã có trong giỏ' : 'Network error',
-          //     onClick: () => {
-          //         console.log(action.payload.message);
-          //     },
-          // });
+            state.loading = false;
+            // notification.open({
+            //     message: "Thêm sản phẩm không thành công",
+            //     description: action.payload.response.message === 'Products-already-in-the-cart' ? 'Sản phẩm đã có trong giỏ' : 'Network error',
+            //     onClick: () => {
+            //         console.log(action.payload.message);
+            //     },
+            // });
         },
 
         //Lấy số lượng sản phẩm trong giỏ
@@ -2408,8 +2408,8 @@ const getHomepageBanner$: RootEpic = (action$) =>
         }
         )
     );
-    
-const postCustomerNeed$: RootEpic = (action$) => 
+
+const postCustomerNeed$: RootEpic = (action$) =>
     action$.pipe(
         filter(postCustomerNeedRequest.match),
         switchMap((re) => {

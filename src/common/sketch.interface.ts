@@ -120,10 +120,10 @@ export interface IUploadSketchRequest {
     id?: string
 };
 
-export interface IBannerHomepage{
+export interface IBannerHomepage {
     type: number
     image: string
     createdAt: string
     updatedAt: string
     id: string
-  }
+}
