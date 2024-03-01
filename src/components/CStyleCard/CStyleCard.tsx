@@ -42,7 +42,7 @@ const CStyleCard = (props: props) => {
     };
 
     useEffect(() => {
-        if (props.type === 'architect' && props.id) {
+        if (props.type === 'architect' && props.id && props.id !== 'last') {
             console.log('useEffect', props);
 
             getImage(props);
