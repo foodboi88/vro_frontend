@@ -1,21 +1,16 @@
 /* eslint-disable new-parens */
 import HttpClient from "../http-client";
-import SYSTEM_CONSTANTS from "../../common/constants";
 
-import {
-    GetAllMemberReq,
-    GetAllMembersWithRoleReq,
-} from "../../common/define-type";
+import axios from "axios";
 import { Observable } from "rxjs/internal/Observable";
 import { catchError, map } from "rxjs/operators";
-import { API_URL } from "../../enum/api.enum";
 import {
     ICurrentSearchValue,
     IReqGetLatestSketchs,
     IUploadSketchRequest,
 } from "../../common/sketch.interface";
-import axios from "axios";
 import Utils from "../../common/utils";
+import { API_URL } from "../../enum/api.enum";
 
 export default class SketchsApi {
     static apiURL = API_URL;
@@ -126,7 +121,7 @@ export default class SketchsApi {
 
     static getSketchListByAuthorId(authorId: string): Observable<any> {
         const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.GET_SKETCH_LIST_BY_AUTHOR_ID}?shopId=${authorId}&size=40&offset=0`;
-        return HttpClient.get(api).pipe( 
+        return HttpClient.get(api).pipe(
             map(
                 (res) => (res as any) || null,
                 catchError((error) => new Observable())
@@ -219,16 +214,18 @@ export default class SketchsApi {
         const finalBodyrequest = {
             title: bodyrequest.title,
             content: bodyrequest.content,
-            price: bodyrequest.price,
-            productDesignTools: [
-              bodyrequest.productDesignTools
-            ],
+            // productDesignTools: [
+            //     bodyrequest.productDesignTools
+            // ],
             productTypeOfArchitecture: [
-              bodyrequest.productTypeOfArchitecture
+                bodyrequest.productTypeOfArchitecture
             ],
-          }
+            productDesignStyle: [
+                bodyrequest.productDesignStyles
+            ]
+        }
         const api = `${SketchsApi.apiURL.HOST}/${this.apiURL.EDIT_PRODUCT}/${bodyrequest.id}`;
-        return HttpClient.put(api,finalBodyrequest).pipe(
+        return HttpClient.put(api, finalBodyrequest).pipe(
             map(
                 (res) => (res as any) || null,
                 catchError((error) => new Observable())

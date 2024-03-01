@@ -137,14 +137,15 @@ const SellerSketchs = () => {
         setIdSketch(record.id)
     }
 
-    const handleOpenEdit = (record: any) => {
+    const handleOpenEdit = async (record: any) => {
         setOpenModalEdit(true);
         console.log(record)
-        const selectedSketch: IUploadSketchRequest =  {
+                const selectedSketch: IUploadSketchRequest =  {
             title: record.title,
             price: record.price,
             content: record.content,
             productTypeOfArchitecture: record.typeOfArchitecture.id,
+            productDesignStyles: record.designStyle.id,
             id: record.id
         };
         setEditSketch(selectedSketch);
