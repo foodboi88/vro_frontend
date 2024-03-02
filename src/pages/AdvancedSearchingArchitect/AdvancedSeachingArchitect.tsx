@@ -9,6 +9,7 @@ import CProductCard from "../../components/ProductCard/CProductCard";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
 import "./styles.advancedsearchingarchitect.scss";
 import { IAuthor } from "../../common/user.interface";
+import CStyleCard from "../../components/CStyleCard/CStyleCard";
 
 const AdvancedSeachingArchitect = () => {
     const navigate = useNavigate();
@@ -100,15 +101,20 @@ const AdvancedSeachingArchitect = () => {
                                     span={spanCol}
                                     key={card.id}
                                 >
-                                    <CProductCard
-                                        imageUrl={card.linkImage}
-                                        title={card.name || ''}
-                                        view={0}
-                                        price={0}
-                                        // idTool={card.typeOfArchitectureId || ''}
-
-                                    // type={card.}
-                                    />
+                                    {card.id === 'last' ?
+                                        <CStyleCard
+                                            type="architect"
+                                            imageUrl={card.linkImage || ''}
+                                            name={card.name || ''}
+                                            id={card.id}
+                                        /> :
+                                        <CStyleCard
+                                            type="architect"
+                                            imageUrl={``}
+                                            name={card.name || ''}
+                                            id={card.id}
+                                        />    
+                                    }
                                 </Col>
                             ))}
                     </Row>
