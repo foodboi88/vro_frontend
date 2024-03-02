@@ -24,8 +24,8 @@ import CustomerRequirementImage3 from '../../images/homepage/customer-requiremen
 import CustomerRequirementImage4 from '../../images/homepage/customer-requirement-4.svg';
 import CustomerRequirementImage5 from '../../images/homepage/customer-requirement-5.svg';
 import CustomerRequirementImage6 from '../../images/homepage/customer-requirement-6.svg';
-import HomepageFooter from '../../images/homepage/homepage-footer.png';
-import IntroImage from "../../images/homepage/introImage.png";
+import HomepageFooter from '../../images/homepage/homepage-footer.svg';
+import IntroImage from "../../images/homepage/introImage.svg";
 
 import Banner1 from '../../images/homepage/banner1.png';
 import Banner2 from '../../images/homepage/banner2.png';
@@ -33,6 +33,8 @@ import CategoryImage1 from '../../images/homepage/category-image-1.png';
 import CategoryImage10 from '../../images/homepage/category-image-10.png';
 import CategoryImage11 from '../../images/homepage/category-image-11.png';
 import CategoryImage12 from '../../images/homepage/category-image-12.png';
+import CategoryImage13 from '../../images/homepage/category-image-13.svg';
+
 import CategoryImage2 from '../../images/homepage/category-image-2.png';
 import CategoryImage3 from '../../images/homepage/category-image-3.png';
 import CategoryImage4 from '../../images/homepage/category-image-4.png';
@@ -176,6 +178,13 @@ const CategoryList = [
         name: 'Phòng thờ',
         id: '64231026edf9dd11e488c261'
     },
+    {
+        imageUrl: CategoryImage13,
+        name: 'Xem thêm',
+        id: 'last'
+    }
+
+
 ]
 // Phần trang chủ của trang web
 const Home = () => {

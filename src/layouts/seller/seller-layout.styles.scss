@@ -79,11 +79,46 @@
 
         .profile-content-right {
             width: 30vw;
-
-
         }
 
+        .sketch-main{
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
 
+            .table-area{
+                display: flex;
+                flex-direction: column;
+                gap: 1em;
+
+                .title-and-search{
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 1em;
+
+                    .title-and-search-title{
+                        color: var(--white-color-v2);
+                        font-size: 24px;
+                        font-weight: 700;
+                    }
+
+                    .title-and-search-search{
+                        display: flex;
+                        align-items: center;
+                        gap: 1em;
+
+                        .ant-input-affix-wrapper{
+                            width: 20vw;
+                        }
+                    }
+                }
+
+                .image-seller-shetch{
+                    width: 150px;
+                }
+            }
+        }
     }
 
     .profile-content.become-seller {
@@ -290,7 +325,7 @@
             width: 100%;
             padding-right: 0;
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             grid-template-rows: repeat(2, 1fr);
             gap: 1em;
 
@@ -305,6 +340,51 @@
 
         .profile-content {
             width: 100%;
+            .sketch-main {
+                .table-area {
+                    .title-and-search {
+                        flex-direction: column;
+                        align-items: center;
+                    }
+                    .image-seller-shetch {
+                        width: 100%;
+                    }
+                }
+            }
         }
     }
+}
+
+@media (max-width:700px) {
+    .main-profile {
+        .profile-navbar {
+            display: flex;
+            flex-direction: column;
+            gap: .5em;
+            width: 100%;
+            border-right: none;
+            padding-right: 0;
+        }
+
+        .profile-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            width: 100%;
+
+            .sketch-main{
+                .statistic-area{
+                    flex-direction: column;
+                    align-items: center;
+                }
+
+            }
+        }
+        
+        .ant-form-item .ant-form-item-label > label{
+            display: flex;
+            justify-content: center;
+        }
+    }
+
 }

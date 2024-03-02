@@ -346,6 +346,23 @@
             color: #E60200;
         }
     }
+
+    .ant-drawer-body{
+        .ant-btn{
+            background-color: #E60200 !important;
+            border-radius: 4px;
+            color: #FFFFFF;
+            border: none;
+            font-weight: 400;
+            font-size: 14px;
+            display: flex;
+            gap: 10px;
+            text-align: center;
+            justify-content: center;
+            margin-bottom: 1em;
+            transition: all 0.3s ease-in-out;
+        }
+    }
 }
 
 .ant-drawer-header {

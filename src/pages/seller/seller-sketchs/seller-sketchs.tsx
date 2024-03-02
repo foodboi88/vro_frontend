@@ -94,7 +94,7 @@ const SellerSketchs = () => {
             dataIndex: 'image',
             key: 'image',
             render: (_, record) => (
-                <img src={record.image} style={{ width: "150px" }} />
+                <img className='image-seller-shetch' src={record.image} />
             )
         },
         //   {
@@ -256,6 +256,7 @@ const SellerSketchs = () => {
                     titleOfColumnList={columns}
                     totalRecord={totalSketchRecords}
                     onChangePagination={onChangePagination}
+                    scollX={500}
                 />
             </div>
         </motion.div>

@@ -1,4 +1,4 @@
-import { Badge, Button, Col, Row } from "antd";
+import { Badge, Button, Col, Row, Tooltip } from "antd";
 import React, { useEffect } from "react";
 import Avatar from "../../images/advance-searching/avatar1.png";
 import "./styles.authorintro.scss";
@@ -28,15 +28,19 @@ const CAuthorIntroduction = (props: IAuthor) => {
                     <div className="contact-and-view">
                         <div className="link-zalo">
                             <div className="link">
-                                <a
-                                    href={props.zalo}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="link-zalo-content"
-                                >
-                                    Liên hệ với KTS/Công ty XD qua Zalo
-                                    <img src="https://stc-zaloprofile.zdn.vn/pc/v1/images/zalo_sharelogo.png" alt="" width={50} />
-                                </a>
+                                <Tooltip title="Liên hệ với KTS/Công ty XD qua Zalo">
+                                    <a
+                                        href={props.zalo}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="link-zalo-content"
+                                    >
+                                        <div className="text-zalo">
+                                            Liên hệ với KTS/Công ty XD qua Zalo
+                                        </div>
+                                        <img src="https://stc-zaloprofile.zdn.vn/pc/v1/images/zalo_sharelogo.png" alt=""  />
+                                    </a>
+                                </Tooltip>
                             </div>
                         </div>
                         {/* <motion.div

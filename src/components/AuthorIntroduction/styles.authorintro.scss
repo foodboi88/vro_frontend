@@ -71,6 +71,10 @@
                         .link-zalo-content {
                             background-color: #343434;
                             padding: .5em 1em;
+                            img{
+                                width: 20px;
+                                height: 20px;
+                            }
                         }
                     }
                 }
@@ -148,6 +152,23 @@
                     .contact {}
 
                     .view {}
+
+                    .link-zalo {
+                        .link {
+                            .link-zalo-content {
+                                padding: .5em 1em;
+
+                                .text-zalo{
+                                    display: none;
+                                }
+
+                                img{
+                                    width: 20px;
+                                    height: 20px;
+                                }
+                            }
+                        }
+                    }
 
                 }
             }

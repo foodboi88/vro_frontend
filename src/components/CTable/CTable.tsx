@@ -20,6 +20,7 @@ interface CTableProps {
     onSearch?: () => void;
     onChangePagination: (event: any) => void;
     visiblePagination?: boolean;
+    scollX?: number;
 
 }
 
@@ -67,20 +68,38 @@ const CTable = (props: CTableProps) => {
                 </div>
             </div>
             <div className='table'>
+                {
+                    props.scollX ?
+                        <Table
+                            columns={props.titleOfColumnList}
+                            dataSource={props.data}
+                            pagination={
+                                {
+                                    total: props.totalRecord,
+                                    onChange: (event) => {
+                                        props.onChangePagination(event)
 
-                <Table
-                    columns={props.titleOfColumnList}
-                    dataSource={props.data}
-                    pagination={
-                        {
-                            total: props.totalRecord,
-                            onChange: (event) => {
-                                props.onChangePagination(event)
-
+                                    }
+                                }
                             }
-                        }
-                    }
-                />
+                            scroll={{ x: props.scollX }}
+                        />
+                        :
+                        <Table
+                            columns={props.titleOfColumnList}
+                            dataSource={props.data}
+                            pagination={
+                                {
+                                    total: props.totalRecord,
+                                    onChange: (event) => {
+                                        props.onChangePagination(event)
+
+                                    }
+                                }
+                            }
+                        />
+                }
+
             </div>
         </div>
     )

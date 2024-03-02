@@ -264,9 +264,7 @@ export const CHeader = (props: MyProps) => {
                     >
                         Sứ mệnh
                     </div>
-                    {/* <div className="header-action-item">
-                        Sự kết nối
-                    </div> */}
+
                     <div className={
                         "header-action-item " + (current === '4' ? 'active' : '')
                     }
@@ -380,7 +378,8 @@ export const CHeader = (props: MyProps) => {
                                 style={{ display: "flex", flexDirection: "column" }}
                             >
                                 {(!isLogin && isShowLogin) && (
-                                    <Button className="drawer-button"
+                                    <>
+                                        <Button className="header-button login"
                                         onClick={() => {
                                             setIsOpenRegisterModal(true)
                                             onClose()
@@ -388,6 +387,15 @@ export const CHeader = (props: MyProps) => {
                                     >
                                         Đăng ký
                                     </Button>
+                                        <Button className="header-button login"
+                                            onClick={() => {
+                                                setIsOpenLoginModal(true)
+                                                onClose()
+                                            }}
+                                        >
+                                            Đăng nhập
+                                        </Button>
+                                    </>
                                 )}
                                 {isShowSearch &&
                                     <div className={`header-content-input draw `}>
@@ -401,22 +409,40 @@ export const CHeader = (props: MyProps) => {
                                 {
                                     isShowNavibar &&
                                     <div className="header-action-type">
-                                        <div className="header-action-item">
+                                            <div className="header-action-item"
+                                                onClick={() => {
+                                                    navigate('/');
+                                                    onClose();
+                                                }}
+                                            >
                                             Trang chủ
                                         </div>
                                         {
                                             isLogin &&
-                                            <div className="header-action-item">
+                                                <div className="header-action-item"
+                                                    onClick={() => {
+                                                        onClickAvatar();
+                                                        onClose();
+                                                    }}
+                                                >
                                                 Quản lý tài khoản
                                             </div>
                                         }
-                                        <div className="header-action-item">
+                                            <div className="header-action-item"
+                                                onClick={() => {
+                                                    navigate('/mission');
+                                                    onClose();
+                                                }}
+                                            >
                                             Sứ mệnh
                                         </div>
-                                        <div className="header-action-item">
-                                            Sự kết nối
-                                        </div>
-                                        <div className="header-action-item">
+
+                                            <div className="header-action-item"
+                                                onClick={() => {
+                                                    navigate('/contact');
+                                                    onClose();
+                                                }}
+                                            >
                                             Liên hệ
                                         </div>
                                     </div>

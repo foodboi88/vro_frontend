@@ -386,6 +386,10 @@
             background-color: var(--black-color-v2-300);
             width: max-content;
             border-radius: 10px;
+        img {
+                width: 20px;
+                height: 20px;
+            }
         }
     }
 }
@@ -1329,4 +1333,18 @@
             }
         }
     }
+.link-zalo {
+    .link {
+        .link-zalo-content {
+            .text-zalo {
+                font-size: 10px;
+            }
+
+            img {
+                width: 20px;
+                height: 20px;
+            }
+        }
+    }
+}
 }
