@@ -15,6 +15,7 @@ export interface IAuthor {
     linkImage?: string;
     id?: string;
     zalo?: string;
+    linkAvatar?: string;
 }
 
 export interface IGetWithdrawRequest {

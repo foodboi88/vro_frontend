@@ -19,12 +19,9 @@ const AdvancedSeachingArchitect = () => {
         window.innerWidth,
         window.innerHeight,
     ]);
-    const [isShowButtonFilter, setIsShowButtonFilter] =
-        useState<boolean>(false);
+    const [isShowButtonFilter, setIsShowButtonFilter] = useState<boolean>(false);
 
-    const {
-        architectList,
-    } = useSelectorRoot((state) => state.sketch);
+    const { architectList } = useSelectorRoot((state) => state.sketch);
 
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [pageSize, setPageSize] = useState<number>(12);
@@ -33,7 +30,7 @@ const AdvancedSeachingArchitect = () => {
     useEffect(() => {
         document.body.scrollTo({
             top: 0,
-            behavior: "smooth"
+            behavior: "smooth",
         });
     }, [navigate]);
 
@@ -70,9 +67,9 @@ const AdvancedSeachingArchitect = () => {
         setCurrentPage(page);
         document.body.scrollTo({
             top: 0,
-            behavior: "smooth"
+            behavior: "smooth",
         });
-    }
+    };
 
     useEffect(() => {
         if (!architectList) return;
@@ -86,35 +83,25 @@ const AdvancedSeachingArchitect = () => {
         <div className="main">
             {/* <CFilter /> */}
             <div className="filtered-items">
-                <div className="author-introduction">
-                </div>
+                <div className="author-introduction"></div>
                 <div className="sketch-list">
-
                     {/* <CArrangeBar /> */}
                     <Row className="detail-list" gutter={[16, 24]}>
                         {newfilteredSketchs &&
                             newfilteredSketchs.map((card) => (
                                 <Col
                                     onClick={() => {
-                                        goToDetailPageHandle(card.id || '');
+                                        goToDetailPageHandle(card.id || "");
                                     }}
                                     span={spanCol}
                                     key={card.id}
                                 >
-                                    {card.id === 'last' ?
-                                        <CStyleCard
-                                            type="architect"
-                                            imageUrl={card.linkImage || ''}
-                                            name={card.name || ''}
-                                            id={card.id}
-                                        /> :
-                                        <CStyleCard
-                                            type="architect"
-                                            imageUrl={``}
-                                            name={card.name || ''}
-                                            id={card.id}
-                                        />    
-                                    }
+                                    <CStyleCard
+                                        type="architect"
+                                        imageUrl={card.linkAvatar || ""}
+                                        name={card.name || ""}
+                                        id={card.id}
+                                    />
                                 </Col>
                             ))}
                     </Row>

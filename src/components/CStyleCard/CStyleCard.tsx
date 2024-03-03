@@ -41,27 +41,27 @@ const CStyleCard = (props: props) => {
         navigate('/searching')
     };
 
-    useEffect(() => {
-        if (props.type === 'architect' && props.id && props.id !== 'last') {
-            console.log('useEffect', props);
+    // useEffect(() => {
+    //     if (props.type === 'architect' && props.id && props.id !== 'last') {
+    //         console.log('useEffect', props);
 
-            getImage(props);
-        }
-    }, [props]);
+    //         getImage(props);
+    //     }
+    // }, [props]);
 
-    const getImage = async (props: any) => {
-        console.log('getimageUrl', props.imageUrl);
+    // const getImage = async (props: any) => {
+    //     console.log('getimageUrl', props.imageUrl);
 
-        await axios.get(`https://api.banvebank.com.vn/users/avatar/${props.id}`)
-            .then((response: any) => {
-                console.log('getimage', response);
-                setIsErrorImage(false);
-            })
-            .catch((error: any) => {
-                console.log('getimageError', error);
-                setIsErrorImage(true);
-            });
-    }
+    //     await axios.get(`https://api.banvebank.com.vn/users/avatar/${props.id}`)
+    //         .then((response: any) => {
+    //             console.log('getimage', response);
+    //             setIsErrorImage(false);
+    //         })
+    //         .catch((error: any) => {
+    //             console.log('getimageError', error);
+    //             setIsErrorImage(true);
+    //         });
+    // }
 
     return (
         <>
@@ -85,12 +85,8 @@ const CStyleCard = (props: props) => {
                     }}
                     className="style-card-main"
                 >
-                    {props.id === 'last' ?
-                        <img src={props.imageUrl} alt="" />
-                        :
-                        <img src={!isErrorImage ? `https://api.banvebank.com.vn/users/avatar/${props.id}` : ImageNotFound} alt="" />
-
-                    }
+                    {}
+                    <img src={props.imageUrl ? props.imageUrl : ImageNotFound} alt="" />
                     <div className="style-card-title">{props.name}</div>
                 </div>
 

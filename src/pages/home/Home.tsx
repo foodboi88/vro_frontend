@@ -258,7 +258,7 @@ const Home = () => {
             totalProduct: 0,
             createdAt: '',
             updateAt: '',
-            linkImage: SeeMore,
+            linkAvatar: SeeMore,
             id: 'last',
         }
 
@@ -727,20 +727,12 @@ const Home = () => {
                                     }}
                                     key={card.id}
                                 >
-                                    {card.id === 'last' ?
-                                        <CStyleCard
-                                            type="architect"
-                                            imageUrl={card.linkImage || ''}
-                                            name={card.name || ''}
-                                            id={card.id}
-                                        /> :
-                                        <CStyleCard
-                                            type="architect"
-                                            imageUrl={``}
-                                            name={card.name || ''}
-                                            id={card.id}
-                                        />    
-                                    }
+                                    <CStyleCard
+                                        type="architect"
+                                        imageUrl={card.linkAvatar || ''}
+                                        name={card.name || ''}
+                                        id={card.id}
+                                    />    
                                 </div>
                             ))
                     }
