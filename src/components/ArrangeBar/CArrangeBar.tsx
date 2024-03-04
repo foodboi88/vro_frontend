@@ -11,12 +11,12 @@ import { sortFilteredSketchRequest } from '../../redux/controller';
 const { Option } = Select;
 
 const CArrangeBar = () => {
-    const [activeButton, setActiveButton] = useState<string>('');
+    const [activeButton, setActiveButton] = useState<boolean>(false);
     const dispatch = useDispatchRoot()
 
-    const handleButtonClick = (sortType: string) => {
-        setActiveButton(sortType);
-        dispatch(sortFilteredSketchRequest(sortType))
+    const handleButtonClick = () => {
+        setActiveButton(!activeButton);
+        dispatch(sortFilteredSketchRequest(activeButton))
     };
     return (
         <div className='main-arrange'>
@@ -26,8 +26,8 @@ const CArrangeBar = () => {
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}>
                     <Button
-                        type={activeButton === 'view' ? 'primary' : 'default'}
-                        onClick={() => handleButtonClick('view')}
+                        type={activeButton ? 'primary' : 'default'}
+                        onClick={() => handleButtonClick()}
                     >
                         Xem nhiều nhất
                     </Button>

@@ -425,24 +425,20 @@ const sketchSlice = createSlice({
         sortFilteredSketchRequest(state, action: PayloadAction<any>) {
             // objs.sort((a,b) => a.last_nom - b.last_nom);
             switch (action.payload) {
-                case 'view':
+                case true:
                     // code block
                     state.filteredSketchs?.sort((a, b) => a.views - b.views)
                     break;
-                case 'purchase':
+                case false:
                     // code block
-                    state.filteredSketchs?.sort((a, b) => a.quantityPurchased - b.quantityPurchased)
-                    break;
-                case 'minToMaxPrice':
-                    state.filteredSketchs?.sort((a, b) => a.price - b.price)
-                    break;
-                case 'maxToMaxPrice':
-                    state.filteredSketchs?.sort((a, b) => b.price - a.price)
+                    state.filteredSketchs?.sort((a, b) => {
+                        if(a.title > b.title){
+                            return 1;
+                        }else return -1;
+                    })
                     break;
                 default:
-                // code block
             }
-
         },
 
         // Dùng để reset lại biến currentSearchValue (biến lưu lại các lựa chọn tìm kiếm nâng cao) mỗi khi chuyển qua chuyển lại giữa
