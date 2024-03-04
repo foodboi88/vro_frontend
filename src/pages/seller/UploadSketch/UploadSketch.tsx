@@ -12,7 +12,8 @@ import {
     Radio,
     SelectProps,
     Steps,
-    Upload
+    Upload,
+    notification
 } from "antd";
 import type { RcFile, UploadProps } from "antd/es/upload";
 import type { UploadFile } from "antd/es/upload/interface";
@@ -541,11 +542,23 @@ const UploadSketch = () => {
                                                 }}
                                                 accept=".png, .jpeg, .jpg"
                                                 beforeUpload={(file) => {
+                                                    const fileSize = Math.round((file.size / 1024));
+                                                    // The size of the file.
+                                                    if (fileSize >= 4096) {
+                                                        notification.error({
+                                                            message: "Vui lòng tải file dưới 5mb",
+                                                            onClick: () => {
+                                                                console.log("Notification Clicked!");
+                                                            },
+                                                        });
+                                                        return false;
+                                                    }
                                                     let tmplst = imageUploadLst;
                                                     tmplst.push(file);
                                                     setImageUploadLst(tmplst);
                                                     return false;
                                                 }}
+                                                 
                                             >
                                                 {imageUploadLst.length >= 8
                                                     ? null
