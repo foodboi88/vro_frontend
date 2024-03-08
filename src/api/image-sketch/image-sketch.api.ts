@@ -33,4 +33,24 @@ export default class ImageSketchApi {
             )
         );
     }
+
+    static putProductImage = (body: any, id: any): Observable<any> => {
+        const api = `${ImageSketchApi.apiURL.HOST}/${this.apiURL.UPLOAD_IMAGE_OF_SKETCH}/${id}`;
+        return HttpClient.put(api, body).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
+
+    static putNewProductImage = (body: any, id: any): Observable<any> => {
+        const api = `${ImageSketchApi.apiURL.HOST}/${this.apiURL.PUT_NEW_PRODUCT_IMAGE}/${id}`;
+        return HttpClient.put(api, body).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
 }

@@ -1353,6 +1353,48 @@ const sketchSlice = createSlice({
         getCustomerNeedFail(state, action: PayloadAction<any>) {
             state.loading = false;
         },
+
+        putImageProductRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        putImageProductSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+            notification.open({
+                message: "Thành công",
+                description: "Cập nhật ảnh sản phẩm cũ thành công",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+        },
+
+        putImageProductFail(state, action: PayloadAction<any>) {
+            console.log(action.payload);
+
+            state.loading = false;
+            notification.open({
+                message: "Thất bại",
+                description: "Cập nhật ảnh sản phẩm không thành công",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+        },
+
+        putNewImageProductRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        putNewImageProductSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+
+        },
+
+        putNewImageProductFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+
+        },
     },
 });
 
@@ -2439,6 +2481,54 @@ const getCustomerNeedList$: RootEpic = (action$) =>
         })
     );
 
+const putImageProduct$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(putImageProductRequest.match),
+        switchMap((re) => {
+            const { id, imageIds } = re.payload;
+
+            const req = {
+                imageIds: imageIds,
+                additionalProp1: {}
+            }
+
+            console.log(req);
+
+
+            return ImageSketchApi.putProductImage(req, id).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.putImageProductSuccess(res),
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.putImageProductFail(err)])
+            );
+        })
+    );
+
+const putNewImageProduct$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(putNewImageProductRequest.match),
+        switchMap((re) => {
+            const { id, imageUploadLst } = re.payload;
+            const file = imageUploadLst[0] as File;
+
+            let imageData = new FormData();
+            re.payload.imageUploadLst.forEach((item: any) => {
+                imageData.append("files", item as File); // chinh lai ten file anh sau
+            });
+
+            return ImageSketchApi.putNewProductImage(imageData, re.payload.id).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.putNewImageProductSuccess(res),
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.putNewImageProductFail(err)])
+            );
+        })
+    );
+
 export const SketchEpics = [
     // uploadSketch$,
     resetCurrentSearchValue$,
@@ -2499,6 +2589,9 @@ export const SketchEpics = [
     getHomepageBanner$,
     postCustomerNeed$,
     getCustomerNeedList$,
+
+    putImageProduct$,
+    putNewImageProduct$,
 ];
 export const {
     getLatestSketchRequest,
@@ -2564,7 +2657,10 @@ export const {
     postCustomerNeedRequest,
     getCustomerNeedRequest,
 
-    getHomepageBannerRequest
+    getHomepageBannerRequest,
+
+    putImageProductRequest,
+    putNewImageProductRequest
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;
 
