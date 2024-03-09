@@ -119,6 +119,11 @@ const CustomerRequirementsList = [
 
 const CategoryList = [
     {
+        imageUrl: CategoryImage13,
+        name: 'Xem thêm',
+        id: 'last'
+    },
+    {
         imageUrl: CategoryImage1,
         name: 'Phòng khách',
         id: '64231026edf9dd11e488c250'
@@ -178,11 +183,6 @@ const CategoryList = [
         name: 'Phòng thờ',
         id: '64231026edf9dd11e488c261'
     },
-    {
-        imageUrl: CategoryImage13,
-        name: 'Xem thêm',
-        id: 'last'
-    }
 
 
 ]

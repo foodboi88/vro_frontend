@@ -117,6 +117,23 @@ const CModalEditSketch = (props: MyProps) => {
 
             // dispatch(putImageProductRequest(req));
         }
+        if (oldImage.length <= 0) {
+            const req = {
+                imageIds: ['all'],
+            }
+            const token = Utils.getValueLocalStorage("token");
+            await axios.put(`https://api.banvebank.com.vn/product-images/${props?.data?.id}`, req, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+
+            }).then((res) => {
+                console.log(res);
+            }
+            ).catch((err) => {
+                console.log(err);
+            })
+        }
 
         if (newImage.length > 0) {
 
@@ -130,7 +147,6 @@ const CModalEditSketch = (props: MyProps) => {
 
             dispatch(putNewImageProductRequest(req));
         }
-
 
         props.setOpenModalEdit(false)
     };
