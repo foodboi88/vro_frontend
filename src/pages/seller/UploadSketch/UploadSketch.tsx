@@ -619,6 +619,9 @@ const UploadSketch = () => {
                                                 <br />
                                             </Upload.Dragger>
                                         </Form.Item> */}
+                                        <div className="check-label">
+                                            Lưu ý: lựa chọn file tải lên không được lớn hơn quá 5mb.
+                                        </div>
                                     </div>
 
 
