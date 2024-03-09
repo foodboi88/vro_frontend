@@ -1,4 +1,4 @@
-import { Col, Row } from "antd";
+import { Breadcrumb, Col, Empty, Row } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IFilteredSketch } from "../../common/sketch.interface";
@@ -81,42 +81,62 @@ const AdvancedSeaching = () => {
     }, [currentPage, filteredSketchs]);
 
     return (
-        <div className="main">
-            <CFilter />
-            <div className="filtered-items">
-                <div className="author-introduction">
-                </div>
-                <div className="sketch-list">
+        <div >
+            <div className="breadcrumb">
+                <Breadcrumb>
+                    <Breadcrumb.Item onClick={() => navigate("/")}>
+                        Trang chủ
+                    </Breadcrumb.Item>
 
-                    <CArrangeBar />
-                    <Row className="detail-list" gutter={[16, 24]}>
-                        {newfilteredSketchs &&
-                            newfilteredSketchs.map((card) => (
-                                <Col
-                                    onClick={() => {
-                                        goToDetailPageHandle(card.id);
-                                    }}
-                                    span={spanCol}
-                                    key={card.id}
-                                >
-                                    <CProductCard
-                                        imageUrl={card.image}
-                                        title={card.title}
-                                        view={card.views}
-                                        price={card.price}
-                                        // idTool={card.typeOfArchitectureId || ''}
+                    <Breadcrumb.Item className="current-link">
+                        Tìm kiếm nâng cao
+                    </Breadcrumb.Item>
+                </Breadcrumb>
+            </div>
+            <div className="main">
+                <CFilter />
+                <div className="filtered-items">
+                    <div className="author-introduction">
+                    </div>
+                    <div className="sketch-list">
 
-                                    // type={card.}
-                                    />
-                                </Col>
-                            ))}
-                    </Row>
+                        <CArrangeBar />
+                        {
+                            newfilteredSketchs && newfilteredSketchs.length ?
+                            <Row className="detail-list" gutter={[16, 24]}>
+                                {
+                                    newfilteredSketchs.map((card) => (
+                                        <Col
+                                            onClick={() => {
+                                                goToDetailPageHandle(card.id);
+                                            }}
+                                            span={spanCol}
+                                            key={card.id}
+                                        >
+                                            <CProductCard
+                                                imageUrl={card.image}
+                                                title={card.title}
+                                                view={card.views}
+                                                price={card.price}
+                                                // idTool={card.typeOfArchitectureId || ''}
+
+                                            // type={card.}
+                                            />
+                                        </Col>
+                                    ))   
+                                }
+                            </Row> :
+                            <Empty
+                                description = 'Không tìm thấy kết quả theo yêu cầu tìm kiếm'
+                            /> 
+                        }
+                    </div>
+                    <CPagination
+                        total={filteredSketchs?.length}
+                        currentPage={currentPage}
+                        onChange={onChangePage}
+                    />
                 </div>
-                <CPagination
-                    total={filteredSketchs?.length}
-                    currentPage={currentPage}
-                    onChange={onChangePage}
-                />
             </div>
         </div>
     );

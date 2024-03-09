@@ -87,6 +87,34 @@
     }
 }
 
+.breadcrumb {
+        margin: 0px;
+    padding-top: 4em;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: normal;
+    background-color: var(--black-color-v2);
+        margin-bottom: -36px;
+    padding-top: 93px;
+    padding-left: 20px;
+        .ant-breadcrumb {
+
+            .ant-breadcrumb-link {
+                font-weight: 500;
+                font-size: clamp(.8em, 4vw, 1em);
+                line-height: 24px;
+                color: #858585;
+                cursor: pointer;
+            }
+
+            .current-link {
+                font-weight: 500;
+                font-size: clamp(.8em, 4vw, 1em);
+                line-height: 24px;
+                color: #C0C0C0;
+            }
+        }
+    }
+
 .ant-pagination-options {
     display: none;
 }
