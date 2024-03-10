@@ -76,6 +76,7 @@ interface SketchState {
     detailSketch?: IDetailSketch;
     commentList?: any[];
     filteredSketchs: IFilteredSketch[];
+    cloneFilteredSketchs: IFilteredSketch[];
     filteredAuthors?: IUser[];
     currentSearchValue: ICurrentSearchValue;
     checkWhetherSketchUploaded: number; // Là số chẵn thì chắc chắn file đó đã đc up cả ảnh + file + content thành công
@@ -149,6 +150,7 @@ const initState: SketchState = {
     detailSketch: undefined,
     commentList: [],
     filteredSketchs: [],
+    cloneFilteredSketchs: [],
     freeSketchList: [],
     filteredAuthors: [],
     currentSearchValue: {
@@ -425,20 +427,20 @@ const sketchSlice = createSlice({
         sortFilteredSketchRequest(state, action: PayloadAction<any>) {
             // objs.sort((a,b) => a.last_nom - b.last_nom);
             switch (action.payload) {
-                case 'view':
+                case true:
                     // code block
                     state.filteredSketchs?.sort((a, b) => a.views - b.views)
                     break;
-                case 'purchase':
+                case false:
                     // code block
-                    state.filteredSketchs?.sort((a, b) => a.quantityPurchased - b.quantityPurchased)
+                    state.filteredSketchs = state.cloneFilteredSketchs;
                     break;
-                case 'minToMaxPrice':
-                    state.filteredSketchs?.sort((a, b) => a.price - b.price)
-                    break;
-                case 'maxToMaxPrice':
-                    state.filteredSketchs?.sort((a, b) => b.price - a.price)
-                    break;
+                // case 'minToMaxPrice':
+                //     state.filteredSketchs?.sort((a, b) => a.price - b.price)
+                //     break;
+                // case 'maxToMaxPrice':
+                //     state.filteredSketchs?.sort((a, b) => b.price - a.price)
+                //     break;
                 default:
                 // code block
             }
@@ -484,6 +486,7 @@ const sketchSlice = createSlice({
 
             state.loading = false;
             state.filteredSketchs = action.payload?.data[0]?.items;
+            state.cloneFilteredSketchs = action.payload?.data[0]?.items;
         },
 
         advancedSearchingFail(state, action: PayloadAction<any>) {
