@@ -76,6 +76,7 @@ interface SketchState {
     detailSketch?: IDetailSketch;
     commentList?: any[];
     filteredSketchs: IFilteredSketch[];
+    cloneFilteredSketchs: IFilteredSketch[];
     filteredAuthors?: IUser[];
     currentSearchValue: ICurrentSearchValue;
     checkWhetherSketchUploaded: number; // Là số chẵn thì chắc chắn file đó đã đc up cả ảnh + file + content thành công
@@ -149,6 +150,7 @@ const initState: SketchState = {
     detailSketch: undefined,
     commentList: [],
     filteredSketchs: [],
+    cloneFilteredSketchs: [],
     freeSketchList: [],
     filteredAuthors: [],
     currentSearchValue: {
@@ -431,12 +433,14 @@ const sketchSlice = createSlice({
                     break;
                 case false:
                     // code block
-                    state.filteredSketchs?.sort((a, b) => {
-                        if(a.title > b.title){
-                            return 1;
-                        }else return -1;
-                    })
+                    state.filteredSketchs = state.cloneFilteredSketchs;
                     break;
+                // case 'minToMaxPrice':
+                //     state.filteredSketchs?.sort((a, b) => a.price - b.price)
+                //     break;
+                // case 'maxToMaxPrice':
+                //     state.filteredSketchs?.sort((a, b) => b.price - a.price)
+                //     break;
                 default:
             }
         },
@@ -480,6 +484,7 @@ const sketchSlice = createSlice({
 
             state.loading = false;
             state.filteredSketchs = action.payload?.data[0]?.items;
+            state.cloneFilteredSketchs = action.payload?.data[0]?.items;
         },
 
         advancedSearchingFail(state, action: PayloadAction<any>) {
