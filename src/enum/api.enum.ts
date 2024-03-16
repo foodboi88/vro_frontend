@@ -12,6 +12,7 @@ export enum API_URL {
     ADVANCED_SEARCHING = "products/filter",
     UPLOAD_IMAGE_OF_SKETCH = "product-images",
     PUT_NEW_PRODUCT_IMAGE = "product-images/newImage",
+    SORT_IMAGE = "product-images/sortImage",
     UPLOAD_CONTENT_OF_SKETCH = "products",
     UPLOAD_FILES_OF_SKETCH = "product-files",
     LOGIN = "users/login",

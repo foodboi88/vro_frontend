@@ -53,4 +53,14 @@ export default class ImageSketchApi {
             )
         );
     }
+
+    static sortImage = (body: any, id: any): Observable<any> => {
+        const api = `${ImageSketchApi.apiURL.HOST}/${this.apiURL.SORT_IMAGE}/${id}`;
+        return HttpClient.put(api, body).pipe(
+            map(
+                (res) => (res as any) || null,
+                catchError((error) => new Observable())
+            )
+        );
+    }
 }

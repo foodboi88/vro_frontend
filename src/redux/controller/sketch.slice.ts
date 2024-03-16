@@ -1400,6 +1400,20 @@ const sketchSlice = createSlice({
             state.loading = false;
 
         },
+
+        sortImageProductRequest(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+
+        sortImageProductSuccess(state, action: PayloadAction<any>) {
+            state.loading = false;
+
+        },
+
+        sortImageProductFail(state, action: PayloadAction<any>) {
+            state.loading = false;
+
+        },
     },
 });
 
@@ -2534,6 +2548,32 @@ const putNewImageProduct$: RootEpic = (action$) =>
         })
     );
 
+const sortImageProduct$: RootEpic = (action$) =>
+    action$.pipe(
+        filter(sortImageProductRequest.match),
+        switchMap((re) => {
+            const { id, imageIds } = re.payload;
+
+            const req = {
+                imageIds: imageIds,
+                additionalProp1: {}
+            }
+
+            console.log(req);
+
+            return ImageSketchApi.sortImage(req, id).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        sketchSlice.actions.sortImageProductSuccess(res),
+                    ];
+                }),
+                catchError((err) => [sketchSlice.actions.sortImageProductFail(err)])
+            );
+        }
+        )
+    );
+
+
 export const SketchEpics = [
     // uploadSketch$,
     resetCurrentSearchValue$,
@@ -2597,6 +2637,7 @@ export const SketchEpics = [
 
     putImageProduct$,
     putNewImageProduct$,
+    sortImageProduct$,
 ];
 export const {
     getLatestSketchRequest,
@@ -2665,7 +2706,9 @@ export const {
     getHomepageBannerRequest,
 
     putImageProductRequest,
-    putNewImageProductRequest
+    putNewImageProductRequest,
+    sortImageProductRequest,
+
 } = sketchSlice.actions;
 export const sketchReducer = sketchSlice.reducer;
 

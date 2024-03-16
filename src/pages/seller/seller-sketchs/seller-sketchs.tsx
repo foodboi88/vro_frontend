@@ -39,8 +39,7 @@ const SellerSketchs = () => {
     )
 
     useEffect(() => {
-        dispatch(getSketchByArchitectRequest(currentSearchValue))
-        dispatch(getSketchStatisticRequest())
+        fetchSketchs()
     }, [])
 
     const columns: ColumnType<any>[] = [
@@ -200,6 +199,11 @@ const SellerSketchs = () => {
         dispatch(getSketchByArchitectRequest(currentSearchValue))
     }
 
+    const fetchSketchs = () => {
+        dispatch(getSketchByArchitectRequest(currentSearchValue))
+        dispatch(getSketchStatisticRequest())
+    }
+
     return (
         <motion.div className='sketch-main'
             initial={{ opacity: 0 }}
@@ -212,6 +216,7 @@ const SellerSketchs = () => {
                     open={openModalEdit}
                     data={editSketch}
                     setOpenModalEdit = {setOpenModalEdit}
+                    fetchSketchs={fetchSketchs}
                 />
 
             }

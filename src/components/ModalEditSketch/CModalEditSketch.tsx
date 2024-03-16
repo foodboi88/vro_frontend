@@ -3,7 +3,7 @@ import TextArea from "antd/lib/input/TextArea";
 import { useEffect, useState } from "react";
 import { IUploadSketchRequest } from "../../common/sketch.interface";
 import { TEXT_FIELD, TEXT_INPUT } from "../../enum/common.enum";
-import { editSketchRequest, getAllFilterCriteriasRequest, getDetailSketchRequest, putImageProductRequest, putNewImageProductRequest } from "../../redux/controller";
+import { editSketchRequest, getAllFilterCriteriasRequest, getDetailSketchRequest, putImageProductRequest, putNewImageProductRequest, sortImageProductRequest } from "../../redux/controller";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
 import "./style.cmodaleditsketch.scss";
 import axios from "axios";
@@ -24,6 +24,7 @@ interface MyProps{
     open: boolean;
     data?: IUploadSketchRequest;
     setOpenModalEdit: React.Dispatch<React.SetStateAction<boolean>>,
+    fetchSketchs: () => void;
 }
 
 type LayoutType = Parameters<typeof Form>[0]['layout'];
@@ -181,7 +182,7 @@ const CModalEditSketch = (props: MyProps) => {
 
         if (newImage.length > 0) {
 
-            const images = newImage.map((item) => item.originFileObj);
+            const images = newImage.map((item: any) => item.originFileObj);
             const req = {
                 id: props?.data?.id,
                 imageUploadLst: images
@@ -192,6 +193,28 @@ const CModalEditSketch = (props: MyProps) => {
             dispatch(putNewImageProductRequest(req));
         }
 
+        const reqSort = {
+            imageIds: fileList.map((item) => item.uid),
+            additionalProp1: {}
+        }
+
+        console.log(reqSort);
+
+        const token = Utils.getValueLocalStorage("token");
+
+        await axios.put(`https://api.banvebank.com.vn/product-images/sortImage/${props?.data?.id}`, reqSort, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+
+        }).then((res) => {
+            console.log(res);
+        }
+        ).catch((err) => {
+            console.log(err);
+        })
+
+        props.fetchSketchs();
         props.setOpenModalEdit(false)
     };
 
