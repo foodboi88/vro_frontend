@@ -64,20 +64,20 @@ export default function CFooter() {
                         <div className="title-content">Trụ sở</div>
                         <div className="content">Lô 40 liền kề 7 Khu đô thị Tổng cục 5, Bộ Công an - Tân Triều - Thanh Trì - Hà Nội</div>
                         <div className="content">Điện thoại: 0866045577</div>
-                        <div className="content">Email: mailto:sale@vro.vn</div>
+                        <div className="content">Email: sale@vro.vn</div>
 
                     </div>
                     <div className="column-3">
                         <div className="title-content">Miền Trung</div>
                         <div className="content">Chi nhánh: Số 129, Hoàng Đức Lương, TP. Đà Nẵng</div>
                         <div className="content">Điện thoại: 0866045577</div>
-                        <div className="content">Email: mailto:sale@vro.vn</div>
+                        <div className="content">Email: sale@vro.vn</div>
                     </div>
                     <div className="column-4">
                         <div className="title-content">Miền Nam</div>
                         <div className="content">Chi nhánh: 34 Xuân Quỳnh, KDC Gia Hòa 523A Đỗ Xuân Hợp, P. Phước Long B, Quận 9, TP.HCM</div>
                         <div className="content">Điện thoại: 0866045577</div>
-                        <div className="content">Email: mailto:sale@vro.vn</div>
+                        <div className="content">Email: sale@vro.vn</div>
                     </div>
                     {/* <div className="column-2">
                         <div className="title-content">Về Chúng tôi</div>
