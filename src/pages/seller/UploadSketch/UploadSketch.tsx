@@ -297,6 +297,10 @@ const UploadSketch = () => {
 
         dispatch(uploadSketchRequest(bodyrequest));
 
+
+
+
+
         // dispatch(uploadFileSketchRequest(bodyrequestTest));
         // dispatch(uploadImageSketchRequest(bodyrequestTest));
     };

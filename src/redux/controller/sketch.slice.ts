@@ -508,7 +508,6 @@ const sketchSlice = createSlice({
                     console.log("Notification Clicked!");
                 },
             });
-            // }
         },
 
         uploadSketchFail(state, action: PayloadAction<any>) {
@@ -540,6 +539,8 @@ const sketchSlice = createSlice({
                     console.log("Notification Clicked!");
                 },
             });
+
+            window.location.href = "/";
             // }
         },
 
