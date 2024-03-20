@@ -29,15 +29,10 @@ interface MyProps{
 
 type LayoutType = Parameters<typeof Form>[0]['layout'];
 
-const uploadButton = (
-    <div>
-        <div style={{ marginTop: 8 }}>Upload</div>
-    </div>
-);
 
 interface DraggableUploadListItemProps {
     originNode: React.ReactElement<any, string | React.JSXElementConstructor<any>>;
-    file: UploadFile<any>;
+    file: any;
 }
 
 const DraggableUploadListItem = ({ originNode, file }: DraggableUploadListItemProps) => {
@@ -75,7 +70,7 @@ const CModalEditSketch = (props: MyProps) => {
     const formItemLayout = formLayout === 'horizontal' ? { labelCol: { span: 6 }, wrapperCol: { span: 18 } } : null;
     const [windowSize, setWindowSize] = useState([window.innerWidth, window.innerHeight,]);
     const [fileList, setFileList] = useState<any[]>([]);
-
+    const [videoList, setVideoList] = useState<any[]>([]);
     useEffect(() => {
         const handleWindowResize = () => {
             setWindowSize([window.innerWidth, window.innerHeight]);
@@ -99,7 +94,10 @@ const CModalEditSketch = (props: MyProps) => {
     useEffect(() => {
         console.log(detailSketch);
         if (detailSketch) {
-            setFileList(detailSketch?.images?.map((item: any, index: any) => {
+
+            const tmpImageLst = detailSketch?.images?.filter((item: any) => !item.isVideo);
+
+            setFileList(tmpImageLst.map((item: any, index: any) => {
                 return {
                     // change to type UploadFile for filelist
                     uid: item.id,
@@ -107,8 +105,12 @@ const CModalEditSketch = (props: MyProps) => {
                     status: 'done',
                     url: item.filePath,
                     isOld: true,
+                    isVideo: item.isVideo
                 }
             }))
+
+            const tmpVideoLst = detailSketch?.images?.filter((item: any) => item.isVideo);
+            setVideoList(tmpVideoLst);
         }
     }, [detailSketch])
 
@@ -122,6 +124,10 @@ const CModalEditSketch = (props: MyProps) => {
 
         });
     }, [fileList]);
+
+    useEffect(() => {
+        console.log(videoList);
+    }, [videoList]);
 
     const handleUploadSketch = async () => {
         console.log(form.getFieldsValue())
@@ -240,6 +246,11 @@ const CModalEditSketch = (props: MyProps) => {
         }
     };
 
+    const handleDeleteVideo = () => {
+        setVideoList([]);
+    }
+
+
     return (
         <Modal
             open={props.open}
@@ -349,6 +360,47 @@ const CModalEditSketch = (props: MyProps) => {
                             >
                                 {fileList.length >= 8 ? null : uploadButton}
                             </Upload> */}
+
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Video"
+                            name="videos"
+                        >
+                            {videoList.length !== 0 &&
+                                <div style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: 20
+                                }}>
+
+                                    <video
+                                        src={videoList[0]?.filePath}
+                                        controls
+                                        style={{ width: "50%" }}
+                                    />
+                                    <Button type="primary" danger
+                                        onClick={handleDeleteVideo}>
+                                        Xóa video
+                                    </Button>
+                                </div>
+                            }
+
+                            <Upload
+                                // action={'localhost:3000/upload'}
+                                className="upload-list-edit-sketch"
+                                listType="picture-card"
+                                onChange={handleChangeFileLst}
+                            // customRequest={handleUpload}
+                            // onRemove={(file) => {
+                            //     console.log(file);
+                            //     const tmp = fileList.filter((item) => item.uid !== file.uid);
+                            //     setFileList(tmp);
+                            // }}
+                            >
+                                Tải video lên
+                            </Upload>
+
 
                         </Form.Item>
 

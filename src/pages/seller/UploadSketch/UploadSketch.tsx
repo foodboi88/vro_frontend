@@ -160,8 +160,10 @@ const UploadSketch = () => {
     const [selectTag, setSelectTag] = useState(""); // Biến lưu giá trị tag bản vẽ
     const [imageUploadLst, setImageUploadLst] = useState<UploadFile[]>([]); // Biến lưu giá trị ảnh bản vẽ đã upload
     const [fileUploadLst, setFileUploadLst] = useState<RcFile[]>([]); // Biến lưu giá trị file bản vẽ đã upload
+    const [videoUploadLst, setVideoUploadLst] = useState<any[]>([]); // Biến lưu giá trị video bản vẽ đã upload
     const [checkLstImageUploadLst, setCheckLstImageUploadLst] = useState<UploadFile[]>([]); // Biến lưu giá trị ảnh bản vẽ đã upload
     const [checkLstFileUploadLst, setCheckLstFileUploadLst] = useState<RcFile[]>([]); // Biến lưu giá trị file bản vẽ đã upload
+    const [checkLstVideoUploadLst, setCheckLstVideoUploadLst] = useState<any[]>([]); // Biến lưu giá trị video bản vẽ đã upload
     const [selectPrice, setSelectPrice] = useState(0); // Biến lưu giá trị giá bản vẽ
     const [note, setNote] = useState(""); // Biến lưu giá trị ghi chú bản vẽ
     const [selectStyle, setSelectStyle] = useState(""); // Biến lưu giá trị kiểu bản vẽ
@@ -212,6 +214,11 @@ const UploadSketch = () => {
         dispatch(getAllFilterCriteriasRequest())
     }, [])
 
+    useEffect(() => {
+        console.log(videoUploadLst);
+
+    }, [videoUploadLst]);
+
     const handleChangeFileLst: UploadProps["onChange"] = ({
         fileList: newFileList,
     }) => {
@@ -221,11 +228,25 @@ const UploadSketch = () => {
         // console.log(newFileList);
     };
 
+    const handleChangeFileLstVideo: UploadProps["onChange"] = ({
+        fileList: newFileList,
+    }) => {
+        setCheckLstVideoUploadLst(newFileList);
+    }
+
     const uploadButton = // Hàm xử lý khi click upload ảnh
         (
             <div>
                 <PlusOutlined />
                 <div style={{ marginTop: 8 }}>Tải ảnh</div>
+            </div>
+        );
+
+    const uploadVideo = // Hàm xử lý khi click upload video
+        (
+            <div>
+                <PlusOutlined />
+                <div style={{ marginTop: 8 }}>Tải video</div>
             </div>
         );
 
@@ -272,13 +293,18 @@ const UploadSketch = () => {
     };
 
     const handleUploadSketch = () => {
+
+        console.log(videoUploadLst);
+
+
         const bodyrequest = {
             // searchType: searchType,
             // selectedType: selectedType,
             title: selectTitle,
             // selectedTag: selectTag,
             imageUploadLst: imageUploadLst,
-            fileUploadLst: fileUploadLst,
+            // fileUploadLst: fileUploadLst,
+            videoUploadLst: videoUploadLst,
             size: "40m*40m",
             price: selectPrice,
             content: note,
@@ -296,9 +322,6 @@ const UploadSketch = () => {
         // };
 
         dispatch(uploadSketchRequest(bodyrequest));
-
-
-
 
 
         // dispatch(uploadFileSketchRequest(bodyrequestTest));
@@ -510,7 +533,6 @@ const UploadSketch = () => {
                                     <div className="description">
                                         Vui lòng nhập các thông tin chung
                                     </div> */}
-
                                     <div className="image">
                                         <Form.Item
                                             className="thumbnail"
@@ -531,8 +553,6 @@ const UploadSketch = () => {
                                                         }
                                                         return false;
                                                     })
-                                                    
-
                                                     setImageUploadLst(tmplst)
                                                     return true
                                                 }}
@@ -564,70 +584,63 @@ const UploadSketch = () => {
                                                 }}
                                                  
                                             >
-                                                {imageUploadLst.length >= 8
+                                                {imageUploadLst.length >= 100
                                                     ? null
                                                     : uploadButton}
                                             </Upload>
-                                            <Modal
-                                                open={previewOpen}
-                                                title={previewTitle}
-                                                footer={null}
-                                                onCancel={handleCancelPreview}
-                                            >
-                                                <img
-                                                    alt="example"
-                                                    style={{ width: "100%" }}
-                                                    src={previewImage}
-                                                />
-                                            </Modal>
                                         </Form.Item>
-                                        {/* <Form.Item
-                                            className="image-list"
-                                            valuePropName="fileList"
-                                        >
-                                            <div className="title-input">
-                                                Tải bản vẽ chi tiết{" "}
-                                                <strong>*</strong>
-                                            </div>
-                                            <Upload.Dragger
-                                                multiple
-                                                listType="picture"
-                                                action={
-                                                    "https://localhost:3000/"
-                                                }
-                                                showUploadList={{
-                                                    showRemoveIcon: true,
-                                                }}
-                                                onChange={(info) => {
-                                                    setCheckLstFileUploadLst(info.fileList as RcFile[])
-                                                }}
-                                                accept=".zip, .rar"
-                                                beforeUpload={(file) => {
-                                                    console.log(file)
-                                                    let tmplst = fileUploadLst;
-                                                    tmplst.push(file);
-                                                    setFileUploadLst(tmplst);
-                                                    return false;
-                                                }}
-                                                progress={{
-                                                    strokeWidth: 3,
-                                                    strokeColor: {
-                                                        "0%": "#a9eab3",
-                                                        "100%": "#27CA40",
-                                                    },
-                                                    style: { top: 12 },
-                                                }}
-                                            >
-                                                Click hoặc kéo file bản vẽ vào
-                                                đây (file .zip hoặc .zar)
-                                                <br />
-                                            </Upload.Dragger>
-                                        </Form.Item> */}
                                         <div className="check-label">
                                             Lưu ý: lựa chọn file tải lên không được lớn hơn quá 5mb.
                                         </div>
                                     </div>
 
+                                    {/* Cho 1 form item upload video */}
+
+                                    <Form.Item
+                                        className="thumbnail"
+                                        valuePropName="videoList"
+                                        >
+                                            <div className="title-input">
+                                            Video 
+                                            </div>
+                                        <Upload
+                                            multiple
+                                            onRemove={(file) => {
+                                                let tmplst = videoUploadLst;
+                                                tmplst.filter((value, index, arr) => {
+                                                    if (value.name === file.name) {
+                                                        // Removes the value from the original array
+                                                        arr.splice(index, 1);
+                                                        return true;
+                                                    }
+                                                    return false;
+                                                })
+                                                setVideoUploadLst(tmplst)
+                                                return true
+                                            }}
+                                            listType="picture-card"
+                                                showUploadList={{
+                                                    showRemoveIcon: true,
+                                                }}
+                                            onChange={(file) => {
+                                                handleChangeFileLstVideo(file)
+                                                }}
+                                            accept=".mp4"
+                                                beforeUpload={(file) => {
+                                                    console.log(file);
+                                                    let tmplst = videoUploadLst;
+                                                    tmplst.push(file);
+                                                    console.log(tmplst);
+                                                    setVideoUploadLst(tmplst);
+                                                    return false;
+                                                }}
+                                            >
+                                            {videoUploadLst.length >= 1
+                                                ? null
+                                                : uploadVideo}
+                                        </Upload>
+
+                                    </Form.Item>
 
                                     <Form.Item>
                                         <div className="title-input">
