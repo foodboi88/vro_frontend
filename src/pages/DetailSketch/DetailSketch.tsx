@@ -140,9 +140,19 @@ const DetailSketch = () => {
     // Kiểm tra xem có chi tiết bản vẽ hay không
     useEffect(() => {
         if (detailSketch) {
+
+            console.log(detailSketch);
+
+
             setDesignStyles(detailSketch.designStyles);
             // setDesignTools(detailSketch.designTools);
-            setImages(detailSketch.images);
+
+            const lstImage = detailSketch.images.filter((image) => image.isVideo === false);
+            const lstVideo = detailSketch.images.filter((image) => image.isVideo === true);
+
+            const lstImageSort = [...lstVideo, ...lstImage];
+
+            setImages(lstImageSort);
             setInfo(detailSketch.info);
             setTypeOfArchitectures(detailSketch.typeOfArchitectures);
             console.log(detailSketch);
@@ -216,6 +226,28 @@ const DetailSketch = () => {
 
     };
 
+    const renderThumbs = () => {
+
+        const thumbs: any = images.map((image, index) => (
+            <div key={index}>
+                {
+                    image.isVideo === false &&
+                    <img src={image.filePath} alt="" style={{ width: '100%' }} />
+                }
+                {
+                    image.isVideo === true &&
+                    <video preload="metadata" style={{ width: '100%' }}>
+                        <source src={image.filePath} type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
+                }
+            </div>
+        ))
+
+
+        return thumbs;
+    };
+
     return (
         <div className="main-detail">
             <div className="breadcrumb">
@@ -231,13 +263,48 @@ const DetailSketch = () => {
             </div>
             <div className="detail-sketch">
                 <div className="image-carousel">
-                    <Carousel>
+                    {/* <Carousel>
                         {images &&
                             images.map((image, index) => (
                                 <div key={index}>
-                                    <img alt="" src={image.filePath} />
+                                    {
+                                        image.isVideo === false &&
+                                        <img alt="" src={image.filePath} />
+
+                                    }
                                 </div>
                             ))}
+                    </Carousel> */}
+                    <Carousel
+                        // showArrows={true}
+                        // infiniteLoop={true}
+                        // autoPlay={true}
+                        // interval={5000}
+                        // transitionTime={1000}
+                        renderThumbs={renderThumbs}
+                    >
+                        {
+                            images &&
+                            images.map((image, index) => (
+                                <div key={index}>
+                                    {
+                                        image.isVideo === false &&
+                                        <img alt="" src={image.filePath} />
+                                    }
+                                    {
+                                        image.isVideo === true &&
+                                        <video
+                                            style={{ width: '100%' }}
+                                            controls>
+                                            <source src={image.filePath} type="video/mp4" />
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    }
+                                </div>
+                            ))
+                        }
+
+
                     </Carousel>
                 </div>
                 <div className="content">

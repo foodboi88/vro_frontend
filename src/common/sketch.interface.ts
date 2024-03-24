@@ -67,6 +67,7 @@ export interface IImagesSketch {
     filePath: string;
     id: string;
     isMain: boolean;
+    isVideo?: boolean;
 }
 export interface IDetailSketch {
     designStyles: IStyle[];

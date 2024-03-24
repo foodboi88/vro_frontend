@@ -1,13 +1,6 @@
-import { Button, Form, Input, Modal, Radio, Upload, UploadFile, UploadProps, notification } from "antd";
-import TextArea from "antd/lib/input/TextArea";
-import { useEffect, useState } from "react";
-import { IUploadSketchRequest } from "../../common/sketch.interface";
-import { TEXT_FIELD, TEXT_INPUT } from "../../enum/common.enum";
-import { editSketchRequest, getAllFilterCriteriasRequest, getDetailSketchRequest, putImageProductRequest, putNewImageProductRequest, sortImageProductRequest } from "../../redux/controller";
-import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
-import "./style.cmodaleditsketch.scss";
-import axios from "axios";
-import Utils from "../../common/utils";
+import {
+    PlusOutlined
+} from "@ant-design/icons";
 import type { DragEndEvent } from '@dnd-kit/core';
 import { DndContext, PointerSensor, useSensor } from '@dnd-kit/core';
 import {
@@ -17,7 +10,16 @@ import {
     verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { UploadOutlined } from "@ant-design/icons";
+import { Button, Form, Input, Modal, Radio, Upload, UploadProps } from "antd";
+import TextArea from "antd/lib/input/TextArea";
+import { useEffect, useState } from "react";
+import { IUploadSketchRequest } from "../../common/sketch.interface";
+import { TEXT_INPUT } from "../../enum/common.enum";
+import { editSketchRequest, getAllFilterCriteriasRequest, getDetailSketchRequest, putNewImageProductRequest } from "../../redux/controller";
+import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
+import "./style.cmodaleditsketch.scss";
+import Utils from "../../common/utils";
+import axios from "axios";
 
 
 interface MyProps{
@@ -61,6 +63,13 @@ const DraggableUploadListItem = ({ originNode, file }: DraggableUploadListItemPr
     );
 };
 
+const uploadVideo = // Hàm xử lý khi click upload video
+    (
+        <div>
+            <PlusOutlined />
+            <div style={{ marginTop: 8 }}>Tải video</div>
+        </div>
+    );
 const CModalEditSketch = (props: MyProps) => {
     const [formLayout, setFormLayout] = useState<LayoutType>('horizontal');
     const [imageUploadLst, setImageUploadLst] = useState([]); // Biến lưu giá trị ảnh bản vẽ đã upload
@@ -71,6 +80,9 @@ const CModalEditSketch = (props: MyProps) => {
     const [windowSize, setWindowSize] = useState([window.innerWidth, window.innerHeight,]);
     const [fileList, setFileList] = useState<any[]>([]);
     const [videoList, setVideoList] = useState<any[]>([]);
+    const [newVideo, setNewVideo] = useState<any>(null);
+
+
     useEffect(() => {
         const handleWindowResize = () => {
             setWindowSize([window.innerWidth, window.innerHeight]);
@@ -110,6 +122,10 @@ const CModalEditSketch = (props: MyProps) => {
             }))
 
             const tmpVideoLst = detailSketch?.images?.filter((item: any) => item.isVideo);
+
+            console.log(tmpVideoLst);
+
+
             setVideoList(tmpVideoLst);
         }
     }, [detailSketch])
@@ -135,14 +151,30 @@ const CModalEditSketch = (props: MyProps) => {
         dispatch(editSketchRequest(bodyrequest));
 
         console.log(fileList);
+        console.log(videoList);
+        console.log(newVideo);
 
 
         // Lấy ra 2 mảng ảnh mới và ảnh cũ
-        const oldImage = fileList.filter((item) => item.isOld);
-        const newImage = fileList.filter((item) => !item.isOld);
-
+        let oldImage = fileList.filter((item) => item.isOld);
+        let newImage = fileList.filter((item) => !item.isOld);
         console.log(oldImage);
         console.log(newImage);
+
+        if (!newVideo && videoList.length > 0) {
+            const req: any = {
+                uid: videoList[0].id,
+                isVideo: true,
+                isOld: true,
+                name: videoList[0].id,
+                status: 'done',
+            }
+            oldImage.push(req);
+        }
+
+        if (newVideo) {
+            newImage.push(newVideo);
+        }
 
 
         if (oldImage.length > 0) {
@@ -199,26 +231,28 @@ const CModalEditSketch = (props: MyProps) => {
             dispatch(putNewImageProductRequest(req));
         }
 
-        const reqSort = {
-            imageIds: fileList.map((item) => item.uid),
-            additionalProp1: {}
-        }
-
-        console.log(reqSort);
-
-        const token = Utils.getValueLocalStorage("token");
-
-        await axios.put(`https://api.banvebank.com.vn/product-images/sortImage/${props?.data?.id}`, reqSort, {
-            headers: {
-                Authorization: `Bearer ${token}`
+        setTimeout(async () => {
+            const reqSort = {
+                imageIds: fileList.map((item) => item.uid),
+                additionalProp1: {}
             }
 
-        }).then((res) => {
-            console.log(res);
-        }
-        ).catch((err) => {
-            console.log(err);
-        })
+            console.log(reqSort);
+
+            const token = Utils.getValueLocalStorage("token");
+
+            await axios.put(`https://api.banvebank.com.vn/product-images/sortImage/${props?.data?.id}`, reqSort, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+
+            }).then((res) => {
+                console.log(res);
+            }
+            ).catch((err) => {
+                console.log(err);
+            })
+        }, 2000);
 
         props.fetchSketchs();
         props.setOpenModalEdit(false)
@@ -230,6 +264,12 @@ const CModalEditSketch = (props: MyProps) => {
         console.log(newFileList);
 
         setFileList(newFileList);
+    };
+
+    const handleChangeVideoLst: UploadProps["onChange"] = ({
+        fileList: newFileList,
+    }) => {
+        setNewVideo(newFileList[0]);
     };
 
     const sensor = useSensor(PointerSensor, {
@@ -345,60 +385,51 @@ const CModalEditSketch = (props: MyProps) => {
                                     </Upload> */}
                                 </SortableContext>
                             </DndContext>
-                            {/* <Upload
-                                // action={'localhost:3000/upload'}
-                                className="upload-list-edit-sketch"
-                                listType="picture-card"
-                                fileList={fileList}
-                                onChange={handleChangeFileLst}
-                            // customRequest={handleUpload}
-                            // onRemove={(file) => {
-                            //     console.log(file);
-                            //     const tmp = fileList.filter((item) => item.uid !== file.uid);
-                            //     setFileList(tmp);
-                            // }}
-                            >
-                                {fileList.length >= 8 ? null : uploadButton}
-                            </Upload> */}
 
                         </Form.Item>
-
                         <Form.Item
-                            label="Video"
+                            label="Video cũ"
                             name="videos"
                         >
-                            {videoList.length !== 0 &&
                                 <div style={{
                                     display: "flex",
                                     alignItems: "center",
                                     gap: 20
                                 }}>
-
+                                {(videoList && videoList.length > 0) ?
                                     <video
                                         src={videoList[0]?.filePath}
                                         controls
                                         style={{ width: "50%" }}
                                     />
-                                    <Button type="primary" danger
-                                        onClick={handleDeleteVideo}>
-                                        Xóa video
-                                    </Button>
-                                </div>
-                            }
+                                    :
+                                    <div>
+                                        <p>Chưa upload video nào</p>
+                                    </div>
+                                }
+                            </div>
+                        </Form.Item>
 
+                        <Form.Item
+                            label="Video mới"
+                            name="videos"
+                        >
                             <Upload
                                 // action={'localhost:3000/upload'}
+                                multiple={false}
                                 className="upload-list-edit-sketch"
                                 listType="picture-card"
-                                onChange={handleChangeFileLst}
-                            // customRequest={handleUpload}
-                            // onRemove={(file) => {
-                            //     console.log(file);
-                            //     const tmp = fileList.filter((item) => item.uid !== file.uid);
-                            //     setFileList(tmp);
-                            // }}
+                                onChange={handleChangeVideoLst}
+                                beforeUpload={(file) => {
+                                    console.log(file);
+                                    setNewVideo(file);
+                                    return false;
+                                }}
+
                             >
-                                Tải video lên
+                                {newVideo
+                                    ? null
+                                    : uploadVideo}
                             </Upload>
 
 

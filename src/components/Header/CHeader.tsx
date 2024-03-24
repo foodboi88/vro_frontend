@@ -121,7 +121,7 @@ export const CHeader = (props: MyProps) => {
     useEffect(() => {
         console.log(isLogin);
         if (accesstokenExpỉred === false) {
-            dispatch(getSketchQuantityInCartRequest());
+            // dispatch(getSketchQuantityInCartRequest());
         }
 
     }, [accesstokenExpỉred])
