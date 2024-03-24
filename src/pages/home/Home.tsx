@@ -501,9 +501,9 @@ const Home = () => {
 
             <div className='header-homepage'>
                 <div className="left-header">
-                    <div className="slogan">
-                        Ngôi nhà của tôi,<br />
-                        Phong cách của tôi.
+                    <div className="slogan eb-garamond">
+                        VRO CONSTRUCTION<br />
+                        Ngân hàng bản vẽ
                     </div>
                     <div className="sub-slogan">Kho bản vẽ với đa dạng chủng loại, là sản phẩm tâm huyết từ các Công ty xây dựng và Kiến trúc sư trên khắp Việt Nam.
                     </div>
