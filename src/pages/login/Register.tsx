@@ -190,7 +190,7 @@ const Register = (props: MyProps) => {
                     </div>
                     <div>
                         <Form.Item
-                            label="Email/sdt"
+                            label="Email"
                             name="emailReg"
                             rules={[
                                 {
@@ -201,7 +201,7 @@ const Register = (props: MyProps) => {
                         >
                             <Input
                                 className="form-input"
-                                placeholder="Nhập email/sđt"
+                                placeholder="Nhập email"
                                 onChange={handleInputEmailReqChange}
                             />
                         </Form.Item>

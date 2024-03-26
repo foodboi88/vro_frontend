@@ -118,7 +118,7 @@ const Login = (props: MyProps) => {
                 >
                     <div>
                         <Form.Item
-                            label="Email/sdt"
+                            label="Email"
                             name="emailLogin"
                             rules={[
                                 {
@@ -129,7 +129,7 @@ const Login = (props: MyProps) => {
                         >
                             <Input
                                 className="form-input"
-                                placeholder="Nhập email/sđt"
+                                placeholder="Nhập email"
                                 onChange={handleInputEmailLoginChange}
                             />
                         </Form.Item>

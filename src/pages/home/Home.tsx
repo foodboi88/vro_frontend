@@ -465,13 +465,13 @@ const Home = () => {
     };
     // Hàm chuyển đổi trạng thái đóng mở modal login
     const toggleLoginModal = () => {
-        setIsOpenLoginModal(!isOpenLoginModal);
-        setIsOpenRegisterModal(!isOpenRegisterModal);
+        setIsOpenLoginModal(true);
+        setIsOpenRegisterModal(false);
     };
     // Hàm chuyển đổi trạng thái đóng mở modal registration
     const toggleRegisterModal = () => {
-        setIsOpenLoginModal(!isOpenLoginModal);
-        setIsOpenRegisterModal(!isOpenRegisterModal);
+        setIsOpenLoginModal(false);
+        setIsOpenRegisterModal(true);
     };
 
     const handleCancelModal = () => {

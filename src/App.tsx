@@ -3,7 +3,7 @@ import "./App.css";
 import "./App.scss";
 // import CMainRouter from './components/CMainRouter';
 import { Layout, Spin } from "antd";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AnimationRouter from "./components/AnimationRouter";
 import CFooter from "./components/Footer/CFooter";
 import { CHeader } from "./components/Header/CHeader";
@@ -13,9 +13,22 @@ import CLoading from "./components/Cloading";
 
 function App() {
     const dispatch = useDispatchRoot();
-    const { tokenLogin, accesstokenExpỉred } = useSelectorRoot((state) => state.login);
+    const { tokenLogin, accesstokenExpỉred, tokenNotExpired } = useSelectorRoot((state) => state.login);
 
+    const navigate = useNavigate();
     const { loading } = useSelectorRoot((state) => state.sketch); // Lấy ra dữ liệu detail sketch và danh sách comment từ redux
+
+    useEffect(() => {
+        let checkLogin = localStorage.getItem("token")
+            ? localStorage.getItem("token")
+            : "";
+        if (checkLogin && tokenNotExpired === false) {
+            localStorage.clear();
+            navigate("/")
+            window.location.reload();
+        }
+
+    }, [tokenNotExpired]);
 
     useEffect(() => {
         let checkLogin = localStorage.getItem("token")

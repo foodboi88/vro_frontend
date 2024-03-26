@@ -138,14 +138,9 @@ export const CHeader = (props: MyProps) => {
         setVisible(false);
     };
     const onClickLogout = () => {
-        Utils.removeItemLocalStorage("token");
-        Utils.removeItemLocalStorage("userMail");
-        Utils.removeItemLocalStorage("userName");
-        Utils.removeItemLocalStorage("userPhone");
-        Utils.removeItemLocalStorage("role");
-
-        Utils.removeItemLocalStorage("refresh_token");
-        setIsLogin(!isLogin);
+        // 
+        localStorage.clear();
+        setIsLogin(false);
         navigate("/")
         window.location.reload();
     };
@@ -167,7 +162,7 @@ export const CHeader = (props: MyProps) => {
     // Hàm chuyển đổi trạng thái đóng mở modal login
     const toggleLoginModal = () => {
         setIsOpenLoginModal(!isOpenLoginModal);
-        setIsOpenRegisterModal(!isOpenRegisterModal);
+        setIsOpenRegisterModal(false);
     };
     // Hàm chuyển đổi trạng thái đóng mở modal registration
     const toggleRegisterModal = () => {

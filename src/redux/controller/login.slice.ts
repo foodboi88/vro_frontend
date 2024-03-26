@@ -36,6 +36,7 @@ interface LoginState {
     accesstokenExpỉred: boolean;
     userRole: string;
     userId: any;
+    tokenNotExpired: boolean;
 }
 
 const initState: LoginState = {
@@ -55,7 +56,8 @@ const initState: LoginState = {
     registerSuccess: false,
     accesstokenExpỉred: true,
     userRole: Utils.getValueLocalStorage("role") ? Utils.getValueLocalStorage("role") : 'user',
-    userId: Utils.getValueLocalStorage("userId")
+    userId: Utils.getValueLocalStorage("userId"),
+    tokenNotExpired: false,
 };
 
 const loginSlice = createSlice({
@@ -67,43 +69,43 @@ const loginSlice = createSlice({
             // console.log("da chui vao",state.loading)
         },
         loginSuccess(state, action: PayloadAction<any>) {
-          Utils.setLocalStorage("token", action.payload.accessToken);
-          Utils.setLocalStorage("refresh_token", action.payload.refreshToken);
-          Utils.setLocalStorage("role", action.payload.role);
-          console.log(action.payload.accessToken);
+            Utils.setLocalStorage("token", action.payload.accessToken);
+            Utils.setLocalStorage("refresh_token", action.payload.refreshToken);
+            Utils.setLocalStorage("role", action.payload.role);
+            console.log(action.payload.accessToken);
 
-          state.tokenLogin = action?.payload?.accessToken;
-          state.loading = false;
-          state.isSuccess = true;
-          state.accesstokenExpỉred = false;
-          state.userRole = action.payload.role;
-          notification.open({
-            message: "Đăng nhập thành công",
-            onClick: () => {
-              console.log("Notification Clicked!");
-            },
-            style: {
-              marginTop: 50,
-              paddingTop: 40,
-            },
-          });
-          // setTimeout(() => {
-          //   window.location.reload();
-          // }, 1000);
+            state.tokenLogin = action?.payload?.accessToken;
+            state.loading = false;
+            state.isSuccess = true;
+            state.accesstokenExpỉred = false;
+            state.tokenNotExpired = true;
+            state.userRole = action.payload.role;
+            notification.open({
+                message: "Đăng nhập thành công",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+                style: {
+                    marginTop: 50,
+                    paddingTop: 40,
+                },
+            });
+            // setTimeout(() => {
+            //   window.location.reload();
+            // }, 1000);
         },
         loginFail(state, action: any) {
-          console.log(action.payload.response);
-          state.loading = false;
-          state.accesstokenExpỉred = true;
-
-          notification.open({
-            message: "Đăng nhập không thành công",
-            // description: action.payload.response.message.message,
-            onClick: () => {
-              console.log("Notification Clicked!");
-            },
-          });
-          // state.message = action.payload.message;
+            console.log(action.payload.response);
+            state.loading = false;
+            state.accesstokenExpỉred = true;
+            notification.open({
+                message: "Đăng nhập không thành công",
+                // description: action.payload.response.message.message,
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+            });
+            // state.message = action.payload.message;
         },
         checkAbleToLogin(state, action: PayloadAction<string>) {
             state.statusCode = action.payload;
@@ -128,6 +130,7 @@ const loginSlice = createSlice({
             state.loading = false;
             state.isSuccess = true;
             state.accesstokenExpỉred = false;
+            state.tokenNotExpired = true;
             // state.user = action.payload.user;
             console.log("---get user info success---");
         },
@@ -144,11 +147,10 @@ const loginSlice = createSlice({
             //         paddingTop: 40,
             //     },
             // });
-            Utils.removeItemLocalStorage("userName");
-            Utils.removeItemLocalStorage("userMail");
-            Utils.removeItemLocalStorage("userPhone");
+            localStorage.clear();
             // state.message = action.payload.message;
             state.accesstokenExpỉred = true;
+            state.tokenNotExpired = false;
             state.loading = false;
 
 
@@ -522,16 +524,16 @@ const changePassword$: RootEpic = (action$) => action$.pipe(
         )
     })
 )
- 
+
 const changeAvatar$: RootEpic = (action$) => action$.pipe(
     filter(changeAvatarRequest.match),
     mergeMap((re) => {
         // IdentityApi.login(re.payload) ?
         console.log(re);
 
-        const {  avatar } = re.payload;
+        const { avatar } = re.payload;
         console.log(avatar);
-        
+
         let imageData = new FormData();
         imageData.append("file", re.payload.avatar); // chinh lai ten file anh sau
 
@@ -548,7 +550,7 @@ const changeAvatar$: RootEpic = (action$) => action$.pipe(
         );
     })
 );
-    
+
 
 export const LoginEpics = [
     login$,
