@@ -137,6 +137,16 @@ const loginSlice = createSlice({
         getUserInfoFail(state, action: any) {
             // state.user = action.payload
             console.log(action);
+            notification.open({
+                message: "Lấy thông tin người dùng không thành công",
+                description: "Thời gian phiên làm việc đã hết. Vui lòng đăng nhập lại.",
+                onClick: () => {
+                    console.log("Notification Clicked!");
+                },
+                style: {
+                    paddingTop: 40,
+                },
+            });
             // notification.open({
             //     message: "Lấy thông tin thành viên không thành công",
             //     description: "Hãy kiểm tra lại thông tin đăng nhập.",
@@ -148,6 +158,9 @@ const loginSlice = createSlice({
             //     },
             // });
             localStorage.clear();
+            window.location.href = "/";
+            window.location.reload();
+
             // state.message = action.payload.message;
             state.accesstokenExpỉred = true;
             state.tokenNotExpired = false;

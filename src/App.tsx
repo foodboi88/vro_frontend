@@ -18,17 +18,17 @@ function App() {
     const navigate = useNavigate();
     const { loading } = useSelectorRoot((state) => state.sketch); // Lấy ra dữ liệu detail sketch và danh sách comment từ redux
 
-    useEffect(() => {
-        let checkLogin = localStorage.getItem("token")
-            ? localStorage.getItem("token")
-            : "";
-        if (checkLogin && tokenNotExpired === false) {
-            localStorage.clear();
-            navigate("/")
-            window.location.reload();
-        }
+    // useEffect(() => {
+    //     let checkLogin = localStorage.getItem("token")
+    //         ? localStorage.getItem("token")
+    //         : "";
+    //     if (checkLogin && tokenNotExpired === false) {
+    //         localStorage.clear();
+    //         navigate("/")
+    //         window.location.reload();
+    //     }
 
-    }, [tokenNotExpired]);
+    // }, [tokenNotExpired]);
 
     useEffect(() => {
         let checkLogin = localStorage.getItem("token")
