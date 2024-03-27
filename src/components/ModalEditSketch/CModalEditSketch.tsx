@@ -233,7 +233,14 @@ const CModalEditSketch = (props: MyProps) => {
 
         setTimeout(async () => {
             const reqSort = {
-                imageIds: fileList.map((item) => item.uid),
+                imageIds: fileList.map((item, index) => {
+                    if (item.isOld) {
+                        return item.uid
+                    }
+                    else {
+                        return (index + 1).toString();
+                    }
+                }),
                 additionalProp1: {}
             }
 
