@@ -1010,6 +1010,8 @@ body {
 }
 
 .ant-spin {
+
+    z-index: 1000;
     .ant-spin-dot-item {
         background-color: #FF0039;
     }

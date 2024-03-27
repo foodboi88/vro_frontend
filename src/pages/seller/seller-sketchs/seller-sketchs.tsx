@@ -42,6 +42,11 @@ const SellerSketchs = () => {
         fetchSketchs()
     }, [])
 
+    useEffect(() => {
+        console.log(sketchsOfArchitect);
+
+    }, [sketchsOfArchitect])
+
     const columns: ColumnType<any>[] = [
         {
             title: 'Số thứ tự',
@@ -114,20 +119,6 @@ const SellerSketchs = () => {
             ),
         },
     ];
-
-    // let statisticalUser = [
-    //   {
-    //       title: "Tổng số bản vẽ toàn sàn",
-    //       number: sketchStatistic?.totalSketch ? sketchStatistic?.totalSketch : 0,
-    //       icon: UserIcon,
-    //   },
-
-    //   {
-    //       title: "Tổng số bản vẽ mới",
-    //       number: sketchStatistic?.totalNewSketch ? sketchStatistic?.totalNewSketch : 0,
-    //       icon: UserMinus,
-    //   },
-    // ]
 
     const dispatch = useDispatchRoot()
 
@@ -217,6 +208,7 @@ const SellerSketchs = () => {
                     data={editSketch}
                     setOpenModalEdit = {setOpenModalEdit}
                     fetchSketchs={fetchSketchs}
+                    currentSearchValue={currentSearchValue}
                 />
 
             }

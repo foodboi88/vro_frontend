@@ -63,7 +63,7 @@ const AuthorPage = () => {
     useEffect(() => {
         if (authorId) {
             dispatch(getAuthorIntroductionByIdRequest(authorId));
-            dispatch(getSketchListByAuthorIdRequest(authorId));
+            // dispatch(getSketchListByAuthorIdRequest(authorId));
         }
     }, []);
 
@@ -79,8 +79,6 @@ const AuthorPage = () => {
     const onChangePage = (page: number) => {
         setCurrentPage(page);
     }
-
-    console.log("authorIntroduction", authorIntroduction);
 
 
     useEffect(() => {

@@ -10,12 +10,12 @@ import {
     verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Button, Form, Input, Modal, Radio, Upload, UploadProps } from "antd";
+import { Button, Form, Input, Modal, Radio, Spin, Upload, UploadProps } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { useEffect, useState } from "react";
 import { IUploadSketchRequest } from "../../common/sketch.interface";
 import { TEXT_INPUT } from "../../enum/common.enum";
-import { editSketchRequest, getAllFilterCriteriasRequest, getDetailSketchRequest, putNewImageProductRequest } from "../../redux/controller";
+import { editSketchRequest, getAllFilterCriteriasRequest, getDetailSketchRequest, getSketchByArchitectRequest, getSketchStatisticRequest, putNewImageProductRequest } from "../../redux/controller";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
 import "./style.cmodaleditsketch.scss";
 import Utils from "../../common/utils";
@@ -27,6 +27,7 @@ interface MyProps{
     data?: IUploadSketchRequest;
     setOpenModalEdit: React.Dispatch<React.SetStateAction<boolean>>,
     fetchSketchs: () => void;
+    currentSearchValue: any;
 }
 
 type LayoutType = Parameters<typeof Form>[0]['layout'];
@@ -81,7 +82,7 @@ const CModalEditSketch = (props: MyProps) => {
     const [fileList, setFileList] = useState<any[]>([]);
     const [videoList, setVideoList] = useState<any[]>([]);
     const [newVideo, setNewVideo] = useState<any>(null);
-
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const handleWindowResize = () => {
@@ -131,6 +132,11 @@ const CModalEditSketch = (props: MyProps) => {
     }, [detailSketch])
 
     useEffect(() => {
+        console.log(isLoading);
+
+    }, [isLoading]);
+
+    useEffect(() => {
         console.log(fileList);
 
         const newImage = fileList.filter((item) => !item.isOld);
@@ -146,6 +152,7 @@ const CModalEditSketch = (props: MyProps) => {
     }, [videoList]);
 
     const handleUploadSketch = async () => {
+        setIsLoading(true);
         console.log(form.getFieldsValue())
         const bodyrequest = {...form.getFieldsValue(),id: props?.data?.id}
         dispatch(editSketchRequest(bodyrequest));
@@ -255,15 +262,20 @@ const CModalEditSketch = (props: MyProps) => {
 
             }).then((res) => {
                 console.log(res);
+
+                dispatch(getSketchByArchitectRequest(props.currentSearchValue))
+                dispatch(getSketchStatisticRequest())
+                setIsLoading(false);
+                props.setOpenModalEdit(false);
             }
             ).catch((err) => {
                 console.log(err);
+                setIsLoading(false);
             })
         }, 2000);
 
-        props.fetchSketchs();
-        props.setOpenModalEdit(false)
     };
+
 
     const handleChangeFileLst: UploadProps["onChange"] = ({
         fileList: newFileList,
@@ -311,6 +323,7 @@ const CModalEditSketch = (props: MyProps) => {
             style={{ height: windowSize[1] - 100, top: 20 }}
             width={1000}
         >
+            <Spin spinning={isLoading} tip="Đang cập nhật bản vẽ..." size="large">
             <div className="main-upload">
                 <div className="upload-area">
                     
@@ -453,6 +466,7 @@ const CModalEditSketch = (props: MyProps) => {
                     </Form>
                 </div>
             </div>
+            </Spin>
         </Modal>
     );
 };

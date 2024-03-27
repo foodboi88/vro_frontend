@@ -53,13 +53,23 @@ const CFilter = (props: props) => {
     } = useSelectorRoot((state) => state.sketch);
     const [form] = Form.useForm();
 
+    console.log(currentSearchValue);
+
+
     useEffect(() => {
         dispatch(getAllFilterCriteriasRequest());
-        dispatch(advancedSearchingRequest(currentSearchValue));
+        if (props.authorId) {
+            dispatch(advancedSearchingRequest({ authorId: props.authorId }));
+        }
+        else {
+            dispatch(advancedSearchingRequest(currentSearchValue));
+        }
     }, []);
 
     const handleSearch = (param: DATA_TRANFER) => {
         console.log(param);
+        console.log(currentSearchValue);
+
         const bodyrequest = {
             tool: param.target === "tool" ? param.value : currentSearchValue.tool,
             architecture:

@@ -55,7 +55,8 @@ import {
     getHomeListSketchRequest,
     getHomepageBannerRequest,
     getTopArchitectsRequest,
-	postCustomerNeedRequest
+    postCustomerNeedRequest,
+    resetCurrentSearchValueRequest
 } from "../../redux/controller";
 import { useDispatchRoot, useSelectorRoot } from "../../redux/store";
 import Login from "../login/Login";
@@ -460,6 +461,17 @@ const Home = () => {
         dispatch(advancedSearchingRequest(bodyrequest));
     };
 
+    const handleSearchStyle = (styleId: string) => {
+        // dispatch(resetCurrentSearchValueRequest(null));
+        const bodyrequest: ICurrentSearchValue = {
+            name: '',
+            architecture: '65ddf7d9622fd54ff9126e08',
+            style: styleId,
+        };
+        dispatch(advancedSearchingRequest(bodyrequest));
+        // navigate("/searching");
+    }
+
     const checkIsLogin = (val: boolean) => {
         setIsLogin(val);
     };
@@ -485,9 +497,15 @@ const Home = () => {
 	}
 	
     const handleOpenPopupCustomerNeed = (item: any) => {
+        console.log(item);
         setItemPopupCustomerNeed(item);
         setIsOpenPopupCustomerNeed(true);
+    }
 
+    const handleClickZalo = (item: any) => {
+        console.log(item);
+
+        window.open(`https://zalo.me/${item.userPhone}`, '_blank');
     }
 
     return (
@@ -644,7 +662,7 @@ const Home = () => {
                             .map((card) => (
                                 <div
                                     onClick={() => {
-                                        handleSearch(card.id);
+                                        handleSearchStyle(card.id);
                                     }}
                                     key={card.id}
                                 >
@@ -926,15 +944,15 @@ const Home = () => {
                                 className="btn-icon"
                                 onClick={() => handlePagination('next', 'free')}
                                 disabled={
-                                    currentIndexFreeSketch >= freeSketchList.length - numberOfCardShow && true
+                                    currentIndexFreeSketch >= latestSketchsList.length - numberOfCardShow && true
                                 }
                             />
                         </Col>
                     </div>
                 </div>
-                {freeSketchList.length > 0 &&
+                {latestSketchsList.length > 0 &&
                     <div className="lst-tool">
-                        {freeSketchList
+                        {latestSketchsList
                             .slice(
                                 currentIndexFreeSketch,
                                 currentIndexFreeSketch + numberOfCardShow
@@ -1033,7 +1051,10 @@ const Home = () => {
                                         </div>
                                     </div>
 
-                                    <div className="info">
+                                    <div className="info"
+                                        onClick={() => handleClickZalo(item)}
+
+                                    >
                                         Liên hệ
                                     </div>
                                 </div>
@@ -1068,7 +1089,9 @@ const Home = () => {
                                         </div>
                                     </div>
 
-                                    <div className="info">
+                                            <div className="info"
+                                                onClick={() => handleClickZalo(item)}
+                                            >
                                         Liên hệ
                                     </div>
                                 </div>
@@ -1156,11 +1179,12 @@ const Home = () => {
                 footer={null}
                 className="customer-requirement-modal"
             >
+                {itemPopupCustomerNeed && 
                 <div className="customer-requirement-popup">
                     <div className="customer-requirement-header">
                         <div className="avatar">
                             <div className="customer-requirement-avatar">
-                                <img src={itemPopupCustomerNeed?.avatar || UserIcon} />
+                                    <img src={`https://api.banvebank.com.vn/${itemPopupCustomerNeed.linkAvatar}`} alt="" />
                             </div>
                             <div className="customer-requirement-info">
                                 <div className="customer-requirement-name">{itemPopupCustomerNeed?.userName}</div>
@@ -1168,13 +1192,16 @@ const Home = () => {
                             </div>
                         </div>
 
-                        <div className="info">
+                            <div className="info"
+                                onClick={() => handleClickZalo(itemPopupCustomerNeed)}
+                            >
                             Liên hệ
                         </div>
                     </div>
                     <div className="customer-requirement-title">{itemPopupCustomerNeed?.title}</div>
                     <div className="customer-requirement-content">{itemPopupCustomerNeed?.description}</div>
                 </div>
+                }
             </Modal>
 
 

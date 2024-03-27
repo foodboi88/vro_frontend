@@ -1246,13 +1246,16 @@ const sketchSlice = createSlice({
             // state.checkWhetherSketchUploaded += 1;
             // if (state.checkWhetherSketchUploaded % 2 === 0) {
             // Cu chia het cho 2 thi la up file thanh cong
-            notification.open({
-                message: "Thành công",
-                description: "Cập nhật bản vẽ thành công",
-                onClick: () => {
-                    console.log("Notification Clicked!");
-                },
-            });
+
+            setTimeout(() => {
+                notification.open({
+                    message: "Thành công",
+                    description: "Cập nhật bản vẽ thành công",
+                    onClick: () => {
+                        console.log("Notification Clicked!");
+                    },
+                });
+            }, 2000);
             // }
         },
 
