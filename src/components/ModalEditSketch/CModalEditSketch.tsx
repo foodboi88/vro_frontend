@@ -329,7 +329,6 @@ const CModalEditSketch = (props: MyProps) => {
                                 <Input
                                     className="search-input"
                                 placeholder="Nhập tiêu đề"
-                                    maxLength={TEXT_INPUT.MAX_LENGTH}
                                 />
                         </Form.Item>
 

@@ -386,7 +386,6 @@ const UploadSketch = () => {
                                                         e.target.value
                                                     )
                                                 }
-                                                maxLength={TEXT_INPUT.MAX_LENGTH}
                                             />
                                         </div>
                                     </Form.Item>
@@ -493,7 +492,6 @@ const UploadSketch = () => {
                                                 onChange={(e) =>
                                                     setNote(e.target.value)
                                                 }
-                                                maxLength={TEXT_FIELD.MAX_LENGTH}
 
                                             />
                                         </div>
